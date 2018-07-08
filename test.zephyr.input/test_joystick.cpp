@@ -14,7 +14,7 @@ void test_joystick()
 
     joystick.Update();
 
-    while (true)
+    while (0 <= GetKeyState('Q'))
     {
         joystick.Update();
 
@@ -36,6 +36,7 @@ void test_joystick()
 
         system("cls");
 
+        println(std::cout, "To end this test, please push 'Q'.");
         for (int i = 0; i < 18; i++)
         {
             auto name = std::to_string(i);

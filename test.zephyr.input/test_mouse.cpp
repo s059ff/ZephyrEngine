@@ -12,7 +12,7 @@ void test_mouse()
     Mouse mouse;
     mouse.Update();
 
-    while (true)
+    while (0 <= GetKeyState('Q'))
     {
         mouse.Update();
 
@@ -34,6 +34,7 @@ void test_mouse()
 
         system("cls");
 
+        println(std::cout, "To end this test, please push 'Q'.");
         println(std::cout, "Left = {0}", to_string(mouse.Left));
         println(std::cout, "Center = {0}", to_string(mouse.Center));
         println(std::cout, "Right = {0}", to_string(mouse.Right));

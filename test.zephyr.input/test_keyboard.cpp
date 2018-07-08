@@ -65,7 +65,7 @@ void test_keyboard()
 
     Keyboard keyboard;
     keyboard.Update();
-    while (true)
+    while (0 <= GetKeyState('Q'))
     {
         keyboard.Update();
 
@@ -87,6 +87,7 @@ void test_keyboard()
 
         system("cls");
 
+        println(std::cout, "To end this test, please push 'Q'.");
         for (auto keyCode : keyCodes)
         {
             auto name = keyCode.first;
