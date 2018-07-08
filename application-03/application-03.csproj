@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BF44013B-1AC6-4ECD-8707-167CF6BC97D2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>application-03</RootNamespace>
+    <AssemblyName>application-03</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AbstractScene.cs" />
+    <Compile Include="components\AIComponent.cs" />
+    <Compile Include="components\AircraftComponent.cs" />
+    <Compile Include="components\AircraftFlameComponent.cs" />
+    <Compile Include="components\AircraftSmokeComponent.cs" />
+    <Compile Include="components\CameraComponent.cs" />
+    <Compile Include="components\CustomCameraComponent.cs" />
+    <Compile Include="components\CustomEntityComponent.cs" />
+    <Compile Include="components\CustomProjectorComponent.cs" />
+    <Compile Include="components\DamageViewComponent.cs" />
+    <Compile Include="components\DebugComponent.cs" />
+    <Compile Include="components\ExplosionComponent.cs" />
+    <Compile Include="components\GameOverComponent.cs" />
+    <Compile Include="components\GameClearComponent.cs" />
+    <Compile Include="components\GameSpaceComponent.cs" />
+    <Compile Include="components\GravityObjectComponent.cs" />
+    <Compile Include="components\GunBulletComponent.cs" />
+    <Compile Include="components\GunFlushComponent.cs" />
+    <Compile Include="components\LimitedLifeTimeComponent.cs" />
+    <Compile Include="GameScript.cs" />
+    <Compile Include="components\MissionControllerComponent.cs" />
+    <Compile Include="components\MissionSelectComponent.cs" />
+    <Compile Include="components\NPCAIComponent.cs" />
+    <Compile Include="components\PlayerComponent.cs" />
+    <Compile Include="components\SquadronComponent.cs" />
+    <Compile Include="components\TimerComponent.cs" />
+    <Compile Include="components\TitleComponent.cs" />
+    <Compile Include="components\TransformControlComponent.cs" />
+    <Compile Include="components\CloudComponent.cs" />
+    <Compile Include="components\JetComponent.cs" />
+    <Compile Include="components\MissileComponent.cs" />
+    <Compile Include="components\MissileSmokeComponent.cs" />
+    <Compile Include="components\StringySmokeComponent.cs" />
+    <Compile Include="components\SystemComponent.cs" />
+    <Compile Include="components\UIComponent.cs" />
+    <Compile Include="components\VibrationComponent.cs" />
+    <Compile Include="components\WindComponent.cs" />
+    <Compile Include="Graphics2D.cs" />
+    <Compile Include="components\GroundComponent.cs" />
+    <Compile Include="components\GunBulletSmokeComponent.cs" />
+    <Compile Include="Missions.cs" />
+    <Compile Include="SceneManager.cs" />
+    <Compile Include="scenes\GameOverScene.cs" />
+    <Compile Include="scenes\GameClearScene.cs" />
+    <Compile Include="scenes\MissionSelectScene.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="scenes\MainScene.cs" />
+    <Compile Include="components\SkyComponent.cs" />
+    <None Include="app.config" />
+    <Compile Include="EngineScript.cs" />
+    <Compile Include="scenes\TitleScene.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CsvHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.6.0.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZephyrSharp.AI\ZephyrSharp.AI.vcxproj">
+      <Project>{30d6e278-d6e8-449d-a88e-5dcb34e7b63d}</Project>
+      <Name>ZephyrSharp.AI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Collision\ZephyrSharp.Collision.vcxproj">
+      <Project>{3f4b0cd1-50cb-4724-8f29-d08c6dcc936b}</Project>
+      <Name>ZephyrSharp.Collision</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.GameSystem.Components\ZephyrSharp.GameSystem.Components.vcxproj">
+      <Project>{0a40c054-bbac-4e39-bbcd-89b060d84cdf}</Project>
+      <Name>ZephyrSharp.GameSystem.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.GameSystem\ZephyrSharp.GameSystem.vcxproj">
+      <Project>{99ca7df9-19be-4ae4-a454-c64096ca9335}</Project>
+      <Name>ZephyrSharp.GameSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Graphics.D3D11\ZephyrSharp.Graphics.D3D11.vcxproj">
+      <Project>{640762f9-b444-4574-a757-565a104e0f14}</Project>
+      <Name>ZephyrSharp.Graphics.D3D11</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Graphics\ZephyrSharp.Graphics.vcxproj">
+      <Project>{8b2006f7-69de-482c-906f-5e38b4ec6adf}</Project>
+      <Name>ZephyrSharp.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Input\ZephyrSharp.Input.vcxproj">
+      <Project>{217ff6bb-f080-440a-8cc2-556148c8afff}</Project>
+      <Name>ZephyrSharp.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Linalg\ZephyrSharp.Linalg.vcxproj">
+      <Project>{f9bc3a40-9b61-49a3-a1f2-1ed0600616a9}</Project>
+      <Name>ZephyrSharp.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Scripting\ZephyrSharp.Scripting.csproj">
+      <Project>{a7abc948-34ad-4b47-9751-342231835d47}</Project>
+      <Name>ZephyrSharp.Scripting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Sound\ZephyrSharp.Sound.vcxproj">
+      <Project>{0672d936-1e69-4650-aa92-393e59b803b0}</Project>
+      <Name>ZephyrSharp.Sound</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp\ZephyrSharp.vcxproj">
+      <Project>{e750c230-c7a1-44ad-ac58-ffccaa5ffebf}</Project>
+      <Name>ZephyrSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrTools.CommandRunner\ZephyrTools.CommandRunner.csproj">
+      <Project>{62184a5b-f46b-4cfb-a52d-e36116968877}</Project>
+      <Name>ZephyrTools.CommandRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrTools.GameSystemMonitor\ZephyrTools.GameSystemMonitor.csproj">
+      <Project>{011010dd-53e9-4c4a-924f-ff83390c9499}</Project>
+      <Name>ZephyrTools.GameSystemMonitor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

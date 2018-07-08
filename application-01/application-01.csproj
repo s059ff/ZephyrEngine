@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8FE1540F-47F9-4B90-86B9-6F14D5D9E101}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>application-01</RootNamespace>
+    <AssemblyName>application-01</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="components\BallComponent.cs" />
+    <Compile Include="components\FloorComponent.cs" />
+    <Compile Include="components\SystemComponent.cs" />
+    <Compile Include="components\WallComponent.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="script\#console.cs" />
+    <Compile Include="script\#constants.cs" />
+    <Compile Include="script\#controller.cs" />
+    <Compile Include="script\#debug.cs" />
+    <Compile Include="script\#directory.cs" />
+    <Compile Include="script\#entity.cs" />
+    <Compile Include="script\#math.cs" />
+    <Compile Include="script\#settings.cs" />
+    <Compile Include="script\#time.cs" />
+    <Compile Include="script\#transform.cs" />
+    <None Include="app.config" />
+    <None Include="script\settings.cs" />
+    <None Include="script\constants.cs" />
+    <None Include="script\transform.cs" />
+    <None Include="script\console.cs" />
+    <None Include="script\controller.cs" />
+    <None Include="script\debug.cs" />
+    <None Include="script\directory.cs" />
+    <None Include="script\entity.cs" />
+    <None Include="script\math.cs" />
+    <None Include="script\time.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="ZephyrSharp.Collision">
+      <HintPath>..\ZephyrSharp.Collision\bin\x64\Debug\ZephyrSharp.Collision.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZephyrSharp.GameSystem.Components\ZephyrSharp.GameSystem.Components.vcxproj">
+      <Project>{0a40c054-bbac-4e39-bbcd-89b060d84cdf}</Project>
+      <Name>ZephyrSharp.GameSystem.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.GameSystem\ZephyrSharp.GameSystem.vcxproj">
+      <Project>{99ca7df9-19be-4ae4-a454-c64096ca9335}</Project>
+      <Name>ZephyrSharp.GameSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Graphics.DX11\ZephyrSharp.Graphics.DX11.vcxproj">
+      <Project>{2be099b4-7b8b-452e-a861-745c896028e4}</Project>
+      <Name>ZephyrSharp.Graphics.DX11</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Graphics\ZephyrSharp.Graphics.vcxproj">
+      <Project>{8b2006f7-69de-482c-906f-5e38b4ec6adf}</Project>
+      <Name>ZephyrSharp.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Input\ZephyrSharp.Input.vcxproj">
+      <Project>{217ff6bb-f080-440a-8cc2-556148c8afff}</Project>
+      <Name>ZephyrSharp.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Linalg\ZephyrSharp.Linalg.vcxproj">
+      <Project>{f9bc3a40-9b61-49a3-a1f2-1ed0600616a9}</Project>
+      <Name>ZephyrSharp.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Scripting\ZephyrSharp.Scripting.csproj">
+      <Project>{a7abc948-34ad-4b47-9751-342231835d47}</Project>
+      <Name>ZephyrSharp.Scripting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp.Sound\ZephyrSharp.Sound.vcxproj">
+      <Project>{0672d936-1e69-4650-aa92-393e59b803b0}</Project>
+      <Name>ZephyrSharp.Sound</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZephyrSharp\ZephyrSharp.vcxproj">
+      <Project>{e750c230-c7a1-44ad-ac58-ffccaa5ffebf}</Project>
+      <Name>ZephyrSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="script\common.csh" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd "$(ProjectDir)"
+"$(SolutionDir)cssc\bin\$(PlatformName)\$(ConfigurationName)\cssc" /nocsc /target:library</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ZephyrSharp.Scripting</name>
+    </assembly>
+    <members>
+        <member name="T:ZephyrSharp.Scripting.ScriptCompilerParameters">
+            <summary>
+            コンパイラの設定を表します。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.IncludeDirectories">
+            <summary>
+            #include ディレクティブによってインクルードされるヘッダファイルを検索するディレクトリを表します。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.BaseClassName">
+            <summary>
+            ラッピングするクラスの基底クラスの名前。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.ClassName">
+            <summary>
+            ラッピングするクラスの名前。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.SourceFormat">
+            <summary>
+            出力ソースコードのフォーマットを行うかどうか。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.GenerateExecutable">
+            <summary>
+            実行可能ファイルを出力するかどうか。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.PythonScopeStyle">
+            <summary>
+            インデントでスコープを定義するかどうか。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.BatchScriptStyle">
+            <summary>
+            バッチファイル形式かどうか。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.GenerateInMemory">
+            <summary>
+            メモリ内に出力する場合は true にします。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.AssemblyName">
+            <summary>
+            出力ファイルの名前。
+            </summary>
+        </member>
+        <member name="P:ZephyrSharp.Scripting.ScriptCompilerParameters.ReferencedAssemblies">
+            <summary>
+            参照アセンブリ。
+            </summary>
+        </member>
+        <member name="M:ZephyrSharp.Scripting.ScriptPreprocessor.Preprocess(ZephyrSharp.Scripting.ScriptPreprocessorParameters,System.String[])">
+            <summary>
+            C#/Script のプリプロセスを行います。
+            </summary>
+            <param name="parameters">プリプロセッサの設定。</param>
+            <param name="sources">ソースプログラム。</param>
+            <returns></returns>
+        </member>
+        <member name="M:ZephyrSharp.Scripting.ScriptPreprocessor.PreprocessFromFile(ZephyrSharp.Scripting.ScriptPreprocessorParameters,System.String[])">
+            <summary>
+            C#/Script のプリプロセスを行います。
+            </summary>
+            <param name="parameters">プリプロセッサの設定。</param>
+            <param name="sources">ソースファイル。</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

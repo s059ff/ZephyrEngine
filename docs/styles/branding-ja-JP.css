@@ -1,0 +1,18 @@
+﻿/* Start JA-JP locale-specific CSS */
+body
+{
+	font-family: メイリオ
+}
+pre
+{
+  font-family: メイリオ
+}
+span.tt
+{
+  font-family: メイリオ;
+}
+span.code
+{
+	font-family: メイリオ;
+}
+/* End locale-specific CSS */

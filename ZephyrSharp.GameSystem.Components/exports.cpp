@@ -1,0 +1,7 @@
+#include "Transform2DComponent.h"
+#include "TransformComponent.h"
+#include "CameraComponent.h"
+#include "ProjectorComponent.h"
+#include "Physics2DComponent.h"
+#include "PhysicsComponent.h"
+#include "LightComponent.h"

@@ -1,0 +1,1 @@
+Entity.Find("player").Get<AircraftComponent>().Armor=0.25f;
