@@ -10,7 +10,7 @@ https://s059ff.github.io/ZephyrEngine/ でAPIのリファレンスを公開し�
 ## 動作環境
 __XepherEngine__ の動作に必要な環境は以下の通りです。
 * Microsoft Windows10 64bit の OS。
-* Visual Studio 2015 もしくは Visual Studio 2015 の Visual C++ 再頒布可能パッケージ。
+* Visual Studio 2017 もしくは Visual Studio 2017 の Visual C++ 再頒布可能パッケージ。
 * Shader Model 5.0 対応 / DirectX11 世代の グラフィックス カード。(ない場合は、ソフトウェアエミュレーションのため、動作が遅くなります。)
 * 最新の .NET Framework Runtime。
 * Autodesk FBX SDK。
@@ -66,38 +66,35 @@ XepherEngine は以下のデバッギング ツールを同梱しており、ゲ
 このツールは、NPCの頭の中を表示するものです。グラフの各ノードは状態を、エッジとエッジの上の数字は、状態遷移確率を示しています。  
 敵AIが「Attack」と「Retreat」を交互に繰り返し、ミサイルが飛んでくると「Avoid missile」に状態が切り替わることを確認してください。
 
-<!--
 ## インストール・ビルド方法（開発者向け）
 1. 外部ライブラリのインストール
-    1. __XepherEngine__ のビルドを行うには Visual Studio 2015 が必要です。Microsoft 社のホームページからダウンロードできます。
-なお、 Visual Studio 2015 のインストール時には 必ず Native C++ の開発環境も併せてインストールしてください。
+    1. __XepherEngine__ のビルドを行うには Visual Studio 2017 が必要です。Microsoft 社のホームページからダウンロードできます。
+なお、 Visual Studio 2017 のインストール時には 必ず Native C++ の開発環境も併せてインストールしてください。
     2. グラフィックスシステムを使用する場合、お使いのコンピュータに Autodesk 社の FBXSDK をインストールする必要があります。
-インストールは http://www.autodesk.com/products/fbx/overview から Visual Studio 2015 用の最新のものをダウンロードしてください。
+インストールは http://www.autodesk.com/products/fbx/overview から Visual Studio 2017 用の最新のものをダウンロードしてください。
 2. https://github.com/s059ff/ZephyrEngine にアクセスしてリポジトリをクローンします。  
-3. Visual Studio 2015 で Visual Studio のソリューションファイルを開きます。
+3. Visual Studio 2017 で Visual Studio のソリューションファイルを開きます。
 4. C++ でゲーム開発を行う場合は、xepher〇〇というプロジェクトを参照に加えるか、ライブラリファイル(*.lib)をリンクする必要があります。 
 5. C# でゲーム開発を行う場合は、XepherSharp〇〇というプロジェクトを参照に加えるか、クラスライブラリ(*.dll)を参照する必要があります。
--->
 
 ## サンプルアプリ
-<!--
-1. __sample01__
+1. __application01__
 
-![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/sample_01.png "スクリーンショット")  
+![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/application_01.png "スクリーンショット")  
 ただボールが跳ねるだけのプログラムです。  
-このプログラムを実行する場合は、「sample 01」というプロジェクトをビルド・実行してください。
--->
+このプログラムを実行する場合は、「application-01」というプロジェクトをビルド・実行してください。
 
-2. __sample02__  
+2. __application03__  
 
-![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/sample_02.png "スクリーンショット")  
+![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/application_03.png "スクリーンショット")  
 ３Dフライトシューティングゲームです。
+このプログラムを実行する場合は、「application-03」というプロジェクトをビルド・実行してください。
 
 【ゲーム内容】  
 戦闘機を操作して、敵の戦闘機を全部撃ち落としてください。
 
 【操作方法】
-![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/sample_02_keyboard.png "スクリーンショット")  
+![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/application_03_keyboard.png "スクリーンショット")  
 
 | キー |  |
 |:-----------|:------------|
@@ -122,21 +119,9 @@ XepherEngine は以下のデバッギング ツールを同梱しており、ゲ
 ## 企業向け情報
 * プログラムの製作人数は私一人です。
 * アプリケーションにおけるサウンドや 3D グラフィックスモデルなどの素材は、インターネット上で公開されているものを使用しています。
-* 製作期間は、エンジン部分が約３年、sample02 が約 3 カ月です。
+* 製作期間は、エンジン部分が約３年、application03 が約 3 カ月です。
 * 作品の詳細は添付しているパワーポイントの資料をご覧ください。
 * __アピールポイント__
     * 数学計算やグラフィックスなど、基本から組み立てたこと。
     * ４万行を超える大規模なプログラム。
     * モジュール毎に分割した再利用性の高いプログラム構成。
-
-<!--
-## インテリジェントシステムズ様向け情報
-sample02 では
-* ゲームシステムモニター
-* コマンドランナー
-* ステートマシンモニター  
-の各デバッギング ツールが動作しています。  
-ゲームとは直接関係なく、リリース時には削除する予定のものですが、こちらも併せてみていただければよいと思います。  
-それぞれ表示内容、使用方法を以下に記します。
-
--->
