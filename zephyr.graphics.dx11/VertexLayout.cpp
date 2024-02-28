@@ -1,16 +1,13 @@
-#include <d3d11.h>
-
 #include "zephyr\runtime_assert.h"
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-#include "zephyr.graphics.dx11\VertexElement.h"
-#include "zephyr.graphics.dx11\VertexShader.h"
 
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-
+#include "GraphicsDevice.h"
+#include "VertexElement.h"
+#include "VertexShader.h"
+#include "GraphicsDevice.h"
 #include "VertexLayout.h"
 
 #define this (*this)
-#define device GraphicsDevice::Instance.Device
+#define device GraphicsDevice::Instance
 
 namespace zephyr
 {

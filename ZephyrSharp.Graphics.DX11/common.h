@@ -10,6 +10,7 @@
 #include "zephyr.graphics.dx11\DepthStencilState.h"
 #include "zephyr.graphics.dx11\DepthStencilView.h"
 #include "zephyr.graphics.dx11\GraphicsDevice.h"
+#include "zephyr.graphics.dx11\GraphicsDeviceContext.h"
 #include "zephyr.graphics.dx11\GeometryShader.h"
 #include "zephyr.graphics.dx11\IndexBuffer.h"
 #include "zephyr.graphics.dx11\InstanceBuffer.h"

@@ -1,5 +1,4 @@
 #include <fbxsdk.h>
-#include <fstream>
 
 #include "zephyr\buffer.h"
 #include "zephyr\com_ptr.h"
@@ -8,6 +7,7 @@
 #include "zephyr\vector.h"
 #include "zephyr\print.h"
 #include "zephyr\smart_ptr.h"
+#include "zephyr\stream.h"
 #include "zephyr.linalg\linalg.h"
 #include "zephyr.filesystem\Directory.h"
 #include "zephyr.filesystem\Path.h"

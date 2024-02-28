@@ -11,7 +11,7 @@ namespace zephyr
 {
     namespace graphics
     {
-        namespace d3d11
+        namespace dx11
         {
             class VertexShader;
             class GeometryShader;

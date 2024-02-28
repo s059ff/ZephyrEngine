@@ -1,22 +1,21 @@
-#include <DirectXTex.h>
-
 #include "zephyr\buffer.h"
 #include "zephyr\vector.h"
 #include "zephyr\matrix.h"
 #include "zephyr\runtime_assert.h"
 #include "zephyr.graphics\ColorCode.h"
 #include "zephyr.graphics\Font.h"
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-#include "zephyr.graphics.dx11\enums.h"
-#include "zephyr.graphics.dx11\_sizeof.h"
 #include "zephyr.filesystem\Path.h"
 
+#include "GraphicsDevice.h"
+#include "GraphicsDeviceContext.h"
+#include "enums.h"
+#include "_sizeof.h"
 #include "Texture2D.h"
 
 #define this (*this)
 
-#define device GraphicsDevice::Instance.Device
-#define context GraphicsDevice::Instance.DeviceContext
+#define device GraphicsDevice::Instance
+#define context GraphicsDeviceContext::Instance
 
 namespace zephyr
 {

@@ -1,7 +1,6 @@
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-#include "zephyr.graphics.dx11\enums.h"
-#include "zephyr.graphics.dx11\ConstantBuffer.h"
-
+#include "GraphicsDevice.h"
+#include "enums.h"
+#include "ConstantBuffer.h"
 #include "VertexBuffer.h"
 
 #define this (*this)

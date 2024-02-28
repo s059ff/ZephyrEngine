@@ -1,9 +1,12 @@
+#include "common.h"
+
 #include "BlendState.h"
 #include "ConstantBuffer.h"
 #include "DepthStencilState.h"
 #include "Enums.h"
 #include "GeometryShader.h"
 #include "GraphicsDevice.h"
+#include "GraphicsDeviceContext.h"
 #include "IndexBuffer.h"
 #include "InstanceBuffer.h"
 #include "PixelShader.h"

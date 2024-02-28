@@ -1,21 +1,20 @@
-#include <d3d11.h>
-#include <d3dcompiler.h>
-
 #include "zephyr\buffer.h"
 #include "zephyr\runtime_assert.h"
-#include "zephyr.graphics.dx11\Blob.h"
-#include "zephyr.graphics.dx11\ConstantBuffer.h"
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-#include "zephyr.graphics.dx11\ShaderResourceView.h"
-#include "zephyr.graphics.dx11\SamplerState.h"
 #include "zephyr.filesystem\File.h"
+
+#include "Blob.h"
+#include "ConstantBuffer.h"
+#include "GraphicsDevice.h"
+#include "GraphicsDeviceContext.h"
+#include "ShaderResourceView.h"
+#include "SamplerState.h"
 
 #include "VertexShader.h"
 
 #define this (*this)
 
-#define device GraphicsDevice::Instance.Device
-#define context GraphicsDevice::Instance.DeviceContext
+#define device GraphicsDevice::Instance
+#define context GraphicsDeviceContext::Instance
 
 namespace zephyr
 {

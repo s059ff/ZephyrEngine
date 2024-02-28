@@ -1,5 +1,3 @@
-#include <DirectXTex.h>
-
 #include "Texture2D.h"
 
 using namespace DirectX;

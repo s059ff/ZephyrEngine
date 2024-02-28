@@ -1,8 +1,6 @@
 #include <memory>
 #include <vector>
 
-#include <DirectXTex.h>
-
 #include "Texture2DArray.h"
 
 using namespace DirectX;

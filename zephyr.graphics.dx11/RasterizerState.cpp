@@ -1,13 +1,10 @@
-#include <d3d11.h>
-
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-#include "zephyr.graphics.dx11\enums.h"
-
+#include "GraphicsDevice.h"
+#include "enums.h"
 #include "RasterizerState.h"
 
 #define this (*this)
-#define device GraphicsDevice::Instance.Device
-#define context GraphicsDevice::Instance.DeviceContext
+#define device GraphicsDevice::Instance
+#define context GraphicsDeviceContext::Instance
 
 namespace zephyr
 {

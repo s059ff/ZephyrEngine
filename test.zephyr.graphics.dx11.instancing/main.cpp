@@ -1,5 +1,3 @@
-#include <d3d11.h>
-
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "libfbxsdk-md.lib")
@@ -10,6 +8,7 @@
 #include "zephyr.graphics\Color.h"
 #include "zephyr.graphics.dx11\enums.h"
 #include "zephyr.graphics.dx11\GraphicsDevice.h"
+#include "zephyr.graphics.dx11\GraphicsDeviceContext.h"
 #include "zephyr.graphics.dx11\VertexShader.h"
 #include "zephyr.graphics.dx11\GeometryShader.h"
 #include "zephyr.graphics.dx11\PixelShader.h"
@@ -37,8 +36,9 @@ void main()
     Window window;
     window.Create("DirectX11 インスタンシング テスト", 800, 600);
 
-    GraphicsDevice& device = GraphicsDevice::Instance;
-    device.Create(window);
+	GraphicsDevice& device = GraphicsDevice::Instance;
+	GraphicsDeviceContext& context = GraphicsDeviceContext::Instance;
+    device.Create(window, false);
 
     struct Vertex
     {
@@ -49,13 +49,13 @@ void main()
     VertexShader vs_shader;
     {
         vs_shader.CreateFromFile("res/VertexShader.hlsl");
-        device.SetVertexShader(vs_shader);
+		context.SetVertexShader(vs_shader);
     }
 
     PixelShader ps_shader;
     {
         ps_shader.CreateFromFile("res/PixelShader.hlsl");
-        device.SetPixelShader(ps_shader);
+		context.SetPixelShader(ps_shader);
     }
 
     Texture2DArray texture;
@@ -82,7 +82,7 @@ void main()
         },
         Accessibility::None);
 
-        device.SetVertexBuffer(vs_buffer, 0);
+		context.SetVertexBuffer(vs_buffer, 0);
     }
 
     InstanceBuffer is_buffer;
@@ -96,7 +96,7 @@ void main()
         },
         Accessibility::None);
 
-        device.SetInstanceBuffer(is_buffer, 1);
+		context.SetInstanceBuffer(is_buffer, 1);
     }
 
     VertexLayout layout;
@@ -108,10 +108,10 @@ void main()
             VertexElement("TEXINDEX", 0, Format::Float1, 1, sizeof(float) * 2, VertexElement::Classification::InstanceData, 1),
         };
         layout.Create(elements, vs_shader);
-        device.SetVertexLayout(layout);
+		context.SetVertexLayout(layout);
     }
 
-    device.SetPrimitiveTopology(PrimitiveTopology::TriangleStrip);
+	context.SetPrimitiveTopology(PrimitiveTopology::TriangleStrip);
 
     ConstantBuffer constant_buffer;
     {
@@ -132,9 +132,9 @@ void main()
 
     window.Updated += [&]()
     {
-        device.Clear(ColorCode::DarkBlue);
-        device.DrawInstanced(4, 4);
-        device.Present();
+		context.Clear(ColorCode::DarkBlue);
+		context.DrawInstanced(4, 4);
+		context.Present();
     };
 
     window.Start();

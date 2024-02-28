@@ -1,17 +1,17 @@
-#include <DirectXTex.h>
-
 #include "zephyr\runtime_assert.h"
 #include "zephyr\smart_ptr.h"
-#include "zephyr.graphics.dx11\GraphicsDevice.h"
-#include "zephyr.graphics.dx11\enums.h"
-#include "zephyr.graphics.dx11\_sizeof.h"
+
+#include "GraphicsDevice.h"
+#include "GraphicsDeviceContext.h"
+#include "enums.h"
+#include "_sizeof.h"
 
 #include "Texture2DArray.h"
 
 #define this (*this)
 
-#define device GraphicsDevice::Instance.Device
-#define context GraphicsDevice::Instance.DeviceContext
+#define device GraphicsDevice::Instance
+#define context GraphicsDeviceContext::Instance
 
 namespace zephyr
 {
