@@ -1,6 +1,0 @@
-#include "zephyr.graphics\Material.h"
-#include "zephyr.graphics\Interface.h"
-#include "zephyr.graphics\Font.h"
-#include "zephyr.graphics\ColorCode.h"
-#include "zephyr.graphics\Color.h"
-#include "zephyr.graphics\Window.h"
