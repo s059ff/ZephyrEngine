@@ -75,10 +75,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ZephyrTools.GameSystem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "application-03", "application-03\application-03.csproj", "{BF44013B-1AC6-4ECD-8707-167CF6BC97D2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zephyr.graphics.d3d11", "zephyr.graphics.d3d11\zephyr.graphics.d3d11.vcxproj", "{517286B2-5A3B-4535-B10B-E1AADA832E98}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZephyrSharp.Graphics.D3D11", "ZephyrSharp.Graphics.D3D11\ZephyrSharp.Graphics.D3D11.vcxproj", "{640762F9-B444-4574-A757-565A104E0F14}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZephyrSharp.AI", "ZephyrSharp.AI\ZephyrSharp.AI.vcxproj", "{30D6E278-D6E8-449D-A88E-5DCB34E7B63D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zephyr.ai", "zephyr.ai\zephyr.ai.vcxproj", "{D049311D-2344-4601-A4BF-1C08A6D318BD}"
@@ -233,14 +229,6 @@ Global
 		{BF44013B-1AC6-4ECD-8707-167CF6BC97D2}.Debug|x64.Build.0 = Debug|x64
 		{BF44013B-1AC6-4ECD-8707-167CF6BC97D2}.Release|x64.ActiveCfg = Release|x64
 		{BF44013B-1AC6-4ECD-8707-167CF6BC97D2}.Release|x64.Build.0 = Release|x64
-		{517286B2-5A3B-4535-B10B-E1AADA832E98}.Debug|x64.ActiveCfg = Debug|x64
-		{517286B2-5A3B-4535-B10B-E1AADA832E98}.Debug|x64.Build.0 = Debug|x64
-		{517286B2-5A3B-4535-B10B-E1AADA832E98}.Release|x64.ActiveCfg = Release|x64
-		{517286B2-5A3B-4535-B10B-E1AADA832E98}.Release|x64.Build.0 = Release|x64
-		{640762F9-B444-4574-A757-565A104E0F14}.Debug|x64.ActiveCfg = Debug|x64
-		{640762F9-B444-4574-A757-565A104E0F14}.Debug|x64.Build.0 = Debug|x64
-		{640762F9-B444-4574-A757-565A104E0F14}.Release|x64.ActiveCfg = Release|x64
-		{640762F9-B444-4574-A757-565A104E0F14}.Release|x64.Build.0 = Release|x64
 		{30D6E278-D6E8-449D-A88E-5DCB34E7B63D}.Debug|x64.ActiveCfg = Debug|x64
 		{30D6E278-D6E8-449D-A88E-5DCB34E7B63D}.Debug|x64.Build.0 = Debug|x64
 		{30D6E278-D6E8-449D-A88E-5DCB34E7B63D}.Release|x64.ActiveCfg = Release|x64
