@@ -115,12 +115,12 @@ namespace zephyr
 
                 if (zephyr::filesystem::Path::GetExtension(path) == ".dds")
                 {
-                    HRESULT hr = LoadFromDDSFile(widen(path).c_str(), 0, &metadata, scratchImage);
+                    HRESULT hr = LoadFromDDSFile(widen(path).c_str(), DirectX::DDS_FLAGS_NONE, &metadata, scratchImage);
                     runtime_assert(SUCCEEDED(hr));
                 }
                 else
                 {
-                    HRESULT hr = LoadFromWICFile(widen(path).c_str(), 0, &metadata, scratchImage);
+                    HRESULT hr = LoadFromWICFile(widen(path).c_str(), DirectX::WIC_FLAGS_NONE, &metadata, scratchImage);
                     runtime_assert(SUCCEEDED(hr));
                 }
 

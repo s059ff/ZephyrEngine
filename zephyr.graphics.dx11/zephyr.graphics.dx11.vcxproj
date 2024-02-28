@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)library\dxtex\include\;$(SolutionDir)library\directx9\include\;$(FBXSDK_DIR)\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(FBXSDK_DIR)\include\;$(SolutionDir)packages\directxtex_desktop_2017.2022.3.24.1\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -102,7 +102,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)library\dxtex\include\;$(SolutionDir)library\directx9\include\;$(FBXSDK_DIR)\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(FBXSDK_DIR)\include\;$(SolutionDir)packages\directxtex_desktop_2017.2022.3.24.1\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -116,7 +116,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)library\dxtex\include\;$(SolutionDir)library\directx9\include\;$(FBXSDK_DIR)\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(FBXSDK_DIR)\include\;$(SolutionDir)packages\directxtex_desktop_2017.2022.3.24.1\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ForcedIncludeFiles>d3d11_4.h;d3dcompiler.h;DirectXTex.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -133,7 +133,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)library\dxtex\include\;$(SolutionDir)library\directx9\include\;$(FBXSDK_DIR)\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(FBXSDK_DIR)\include\;$(SolutionDir)packages\directxtex_desktop_2017.2022.3.24.1\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ForcedIncludeFiles>d3d11_4.h;d3dcompiler.h;DirectXTex.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -210,7 +210,17 @@
       <Project>{ed51c3bc-59da-480d-bfac-12d608effc0b}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\directxtex_desktop_2017.2022.3.24.1\build\native\directxtex_desktop_2017.targets" Condition="Exists('..\packages\directxtex_desktop_2017.2022.3.24.1\build\native\directxtex_desktop_2017.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\directxtex_desktop_2017.2022.3.24.1\build\native\directxtex_desktop_2017.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtex_desktop_2017.2022.3.24.1\build\native\directxtex_desktop_2017.targets'))" />
+  </Target>
 </Project>

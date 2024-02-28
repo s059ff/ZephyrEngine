@@ -14,7 +14,7 @@ namespace ZephyrSharp
             TexMetadata metadata;
             ScratchImage scratchImage;
 
-            HRESULT hr = LoadFromDDSFile(to_wstring(path).c_str(), 0, &metadata, scratchImage);
+            HRESULT hr = LoadFromDDSFile(to_wstring(path).c_str(), DirectX::DDS_FLAGS_NONE, &metadata, scratchImage);
             runtime_assert(SUCCEEDED(hr));
 
             const size_t slices = scratchImage.GetImageCount();
@@ -49,7 +49,7 @@ namespace ZephyrSharp
             {
                 ScratchImage scratchImage;
 
-                HRESULT hr = LoadFromWICFile(to_wstring(path).c_str(), 0, &metadata, scratchImage);
+                HRESULT hr = LoadFromWICFile(to_wstring(path).c_str(), DirectX::WIC_FLAGS_NONE, &metadata, scratchImage);
                 runtime_assert(SUCCEEDED(hr));
 
                 if (size == 0)
@@ -73,7 +73,7 @@ namespace ZephyrSharp
             TexMetadata metadata;
             ScratchImage scratchImage;
 
-            HRESULT hr = LoadFromDDSFile(to_wstring(path).c_str(), 0, &metadata, scratchImage);
+            HRESULT hr = LoadFromDDSFile(to_wstring(path).c_str(), DirectX::DDS_FLAGS_NONE, &metadata, scratchImage);
             runtime_assert(SUCCEEDED(hr));
 
             const Image* image0 = scratchImage.GetImage(0, 0, 0);

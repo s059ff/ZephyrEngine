@@ -116,4 +116,7 @@
     <_EmbedManagedResourceFile Include="torus.cx" />
     <_EmbedManagedResourceFile Include="cylinder.cx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

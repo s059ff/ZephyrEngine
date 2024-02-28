@@ -118,7 +118,7 @@ namespace zephyr
                 DirectX::TexMetadata metadata;
                 DirectX::ScratchImage scratchImage;
 
-                HRESULT hr = LoadFromDDSFile(widen(path).c_str(), 0, &metadata, scratchImage);
+                HRESULT hr = LoadFromDDSFile(widen(path).c_str(), DirectX::DDS_FLAGS_NONE, &metadata, scratchImage);
                 runtime_assert(SUCCEEDED(hr));
 
                 const size_t slices = scratchImage.GetImageCount();
@@ -155,7 +155,7 @@ namespace zephyr
 
                     DirectX::ScratchImage scratchImage;
 
-                    HRESULT hr = LoadFromWICFile(widen(path).c_str(), 0, &metadata, scratchImage);
+                    HRESULT hr = LoadFromWICFile(widen(path).c_str(), DirectX::WIC_FLAGS_NONE, &metadata, scratchImage);
                     runtime_assert(SUCCEEDED(hr));
 
                     if (size == 0)
@@ -341,7 +341,7 @@ namespace zephyr
                 DirectX::TexMetadata metadata;
                 DirectX::ScratchImage scratchImage;
 
-                HRESULT hr = LoadFromDDSFile(widen(path).c_str(), 0, &metadata, scratchImage);
+                HRESULT hr = LoadFromDDSFile(widen(path).c_str(), DirectX::DDS_FLAGS_NONE, &metadata, scratchImage);
                 runtime_assert(SUCCEEDED(hr));
 
                 const DirectX::Image* image0 = scratchImage.GetImage(0, 0, 0);

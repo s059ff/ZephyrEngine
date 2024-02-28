@@ -13,12 +13,12 @@ namespace ZephyrSharp
 
             if (System::IO::Path::GetExtension(path) == ".dds")
             {
-                HRESULT hr = LoadFromDDSFile(to_wstring(path).c_str(), 0, &metadata, scratchImage);
+                HRESULT hr = LoadFromDDSFile(to_wstring(path).c_str(), DirectX::DDS_FLAGS_NONE, &metadata, scratchImage);
                 runtime_assert(SUCCEEDED(hr));
             }
             else
             {
-                HRESULT hr = LoadFromWICFile(to_wstring(path).c_str(), 0, &metadata, scratchImage);
+                HRESULT hr = LoadFromWICFile(to_wstring(path).c_str(), DirectX::WIC_FLAGS_NONE, &metadata, scratchImage);
                 runtime_assert(SUCCEEDED(hr));
             }
 
