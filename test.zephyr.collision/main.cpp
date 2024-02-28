@@ -1,6 +1,10 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+
 #pragma comment(lib, "libfbxsdk-md.lib")
+#pragma comment(lib, "libxml2-md.lib")
+#pragma comment(lib, "zlib-md.lib")
+
 #pragma comment(lib, "DirectXTex.lib")
 
 #include "zephyr.linalg\Matrix4x3.h"
@@ -9,6 +13,7 @@
 #include "zephyr.graphics\Color.h"
 #include "zephyr.graphics\Window.h"
 #include "zephyr.graphics.dx11\GraphicsDevice.h"
+#include "zephyr.graphics.dx11\GraphicsDeviceContext.h"
 #include "zephyr.graphics.dx11\VertexShader.h"
 #include "zephyr.graphics.dx11\PixelShader.h"
 #include "zephyr.graphics.dx11\VertexLayout.h"
@@ -37,8 +42,9 @@ void main()
     Window window;
     window.Create("C# Collision ƒeƒXƒg", 800, 600);
 
-    auto& device = GraphicsDevice::Instance;
-    device.Create(window);
+	auto& device = GraphicsDevice::Instance;
+	auto& context = GraphicsDeviceContext::Instance;
+    device.Create(window, false);
 
     VertexShader vs_shader;
     vs_shader.CreateFromFile("res/VertexShader.hlsl");
@@ -56,9 +62,9 @@ void main()
         layout.Create(elements, vs_shader);
     }
 
-    device.SetVertexShader(vs_shader);
-    device.SetPixelShader(ps_shader);
-    device.SetVertexLayout(layout);
+	context.SetVertexShader(vs_shader);
+	context.SetPixelShader(ps_shader);
+	context.SetVertexLayout(layout);
 
     GraphicsModel sphere;
     sphere.CreateSphere(16, 16);
@@ -85,7 +91,7 @@ void main()
 
     window.Updated += [&]()
     {
-        device.Clear(Color(ColorCode::Black));
+		context.Clear(Color(ColorCode::Black));
 
         auto point = model1_c.collide_point(&model2_c);
 
@@ -93,8 +99,8 @@ void main()
         auto projection = Matrix4x4().identity().perspective(3.14f / 3, 4.0f / 3.0f, 0.1f, 128.0f);
 
         {
-            device.SetVertexBuffer(model1.VertexPositions, 0);
-            device.SetPrimitiveTopology(model1.Topology);
+			context.SetVertexBuffer(model1.VertexPositions, 0);
+			context.SetPrimitiveTopology(model1.Topology);
 
             vs_c0.Update(Matrix4x4(world1 * viewing * projection));
             ps_c0.Update(Matrix4x4(world1));
@@ -106,14 +112,14 @@ void main()
             ps_shader.SetConstantBuffer(ps_c1, 1);
             ps_shader.SetConstantBuffer(ps_c2, 2);
 
-            device.Draw(model1.VertexPositions.count, 0);
+			context.Draw(model1.VertexPositions.count, 0);
         }
 
         {
-            device.SetVertexBuffer(model2.VertexPositions, 0);
-            device.SetVertexBuffer(model2.VertexNormals, 1);
-            device.SetPrimitiveTopology(model2.Topology);
-            device.SetIndexBuffer(model2.VertexIndices);
+			context.SetVertexBuffer(model2.VertexPositions, 0);
+			context.SetVertexBuffer(model2.VertexNormals, 1);
+			context.SetPrimitiveTopology(model2.Topology);
+			context.SetIndexBuffer(model2.VertexIndices);
 
             vs_c0.Update(Matrix4x4(world2 * viewing * projection));
             ps_c0.Update(Matrix4x4(world2));
@@ -125,16 +131,16 @@ void main()
             ps_shader.SetConstantBuffer(ps_c1, 1);
             ps_shader.SetConstantBuffer(ps_c2, 2);
 
-            device.DrawIndexed(model2.VertexIndices.count, 0);
+			context.DrawIndexed(model2.VertexIndices.count, 0);
         }
 
         {
             auto world = Matrix4x3().identity().translate(point).scale(0.25f);
-            device.SetPrimitiveTopology(sphere.Topology);
+			context.SetPrimitiveTopology(sphere.Topology);
 
-            device.SetVertexBuffer(sphere.VertexPositions, 0);
-            device.SetVertexBuffer(sphere.VertexNormals, 1);
-            device.SetIndexBuffer(sphere.VertexIndices);
+			context.SetVertexBuffer(sphere.VertexPositions, 0);
+			context.SetVertexBuffer(sphere.VertexNormals, 1);
+			context.SetIndexBuffer(sphere.VertexIndices);
 
             vs_c0.Update(Matrix4x4(world * viewing * projection));
             ps_c0.Update(Matrix4x4(world));
@@ -146,10 +152,10 @@ void main()
             ps_shader.SetConstantBuffer(ps_c1, 1);
             ps_shader.SetConstantBuffer(ps_c2, 2);
 
-            device.DrawIndexed(sphere.VertexIndices.count, 0);
+			context.DrawIndexed(sphere.VertexIndices.count, 0);
         }
 
-        device.Present();
+		context.Present();
 
         r += 0.01f;
     };
