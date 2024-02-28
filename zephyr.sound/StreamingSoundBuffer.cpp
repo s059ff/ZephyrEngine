@@ -1,6 +1,6 @@
 #include <dsound.h>
 
-#include "vorbis/vorbisfile.h"
+#include <vorbis/vorbisfile.h>
 
 #include "zephyr.filesystem\File.h"
 #include "zephyr.filesystem\Path.h"

@@ -1,5 +1,3 @@
-#include <d3d11.h>
-
 #include "zephyr\runtime_assert.h"
 
 namespace zephyr
