@@ -228,18 +228,18 @@ public class BallComponent : EntityComponent
 
     private void RenderDepthMap()
     {
-        GraphicsDevice device = GraphicsDevice.Instance;
-        device.SetBlendState(NoBlend);
-        device.SetRasterizerState(CullingOff);
-        device.SetDepthStencilState(ZTestOn);
-        device.SetVertexLayout(VertexLayout);
-        device.SetVertexShader(VertexShader);
-        device.SetPixelShader(PixelShader0);
+        GraphicsDeviceContext context = GraphicsDeviceContext.Instance;
+        context.SetBlendState(NoBlend);
+        context.SetRasterizerState(CullingOff);
+        context.SetDepthStencilState(ZTestOn);
+        context.SetVertexLayout(VertexLayout);
+        context.SetVertexShader(VertexShader);
+        context.SetPixelShader(PixelShader0);
 
-        device.SetPrimitiveTopology(GraphicsModel.Topology);
-        device.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
-        device.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
-        device.SetIndexBuffer(GraphicsModel.VertexIndices);
+        context.SetPrimitiveTopology(GraphicsModel.Topology);
+        context.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
+        context.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
+        context.SetIndexBuffer(GraphicsModel.VertexIndices);
 
         var world = this.Owner.Get<TransformComponent>().Matrix;
         var viewing_light = Entity.Find("light").Get<TransformComponent>().Matrix.Inverse;
@@ -250,23 +250,23 @@ public class BallComponent : EntityComponent
         PixelShader0.SetConstantBuffer(world, 0);
         PixelShader0.SetConstantBuffer(Color, 1);
 
-        device.DrawIndexed(GraphicsModel.VertexIndices.Count);
+        context.DrawIndexed(GraphicsModel.VertexIndices.Count);
     }
 
     private void Render()
     {
-        GraphicsDevice device = GraphicsDevice.Instance;
-        device.SetBlendState(NoBlend);
-        device.SetRasterizerState(CullingOff);
-        device.SetDepthStencilState(ZTestOn);
-        device.SetVertexLayout(VertexLayout);
-        device.SetVertexShader(VertexShader);
-        device.SetPixelShader(PixelShader1);
+        GraphicsDeviceContext context = GraphicsDeviceContext.Instance;
+        context.SetBlendState(NoBlend);
+        context.SetRasterizerState(CullingOff);
+        context.SetDepthStencilState(ZTestOn);
+        context.SetVertexLayout(VertexLayout);
+        context.SetVertexShader(VertexShader);
+        context.SetPixelShader(PixelShader1);
 
-        device.SetPrimitiveTopology(GraphicsModel.Topology);
-        device.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
-        device.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
-        device.SetIndexBuffer(GraphicsModel.VertexIndices);
+        context.SetPrimitiveTopology(GraphicsModel.Topology);
+        context.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
+        context.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
+        context.SetIndexBuffer(GraphicsModel.VertexIndices);
 
         var world = this.Owner.Get<TransformComponent>().Matrix;
         var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
@@ -284,6 +284,6 @@ public class BallComponent : EntityComponent
         PixelShader1.SetSamplerState(SamplerState0, 0);
         PixelShader1.SetSamplerState(SamplerState1, 1);
 
-        device.DrawIndexed(GraphicsModel.VertexIndices.Count);
+        context.DrawIndexed(GraphicsModel.VertexIndices.Count);
     }
 }

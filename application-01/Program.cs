@@ -13,15 +13,13 @@ class Program
 
     static void Main(string[] args)
     {
-#if DEBUG
-        chdir("../../../");
-#endif
-
         var window = new Window();
         window.Create("Graphics + Collision Test", 1024, 768);
 
         var device = GraphicsDevice.Instance;
         device.Create(window);
+
+        var context = GraphicsDeviceContext.Instance;
 
         DepthMap.CreateDepthMap(1024, 1024);
 
@@ -31,17 +29,17 @@ class Program
 
             Entity.BroadcastMessage(UpdateMessage);
 
-            device.SetRenderTargetAndDepthStencil(null, DepthMap);
-            device.SetViewport(1024, 1024);
-            device.Clear(new Color(0, 0, 0, 0));
+            context.SetRenderTargetAndDepthStencil(null, DepthMap);
+            context.SetViewport(1024, 1024);
+            context.Clear(new Color(0, 0, 0, 0));
             Entity.BroadcastMessage(RenderDepthMapMessage);
 
-            device.ResetRenderTargetAndDepthStencil();
-            device.SetViewport(1024, 768);
-            device.Clear(ColorCode.Black);
+            context.ResetRenderTargetAndDepthStencil();
+            context.SetViewport(1024, 768);
+            context.Clear(ColorCode.Black);
             Entity.BroadcastMessage(RenderMessage);
             Entity.BroadcastMessage(TranslucentRenderMessage);
-            device.Present();
+            context.Present();
 
             if (pressed(KeyCode.Escape))
                 window.Close();
@@ -51,7 +49,7 @@ class Program
 
         window.Destroyed += () =>
         {
-            device.UnbindAllResources();
+            context.UnbindAllResources();
             Entity.Clear();
             DepthMap.Dispose();
             ResourceManager.CleanUp();

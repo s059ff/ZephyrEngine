@@ -72,18 +72,18 @@ class WallComponent : EntityComponent
 
     void Render()
     {
-        GraphicsDevice device = GraphicsDevice.Instance;
-        device.SetBlendState(Addition);
-        device.SetRasterizerState(CullingOn);
-        device.SetDepthStencilState(ZTestOnWriteOff);
-        device.SetVertexLayout(VertexLayout);
-        device.SetVertexShader(VertexShader);
-        device.SetPixelShader(PixelShader);
+        GraphicsDeviceContext context = GraphicsDeviceContext.Instance;
+        context.SetBlendState(Addition);
+        context.SetRasterizerState(CullingOn);
+        context.SetDepthStencilState(ZTestOnWriteOff);
+        context.SetVertexLayout(VertexLayout);
+        context.SetVertexShader(VertexShader);
+        context.SetPixelShader(PixelShader);
 
-        device.SetPrimitiveTopology(GraphicsModel.Topology);
-        device.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
-        device.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
-        device.SetVertexBuffer(GraphicsModel.VertexTextureCoords, 2);
+        context.SetPrimitiveTopology(GraphicsModel.Topology);
+        context.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
+        context.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
+        context.SetVertexBuffer(GraphicsModel.VertexTextureCoords, 2);
 
         var world = this.Owner.Get<TransformComponent>().Matrix;
         var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
@@ -99,6 +99,6 @@ class WallComponent : EntityComponent
         PixelShader.SetTexture(GraphicsModel.Texture, 0);
         PixelShader.SetTexture(Program.DepthMap, 1);
 
-        device.Draw(4);
+        context.Draw(4);
     }
 }

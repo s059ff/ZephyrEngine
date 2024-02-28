@@ -49,8 +49,6 @@ class Program
 
     static void Main(string[] args)
     {
-        chdir("../../../");
-
         Window window = new Window();
         window.Create("application-03", (int)DisplayWidth, (int)DisplayHeight);
 

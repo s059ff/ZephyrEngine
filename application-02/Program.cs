@@ -19,10 +19,6 @@ class Program
 
     static void Main(string[] args)
     {
-#if DEBUG
-        chdir("../../../");
-#endif
-
         Window window = new Window();
         window.Create("application-02", (int)DisplayWidth, (int)DisplayHeight);
 
