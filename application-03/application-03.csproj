@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>application-03</RootNamespace>
     <AssemblyName>application-03</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -161,9 +162,9 @@
       <Project>{99ca7df9-19be-4ae4-a454-c64096ca9335}</Project>
       <Name>ZephyrSharp.GameSystem</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZephyrSharp.Graphics.D3D11\ZephyrSharp.Graphics.D3D11.vcxproj">
-      <Project>{640762f9-b444-4574-a757-565a104e0f14}</Project>
-      <Name>ZephyrSharp.Graphics.D3D11</Name>
+    <ProjectReference Include="..\ZephyrSharp.Graphics.DX11\ZephyrSharp.Graphics.DX11.vcxproj">
+      <Project>{2be099b4-7b8b-452e-a861-745c896028e4}</Project>
+      <Name>ZephyrSharp.Graphics.DX11</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZephyrSharp.Graphics\ZephyrSharp.Graphics.vcxproj">
       <Project>{8b2006f7-69de-482c-906f-5e38b4ec6adf}</Project>
