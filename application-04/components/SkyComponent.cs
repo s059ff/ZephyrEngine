@@ -73,7 +73,7 @@ public class SkyComponent : CustomEntityComponent
     {
         base.OnAttach();
 
-        var scale = Entity.Find("gamespace").Get<GameSpaceComponent>().AreaLength * sqrt(2);
+        var scale = Entity.Find("gamespace").Get<GameSpaceComponent>().SpaceLength * sqrt(2);
         this.Owner.Get<TransformComponent>().Matrix.Scale(scale);
     }
 

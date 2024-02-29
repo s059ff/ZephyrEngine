@@ -46,7 +46,7 @@ public class GroundComponent : CustomEntityComponent
     {
         base.OnAttach();
 
-        var scale = Entity.Find("gamespace").Get<GameSpaceComponent>().AreaLength;
+        var scale = Entity.Find("gamespace").Get<GameSpaceComponent>().SpaceLength;
         this.Owner.Get<TransformComponent>().Matrix.RotateX(deg2rad(90));
         this.Owner.Get<TransformComponent>().Matrix.Scale(scale);
 

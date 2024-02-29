@@ -1,9 +1,9 @@
 ﻿public class GameSpaceComponent : CustomEntityComponent
 {
-    public GameSpaceComponent(float areaLength)
+    public GameSpaceComponent(float spaceLength)
     {
-        this.AreaLength = areaLength;
+        this.SpaceLength = spaceLength;
     }
 
-    public readonly float AreaLength;
+    public readonly float SpaceLength;
 }
