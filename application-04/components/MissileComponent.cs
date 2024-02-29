@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.Collision;
+using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
@@ -12,7 +12,6 @@ public class MissileComponent : CustomEntityComponent
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
     static GraphicsModel GraphicsModel = new GraphicsModel();
-    static readonly Vector3 JetPos = new Vector3(0, 0, -1.770481f);
 
     //const float Weight = 50.0f;
     const float Weight = 20.0f;
@@ -28,6 +27,7 @@ public class MissileComponent : CustomEntityComponent
     const float LockableAngleRange = 60.0f;
     const float LockableDistanceRange = 3000.0f;
     const float Damage = 0.5f;
+    public Vector3 EngineNozzlePos { get; private set; } = new Vector3(0, 0, -1.770481f);
 
     public Entity TargetEntity { get; set; }
     public bool Locking { get; private set; }
@@ -115,7 +115,7 @@ public class MissileComponent : CustomEntityComponent
                 #region コンポーネント取り付け
                 {
                     if (!this.Owner.Has<JetComponent>())
-                        this.Owner.Attach<JetComponent>().OffsetPosition = JetPos;
+                        this.Owner.Attach<JetComponent>().OffsetPosition = EngineNozzlePos;
 
                     if (!this.Owner.Has<MissileSmokeComponent>())
                         this.Owner.Attach<MissileSmokeComponent>();
