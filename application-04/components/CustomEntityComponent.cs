@@ -1,4 +1,4 @@
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
 using static GameScript;
@@ -45,7 +45,19 @@ public class CustomEntityComponent : EntityComponent
     protected CollisionComponent Collision { get; private set; }
 
     protected Matrix4x4 WorldMatrix { get { return new Matrix4x4(Transform.Matrix); } }
-    protected Matrix4x4 ViewingMatrix { get { return CustomCameraComponent.ViewingMatrix; } }
-    protected Matrix4x4 ProjectionMatrix { get { return CustomProjectorComponent.ProjectionMatrix; } }
+    protected Matrix4x4 ViewingMatrix
+    {
+        get
+        {
+            return new Matrix4x4(Entity.Find("camera").Get<CameraComponent>().ViewingMatrix);
+        }
+    }
+    protected Matrix4x4 ProjectionMatrix
+    {
+        get
+        {
+            return Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
+        }
+    }
     protected Matrix4x4 WVPMatrix { get { return WorldMatrix * ViewingMatrix * ProjectionMatrix; } }
 }

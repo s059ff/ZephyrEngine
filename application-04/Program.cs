@@ -93,7 +93,6 @@ class Program
         camera.Name = "camera";
         camera.Attach(new TransformComponent());
         camera.Attach(new CameraComponent());
-        camera.Attach(new CustomCameraComponent());
         camera.Attach(new SoundObserverComponent() { EffectRange = 10000, SonicSpeed = SonicSpeed * 2 });
         camera.Attach(new TransformControlComponent());
 
@@ -105,7 +104,6 @@ class Program
         Entity projector = Entity.Instantiate();
         projector.Name = "projector";
         projector.Attach(new ProjectorComponent());
-        projector.Attach(new CustomProjectorComponent());
         projector.Get<ProjectorComponent>().SetPerspectiveMode(PI / 3, DisplayAspect, 1.0f, 4096.0f);
 
         Entity projector2d = Entity.Instantiate();
