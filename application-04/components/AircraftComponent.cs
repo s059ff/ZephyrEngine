@@ -63,7 +63,8 @@ public class AircraftComponent : CustomEntityComponent
     public bool Visible = true;
     public float Opacity = 0;
 
-    float Power = 0.5f;
+    float EnginePower = 0.5f;
+    const float EnginePowerThreshold = 0.9f;
     float Stability = 1.0f;
     float GunReloadTime = 0;
     List<Entity> GunFlushs = new List<Entity>();
@@ -393,12 +394,19 @@ public class AircraftComponent : CustomEntityComponent
 
     void Update()
     {
-        this.DesiredPower = clamp(this.DesiredPower, 0.5f, 1);
-        this.Power = close(this.Power, this.DesiredPower, 0.004f);
+        this.DesiredPower = clamp(this.DesiredPower, 0.5f, 1.0f);
+        this.EnginePower = close(this.EnginePower, this.DesiredPower, 0.004f);
+
+        float vibrationScale = 0.8f / (1.0f - EnginePowerThreshold) * (this.EnginePower - EnginePowerThreshold) + 0.2f;
+        vibrationScale = max(vibrationScale, 0.2f);
+        float vx = normal(0.0f, vibrationScale);
+        float vy = normal(0.0f, vibrationScale);
+        float vz = normal(0.0f, vibrationScale);
+        this.Physics.Force += new Vector3(vx, vy, vz);
 
         Physics.Mass = this.Weight;
         Physics.InertiaMoment = this.InertiaMoment;
-        Physics.Force += Transform.Forward * (this.Thrust * this.Power * max(1.0f, (this.Power - 0.9f) * 10.0f * 1.5f));
+        Physics.Force += Transform.Forward * (this.Thrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
 
         for (int i = 0; i < WeaponCount; i++)
         {
@@ -422,7 +430,7 @@ public class AircraftComponent : CustomEntityComponent
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.EdgePos));
         }
 
-        this.Owner.Get<JetComponent>().Power = this.Power;
+        this.Owner.Get<JetComponent>().Power = this.EnginePower;
 
         if (this.Armor == 0)
         {
@@ -456,7 +464,7 @@ public class AircraftComponent : CustomEntityComponent
         #region サウンドの設定
         {
             if (this.Owner.Name == "player")
-                this.Owner.Get<SoundComponent>().VolumeFactor = square(this.Power);
+                this.Owner.Get<SoundComponent>().VolumeFactor = square(this.EnginePower);
             else
                 this.Owner.Get<SoundComponent>().VolumeFactor = 1.0f;
         }
