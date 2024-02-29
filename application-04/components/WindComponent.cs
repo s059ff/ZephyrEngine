@@ -154,8 +154,9 @@ public class WindComponent : CustomEntityComponent
         {
             var instance = Instances[i];
             InstanceWVPs.Write(i, instance.Matrix * ViewingMatrix * ProjectionMatrix);
-
-            float alpha = 0.15f * instance.Time;
+            
+            // 速度に応じて濃度を濃くする
+            float alpha = 0.15f * instance.Time * max(this.Physics.Velocity.Magnitude - 3.0f, 0.0f);
             InstanceAlphas.Write(i, alpha);
         }
         InstanceAlphas.Unlock();
