@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -80,7 +80,7 @@ public class UIComponent : CustomEntityComponent
 
         var transform = player.Get<TransformComponent>();
         var physics = player.Get<PhysicsComponent>();
-        var target = player.Get<AIComponent>().TargetEntity;
+        var target = player.Get<AircraftAvionicsComponent>().TargetEntity;
 
         bool lockonAlert = false;
         bool missileAlert = false;
@@ -321,7 +321,7 @@ public class UIComponent : CustomEntityComponent
             #region ターゲットマーカー
             Entity.ForEach((e) =>
             {
-                if (e.Has<AIComponent>() && e.Get<AircraftComponent>().Armor > 0 && e.Name != "player")
+                if (e.Has<AircraftAvionicsComponent>() && e.Get<AircraftComponent>().Armor > 0 && e.Name != "player")
                 {
                     var missile = player.Get<AircraftComponent>().ActiveMissile;
                     {
@@ -341,7 +341,7 @@ public class UIComponent : CustomEntityComponent
                                 translate(x * DisplayAspect, y);
                                 scale(0.06f);
 
-                                if (e.Get<AIComponent>().Group == Enemy)
+                                if (e.Get<AircraftAvionicsComponent>().Organization == Enemy)
                                 {
                                     if ((missile != null) && (missile.TargetEntity == e))
                                     {
@@ -517,9 +517,9 @@ public class UIComponent : CustomEntityComponent
 
                 Entity.ForEach((e) =>
                 {
-                    if (e.Has<AIComponent>() && (e.Name != "player"))
+                    if (e.Has<AircraftAvionicsComponent>() && (e.Name != "player"))
                     {
-                        color((e.Get<AIComponent>().Group == Friend) ? Blue : Red);
+                        color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? Blue : Red);
 
                         if (!((e == target) && (frame % 60 < 30)))
                         {
@@ -627,16 +627,16 @@ public class UIComponent : CustomEntityComponent
 
                 Entity.ForEach((e) =>
                 {
-                    if (e.Has<AIComponent>())
+                    if (e.Has<AircraftAvionicsComponent>())
                     {
                         if (!((target == e) && (frame % 60 < 30)))
                         {
-                            color((e.Get<AIComponent>().Group == Friend) ? (e.Name == "player") ? Green : Blue : Red);
+                            color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? (e.Name == "player") ? Green : Blue : Red);
 
                             var transform2 = e.Get<TransformComponent>();
                             Matrix4x3 matrix = transform2.Matrix;
                             Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
-                            point /= Entity.Find("gamespace").Get<GameSpaceComponent>().AreaLength * 0.5f;
+                            point /= Entity.Find("gamespace").Get<GameSpaceComponent>().SpaceLength * 0.5f;
                             if (point.Magnitude <= 1.0f)
                             {
                                 Vector2 point2D;

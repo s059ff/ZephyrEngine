@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
@@ -154,47 +154,34 @@ class Program
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
-            entity.Attach(new JetComponent());
             entity.Attach(new AircraftComponent());
-            entity.Attach(new AIComponent(Friend));
-            entity.Attach(new PlayerComponent());
-            entity.Attach(new SquadronComponent("Chezard"));
+            entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
+            entity.Attach(new AircraftAvionicsComponent(Friend));
+            entity.Attach(new SquadronComponent("Gargoyle"));
+            entity.Attach(new PlayerPilotComponent());
+            entity.Attach(new WindComponent());
+
             entity.Get<TransformComponent>().Position = new Vector3(0, 2000, -2000);
             entity.Get<SoundComponent>().LoopPlay();
-            entity.Attach(new WindComponent());
         }
 
+        for (int i = 0; i < 2; i++)
         {
             Entity entity = Entity.Instantiate();
-            entity.Name = "friend1";
+            entity.Name = string.Format("friend{0}", i + 1);
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
+            entity.Attach(new AircraftComponent());
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
-            entity.Attach(new AircraftComponent());
-            entity.Attach(new AIComponent(Friend));
-            entity.Attach(new SquadronComponent("Chezard"));
-            entity.Attach(new NPCAIComponent());
-            entity.Get<TransformComponent>().Position = new Vector3(-20, 2000, -2000);
-            entity.Get<SoundComponent>().LoopPlay();
-        }
+            entity.Attach(new AircraftAvionicsComponent(Friend));
+            entity.Attach(new SquadronComponent("Gargoyle"));
+            entity.Attach(new NonPlayerPilotComponent());
 
-        {
-            //Entity entity = Entity.Instantiate();
-            //entity.Name = "friend2";
-            //entity.Attach(new TransformComponent());
-            //entity.Attach(new PhysicsComponent());
-            //entity.Attach(new CollisionComponent());
-            //entity.Attach(new JetComponent());
-            //entity.Attach(new SoundComponent(JetSound));
-            //entity.Attach(new AircraftComponent());
-            //entity.Attach(new AIComponent(Friend));
-            //entity.Attach(new SquadronComponent("Chezard"));
-            //entity.Attach(new NPCAIComponent());
-            //entity.Get<TransformComponent>().Position = new Vector3(20, 2000, -2000);
-            //entity.Get<SoundComponent>().LoopPlay();
+            entity.Get<TransformComponent>().Position = new Vector3(normal(0, 100), normal(2000, 100), normal(-2000, 100));
+            entity.Get<SoundComponent>().LoopPlay();
         }
 
         for (int i = 0; i < 4; i++)
@@ -204,12 +191,13 @@ class Program
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
+            entity.Attach(new AircraftComponent());
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
-            entity.Attach(new AircraftComponent());
-            entity.Attach(new AIComponent(Enemy));
+            entity.Attach(new AircraftAvionicsComponent(Enemy));
             entity.Attach(new SquadronComponent("Cyclops"));
-            entity.Attach(new NPCAIComponent());
+            entity.Attach(new NonPlayerPilotComponent());
+
             entity.Get<TransformComponent>().Matrix.RotateX(uniform(-PI, PI));
             entity.Get<TransformComponent>().Matrix.RotateY(uniform(-PI, PI));
             entity.Get<TransformComponent>().Matrix.RotateZ(uniform(-PI, PI));

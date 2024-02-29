@@ -1,25 +1,12 @@
-﻿using System;
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
 using static EngineScript;
 using static GameScript;
 
-public class PlayerComponent : CustomEntityComponent
+class PlayerPilotComponent : AbstractPilotComponent
 {
-    float GazeKeyPressedTime = 0;
-
-    int ReleasedFrameDown = 0;
-
-    bool HUDView = false;
-
-    float TrackingLatency = 12;
-
-    float AngleOffsetX, AngleOffsetY;
-
-    bool EnableCameraManualTransform = false;
-
     protected override void ReceiveMessage(object message, object argument)
     {
         base.ReceiveMessage(message, argument);
@@ -37,9 +24,9 @@ public class PlayerComponent : CustomEntityComponent
 
     private void Update()
     {
-        var myself = Owner;
-        var aircraft = Owner.Get<AircraftComponent>();
-        var ai = Owner.Get<AIComponent>();
+        var self = this.Owner;
+        var aircraft = this.Owner.Get<AircraftComponent>();
+        var avionics = this.Owner.Get<AircraftAvionicsComponent>();
 
         if (pressed(KeyCode.Q))
         {
@@ -67,9 +54,9 @@ public class PlayerComponent : CustomEntityComponent
             aircraft.Pitch(-1.0f);
         }
 
-        if (pressed(KeyCode.Left) && pressed(KeyCode.Right) && ai.HasTarget())
+        if (pressed(KeyCode.Left) && pressed(KeyCode.Right) && avionics.HasTarget())
         {
-            aircraft.AutoPilot(GunBulletComponent.ComputeOptimalAimPosition(this.Owner, ai.TargetEntity));
+            aircraft.AutoPilot(GunBulletComponent.ComputeOptimalAimPosition(this.Owner, avionics.TargetEntity));
         }
         if (pressed(KeyCode.Z))
         {
@@ -89,14 +76,10 @@ public class PlayerComponent : CustomEntityComponent
         }
         if (!pressed(KeyCode.LeftCtrl) && !pressed(KeyCode.RightCtrl))
         {
-            if (nowpressed(KeyCode.W))
-            {
-                ai.ResetTarget();
-            }
             if (nowreleased(KeyCode.S))
             {
                 if (GazeKeyPressedTime < 1.0f)
-                    ai.ChangeTarget();
+                    avionics.ChangeTarget();
             }
             if (nowreleased(KeyCode.A))
             {
@@ -178,9 +161,9 @@ public class PlayerComponent : CustomEntityComponent
         }
         else
         {
-            if (ai.TargetEntity != null)
+            if (avionics.TargetEntity != null)
             {
-                camera.GazingPoint = ai.TargetEntity.Get<TransformComponent>().Position;
+                camera.GazingPoint = avionics.TargetEntity.Get<TransformComponent>().Position;
                 camera.EnableGazing = (1.0f < GazeKeyPressedTime);
             }
             else
@@ -235,4 +218,16 @@ public class PlayerComponent : CustomEntityComponent
             camera.TrackingLatency = (int)TrackingLatency;
         }
     }
+
+    float GazeKeyPressedTime = 0;
+
+    int ReleasedFrameDown = 0;
+
+    bool HUDView = false;
+
+    const float TrackingLatency = 12;
+
+    float AngleOffsetX, AngleOffsetY;
+
+    bool EnableCameraManualTransform = false;
 }

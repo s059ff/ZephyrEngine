@@ -577,12 +577,14 @@ public class AircraftComponent : CustomEntityComponent
                 this.Owner.Get<TimerComponent>().Ticked += this.Destroy;
             }
 
-            if (this.Owner.Has<AIComponent>())
-                this.Owner.Detach<AIComponent>();
+            if (this.Owner.Has<AircraftAvionicsComponent>())
+                this.Owner.Detach<AircraftAvionicsComponent>();
             if (this.Owner.Has<SquadronComponent>())
                 this.Owner.Detach<SquadronComponent>();
-            if (this.Owner.Has<NPCAIComponent>())
-                this.Owner.Detach<NPCAIComponent>();
+            //if (this.Owner.Has<PlayerAIComponent>())
+            //    this.Owner.Detach<PlayerAIComponent>();
+            //if (this.Owner.Has<NonPlayerAIComponent>())
+            //    this.Owner.Detach<NonPlayerAIComponent>();
         }
     }
 
@@ -706,7 +708,7 @@ public class AircraftComponent : CustomEntityComponent
                 e.Get<TransformComponent>().Matrix = Transform.Matrix;
                 e.Get<TransformComponent>().Matrix.Translate(this.Weapons[i].WeaponPos);
                 e.Get<PhysicsComponent>().Velocity = Physics.Velocity;
-                e.Get<MissileComponent>().TargetEntity = (this.Owner.Has<AIComponent>()) ? this.Owner.Get<AIComponent>().TargetEntity : null;
+                e.Get<MissileComponent>().TargetEntity = (this.Owner.Has<AircraftAvionicsComponent>()) ? this.Owner.Get<AircraftAvionicsComponent>().TargetEntity : null;
             }
         }
         #endregion
