@@ -134,7 +134,7 @@ class Program
         {
             float x = tuple.Item1 - 0.5f;
             float z = tuple.Item2 - 0.5f;
-            var length = Entity.Find("gamespace").Get<GameSpaceComponent>().AreaLength;
+            var length = Entity.Find("gamespace").Get<GameSpaceComponent>().SpaceLength;
             x *= length;
             z *= length;
             float y = normal(1000, 100);

@@ -83,14 +83,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="components\AIComponent.cs" />
+    <Compile Include="components\AbstractPilotComponent.cs" />
+    <Compile Include="components\AircraftAvionicsComponent.cs" />
     <Compile Include="components\AircraftComponent.cs" />
     <Compile Include="components\AircraftFlameComponent.cs" />
     <Compile Include="components\AircraftSmokeComponent.cs" />
     <Compile Include="components\CameraComponent.cs" />
-    <Compile Include="components\CustomCameraComponent.cs" />
     <Compile Include="components\CustomEntityComponent.cs" />
-    <Compile Include="components\CustomProjectorComponent.cs" />
     <Compile Include="components\DebugComponent.cs" />
     <Compile Include="components\ExplosionComponent.cs" />
     <Compile Include="components\GameSpaceComponent.cs" />
@@ -98,10 +97,9 @@
     <Compile Include="components\GunBulletComponent.cs" />
     <Compile Include="components\GunFlushComponent.cs" />
     <Compile Include="components\LimitedLifeTimeComponent.cs" />
-    <Compile Include="components\VibrationComponent.cs" />
+    <Compile Include="components\NonPlayerPilotComponent.cs" />
+    <Compile Include="components\PlayerPilotComponent.cs" />
     <Compile Include="GameScript.cs" />
-    <Compile Include="components\NPCAIComponent.cs" />
-    <Compile Include="components\PlayerComponent.cs" />
     <Compile Include="components\SquadronComponent.cs" />
     <Compile Include="components\TimerComponent.cs" />
     <Compile Include="components\TransformControlComponent.cs" />
