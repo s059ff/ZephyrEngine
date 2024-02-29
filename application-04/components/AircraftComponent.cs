@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CsvHelper;
@@ -28,9 +28,9 @@ public class AircraftComponent : CustomEntityComponent
     readonly float Thrust;
     readonly Vector3 CanardPos;
     readonly Vector3 ElevatorPos;
-    readonly Vector3 EdgePos;
+    readonly Vector3 WingEdgePos;
     public readonly Vector3 CockpitPos;
-    readonly Vector3 JetPos;
+    public readonly Vector3 EngineNozzlePos;
     readonly Vector3 GunPos;
     readonly GraphicsModel Body = new GraphicsModel();
     readonly GraphicsModel LeftCanard = null;
@@ -83,14 +83,14 @@ public class AircraftComponent : CustomEntityComponent
         public float Weight;
         public float InertiaMoment;
         public float Thrust;
-        public Vector3 JetPos;
+        public Vector3 EngineNozzlePos;
         public Vector3 CanardPos;
         public Vector3 ElevatorPos;
         public Vector3 WeaponPos0;
         public Vector3 WeaponPos1;
         public Vector3 WeaponPos2;
         public Vector3 WeaponPos3;
-        public Vector3 EdgePos;
+        public Vector3 WingEdgePos;
         public Vector3 CockpitPos;
         public Vector3 GunPos;
     }
@@ -111,14 +111,14 @@ public class AircraftComponent : CustomEntityComponent
             Map(x => x.Weight).Index(1);
             Map(x => x.InertiaMoment).Index(2);
             Map(x => x.Thrust).Index(3);
-            Map(x => x.JetPos).Index(4).TypeConverter<CsvVector3Converter>();
+            Map(x => x.EngineNozzlePos).Index(4).TypeConverter<CsvVector3Converter>();
             Map(x => x.CanardPos).Index(5).TypeConverter<CsvVector3Converter>();
             Map(x => x.ElevatorPos).Index(6).TypeConverter<CsvVector3Converter>();
             Map(x => x.WeaponPos0).Index(7).TypeConverter<CsvVector3Converter>();
             Map(x => x.WeaponPos1).Index(8).TypeConverter<CsvVector3Converter>();
             Map(x => x.WeaponPos2).Index(9).TypeConverter<CsvVector3Converter>();
             Map(x => x.WeaponPos3).Index(10).TypeConverter<CsvVector3Converter>();
-            Map(x => x.EdgePos).Index(11).TypeConverter<CsvVector3Converter>();
+            Map(x => x.WingEdgePos).Index(11).TypeConverter<CsvVector3Converter>();
             Map(x => x.CockpitPos).Index(12).TypeConverter<CsvVector3Converter>();
             Map(x => x.GunPos).Index(13).TypeConverter<CsvVector3Converter>();
         }
@@ -161,7 +161,7 @@ public class AircraftComponent : CustomEntityComponent
         this.Thrust = settings.Thrust;
         this.CanardPos = settings.CanardPos;
         this.ElevatorPos = settings.ElevatorPos;
-        this.JetPos = settings.JetPos;
+        this.EngineNozzlePos = settings.EngineNozzlePos;
         for (int i = 0; i < WeaponCount; i++)
         {
             this.Weapons[i] = new Weapon();
@@ -175,7 +175,7 @@ public class AircraftComponent : CustomEntityComponent
         //this.Weapons[6].WeaponPos = settings.WeaponPos3;
         //this.Weapons[7].WeaponPos = reverseX(settings.WeaponPos3);
 
-        this.EdgePos = settings.EdgePos;
+        this.WingEdgePos = settings.WingEdgePos;
         this.CockpitPos = settings.CockpitPos;
         this.GunPos = settings.GunPos;
 
@@ -425,9 +425,9 @@ public class AircraftComponent : CustomEntityComponent
         if (this.Armor > 0)
         {
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = Transform.Matrix;
-            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.EdgePos);
+            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.WingEdgePos);
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = Transform.Matrix;
-            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.EdgePos));
+            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.WingEdgePos));
         }
 
         this.Owner.Get<JetComponent>().Power = this.EnginePower;
