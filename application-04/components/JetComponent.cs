@@ -141,6 +141,18 @@ public class JetComponent : CustomEntityComponent
         Texture.Create("res/texture/jet.dds", Accessibility.None);
     }
 
+    protected override void OnAttach()
+    {
+        base.OnAttach();
+
+        assert(this.Owner.Has<AircraftComponent>() || this.Owner.Has<MissileComponent>());
+
+        if (this.Owner.Has<AircraftComponent>())
+            this.OffsetPosition = this.Owner.Get<AircraftComponent>().EngineNozzlePos;
+        if (this.Owner.Has<MissileComponent>())
+            this.OffsetPosition = this.Owner.Get<MissileComponent>().EngineNozzlePos;
+    }
+
     protected override void ReceiveMessage(object message, object argument)
     {
         base.ReceiveMessage(message, argument);

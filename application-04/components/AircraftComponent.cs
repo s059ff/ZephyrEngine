@@ -246,8 +246,6 @@ public class AircraftComponent : CustomEntityComponent
         Collision.Group = 1;
         Collision.OtherGroups = 4;
         Collision.Collided += Collided;
-
-        this.Owner.Get<JetComponent>().OffsetPosition = this.JetPos;
     }
 
     private void Collided(Entity other, Vector3 point)
