@@ -92,8 +92,8 @@ namespace zephyr
             enum class CpuAccessibility
             {
                 None = 0,
-                Read = 0x20000L,
-                Write = 0x10000L,
+                Read = 0x20000L,	// D3D11_CPU_ACCESS_READ
+                Write = 0x10000L,	// D3D11_CPU_ACCESS_WRITE
                 ReadWrite = Read | Write
             };
 
