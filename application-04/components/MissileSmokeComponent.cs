@@ -146,29 +146,45 @@ public class MissileSmokeComponent : CustomEntityComponent
         PixelShader.SetSamplerState(Wrap, 0);
         PixelShader.SetTexture(Texture, 0);
 
-        InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
-        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
-
-        int k = 0;
-        foreach (var instance in Instances)
+        Matrix4x4[] matrices = new Matrix4x4[Instances.Count];
+        float[] alphas = new float[Instances.Count];
         {
-            Vector3 position = instance.Position;
-            float x = instance.Time;
-            float scale = clamp(-3 * sin(x) * log(x), 0, 1) * 15 + 10;
-            float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.15f;
+            int i = 0;
+            foreach (var instance in Instances)
+            {
+                Vector3 position = instance.Position;
+                float x = instance.Time;
+                float scale = clamp(-3 * sin(x) * log(x), 0, 1) * 15 + 10;
+                float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.15f;
 
-            var world = new Matrix4x3().Identity();
-            world.Translate(position * ViewingMatrix);
-            world.Scale(scale);
+                var world = new Matrix4x3().Identity();
+                world.Translate(position * ViewingMatrix);
+                world.Scale(scale);
 
-            InstanceWVPs.Write(k, world * ProjectionMatrix);
-            InstanceAlphas.Write(k, alpha);
+                matrices[i] = world * ProjectionMatrix;
+                alphas[i] = alpha;
 
-            k++;
+                i++;
+            }
         }
 
-        InstanceAlphas.Unlock();
+        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
+        {
+            for (int i = 0; i < Instances.Count; i++)
+            {
+                InstanceWVPs.Write(i, matrices[i]);
+            }
+        }
         InstanceWVPs.Unlock();
+
+        InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
+        {
+            for (int i = 0; i < Instances.Count; i++)
+            {
+                InstanceAlphas.Write(i, alphas[i]);
+            }
+        }
+        InstanceAlphas.Unlock();
 
         device.SetInstanceBuffer(InstanceAlphas, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);

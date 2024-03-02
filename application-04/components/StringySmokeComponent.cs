@@ -163,12 +163,12 @@ public class StringySmokeComponent : CustomEntityComponent
         PixelShader.SetSamplerState(Wrap, 0);
         PixelShader.SetTexture(Texture, 0);
 
-        InstanceColors.Lock(Accessibility.DynamicWriteOnly);
-        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
-
         var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
         var projection = Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
         var eye = Entity.Find("camera").Get<TransformComponent>().Position;
+
+        Matrix4x4[] matrices = new Matrix4x4[Nodes.Count];
+        Color[] colors = new Color[Nodes.Count];
 
         int k = 0;
         Vector3 position2 = Nodes.First.Value.Position;
@@ -194,19 +194,30 @@ public class StringySmokeComponent : CustomEntityComponent
                 world.Transform(matrix);
                 world.Scale(1, 2, (position1 - position2).Magnitude);
 
-                InstanceWVPs.Write(k, world * viewing * projection);
+                matrices[k] = world * viewing * projection;
 
                 //float alpha = clamp(exp(-square(node.Time - 0.5f) / 0.075f), 0, 1) * 0.75f;
                 float alpha = clamp(sin((1 - node.Time) * PI) - 0.05f, 0, 1) * (1 - node.Time);
                 //float alpha = 1.0f - node.Time;
-                InstanceColors.Write(k, new Color(alpha, alpha, alpha));
+                colors[k] = new Color(alpha, alpha, alpha);
             }
             k++;
             position2 = position1;
         }
 
-        InstanceColors.Unlock();
+        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
+        for (int i = 0; i < Nodes.Count; i++)
+        {
+            InstanceWVPs.Write(i, matrices[i]);
+        }
         InstanceWVPs.Unlock();
+
+        InstanceColors.Lock(Accessibility.DynamicWriteOnly);
+        for (int i = 0; i < Nodes.Count; i++)
+        {
+            InstanceColors.Write(i, colors[i]);
+        }
+        InstanceColors.Unlock();
 
         device.SetInstanceBuffer(InstanceColors, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);
