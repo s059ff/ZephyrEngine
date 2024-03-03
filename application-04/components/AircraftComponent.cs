@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CsvHelper;
@@ -425,8 +425,11 @@ public class AircraftComponent : CustomEntityComponent
         {
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.WingEdgePos);
+            this.LeftSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = Physics.AngularVelocity.Magnitude * 60;
+
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.WingEdgePos));
+            this.RightSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = Physics.AngularVelocity.Magnitude * 60;
         }
         #endregion
 

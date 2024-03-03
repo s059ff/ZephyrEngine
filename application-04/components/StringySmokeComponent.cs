@@ -10,21 +10,22 @@ using static GameScript;
 public class StringySmokeComponent : CustomEntityComponent
 {
     static VertexBuffer<Vector3> VertexPositions = new VertexBuffer<Vector3>();
-    static VertexBuffer<Vector2> VertexTextureCoords = new VertexBuffer<Vector2>();
+    static VertexBuffer<Vector4> VertexColors = new VertexBuffer<Vector4>();
     static InstanceBuffer<Color> InstanceColors = new InstanceBuffer<Color>();
     static InstanceBuffer<Matrix4x4> InstanceWVPs = new InstanceBuffer<Matrix4x4>();
     static VertexLayout VertexLayout = new VertexLayout();
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
-    static Texture2D Texture = new Texture2D();
 
-    const int InstanceCount = 128;
+    public float Intensity { private get; set; }
 
-    float CountSpeed = 0.004f;
+    const int InstanceCount = 256;
+    const float CountSpeed = 0.01f;
 
     class Node
     {
         public Vector3 Position;
+        public float Alpha;
         public float Time;
     }
 
@@ -34,18 +35,22 @@ public class StringySmokeComponent : CustomEntityComponent
     {
         VertexPositions.Create(new Vector3[]
         {
-            new Vector3(0, 1, 1),
-            new Vector3(0, 1, 0),
-            new Vector3(0, 0, 1),
-            new Vector3(0, 0, 0),
+            new Vector3(0.0f, +0.25f, 1.0f),
+            new Vector3(0.0f, +0.25f, 0.0f),
+            new Vector3(0.0f, 0.0f, 1.0f),
+            new Vector3(0.0f, 0.0f, 0.0f),
+            new Vector3(0.0f, -0.25f, 1.0f),
+            new Vector3(0.0f, -0.25f, 0.0f),
         }, Accessibility.None);
 
-        VertexTextureCoords.Create(new Vector2[]
+        VertexColors.Create(new Vector4[]
         {
-            new Vector2(0, 0),
-            new Vector2(1, 0),
-            new Vector2(0, 1),
-            new Vector2(1, 1),
+            new Vector4(0, 0, 0, 1),
+            new Vector4(0, 0, 0, 1),
+            new Vector4(1, 1, 1, 1),
+            new Vector4(1, 1, 1, 1),
+            new Vector4(0, 0, 0, 1),
+            new Vector4(0, 0, 0, 1),
         }, Accessibility.None);
 
         InstanceColors.Create(InstanceCount, Accessibility.DynamicWriteOnly);
@@ -57,15 +62,13 @@ public class StringySmokeComponent : CustomEntityComponent
         VertexLayout.Create(new VertexElement[]
         {
             new VertexElement("POSITION", 0, Format.Float3, 0, 0, VertexElement.Classification.VertexData, 0),
-            new VertexElement("TEXCOORD", 0, Format.Float2, 1, 0, VertexElement.Classification.VertexData, 0),
-            new VertexElement("COLOR", 0, Format.Float4, 2, 0, VertexElement.Classification.InstanceData, 1),
+            new VertexElement("VERTEX_COLOR", 0, Format.Float4, 1, 0, VertexElement.Classification.VertexData, 0),
+            new VertexElement("INSTANCE_COLOR", 0, Format.Float4, 2, 0, VertexElement.Classification.InstanceData, 1),
             new VertexElement("WVP", 0, Format.Float4, 3, sizeof(float) * 0, VertexElement.Classification.InstanceData, 1),
             new VertexElement("WVP", 1, Format.Float4, 3, sizeof(float) * 4, VertexElement.Classification.InstanceData, 1),
             new VertexElement("WVP", 2, Format.Float4, 3, sizeof(float) * 8, VertexElement.Classification.InstanceData, 1),
             new VertexElement("WVP", 3, Format.Float4, 3, sizeof(float) * 12, VertexElement.Classification.InstanceData, 1),
         }, VertexShader);
-
-        Texture.Create("res/texture/stringy_smoke.dds", Accessibility.None);
     }
 
     public StringySmokeComponent()
@@ -81,6 +84,7 @@ public class StringySmokeComponent : CustomEntityComponent
             Nodes.AddFirst(new Node()
             {
                 Position = this.Owner.Get<TransformComponent>().Position,
+                Alpha = 0,
                 Time = 0
             });
         }
@@ -112,16 +116,14 @@ public class StringySmokeComponent : CustomEntityComponent
 
     private void Update()
     {
-        if (frame % 3 == 0)
+        if (this.Owner.Has<TransformComponent>())
         {
-            if (this.Owner.Has<TransformComponent>())
+            Nodes.AddFirst(new Node()
             {
-                Nodes.AddFirst(new Node()
-                {
-                    Position = Transform.Position,
-                    Time = 0
-                });
-            }
+                Position = Transform.Position,
+                Alpha = clamp(this.Intensity, 0.0f, 1.0f),
+                Time = 0
+            });
         }
         if (this.Owner.Has<TransformComponent>())
         {
@@ -158,10 +160,7 @@ public class StringySmokeComponent : CustomEntityComponent
         device.SetPixelShader(PixelShader);
 
         device.SetVertexBuffer(VertexPositions, 0);
-        device.SetVertexBuffer(VertexTextureCoords, 1);
-
-        PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(Texture, 0);
+        device.SetVertexBuffer(VertexColors, 1);
 
         var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
         var projection = Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
@@ -196,9 +195,9 @@ public class StringySmokeComponent : CustomEntityComponent
 
                 matrices[k] = world * viewing * projection;
 
-                //float alpha = clamp(exp(-square(node.Time - 0.5f) / 0.075f), 0, 1) * 0.75f;
-                float alpha = clamp(sin((1 - node.Time) * PI) - 0.05f, 0, 1) * (1 - node.Time);
-                //float alpha = 1.0f - node.Time;
+                // 機体の少し後方から発生し, 時間経過で消えるように見せる
+                // 機体が旋回しているときは濃度を濃くする
+                float alpha = clamp(exp(-square(node.Time - 0.5f) / 0.075f), 0, 1) * 0.75f * node.Alpha;
                 colors[k] = new Color(alpha, alpha, alpha);
             }
             k++;
@@ -222,6 +221,6 @@ public class StringySmokeComponent : CustomEntityComponent
         device.SetInstanceBuffer(InstanceColors, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);
 
-        device.DrawInstanced(4, Nodes.Count - 1);
+        device.DrawInstanced(6, Nodes.Count - 1);
     }
 }

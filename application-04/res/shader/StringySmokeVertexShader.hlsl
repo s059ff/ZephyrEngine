@@ -2,8 +2,8 @@
 struct VSInput
 {
     float3 pos : POSITION;
-    float2 tex : TEXCOORD;
-    float4 color : COLOR;
+    float4 vertex_color : VERTEX_COLOR;
+    float4 instance_color : INSTANCE_COLOR;
     float4 wvp0 : WVP0;
     float4 wvp1 : WVP1;
     float4 wvp2 : WVP2;
@@ -13,7 +13,6 @@ struct VSInput
 struct VSOutput
 {
     float4 pos : SV_POSITION;
-    float2 tex : TEXCOORD;
     float4 color : COLOR;
 };
 
@@ -27,8 +26,7 @@ VSOutput main(VSInput input)
         wvp[2] = input.wvp2;
         wvp[3] = input.wvp3;
         output.pos = mul(float4(input.pos, 1), wvp);
-        output.tex = input.tex;
-        output.color = input.color;
+        output.color = input.vertex_color * input.instance_color;
     }
     return output;
 }
