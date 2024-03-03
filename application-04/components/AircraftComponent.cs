@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CsvHelper;
@@ -18,7 +18,7 @@ public class AircraftComponent : CustomEntityComponent
     static VertexLayout VertexLayout = new VertexLayout();
     static AircraftParameter[] AircraftParameters;
 
-    const float ReloadSpeed = 1.0f / 1200;
+    const float MissileReloadSpeed = 1.0f / 1200;
     const float GunReloadSpeed = 1.0f / 10;
     public const float Radius = 5.0f;
     public const int WeaponCount = 4;
@@ -57,27 +57,33 @@ public class AircraftComponent : CustomEntityComponent
     }
     public bool Locking { get { return (ActiveMissile != null) && (ActiveMissile.Locking); } }
     public float[] ReloadTimes { get { return this.Weapons.Select(w => w.ReloadTime).ToArray(); } }
-    public float DesiredPower { get; set; } = 0.5f;
     public float Armor { get; set; } = 1.0f;
-    public bool Firing { private get; set; } = false;
 
     public bool Visible = true;
     public float Opacity = 0;
 
-    float EnginePower = 0.5f;
+    public float EnginePower = 0.5f;
     const float EnginePowerThreshold = 0.9f;
-    float Stability = 1.0f;
     float GunReloadTime = 0;
     List<Entity> GunFlushs = new List<Entity>();
 
     class Weapon
     {
-        public float ReloadTime;
+        public float ReloadTime = 1.0f;
         public Vector3 WeaponPos;
         public Entity MissileEntity;
     }
     int NextUseWeapon = 0;
 
+    public float ThrottleInput { get; set; }
+    public float PitchInput { get; set; }
+    public float RollInput { get; set; }
+    public float YawInput { get; set; }
+    public bool MissileLaunchInput { get; set; }
+    public bool GunFireInput { get; set; }
+
+    public float TurningSpeed;
+    public float TurningRadius;
 
     public class AircraftParameter
     {
@@ -279,39 +285,6 @@ public class AircraftComponent : CustomEntityComponent
         this.NormalMapTexture.Dispose();
     }
 
-    public void Pitch(float power)
-    {
-        power = clamp(power, -1.0f, 1.0f);
-        if (power > 0) power = 0.5f * power;
-        float x = Physics.Velocity.Magnitude;
-        float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-        Physics.Torque += Transform.Rightward * 0.003f * power * this.Stability * k;
-    }
-
-    public void Roll(float power)
-    {
-        power = clamp(power, -1.0f, 1.0f);
-        float x = Physics.Velocity.Magnitude;
-        float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-        Physics.Torque += Transform.Forward * -0.025f * power * this.Stability * k;
-    }
-
-    public void Yaw(float power)
-    {
-        power = clamp(power, -1.0f, 1.0f);
-        float x = Physics.Velocity.Magnitude;
-        float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-        Physics.Torque += Transform.Upward * 0.00075f * power * this.Stability * k;
-    }
-
-    public void YawY(float power)
-    {
-        power = clamp(power, -1.0f, 1.0f);
-        float x = Physics.Velocity.Magnitude;
-        float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-        Physics.Torque += Transform.Rightward * 0.00075f * power * this.Stability * k;
-    }
-
     public void AutoPilot(Vector3 destination)
     {
         var p = destination * Transform.Matrix.Inverse;
@@ -321,20 +294,23 @@ public class AircraftComponent : CustomEntityComponent
         if ((deg2rad(20) < y) && (deg2rad(2) < z))
         {
             var power = clamp(y / 2, 0.2f, 1);
-            this.Roll(power * ((p.X > 0) ? 1 : -1));
+            this.RollInput = power * ((p.X > 0) ? 1 : -1);
+            this.PitchInput = 0.0f;
+            this.YawInput = 0.0f;
         }
         else
         {
-            this.Yaw((p.X > 0) ? 1 : -1);
+            this.RollInput = 0.0f;
+            this.YawInput = (p.X > 0) ? 1 : -1;
 
             if (deg2rad(5) < z)
             {
                 var power = clamp(z * 6, 0.5f, 1);
-                this.Pitch(power * ((p.Y > 0) ? -1 : 1));
+                this.PitchInput = power * ((p.Y > 0) ? -1 : 1);
             }
             else
             {
-                this.YawY((p.Y > 0) ? -1 : 1);
+                this.PitchInput = (p.Y > 0) ? -0.25f : 0.25f;
             }
         }
     }
@@ -355,79 +331,113 @@ public class AircraftComponent : CustomEntityComponent
         var p2 = target.Get<TransformComponent>().Position + time * target.Get<PhysicsComponent>().Velocity;
 
         if ((p2 - p1).SquaredMagnitude < square(Radius))
-            this.Fire();
-    }
-
-    public void Launch()
-    {
-        var weapon = this.Weapons[this.NextUseWeapon];
-        if (weapon.ReloadTime == 1.0f)
-        {
-            weapon.MissileEntity.Get<MissileComponent>().Launch();
-            weapon.MissileEntity.Attach(new SoundComponent(JetSound));
-            weapon.MissileEntity.Get<SoundComponent>().LoopPlay();
-            weapon.MissileEntity = null;
-            weapon.ReloadTime = 0;
-
-            NextUseWeapon = (NextUseWeapon + 1) % WeaponCount;
-        }
-    }
-
-    public void Fire()
-    {
-        this.Firing = true;
-    }
-
-    public void Avoid()
-    {
-        //this.Pitch(pow(this.Stability, 10) * -400.0f);
-        float x = Physics.Velocity.Magnitude;
-        float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-        Physics.Torque += Transform.Rightward * 0.003f * -400.0f * this.Stability * k;
-        this.Stability = 0;
+            this.GunFireInput = true;
     }
 
     void Update()
     {
-        this.DesiredPower = clamp(this.DesiredPower, 0.5f, 1.0f);
-        this.EnginePower = close(this.EnginePower, this.DesiredPower, 0.004f);
+        this.ThrottleInput = clamp(this.ThrottleInput, -1.0f, 1.0f);
+        this.PitchInput = clamp(this.PitchInput, -1.0f, 1.0f);
+        this.RollInput = clamp(this.RollInput, -1.0f, 1.0f);
+        this.YawInput = clamp(this.YawInput, -1.0f, 1.0f);
 
-        float vibrationScale = 0.8f / (1.0f - EnginePowerThreshold) * (this.EnginePower - EnginePowerThreshold) + 0.2f;
-        vibrationScale = max(vibrationScale, 0.2f);
-        float vx = normal(0.0f, vibrationScale);
-        float vy = normal(0.0f, vibrationScale);
-        float vz = normal(0.0f, vibrationScale);
-        this.Physics.Force += new Vector3(vx, vy, vz);
-
-        Physics.Mass = this.Weight;
-        Physics.InertiaMoment = this.InertiaMoment;
-        Physics.Force += Transform.Forward * (this.Thrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
-
-        for (int i = 0; i < WeaponCount; i++)
+        #region エンジン推力による前進
         {
-            this.Weapons[i].ReloadTime = min(this.Weapons[i].ReloadTime + ReloadSpeed, 1.0f);
+            this.EnginePower = clamp(this.EnginePower + 0.004f * this.ThrottleInput, 0.25f, 1.0f);
+            this.Physics.Mass = this.Weight;
+            this.Physics.InertiaMoment = this.InertiaMoment;
+            this.Physics.Force += this.Transform.Forward * (this.Thrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
+        }
+        #endregion
 
-            if (this.Weapons[i].ReloadTime >= 1.0f && this.Weapons[i].MissileEntity == null)
+        #region エンジン動作による振動
+        {
+            float vibrationScale = max(0.8f / (1.0f - EnginePowerThreshold) * (this.EnginePower - EnginePowerThreshold) + 0.2f, 0.2f);
+            float vx = normal(0.0f, vibrationScale);
+            float vy = normal(0.0f, vibrationScale);
+            float vz = normal(0.0f, vibrationScale);
+            this.Physics.Force += new Vector3(vx, vy, vz);
+        }
+        #endregion
+
+        #region ピッチ操作
+        {
+            float power = clamp(this.PitchInput, -1.0f, 1.0f);
+            if (power > 0) power = 0.5f * power;
+            float x = this.Physics.Velocity.Magnitude;
+            float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
+            this.Physics.Torque += this.Transform.Rightward * 0.003f * power * k;
+        }
+        #endregion
+
+        #region ロール操作
+        {
+            float power = clamp(this.RollInput, -1.0f, 1.0f);
+            float x = this.Physics.Velocity.Magnitude;
+            float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
+            this.Physics.Torque += this.Transform.Forward * -0.025f * power * k;
+        }
+        #endregion
+
+        #region ヨー操作
+        {
+            float power = clamp(this.YawInput, -1.0f, 1.0f);
+            float x = this.Physics.Velocity.Magnitude;
+            float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
+            this.Physics.Torque += this.Transform.Upward * 0.00075f * power * k;
+        }
+        #endregion
+
+        #region 旋回半径の計算
+        {
+            float w = (this.Physics.AngularVelocity * this.Transform.Matrix._Matrix3x3.Inverse).X;
+            this.TurningSpeed = w;
+            this.TurningRadius = this.Physics.Velocity.Magnitude / (tan(w) + 1e-8f);
+        }
+        #endregion
+
+        #region ミサイルのリロード
+        {
+            foreach (var weapon in this.Weapons)
             {
-                Entity e = Entity.Instantiate();
-                e.Attach(new TransformComponent());
-                e.Attach(new PhysicsComponent());
-                e.Attach(new MissileComponent(this.Owner));
-                this.Weapons[i].MissileEntity = e;
+                weapon.ReloadTime = close(weapon.ReloadTime, 1.0f, MissileReloadSpeed);
+
+                if (weapon.ReloadTime >= 1.0f && weapon.MissileEntity == null)
+                {
+                    Entity e = Entity.Instantiate();
+                    e.Attach(new TransformComponent());
+                    e.Attach(new PhysicsComponent());
+                    e.Attach(new MissileComponent(this.Owner));
+                    weapon.MissileEntity = e;
+                }
             }
         }
+        #endregion
 
+        #region 機関砲のリロード
+        {
+            this.GunReloadTime = close(this.GunReloadTime, 1.0f, GunReloadSpeed);
+        }
+        #endregion
+
+        #region 主翼端の風切りエフェクト更新
         if (this.Armor > 0)
         {
-            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = Transform.Matrix;
+            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.WingEdgePos);
-            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = Transform.Matrix;
+            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.WingEdgePos));
         }
+        #endregion
 
-        this.Owner.Get<JetComponent>().Power = this.EnginePower;
+        #region アフターバーナーのエフェクト更新
+        {
+            this.Owner.Get<JetComponent>().Power = this.EnginePower;
+        }
+        #endregion
 
-        if (this.Armor == 0)
+        #region ダメージ表現のための煙と炎
+        if (this.Armor <= 0.25f)
         {
             if (!this.Owner.Has<AircraftFlameComponent>())
                 this.Owner.Attach<AircraftFlameComponent>();
@@ -435,33 +445,49 @@ public class AircraftComponent : CustomEntityComponent
             if (!this.Owner.Has<AircraftSmokeComponent>())
                 this.Owner.Attach<AircraftSmokeComponent>();
         }
+        else
+        {
+            if (this.Owner.Has<AircraftFlameComponent>())
+                this.Owner.Detach<AircraftFlameComponent>();
 
-        if (0 < this.Armor)
-            this.Armor += 0.0002f;
+            if (this.Owner.Has<AircraftSmokeComponent>())
+                this.Owner.Detach<AircraftSmokeComponent>();
+        }
+        #endregion
 
-        this.Armor = clamp(this.Armor, 0, 1);
-
-        #region 耐久力が０のとき、地面に落下
+        #region 耐久値がなくなったとき, 地上に落下
         if (this.Armor == 0)
         {
-            this.DesiredPower = 0.6f;
+            this.PitchInput = 0.0f;
+            this.RollInput = 0.0f;
+            this.YawInput = 0.0f;
+            this.ThrottleInput = 0.0f;
+            this.MissileLaunchInput = false;
+            this.GunFireInput = false;
 
-            Vector3 axis = Transform.Rightward;
-            axis.Y = 0;
-            axis.Normalize();
-            axis *= 0.001f;
-            if (Transform.Upward.Y < 0)
-                axis *= -1;
-            Physics.Torque += axis;
+            {
+                Vector3 axis = new Vector3(this.Transform.Rightward.X, 0, this.Transform.Rightward.Z).Normalize();
+                Vector3 torque = 0.001f * axis * (0 < this.Transform.Upward.Y ? 1.0f : -1.0f);
+                this.Physics.Torque += torque;
+            }
+
+            {
+                Vector3 axis = this.Transform.Forward;
+                Vector3 torque = 0.05f * axis;
+                this.Physics.Torque += torque;
+            }
         }
         #endregion
 
         #region サウンドの設定
         {
-            if (this.Owner.Name == "player")
-                this.Owner.Get<SoundComponent>().VolumeFactor = square(this.EnginePower);
-            else
-                this.Owner.Get<SoundComponent>().VolumeFactor = 1.0f;
+            if (this.Owner.Has<SoundComponent>())
+            {
+                if (this.Owner.Name == "player")
+                    this.Owner.Get<SoundComponent>().VolumeFactor = square(this.EnginePower);
+                else
+                    this.Owner.Get<SoundComponent>().VolumeFactor = 1.0f;
+            }
         }
         #endregion
 
@@ -469,16 +495,16 @@ public class AircraftComponent : CustomEntityComponent
         {
             if (this.Owner.Name == "player")
             {
-                if (ActiveMissile != null)
+                if (this.ActiveMissile != null)
                 {
-                    if (ActiveMissile.Locking)
+                    if (this.ActiveMissile.Locking)
                     {
                         if (!LockonSound.Playing)
                             LockonSound.LoopPlay();
                     }
                     else
                     {
-                        if (ActiveMissile.Seeking)
+                        if (this.ActiveMissile.Seeking)
                         {
                             if ((frame % 30) < 15)
                             {
@@ -502,9 +528,7 @@ public class AircraftComponent : CustomEntityComponent
         }
         #endregion
 
-        this.Stability = clamp(this.Stability + 0.01f, 0, 1);
-
-        this.GunReloadTime = close(this.GunReloadTime, 1.0f, GunReloadSpeed);
+        this.Armor = clamp(this.Armor, 0, 1);
 
         #region マズルフラッシュの座標の更新
         {
@@ -519,8 +543,25 @@ public class AircraftComponent : CustomEntityComponent
         }
         #endregion
 
+        #region ミサイル操作
+        if (this.MissileLaunchInput)
+        {
+            var weapon = this.Weapons[this.NextUseWeapon];
+            if (weapon.ReloadTime == 1.0f)
+            {
+                weapon.MissileEntity.Get<MissileComponent>().Launch();
+                weapon.MissileEntity.Attach(new SoundComponent(JetSound));
+                weapon.MissileEntity.Get<SoundComponent>().LoopPlay();
+                weapon.MissileEntity = null;
+                weapon.ReloadTime = 0;
+
+                NextUseWeapon = (NextUseWeapon + 1) % WeaponCount;
+            }
+        }
+        #endregion
+
         #region 機銃発射
-        if (this.Firing)
+        if (this.GunFireInput)
         {
             if (this.GunReloadTime == 1)
             {
@@ -554,8 +595,6 @@ public class AircraftComponent : CustomEntityComponent
                 }
                 this.GunReloadTime = 0f;
             }
-
-            this.Firing = false;
         }
         #endregion
     }
@@ -576,10 +615,10 @@ public class AircraftComponent : CustomEntityComponent
                 this.Owner.Detach<AircraftAvionicsComponent>();
             if (this.Owner.Has<SquadronComponent>())
                 this.Owner.Detach<SquadronComponent>();
-            //if (this.Owner.Has<PlayerAIComponent>())
-            //    this.Owner.Detach<PlayerAIComponent>();
-            //if (this.Owner.Has<NonPlayerAIComponent>())
-            //    this.Owner.Detach<NonPlayerAIComponent>();
+            if (this.Owner.Has<PlayerPilotComponent>())
+                this.Owner.Detach<PlayerPilotComponent>();
+            if (this.Owner.Has<NonPlayerPilotComponent>())
+                this.Owner.Detach<NonPlayerPilotComponent>();
         }
     }
 
@@ -755,5 +794,8 @@ public class AircraftComponent : CustomEntityComponent
         Entity.Kill(this.Owner);
     }
 
-    static Vector3 reverseX(Vector3 v) { return new Vector3(-v.X, v.Y, v.Z); }
+    static Vector3 reverseX(Vector3 v)
+    {
+        return new Vector3(-v.X, v.Y, v.Z);
+    }
 }

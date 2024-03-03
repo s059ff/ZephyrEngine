@@ -72,6 +72,77 @@ public class GameScript
     public static int mouseDX, mouseDY, mouseDZ;
     static Keyboard _keyboard = new Keyboard();
     static Mouse _mouse = new Mouse();
+    static GamePad _gamepad = new DualShock4();
+
+    public enum GamePadButton
+    {
+        A,
+        B,
+        X,
+        Y,
+        LB,
+        RB,
+        LT,
+        RT,
+        LSB,
+        RSB,
+        Back,
+        Start,
+        Guide,
+    }
+
+    public abstract class GamePad : JoyStick
+    {
+        public ButtonState GetButtonState(GamePadButton button)
+        {
+            return base.GetButtonState(this.getButtonID(button));
+        }
+
+        public int GetPressTimeLength(GamePadButton button)
+        {
+            return base.GetPressTimeLength(this.getButtonID(button));
+        }
+
+        protected abstract int getButtonID(GamePadButton button);
+    }
+
+    public class DualShock4 : GamePad
+    {
+        protected override int getButtonID(GamePadButton button)
+        {
+            switch (button)
+            {
+                case GamePadButton.A:
+                    return 1;
+                case GamePadButton.B:
+                    return 2;
+                case GamePadButton.X:
+                    return 0;
+                case GamePadButton.Y:
+                    return 3;
+                case GamePadButton.LB:
+                    return 4;
+                case GamePadButton.RB:
+                    return 5;
+                case GamePadButton.LT:
+                    return 6;
+                case GamePadButton.RT:
+                    return 7;
+                case GamePadButton.LSB:
+                    return 10;
+                case GamePadButton.RSB:
+                    return 11;
+                case GamePadButton.Back:
+                    return 8;
+                case GamePadButton.Start:
+                    return 9;
+                case GamePadButton.Guide:
+                    return 12;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+    }
 
     public static ButtonState getkey(KeyCode code)
     {
@@ -96,6 +167,51 @@ public class GameScript
     public static bool nowreleased(KeyCode code)
     {
         return _keyboard.GetKeyState(code) == ButtonState.NowReleased;
+    }
+
+    public static bool nowpressed(GamePadButton button)
+    {
+        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.NowPressed : false;
+    }
+
+    public static bool pressed(GamePadButton button)
+    {
+        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.Pressed : false;
+    }
+
+    public static bool released(GamePadButton button)
+    {
+        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.Released : false;
+    }
+
+    public static bool nowreleased(GamePadButton button)
+    {
+        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.NowReleased : false;
+    }
+
+    public static int getPressTimeLength(KeyCode code)
+    {
+        return _keyboard.GetPressTimeLength(code);
+    }
+
+    public static int getPressTimeLength(GamePadButton button)
+    {
+        return _gamepad.IsConnected ? _gamepad.GetPressTimeLength(button) : 0;
+    }
+
+    public static Tuple<double, double> getAnalogStickAxis()
+    {
+        return _gamepad.IsConnected ? Tuple.Create(_gamepad.AxisX, _gamepad.AxisY) : Tuple.Create<double,double>(0, 0);
+    }
+
+    public static Tuple<double, double> getAnalogStickSubAxis()
+    {
+        return _gamepad.IsConnected ? Tuple.Create(_gamepad.SubAxisX, _gamepad.SubAxisY) : Tuple.Create<double,double>(0, 0);
+    }
+
+    public static bool isConnectedGamePad()
+    {
+        return _gamepad.IsConnected;
     }
 
     public static bool click()
@@ -289,6 +405,7 @@ public class GameScript
     {
         _keyboard.Update();
         _mouse.Update();
+        _gamepad.Update();
 
         mouseX = _mouse.X;
         mouseY = _mouse.Y;
