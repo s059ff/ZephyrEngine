@@ -2,24 +2,23 @@
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
-using static EngineScript;
 using static GameScript;
 
-public class DebugComponent : CustomEntityComponent
+public class DebugMarkerComponent : CustomEntityComponent
 {
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
     static GraphicsModel GraphicsModel = new GraphicsModel();
 
-    static DebugComponent()
+    static DebugMarkerComponent()
     {
-        VertexShader.CreateFromFile("res/shader/DebugVertexShader.hlsl");
-        PixelShader.CreateFromFile("res/shader/DebugPixelShader.hlsl");
+        VertexShader.CreateFromFile("res/shader/DebugMarkerVertexShader.hlsl");
+        PixelShader.CreateFromFile("res/shader/DebugMarkerPixelShader.hlsl");
 
         VertexLayout.Create(new VertexElement[]
         {
-                new VertexElement("POSITION", 0, Format.Float3, 0, 0, VertexElement.Classification.VertexData, 0),
+            new VertexElement("POSITION", 0, Format.Float3, 0, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
 
         GraphicsModel.CreateSphere(16, 16);
