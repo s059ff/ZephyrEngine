@@ -40,12 +40,19 @@ namespace zephyr
             /// ボタンの状態を取得します。
             /// </summary>
             /// <param name="id">ボタンの ID 。</param>
-            ButtonState GetButtonState(int id);
+            ButtonState GetButtonState(int id) const;
+
+			/// <summary>
+			/// ボタンの長押し時間を取得します。
+			/// </summary>
+			/// <param name="id">ボタンの ID 。</param>
+			/// <returns>ボタンが押されて続けているフレーム数。</returns>
+			int GetPressTimeLength(int id) const;
 
             /// <summary>
             /// ボタンの状態を取得します。
             /// </summary>
-            ButtonState operator [](int id)
+            ButtonState operator [](int id) const
             {
                 return this->GetButtonState(id);
             }
@@ -100,7 +107,7 @@ namespace zephyr
             /// <summary>
             /// コントローラが接続されているか調べます。
             /// </summary>
-            bool isConnected();
+            bool isConnected() const;
 
             /// <summary>
             /// アナログスティックのデッドゾーンの大きさを 0 から 1 の範囲で指定します。
@@ -125,6 +132,9 @@ namespace zephyr
 
             // 直前のボタンの状態
             array<byte, ButtonCount> prevButtonState;
+
+			// ボタンが押されている合計時間
+			array<int, ButtonCount> pressTimeLength;
 
             // 現在のPOVスイッチの状態
             bool povLeft, povRight, povUp, povDown;

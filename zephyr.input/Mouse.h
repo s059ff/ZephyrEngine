@@ -84,7 +84,7 @@ namespace zephyr
             /// <summary>
             /// マウスが接続されているか調べます。
             /// </summary>
-            bool isConnected();
+            bool isConnected() const;
 
         private:
 

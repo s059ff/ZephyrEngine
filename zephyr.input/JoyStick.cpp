@@ -173,6 +173,15 @@ namespace zephyr
                         this.buttonState[i] = state.rgbButtons[i];
                     }
 
+					for (int i = 0; i < ButtonCount; i++)
+					{
+						// ’·‰Ÿ‚µ‚µ‚Ä—£‚µ‚½ó‘Ô‚àŒŸ’m‚Å‚«‚é‚æ‚¤‚É‚·‚é (T < pressTime && NowReleased)
+						if (0 < (this.prevButtonState[i] & 0x80))
+							this.pressTimeLength[i]++;
+						else
+							this.pressTimeLength[i] = 0;
+					}
+
                     this.axisX = getFormatedAxisValue(state.lX, this.DeadZone);
                     this.axisY = getFormatedAxisValue(-state.lY, this.DeadZone);
 
@@ -206,14 +215,19 @@ namespace zephyr
             }
         }
 
-        ButtonState JoyStick::GetButtonState(int id)
+        ButtonState JoyStick::GetButtonState(int id) const
         {
             bool now = (this.buttonState[id]& 0x80) > 0;
             bool pre = (this.prevButtonState[id]& 0x80) > 0;
             return getButtonState(now, pre);
         }
 
-        bool JoyStick::isConnected()
+		int JoyStick::GetPressTimeLength(int id) const
+		{
+			return this.pressTimeLength[id];
+		}
+
+        bool JoyStick::isConnected() const
         {
             JOYINFO info;
             return joyGetPos(0,&info) == JOYERR_NOERROR;

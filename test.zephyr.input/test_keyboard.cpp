@@ -92,7 +92,8 @@ void test_keyboard()
         {
             auto name = keyCode.first;
             auto state = keyboard.GetKeyState(keyCode.second);
-            println(std::cout, "{0} = {1}", name, to_string(state));
+			auto time = keyboard.GetPressTimeLength(keyCode.second);
+            println(std::cout, "{0} = {1} ({2})", name, to_string(state), time);
         }
 
         Sleep(1000);

@@ -5,34 +5,34 @@ namespace zephyr
     namespace input
     {
         /// <summary>
-        /// ƒ{ƒ^ƒ“‚Ìó‘Ô‚ð•\‚µ‚Ü‚·B
+        /// ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìï¿½Ô‚ï¿½\ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
         /// </summary>
         enum class ButtonState
         {
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í—£‚³‚ê‚Ä‚¢‚Ü‚·B
+            /// ï¿½{ï¿½^ï¿½ï¿½ï¿½Í—ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B
             /// </summary>
             Released,
 
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í‰Ÿ‚³‚ê‚Ä‚¢‚Ü‚·B
+            /// ï¿½{ï¿½^ï¿½ï¿½ï¿½Í‰ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B
             /// </summary>
             Pressed,
 
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í¡—£‚³‚ê‚Ü‚µ‚½B
+            /// ï¿½{ï¿½^ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B
             /// </summary>
             NowReleased,
 
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í¡‰Ÿ‚³‚ê‚Ü‚µ‚½B
+            /// ï¿½{ï¿½^ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B
             /// </summary>
             NowPressed
         };
 
         namespace
         {
-            // ƒ{ƒ^ƒ“‚Ìó‘Ô‚ðŽæ“¾‚·‚é
+            // ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìï¿½Ô‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
             inline ButtonState getButtonState(bool now, bool prev)
             {
                 if (now)

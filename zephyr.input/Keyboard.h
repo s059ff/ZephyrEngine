@@ -41,7 +41,14 @@ namespace zephyr
             /// </summary>
             /// <param name="key">キーコード。</param>
             /// <returns>キーの状態。</returns>
-            ButtonState GetKeyState(KeyCode key);
+            ButtonState GetKeyState(KeyCode key) const;
+
+			/// <summary>
+			/// キーの長押し時間を取得します。
+			/// </summary>
+			/// <param name="key">キーコード。</param>
+			/// <returns>キーが押されて続けているフレーム数。</returns>
+			int GetPressTimeLength(KeyCode key) const;
 
             /// <summary>
             /// キーの状態を取得します。
@@ -74,6 +81,9 @@ namespace zephyr
 
             // キーボードの状態
             array<byte, KeyCount> keyState;
+
+			// キーが押されている合計時間
+			array<int, KeyCount> pressTimeLength;
         };
     }
 }

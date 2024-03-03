@@ -32,6 +32,16 @@ namespace ZephyrSharp
                 return (ButtonState)Native->GetButtonState(id);
             }
 
+			/// <summary>
+			/// ボタンの長押し時間を取得します。
+			/// </summary>
+			/// <param name="id">ボタンの ID 。</param>
+			/// <returns>ボタンが押されて続けているフレーム数。</returns>
+			int GetPressTimeLength(int id)
+			{
+				return Native->GetPressTimeLength(id);
+			}
+
             /// <summary>
             /// ボタンの状態を取得します。
             /// </summary>

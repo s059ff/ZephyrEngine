@@ -33,6 +33,16 @@ namespace ZephyrSharp
                 return (ButtonState)Native->GetKeyState((zephyr::input::KeyCode)key);
             }
 
+			/// <summary>
+			/// キーの長押し時間を取得します。
+			/// </summary>
+			/// <param name="key">キーコード。</param>
+			/// <returns>キーが押されて続けているフレーム数。</returns>
+			int GetPressTimeLength(KeyCode key)
+			{
+				return Native->GetPressTimeLength((zephyr::input::KeyCode)key);
+			}
+
             /// <summary>
             /// キーの状態を取得します。
             /// </summary>

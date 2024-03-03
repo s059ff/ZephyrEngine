@@ -130,7 +130,7 @@ namespace zephyr
             return getButtonState(this.center, this.prevCenter);
         }
 
-        bool Mouse::isConnected()
+        bool Mouse::isConnected() const
         {
             return GetSystemMetrics(SM_MOUSEPRESENT) != 0;
         }
