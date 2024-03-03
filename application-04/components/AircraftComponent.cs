@@ -16,6 +16,7 @@ public class AircraftComponent : CustomEntityComponent
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
+    static AircraftParameter[] AircraftParameters;
 
     const float ReloadSpeed = 1.0f / 1200;
     const float GunReloadSpeed = 1.0f / 10;
@@ -77,7 +78,8 @@ public class AircraftComponent : CustomEntityComponent
     }
     int NextUseWeapon = 0;
 
-    public class AircraftSettings
+
+    public class AircraftParameter
     {
         public string Name;
         public float Weight;
@@ -103,9 +105,9 @@ public class AircraftComponent : CustomEntityComponent
         }
     }
 
-    public sealed class AircraftSettingsMap : CsvHelper.Configuration.ClassMap<AircraftSettings>
+    public sealed class AircraftParameterClassMap : ClassMap<AircraftParameter>
     {
-        public AircraftSettingsMap()
+        public AircraftParameterClassMap()
         {
             Map(x => x.Name).Index(0);
             Map(x => x.Weight).Index(1);
@@ -137,47 +139,42 @@ public class AircraftComponent : CustomEntityComponent
             new VertexElement("TANGENT", 0, Format.Float3, 3, 0, VertexElement.Classification.VertexData, 0),
             new VertexElement("BINORMAL", 0, Format.Float3, 4, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
-    }
 
-    public AircraftComponent()
-    {
-        AircraftSettings settings = null;
-
-        using (var csv = new CsvHelper.CsvReader(new StreamReader("res/data/aircrafts.csv")))
+        using (var csv = new CsvReader(new StreamReader("res/data/aircrafts.csv")))
         {
             csv.Configuration.HasHeaderRecord = true;
-            csv.Configuration.RegisterClassMap<AircraftSettingsMap>();
+            csv.Configuration.RegisterClassMap<AircraftParameterClassMap>();
             csv.Configuration.Delimiter = "\t";
-            var records = csv.GetRecords<AircraftSettings>();
-            foreach (var record in records)
-            {
-                settings = record;
-            }
+            AircraftParameters = csv.GetRecords<AircraftParameter>().ToArray();
         }
+    }
 
-        this.Name = settings.Name.Replace(' ', '_');
-        this.Weight = settings.Weight;
-        this.InertiaMoment = settings.InertiaMoment;
-        this.Thrust = settings.Thrust;
-        this.CanardPos = settings.CanardPos;
-        this.ElevatorPos = settings.ElevatorPos;
-        this.EngineNozzlePos = settings.EngineNozzlePos;
+    public AircraftComponent(string aircraftName)
+    {
+        var parameters = AircraftParameters.Where((parameter) => parameter.Name == aircraftName).First();
+        this.Name = parameters.Name.Replace(' ', '_');
+        this.Weight = parameters.Weight;
+        this.InertiaMoment = parameters.InertiaMoment;
+        this.Thrust = parameters.Thrust;
+        this.CanardPos = parameters.CanardPos;
+        this.ElevatorPos = parameters.ElevatorPos;
+        this.EngineNozzlePos = parameters.EngineNozzlePos;
         for (int i = 0; i < WeaponCount; i++)
         {
             this.Weapons[i] = new Weapon();
         }
-        this.Weapons[0].WeaponPos = settings.WeaponPos0;
-        this.Weapons[1].WeaponPos = reverseX(settings.WeaponPos0);
-        this.Weapons[2].WeaponPos = settings.WeaponPos1;
-        this.Weapons[3].WeaponPos = reverseX(settings.WeaponPos1);
-        //this.Weapons[4].WeaponPos = settings.WeaponPos2;
-        //this.Weapons[5].WeaponPos = reverseX(settings.WeaponPos2);
-        //this.Weapons[6].WeaponPos = settings.WeaponPos3;
-        //this.Weapons[7].WeaponPos = reverseX(settings.WeaponPos3);
+        this.Weapons[0].WeaponPos = parameters.WeaponPos0;
+        this.Weapons[1].WeaponPos = reverseX(parameters.WeaponPos0);
+        this.Weapons[2].WeaponPos = parameters.WeaponPos1;
+        this.Weapons[3].WeaponPos = reverseX(parameters.WeaponPos1);
+        //this.Weapons[4].WeaponPos = parameters.WeaponPos2;
+        //this.Weapons[5].WeaponPos = reverseX(parameters.WeaponPos2);
+        //this.Weapons[6].WeaponPos = parameters.WeaponPos3;
+        //this.Weapons[7].WeaponPos = reverseX(parameters.WeaponPos3);
 
-        this.WingEdgePos = settings.WingEdgePos;
-        this.CockpitPos = settings.CockpitPos;
-        this.GunPos = settings.GunPos;
+        this.WingEdgePos = parameters.WingEdgePos;
+        this.CockpitPos = parameters.CockpitPos;
+        this.GunPos = parameters.GunPos;
 
         this.Body.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_Body.cx", this.Name));
         if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Name)))

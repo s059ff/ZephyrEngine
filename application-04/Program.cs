@@ -151,7 +151,7 @@ class Program
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
-            entity.Attach(new AircraftComponent());
+            entity.Attach(new AircraftComponent("FA-22_Raptor"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(Friend));
@@ -170,7 +170,7 @@ class Program
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
-            entity.Attach(new AircraftComponent());
+            entity.Attach(new AircraftComponent("FA-22_Raptor"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(Friend));
@@ -188,7 +188,7 @@ class Program
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
-            entity.Attach(new AircraftComponent());
+            entity.Attach(new AircraftComponent("Su-37_Terminator"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(Enemy));
