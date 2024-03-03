@@ -366,7 +366,7 @@ public class UIComponent : CustomEntityComponent
                                 write(e.Get<AircraftComponent>().Name + "\n" + distance);
 
                                 translate(0, -2);
-                                write(e.Get<SquadronComponent>().SquadronName + " " + (e.Get<SquadronComponent>().Number + 1));
+                                write(e.Get<SquadronComponent>().SquadronName + " " + (e.Get<SquadronComponent>().UnitNumber + 1));
                             }
                             popMatrix();
                         }

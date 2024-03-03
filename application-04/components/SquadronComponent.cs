@@ -12,39 +12,43 @@ public class SquadronComponent : CustomEntityComponent
         public int count = 0;
     }
 
-    static Dictionary<string, SquadronInfo> Squadrons = new Dictionary<string, SquadronInfo>();
+    static Dictionary<string, SquadronInfo> SquadronTable = new Dictionary<string, SquadronInfo>();
 
-    public Entity SquadronLeader { get { return Squadrons[this.SquadronName].entities[0]; } }
+    public Entity SquadronLeader { get { return SquadronTable[this.SquadronName].entities[0]; } }
 
     public readonly string SquadronName;
-    public int Number;
+    public int UnitNumber;
+
+    const int InvalidUnitNumber = -1;
 
     public SquadronComponent(string squadronName)
     {
         this.SquadronName = squadronName;
+        this.UnitNumber = InvalidUnitNumber;
     }
 
     protected override void OnAttach()
     {
         base.OnAttach();
 
-        if (!Squadrons.ContainsKey(this.SquadronName))
+        if (!SquadronTable.ContainsKey(this.SquadronName))
         {
-            Squadrons.Add(this.SquadronName, new SquadronInfo());
+            SquadronTable.Add(this.SquadronName, new SquadronInfo());
         }
-        this.Number = Squadrons[this.SquadronName].count++;
+        var squadronInfo = SquadronTable[this.SquadronName];
 
-        var squadronsEntities = Squadrons[this.SquadronName].entities;
-        if (squadronsEntities.Length <= this.Number)
-            Array.Resize(ref squadronsEntities, squadronsEntities.Length * 2);
-        squadronsEntities[this.Number] = Owner;
+        this.UnitNumber = squadronInfo.count++;
+        squadronInfo.entities[this.UnitNumber] = this.Owner;
     }
 
     protected override void OnDetach()
     {
         base.OnDetach();
 
-        Squadrons[this.SquadronName].entities[this.Number] = null;
-        this.Number = -1;
+        var squadronInfo = SquadronTable[this.SquadronName];
+        squadronInfo.entities[this.UnitNumber] = null;
+        squadronInfo.count--;
+
+        this.UnitNumber = InvalidUnitNumber;
     }
 }
