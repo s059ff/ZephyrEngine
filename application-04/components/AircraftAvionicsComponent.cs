@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
 using static EngineScript;
@@ -53,7 +53,7 @@ class AircraftAvionicsComponent : CustomEntityComponent
 
     public bool HasTarget()
     {
-        return this.targetEntity != null;
+        return this.TargetEntity != null;
     }
 
     const float DistanceThreshold = 4000.0f;
