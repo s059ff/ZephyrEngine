@@ -414,28 +414,33 @@ public class UIComponent : CustomEntityComponent
             }
             #endregion
 
-#if false
-            #region デバッグゾーン
+            #region デバッグ用
             {
-                var viewing = ViewingMatrix;
-                var projection = ProjectionMatrix;
-                var v2 = new Vector4(PlayerComponent.AimPoint, 1) * viewing * projection;
+                color(Green);
 
-                if (0 <= v2.W)
+                pushMatrix();
                 {
-                    pushMatrix();
-                    {
-                        translate(new Vector2(v2.X / v2.W * DisplayAspect, v2.Y / v2.W));
-                        scale(0.1f);
+                    translate(-1.6f, 1.0f, 0.0f);
+                    scale(0.05f);
 
-                        color(Red);
-                        draw(GunReticleTexture);
-                    }
-                    popMatrix();
+                    write($"EnginePower: {aircraft.EnginePower}");
+                    translate(0.0f, -1.0f, 0.0f);
+
+                    write($"Velocity: {physics.Velocity.Magnitude * 60} m/s");
+                    translate(0.0f, -1.0f, 0.0f);
+
+                    write($"AngularVelocity: {physics.AngularVelocity.Magnitude * 60} rad/s");
+                    translate(0.0f, -1.0f, 0.0f);
+
+                    write($"TurningSpeed: {aircraft.TurningSpeed * 60} rad/s");
+                    translate(0.0f, -1.0f, 0.0f);
+
+                    write($"TurningRadius: {aircraft.TurningRadius} m");
+                    translate(0.0f, -1.0f, 0.0f);
                 }
+                popMatrix();
             }
             #endregion  
-#endif
 
             #region シーカー
             {
