@@ -332,8 +332,6 @@ public class UIComponent : CustomEntityComponent
                         Vector4 v = new Vector4(Vector3.Zero, 1) * world * viewing * projection;
                         if (0 <= v.W && v.W <= SearchOperationRange)
                         {
-                            int distance = (int)(transform.Position - e.Get<TransformComponent>().Position).Magnitude;
-
                             pushMatrix();
                             {
                                 var x = v.X / v.W;
@@ -343,15 +341,17 @@ public class UIComponent : CustomEntityComponent
 
                                 if (e.Get<AircraftAvionicsComponent>().Organization == Enemy)
                                 {
-                                    if ((missile != null) && (missile.TargetEntity == e))
+                                    if ((missile != null) && (missile.TargetEntity == e) && (missile.Locking))
                                     {
-                                        color(missile.Locking ? Red : Green);
-                                        if (missile.Locking || (frame % 60 < 30))
-                                        {
-                                            draw(TargetTexture);
-                                        }
+                                        color(Red);
+                                        draw(TargetTexture);
                                     }
-                                    else
+                                    else if ((target == e) && (frame % 30 < 15))
+                                    {
+                                        color(Green);
+                                        draw(TargetTexture);
+                                    }
+                                    else if (target != e)
                                     {
                                         color(Green);
                                         draw(TargetTexture);
@@ -363,10 +363,18 @@ public class UIComponent : CustomEntityComponent
                                     draw(TargetTexture);
                                 }
 
-                                write(e.Get<AircraftComponent>().Name + "\n" + distance);
+                                translate(0.5f, 0);
+                                scale(0.75f);
+                                string text = string.Format(
+                                        "{0}\n{1}",
+                                        e.Get<AircraftComponent>().Name,
+                                        e.Get<SquadronComponent>().SquadronName + " " + (e.Get<SquadronComponent>().UnitNumber + 1)
+                                    );
+                                write(text, TextAlignment.Left, TextAlignment.Bottom);
 
-                                translate(0, -2);
-                                write(e.Get<SquadronComponent>().SquadronName + " " + (e.Get<SquadronComponent>().UnitNumber + 1));
+                                float distance = (transform.Position - e.Get<TransformComponent>().Position).Magnitude;
+                                string text2 = string.Format("{0}", (int)distance);
+                                write(text2, TextAlignment.Left, TextAlignment.Top);
                             }
                             popMatrix();
                         }
