@@ -121,12 +121,12 @@ public class UIComponent : CustomEntityComponent
             {
                 pushMatrix();
                 {
-                    translate(-1.0f, 0.75f, 0.0f);
+                    translate(0.0f, -0.75f, 0.0f);
 
                     pushMatrix();
                     {
-                        scale(0.08f);
-                        write(string.Format("{0:p}", aircraft.Armor), TextAlignment.Center, TextAlignment.Center);
+                        scale(0.06f);
+                        write(string.Format("{0:p0}", aircraft.Armor), TextAlignment.Center, TextAlignment.Center);
                     }
                     popMatrix();
                 }
@@ -146,7 +146,7 @@ public class UIComponent : CustomEntityComponent
                     pushMatrix();
                     {
                         translate(-0.15f, 0.0f, 0.0f);
-                        scale(0.08f);
+                        scale(0.06f);
                         write(floor(velocity).ToString().PadLeft(4), TextAlignment.Center, TextAlignment.Center);
                     }
                     popMatrix();
@@ -170,7 +170,7 @@ public class UIComponent : CustomEntityComponent
                     pushMatrix();
                     {
                         translate(0.15f, 0.0f, 0.0f);
-                        scale(0.08f);
+                        scale(0.06f);
                         write(floor(altitude).ToString().PadLeft(4), TextAlignment.Center, TextAlignment.Center);
                     }
                     popMatrix();
