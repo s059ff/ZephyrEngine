@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -80,7 +80,7 @@ public class UIComponent : CustomEntityComponent
 
         var transform = player.Get<TransformComponent>();
         var physics = player.Get<PhysicsComponent>();
-        var target = player.Get<AircraftAvionicsComponent>().TargetEntity;
+        var target = player.Get<AircraftAvionicsComponent>()?.TargetEntity;
 
         bool lockonAlert = false;
         bool missileAlert = false;
