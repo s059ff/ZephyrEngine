@@ -1,4 +1,4 @@
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -339,7 +339,8 @@ public class UIComponent : CustomEntityComponent
                                 translate(x * DisplayAspect, y);
                                 scale(0.06f);
 
-                                if (e.Get<AircraftAvionicsComponent>().Organization == Enemy)
+                                var organization = e.Get<AircraftAvionicsComponent>().Organization;
+                                if (organization == Enemy)
                                 {
                                     if ((missile != null) && (missile.TargetEntity == e) && (missile.Locking))
                                     {
@@ -362,6 +363,8 @@ public class UIComponent : CustomEntityComponent
                                     color(Blue);
                                     draw(TargetTexture);
                                 }
+
+                                color(organization == Friend ? Blue : Green);
 
                                 translate(0.5f, 0);
                                 scale(0.75f);
