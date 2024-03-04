@@ -1,4 +1,4 @@
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -413,34 +413,6 @@ public class UIComponent : CustomEntityComponent
                 }
             }
             #endregion
-
-            #region デバッグ用
-            {
-                color(Green);
-
-                pushMatrix();
-                {
-                    translate(-1.6f, 1.0f, 0.0f);
-                    scale(0.05f);
-
-                    write($"EnginePower: {aircraft.EnginePower}");
-                    translate(0.0f, -1.0f, 0.0f);
-
-                    write($"Velocity: {physics.Velocity.Magnitude * 60} m/s");
-                    translate(0.0f, -1.0f, 0.0f);
-
-                    write($"AngularVelocity: {physics.AngularVelocity.Magnitude * 60} rad/s");
-                    translate(0.0f, -1.0f, 0.0f);
-
-                    write($"TurningSpeed: {aircraft.TurningSpeed * 60} rad/s");
-                    translate(0.0f, -1.0f, 0.0f);
-
-                    write($"TurningRadius: {aircraft.TurningRadius} m");
-                    translate(0.0f, -1.0f, 0.0f);
-                }
-                popMatrix();
-            }
-            #endregion  
 
             #region シーカー
             {

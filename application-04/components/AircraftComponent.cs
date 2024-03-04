@@ -82,9 +82,6 @@ public class AircraftComponent : CustomEntityComponent
     public bool MissileLaunchInput { get; set; }
     public bool GunFireInput { get; set; }
 
-    public float TurningSpeed;
-    public float TurningRadius;
-
     public class AircraftParameter
     {
         public string Name;
@@ -385,14 +382,6 @@ public class AircraftComponent : CustomEntityComponent
             float x = this.Physics.Velocity.Magnitude;
             float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
             this.Physics.Torque += this.Transform.Upward * 0.00075f * power * k;
-        }
-        #endregion
-
-        #region 旋回半径の計算
-        {
-            float w = (this.Physics.AngularVelocity * this.Transform.Matrix._Matrix3x3.Inverse).X;
-            this.TurningSpeed = w;
-            this.TurningRadius = this.Physics.Velocity.Magnitude / (tan(w) + 1e-8f);
         }
         #endregion
 
