@@ -118,7 +118,7 @@ class PlayerPilotComponent : AbstractPilotComponent
 
         camera.AngleOffset = new Matrix3x3().Identity().RotateY(AngleOffsetY).RotateX(AngleOffsetX);
 
-        if (!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D))
+        if (!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D) || nowpressed(GamePadButton.RSB))
         {
             HUDView = !HUDView;
         }

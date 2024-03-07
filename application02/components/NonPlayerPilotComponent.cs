@@ -25,6 +25,7 @@ class NonPlayerPilotComponent : AbstractPilotComponent
     private void Update()
     {
         var aircraft = this.Owner.Get<AircraftComponent>();
-        aircraft.AutoPilot(new Vector3(0, 2000, 0));
+        aircraft.AutoPilot();
+        aircraft.AutoAttack();
     }
 }

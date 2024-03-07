@@ -1,4 +1,5 @@
-﻿using ZephyrSharp.GameSystem;
+﻿using System.Collections.Generic;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -25,6 +26,10 @@ public class UIComponent : CustomEntityComponent
     float NoticeDisplayTime = 0;
     string NoticeMessage = string.Empty;
 
+#if DEBUG
+    public Dictionary<string, string> DebugMessages = new Dictionary<string, string>();
+#endif
+
     static UIComponent()
     {
         CourseTexture.Create("res/texture/course.png", Accessibility.None);
@@ -47,8 +52,18 @@ public class UIComponent : CustomEntityComponent
 
         switch (message as string)
         {
+            case UpdateMessage:
+                this.Update();
+#if DEBUG
+                this.DebugUpdate();
+#endif
+                break;
+
             case DrawMessage:
                 this.Draw();
+#if DEBUG
+                this.DebugDraw();
+#endif
                 break;
 
             case "notice":
@@ -66,6 +81,26 @@ public class UIComponent : CustomEntityComponent
         base.OnDestroy();
 
         AlertSound.Stop();
+    }
+
+    private void Update() { }
+
+    private void DebugUpdate()
+    {
+        int friendCount = 0, enemeyCount = 0;
+        Entity.ForEach((e) =>
+        {
+            if (e.Has<AircraftComponent>() && e.Has<AircraftAvionicsComponent>())
+            {
+                var avionics = e.Get<AircraftAvionicsComponent>();
+                if (avionics.Organization == Friend)
+                    friendCount++;
+                if (avionics.Organization == Enemy)
+                    enemeyCount++;
+            }
+        });
+        this.DebugMessages["friend_count"] = friendCount.ToString();
+        this.DebugMessages["enemy_count"] = enemeyCount.ToString();
     }
 
     private void Draw()
@@ -110,6 +145,7 @@ public class UIComponent : CustomEntityComponent
             Color Black = new Color(0, 0, 0, 0.8f);
             Color Yellow = new Color(0.6f, 0.6f, 0, 0.8f);
             Color Green = new Color(0, 0.8f, 0, 0.8f);
+            Color DarkGray = new Color(0.1f, 0.1f, 0.1f, 0.8f);
 
             identity();
 
@@ -582,13 +618,13 @@ public class UIComponent : CustomEntityComponent
                             switch (i)
                             {
                                 case 0: translate(-0.75f, 0); break;
-                                case 1: translate(0.75f, 0); break;
+                                case 1: translate(+0.75f, 0); break;
                                 case 2: translate(-1.75f, -0.25f); break;
-                                case 3: translate(1.75f, -0.25f); break;
+                                case 3: translate(+1.75f, -0.25f); break;
                                 case 4: translate(-2.75f, -0.5f); break;
-                                case 5: translate(2.75f, -0.5f); break;
+                                case 5: translate(+2.75f, -0.5f); break;
                                 case 6: translate(-3.75f, -0.75f); break;
-                                case 7: translate(3.75f, -0.75f); break;
+                                case 7: translate(+3.75f, -0.75f); break;
                             }
                             color(time == 1 ? Green : Red);
                             drawThreshold(ReloadTimeTexture, 0, 1 - time, 1.0f, 1.0f);
@@ -698,6 +734,29 @@ public class UIComponent : CustomEntityComponent
             }
             #endregion
         }
+    }
+
+    private void DebugDraw()
+    {
+        Color Green = new Color(0.0f, 0.8f, 0.0f, 0.8f);
+
+        identity();
+
+        blend(HalfAddition);
+        color(Green);
+
+        pushMatrix();
+        {
+            translate(-1.6f, 1.0f, 0.0f);
+            scale(0.05f);
+
+            foreach (var message in this.DebugMessages)
+            {
+                write($"{message.Key}: {message.Value}");
+                translate(0.0f, -1.0f, 0.0f);
+            }
+        }
+        popMatrix();
     }
 
     public void ChangeRadarRange()

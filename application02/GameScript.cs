@@ -45,8 +45,8 @@ public class GameScript
     public const int Enemy = 1;
 
     public const float SearchOperationRange = 4000;
-    public const float DisplayWidth = 1280;
-    public const float DisplayHeight = 720;
+    public const float DisplayWidth = 1920;
+    public const float DisplayHeight = 1080;
     public const bool FullScreen = false;
     public const float DisplayAspect = DisplayWidth / DisplayHeight;
     #endregion

@@ -1,3 +1,5 @@
+﻿using System;
+using System.IO;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
@@ -13,7 +15,7 @@ class Program
     static void Main(string[] args)
     {
         Window window = new Window();
-        window.Create("application-04", (int)DisplayWidth, (int)DisplayHeight);
+        window.Create("application02", (int)DisplayWidth, (int)DisplayHeight);
 
         GraphicsDevice.Instance.Create(window, FullScreen);
         SoundDevice.Instance.Create(window.Handle);
@@ -84,6 +86,7 @@ class Program
         Entity system = Entity.Instantiate();
         system.Name = "system";
         system.Attach(new SystemComponent());
+        system.Attach(new LoggerComponent());
 
         Entity gamespace = Entity.Instantiate();
         gamespace.Name = "gamespace";
@@ -128,6 +131,7 @@ class Program
         ground.Attach(new CollisionComponent());
         ground.Attach(new GroundComponent());
 
+#if false
         Entity cloud = Entity.Instantiate();
         cloud.Name = "cloud";
         cloud.Attach(new CloudComponent(randoms(distmap("res/texture/cloud_distribution.png"), 10000).Select(tuple =>
@@ -140,6 +144,7 @@ class Program
             float y = normal(1000, 100);
             return new Vector3(x, y, z);
         }).ToArray()));
+#endif
 
         Entity ui = Entity.Instantiate();
         ui.Name = "ui";
@@ -163,7 +168,7 @@ class Program
             entity.Get<SoundComponent>().LoopPlay();
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 0; i++)
         {
             Entity entity = Entity.Instantiate();
             entity.Name = string.Format("friend{0}", i + 1);
@@ -177,7 +182,7 @@ class Program
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new NonPlayerPilotComponent());
 
-            entity.Get<TransformComponent>().Position = new Vector3(normal(0, 100), normal(2000, 100), normal(-2000, 100));
+            entity.Get<TransformComponent>().Position = new Vector3(normal(0, 100), 2000, normal(-2000, 100));
             entity.Get<SoundComponent>().LoopPlay();
         }
 
@@ -198,7 +203,7 @@ class Program
             entity.Get<TransformComponent>().Matrix.RotateX(uniform(-PI, PI));
             entity.Get<TransformComponent>().Matrix.RotateY(uniform(-PI, PI));
             entity.Get<TransformComponent>().Matrix.RotateZ(uniform(-PI, PI));
-            entity.Get<TransformComponent>().Position = new Vector3(normal(0, 1000), normal(2000, 1000), normal(1000, 1000));
+            entity.Get<TransformComponent>().Position = new Vector3(normal(0, 100), 2000, normal(1000, 100));
             entity.Get<SoundComponent>().LoopPlay();
         }
     }

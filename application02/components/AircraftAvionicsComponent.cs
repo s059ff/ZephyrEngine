@@ -1,3 +1,5 @@
+﻿using System;
+using System.Collections.Generic;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
@@ -51,6 +53,29 @@ class AircraftAvionicsComponent : CustomEntityComponent
         }
     }
 
+    public void ChangeTargetRandomly()
+    {
+        List<Entity> entities = new List<Entity>();
+
+        Entity.ForEach(e =>
+        {
+            if (e.Has<AircraftComponent>() && e.Has<AircraftAvionicsComponent>())
+            {
+                if (e.Get<AircraftComponent>().Armor == 0)
+                    return;
+                if (this.Organization == e.Get<AircraftAvionicsComponent>().Organization)
+                    return;
+                entities.Add(e);
+            }
+        });
+
+        if (entities.Count > 0)
+        {
+            var random = new Random();
+            this.targetEntity = entities[random.Next(entities.Count)];
+        }
+    }
+
     public bool HasTarget()
     {
         return this.TargetEntity != null;
@@ -74,7 +99,14 @@ class AircraftAvionicsComponent : CustomEntityComponent
             }
             if (this.targetEntity == null)
             {
-                this.ChangeTarget();
+                if (this.Owner.Name == "player")
+                {
+                    this.ChangeTarget();
+                }
+                else
+                {
+                    this.ChangeTargetRandomly();
+                }
             }
             return this.targetEntity;
         }

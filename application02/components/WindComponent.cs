@@ -1,5 +1,4 @@
-﻿using ZephyrSharp.GameSystem.Components;
-using ZephyrSharp.Graphics;
+﻿using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
 using static EngineScript;
 using static GameScript;
@@ -105,7 +104,8 @@ public class WindComponent : CustomEntityComponent
 
     private void Update()
     {
-        var world = this.Owner.Get<TransformComponent>().Matrix;
+        //var world = this.Owner.Get<TransformComponent>().Matrix;
+        var world = new Matrix4x3().LookAt(this.Transform.Position, this.Transform.Position + this.Physics.Velocity);
 
         for (int i = 0; i < InstanceCount; i++)
         {

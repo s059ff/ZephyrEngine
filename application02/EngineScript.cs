@@ -44,10 +44,6 @@ public class EngineScript
     {
         if (!b)
         {
-            MessageBox.Show(
-                comment + Environment.NewLine
-                + "スタックトレース:" + Environment.NewLine
-                + Environment.StackTrace, "エラーが発生しました。", MessageBoxIcon.Error);
             throw new RuntimeException(comment);
         }
     }

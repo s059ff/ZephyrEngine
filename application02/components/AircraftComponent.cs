@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CsvHelper;
@@ -18,8 +18,8 @@ public class AircraftComponent : CustomEntityComponent
     static VertexLayout VertexLayout = new VertexLayout();
     static AircraftParameter[] AircraftParameters;
 
-    const float MissileReloadSpeed = 1.0f / 1200;
-    const float GunReloadSpeed = 1.0f / 10;
+    const float MissileReloadSpeed = 1.0f / 1800;
+    const float GunReloadSpeed = 0.25f;
     public const float Radius = 5.0f;
     public const int WeaponCount = 4;
 
@@ -57,7 +57,7 @@ public class AircraftComponent : CustomEntityComponent
     }
     public bool Locking { get { return (ActiveMissile != null) && (ActiveMissile.Locking); } }
     public float[] ReloadTimes { get { return this.Weapons.Select(w => w.ReloadTime).ToArray(); } }
-    public float Armor { get; set; } = 1.0f;
+    public float Armor { get; private set; } = 1.0f;
 
     public bool Visible = true;
     public float Opacity = 0;
@@ -165,15 +165,34 @@ public class AircraftComponent : CustomEntityComponent
         for (int i = 0; i < WeaponCount; i++)
         {
             this.Weapons[i] = new Weapon();
+            switch (i)
+            {
+                case 0:
+                    this.Weapons[0].WeaponPos = parameters.WeaponPos0;
+                    break;
+                case 1:
+                    this.Weapons[1].WeaponPos = reverseX(parameters.WeaponPos0);
+                    break;
+                case 2:
+                    this.Weapons[2].WeaponPos = parameters.WeaponPos1;
+                    break;
+                case 3:
+                    this.Weapons[3].WeaponPos = reverseX(parameters.WeaponPos1);
+                    break;
+                case 4:
+                    this.Weapons[4].WeaponPos = parameters.WeaponPos2;
+                    break;
+                case 5:
+                    this.Weapons[5].WeaponPos = reverseX(parameters.WeaponPos2);
+                    break;
+                case 6:
+                    this.Weapons[6].WeaponPos = parameters.WeaponPos3;
+                    break;
+                case 7:
+                    this.Weapons[7].WeaponPos = reverseX(parameters.WeaponPos3);
+                    break;
+            }
         }
-        this.Weapons[0].WeaponPos = parameters.WeaponPos0;
-        this.Weapons[1].WeaponPos = reverseX(parameters.WeaponPos0);
-        this.Weapons[2].WeaponPos = parameters.WeaponPos1;
-        this.Weapons[3].WeaponPos = reverseX(parameters.WeaponPos1);
-        //this.Weapons[4].WeaponPos = parameters.WeaponPos2;
-        //this.Weapons[5].WeaponPos = reverseX(parameters.WeaponPos2);
-        //this.Weapons[6].WeaponPos = parameters.WeaponPos3;
-        //this.Weapons[7].WeaponPos = reverseX(parameters.WeaponPos3);
 
         this.WingEdgePos = parameters.WingEdgePos;
         this.CockpitPos = parameters.CockpitPos;
@@ -312,23 +331,97 @@ public class AircraftComponent : CustomEntityComponent
         }
     }
 
-    public void AutoPilot(Entity target)
+    public void AutoPilot()
     {
-        Vector3 destination = GunBulletComponent.ComputeOptimalAimPosition(this.Owner, target);
-        this.AutoPilot(destination);
+        var avionics = this.Owner.Get<AircraftAvionicsComponent>();
+        if (avionics == null)
+            return;
+
+        Vector3? threatMissilePosition = null;
+        {
+            float threatMissileDistance = float.MaxValue;
+            bool isThreatMissileLaunched = false;
+            Entity.ForEach(e =>
+            {
+                var missile = e.Get<MissileComponent>();
+                if (missile != null && missile.TargetEntity == this.Owner && missile.Locking)
+                {
+                    Vector3 position = missile.Owner.Get<TransformComponent>().Position;
+                    float distance = (Transform.Position - position).Magnitude;
+
+                    // 発射前ミサイルよりも発射済みミサイルを優先する
+                    if (distance < threatMissileDistance || !isThreatMissileLaunched)
+                    {
+                        threatMissilePosition = position;
+                        threatMissileDistance = distance;
+                        isThreatMissileLaunched = missile.Launched;
+                    }
+                }
+            });
+        }
+
+        if (Transform.Position.Y < 1000)
+        {
+            // 高度が低い場合, 上昇する
+            this.AutoPilot(new Vector3(Transform.Position.X, 2000, Transform.Position.Z));
+        }
+        else if (min(Transform.Position.X, Transform.Position.Z) < -8000 || max(Transform.Position.X, Transform.Position.Z) > +8000)
+        {
+            // 戦闘エリアからの離脱を防ぐ
+            this.AutoPilot(new Vector3(0, 2000, 0));
+        }
+        else if (threatMissilePosition != null)
+        {
+            // ミサイルにロックされている場合, 回避行動を行う
+            Vector3 n = (Transform.Position - (Vector3)threatMissilePosition).Normalize();
+            Vector3 a = Transform.Forward;
+            Vector3 b = Vector3.Inner(a, n) * n;
+            Vector3 v = a - b;
+            Vector3 destination = Transform.Position + v;
+            this.AutoPilot(destination);
+
+            // 確認用
+            float angle = Vector3.Angle(v, n);
+            assert(abs(angle - PIOver2) < 1e-4);
+        }
+        else if (avionics.HasTarget())
+        {
+            Vector3 destination = GunBulletComponent.ComputeOptimalAimPosition(this.Owner, avionics.TargetEntity);
+            this.AutoPilot(destination);
+        }
+        else
+        {
+            // ターゲットがいない場合, 中心に移動する
+            this.AutoPilot(new Vector3(0, 2000, 0));
+        }
     }
 
-    public void AutoFire(Entity target)
+    public void AutoAttack()
     {
-        var viewing = ViewingMatrix;
-        var projection = ProjectionMatrix;
-        var time = GunBulletComponent.ComputeHitTime(this.Owner, target);
+        var avionics = this.Owner.Get<AircraftAvionicsComponent>();
+        if (avionics == null)
+            return;
+        if (!avionics.HasTarget())
+            return;
 
-        var p1 = new Vector3(0, 0, time * GunBulletComponent.BulletSpeed) * this.Transform.Matrix;
-        var p2 = target.Get<TransformComponent>().Position + time * target.Get<PhysicsComponent>().Velocity;
+        #region 主兵装の操作
+        {
+            this.MissileLaunchInput = (this.ActiveMissile != null && this.Locking && uniform() < 0.001f);
+        }
+        #endregion
 
-        if ((p2 - p1).SquaredMagnitude < square(Radius))
-            this.GunFireInput = true;
+        #region 機関砲の操作
+        {
+            var viewing = ViewingMatrix;
+            var projection = ProjectionMatrix;
+            var time = GunBulletComponent.ComputeHitTime(this.Owner, avionics.TargetEntity);
+
+            var p1 = new Vector3(0, 0, time * GunBulletComponent.BulletSpeed) * this.Transform.Matrix;
+            var p2 = avionics.TargetEntity.Get<TransformComponent>().Position + time * avionics.TargetEntity.Get<PhysicsComponent>().Velocity;
+
+            this.GunFireInput = ((p2 - p1).SquaredMagnitude < square(Radius));
+        }
+        #endregion
     }
 
     void Update()
@@ -372,7 +465,7 @@ public class AircraftComponent : CustomEntityComponent
             float power = clamp(this.RollInput, -1.0f, 1.0f);
             float x = this.Physics.Velocity.Magnitude;
             float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-            this.Physics.Torque += this.Transform.Forward * -0.025f * power * k;
+            this.Physics.Torque += this.Transform.Forward * -0.02f * power * k;
         }
         #endregion
 
@@ -520,8 +613,6 @@ public class AircraftComponent : CustomEntityComponent
         }
         #endregion
 
-        this.Armor = clamp(this.Armor, 0, 1);
-
         #region マズルフラッシュの座標の更新
         {
             foreach (var e in this.GunFlushs.Where(e => !e.IsAlive).ToArray())
@@ -593,9 +684,9 @@ public class AircraftComponent : CustomEntityComponent
 
     public void Damage(float damage)
     {
-        this.Armor -= damage;
+        this.Armor = clamp(this.Armor - damage, 0.0f, 1.0f);
 
-        if (this.Armor <= 0)
+        if (this.Armor == 0)
         {
             if (!this.Owner.Has<TimerComponent>())
             {

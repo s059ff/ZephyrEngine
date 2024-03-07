@@ -19,12 +19,12 @@ public class MissileComponent : CustomEntityComponent
     const float InertiaMoment = 2.0f;
     const float Thrust = 30.0f;
     const float CountSpeed = 0.001f;
-    const float TimeToIgnition = 0.015f;
+    const float TimeToIgnition = 0.0f;
     const float TurningPerformance = 0.025f; // 0.004f;
     const float SeekerAngleRange = 30.0f;
     const float SeekerDistanceRange = 1500.0f;
     const float SeekerSpeed = 0.0075f;
-    const float LockableAngleRange = 60.0f;
+    const float LockableAngleRange = 45.0f;
     const float LockableDistanceRange = 3000.0f;
     const float Damage = 0.5f;
     public Vector3 EngineNozzlePos { get; private set; } = new Vector3(0, 0, -1.770481f);
