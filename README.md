@@ -82,13 +82,13 @@ XepherEngine は以下のデバッギング ツールを同梱しており、ゲ
 
 ![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/application_01.png "スクリーンショット")  
 ただボールが跳ねるだけのプログラムです。  
-このプログラムを実行する場合は、「application-01」というプロジェクトをビルド・実行してください。
+このプログラムを実行する場合は、「application01」というプロジェクトをビルド・実行してください。
 
 2. __application03__  
 
 ![スクリーンショット](https://github.com/s059ff/ZephyrEngine/blob/master/screenshots/application_03.png "スクリーンショット")  
 ３Dフライトシューティングゲームです。
-このプログラムを実行する場合は、「application-03」というプロジェクトをビルド・実行してください。
+このプログラムを実行する場合は、「application02」というプロジェクトをビルド・実行してください。
 
 【ゲーム内容】  
 戦闘機を操作して、敵の戦闘機を全部撃ち落としてください。
