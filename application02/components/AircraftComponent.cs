@@ -59,8 +59,7 @@ public class AircraftComponent : CustomEntityComponent
     public float[] ReloadTimes { get { return this.Weapons.Select(w => w.ReloadTime).ToArray(); } }
     public float Armor { get; private set; } = 1.0f;
 
-    public bool Visible = true;
-    public float Opacity = 0;
+    public float Visibility = 1.0f;
 
     public float EnginePower = 0.5f;
     const float EnginePowerThreshold = 0.9f;
@@ -243,12 +242,12 @@ public class AircraftComponent : CustomEntityComponent
                 break;
 
             case RenderMessage:
-                if (this.Opacity == 0.0f)
+                if (this.Visibility == 1.0f)
                     this.Render();
                 break;
 
             case TranslucentRenderMessage:
-                if (this.Opacity != 0.0f)
+                if (this.Visibility < 1.0f)
                     this.Render();
                 break;
 
@@ -664,7 +663,7 @@ public class AircraftComponent : CustomEntityComponent
                     });
                 }
 
-                if (this.Visible)
+                if (this.Visibility == 1.0f)
                 {
                     Entity e = Entity.Instantiate();
                     e.Attach(new TransformComponent() { Matrix = Transform.Matrix });
@@ -708,9 +707,9 @@ public class AircraftComponent : CustomEntityComponent
     void Render()
     {
         GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
-        device.SetBlendState(this.Opacity == 0 ? NoBlend : AlphaBlend);
+        device.SetBlendState(this.Visibility == 1.0f ? NoBlend : AlphaBlend);
         device.SetRasterizerState(CullingOn);
-        device.SetDepthStencilState(this.Opacity == 0 ? ZTestOn : ZTestOnWriteOff);
+        device.SetDepthStencilState(this.Visibility == 1.0f ? ZTestOn : ZTestOnWriteOff);
         device.SetVertexLayout(VertexLayout);
         device.SetPrimitiveTopology(PrimitiveTopology.TriangleList);
         device.SetVertexShader(VertexShader);
@@ -722,7 +721,7 @@ public class AircraftComponent : CustomEntityComponent
 
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("camera").Get<TransformComponent>().Position, 1), 2);
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 3);
-        PixelShader.SetConstantBuffer(new Color(1, 1, 1, 1.0f - this.Opacity), 4);
+        PixelShader.SetConstantBuffer(new Color(1, 1, 1, this.Visibility), 4);
 
         {
             VertexShader.SetConstantBuffer(WVPMatrix, 0);

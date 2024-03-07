@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
@@ -135,12 +135,7 @@ class PlayerPilotComponent : AbstractPilotComponent
 
         {
             var distance = (camera.TrackingOffset - aircraft.CockpitPos).Magnitude;
-            var alpha = clamp(distance / 15, 0, 1);
-            aircraft.Opacity = 1 - alpha;
-            if (alpha < .99f)
-            {
-                aircraft.Visible = false;
-            }
+            aircraft.Visibility = clamp(distance / 15, 0, 1);
         }
 
         if (nowpressed(KeyCode.F1))
