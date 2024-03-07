@@ -60,8 +60,14 @@ void main()
 
     Texture2DArray texture;
     ColorCode init[32 * 32 * 2];
-    memset(init, reinterpret_cast<int&>(ColorCode(255, 0, 0, 255)), sizeof(ColorCode) * 32 * 32);
-    memset(init + 32 * 32, reinterpret_cast<int&>(ColorCode(0, 255, 0, 255)), sizeof(ColorCode) * 32 * 32);
+    for (size_t i = 0; i < 32; i++)
+    {
+        for (size_t j = 0; j < 32; j++)
+        {
+            init[i * 32 + j] = ColorCode(i * 8, j * 8, 0, 255);
+            init[i * 32 + j + 32 * 32] = ColorCode(0, i * 8, j * 8, 255);
+        }
+    }
     texture.Create(init, 32, 32, 2, Format::UByte4Norm, Accessibility::None, BufferBindFlags::ShaderResource);
 
     ShaderResourceView view;
@@ -133,6 +139,7 @@ void main()
     window.Updated += [&]()
     {
 		context.Clear(ColorCode::DarkBlue);
+
 		context.DrawInstanced(4, 4);
 		context.Present();
     };
