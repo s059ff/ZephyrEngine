@@ -1,4 +1,4 @@
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
@@ -118,19 +118,31 @@ class PlayerPilotComponent : AbstractPilotComponent
 
         camera.AngleOffset = new Matrix3x3().Identity().RotateY(AngleOffsetY).RotateX(AngleOffsetX);
 
-        if (!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D) || nowpressed(GamePadButton.RSB))
+        if ((!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D)) || nowpressed(GamePadButton.RSB))
         {
-            HUDView = !HUDView;
+            switch (this.cameraView)
+            {
+                case CameraView.ThirdPersonPerspective:
+                    this.cameraView = CameraView.Cockpit;
+                    break;
+                case CameraView.Cockpit:
+                    this.cameraView = CameraView.ThirdPersonPerspective;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        aircraft.Visible = true;
-        if (HUDView)
+        switch (this.cameraView)
         {
-            camera.TrackingOffset = 0.9f * camera.TrackingOffset + 0.1f * aircraft.CockpitPos;
-        }
-        else
-        {
-            camera.TrackingOffset = 0.9f * camera.TrackingOffset + 0.1f * new Vector3(0, 4, -18);
+            case CameraView.ThirdPersonPerspective:
+                camera.TrackingOffset = 0.9f * camera.TrackingOffset + 0.1f * new Vector3(0, 4, -18);
+                break;
+            case CameraView.Cockpit:
+                camera.TrackingOffset = 0.9f * camera.TrackingOffset + 0.1f * aircraft.CockpitPos;
+                break;
+            default:
+                break;
         }
 
         {
@@ -155,9 +167,15 @@ class PlayerPilotComponent : AbstractPilotComponent
         }
     }
 
-    bool HUDView = false;
+    enum CameraView
+    {
+        ThirdPersonPerspective,
+        Cockpit
+    }
 
     const float TrackingLatency = 12;
+
+    CameraView cameraView = CameraView.ThirdPersonPerspective;
 
     float AngleOffsetX, AngleOffsetY;
 
