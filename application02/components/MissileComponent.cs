@@ -168,7 +168,11 @@ public class MissileComponent : CustomEntityComponent
                         {
                             if (this.FromPlayer)
                             {
-                                Entity.SendMessage(Entity.Find("ui"), "notice", "Miss");
+                                var player = Entity.Find("player");
+                                if (player != null)
+                                {
+                                    Entity.SendMessage(player, "notice", "Miss");
+                                }
                             }
                             this.Locking = false;
                             this.TargetEntity = null;
@@ -304,18 +308,19 @@ public class MissileComponent : CustomEntityComponent
             var aircraft = other.Get<AircraftComponent>();
             aircraft.Damage(Damage);
 
-            if (this.FromPlayer)
+            var player = Entity.Find("player");
+            if (player != null)
             {
-                if (aircraft.Armor > 0)
-                    Entity.SendMessage(Entity.Find("ui"), "notice", "Hit");
-                else
-                    Entity.SendMessage(Entity.Find("ui"), "notice", "Destroyed");
+                if (this.FromPlayer)
+                {
+                    if (aircraft.Armor > 0)
+                        Entity.SendMessage(player, "notice", "Hit");
+                    else
+                        Entity.SendMessage(player, "notice", "Destroyed");
+                }
+                if (other.Name == "player")
+                    Entity.SendMessage(Entity.Find("player"), "notice", "Damaged");
             }
-        }
-
-        if (other.Name == "player")
-        {
-            Entity.SendMessage(Entity.Find("ui"), "notice", "Damaged");
         }
 
         {

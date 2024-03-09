@@ -89,11 +89,7 @@ class PlayerPilotComponent : AbstractPilotComponent
         }
         if (changeRadarRangeInput)
         {
-            var entity = Entity.Find("ui");
-            if (entity != null)
-            {
-                entity.Get<UIComponent>().ChangeRadarRange();
-            }
+            this.Owner.Get<AircraftHUDComponent>()?.ChangeRadarRange();
         }
 
         camera.AngleOffset = new Matrix3x3().Identity().RotateY(AngleOffsetY).RotateX(AngleOffsetX);

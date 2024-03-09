@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -146,10 +146,6 @@ class Program
         }).ToArray()));
 #endif
 
-        Entity ui = Entity.Instantiate();
-        ui.Name = "ui";
-        ui.Attach(new UIComponent());
-
         {
             Entity entity = Entity.Instantiate();
             entity.Name = "player";
@@ -163,6 +159,7 @@ class Program
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new PlayerPilotComponent());
             entity.Attach(new WindComponent());
+            entity.Attach(new AircraftHUDComponent());
 
             entity.Get<TransformComponent>().Position = new Vector3(0, 2000, -2000);
             entity.Get<SoundComponent>().LoopPlay();

@@ -1,5 +1,4 @@
-﻿using ZephyrSharp.Collision;
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -111,17 +110,18 @@ class GunBulletComponent : CustomEntityComponent
             var aircraft = other.Get<AircraftComponent>();
             aircraft.Damage(Damage);
 
-            if (this.ShootedByPlayer)
+            var player = Entity.Find("player");
+            if (player != null)
             {
-                if (aircraft.Armor > 0)
-                    Entity.SendMessage(Entity.Find("ui"), "notice", "Hit");
-                else
-                    Entity.SendMessage(Entity.Find("ui"), "notice", "Destroyed");
-            }
-
-            if (other.Name == "player")
-            {
-                Entity.SendMessage(Entity.Find("ui"), "notice", "Damaged");
+                if (this.ShootedByPlayer)
+                {
+                    if (aircraft.Armor > 0)
+                        Entity.SendMessage(player, "notice", "Hit");
+                    else
+                        Entity.SendMessage(player, "notice", "Destroyed");
+                }
+                if (other.Name == "player")
+                    Entity.SendMessage(Entity.Find("player"), "notice", "Damaged");
             }
         }
         else if (other.Has<GroundComponent>())

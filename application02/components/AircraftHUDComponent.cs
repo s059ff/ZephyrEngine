@@ -6,7 +6,7 @@ using ZephyrSharp.Linalg;
 using static EngineScript;
 using static GameScript;
 
-public class UIComponent : CustomEntityComponent
+public class AircraftHUDComponent : CustomEntityComponent
 {
     static Texture2D CourseTexture = new Texture2D();
     static Texture2D CoursePointerTexture = new Texture2D();
@@ -30,7 +30,7 @@ public class UIComponent : CustomEntityComponent
     public Dictionary<string, string> DebugMessages = new Dictionary<string, string>();
 #endif
 
-    static UIComponent()
+    static AircraftHUDComponent()
     {
         CourseTexture.Create("res/texture/course.png", Accessibility.None);
         CoursePointerTexture.Create("res/texture/course_pointer.png", Accessibility.None);
@@ -105,24 +105,20 @@ public class UIComponent : CustomEntityComponent
 
     private void Draw()
     {
-        var player = Entity.Find("player");
-        if (player == null || player.Get<AircraftComponent>().Armor == 0)
-            return;
-
-        var aircraft = player.Get<AircraftComponent>();
+        var aircraft = this.Owner.Get<AircraftComponent>();
         if (aircraft == null || aircraft.Armor == 0)
             return;
 
-        var transform = player.Get<TransformComponent>();
-        var physics = player.Get<PhysicsComponent>();
-        var target = player.Get<AircraftAvionicsComponent>()?.TargetEntity;
+        var transform = this.Owner.Get<TransformComponent>();
+        var physics = this.Owner.Get<PhysicsComponent>();
+        var target = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
 
         bool lockonAlert = false;
         bool missileAlert = false;
         Entity.ForEach((e) =>
         {
             var missile = e.Get<MissileComponent>();
-            if (missile != null && missile.TargetEntity == player && missile.Locking)
+            if (missile != null && missile.TargetEntity == this.Owner && missile.Locking)
             {
                 if (missile.Launched)
                     missileAlert = true;
@@ -318,7 +314,7 @@ public class UIComponent : CustomEntityComponent
             {
                 color(Red);
                 var missile = e.Get<MissileComponent>();
-                if (missile != null && missile.TargetEntity == player && missile.Locking && missile.Launched)
+                if (missile != null && missile.TargetEntity == this.Owner && missile.Locking && missile.Launched)
                 {
                     var transform2 = e.Get<TransformComponent>();
                     Vector3 relative = transform2.Position - transform.Position;
@@ -357,9 +353,9 @@ public class UIComponent : CustomEntityComponent
             #region ターゲットマーカー
             Entity.ForEach((e) =>
             {
-                if (e.Has<AircraftAvionicsComponent>() && e.Get<AircraftComponent>().Armor > 0 && e.Name != "player")
+                if (e.Has<AircraftAvionicsComponent>() && e.Get<AircraftComponent>().Armor > 0 && e != this.Owner)
                 {
-                    var missile = player.Get<AircraftComponent>().ActiveMissile;
+                    var missile = this.Owner.Get<AircraftComponent>().ActiveMissile;
                     {
                         var world = e.Get<TransformComponent>().Matrix;
                         var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
@@ -427,7 +423,7 @@ public class UIComponent : CustomEntityComponent
             {
                 var viewing = ViewingMatrix;
                 var projection = ProjectionMatrix;
-                var time = GunBulletComponent.ComputeHitTime(player, target);
+                var time = GunBulletComponent.ComputeHitTime(this.Owner, target);
 
                 var p1 = new Vector3(0, 0, time * GunBulletComponent.BulletSpeed) * transform.Matrix;
                 var v1 = new Vector4(p1, 1) * viewing * projection;
@@ -455,7 +451,7 @@ public class UIComponent : CustomEntityComponent
 
             #region シーカー
             {
-                var missile = player.Get<AircraftComponent>().ActiveMissile;
+                var missile = this.Owner.Get<AircraftComponent>().ActiveMissile;
                 if (missile != null && missile.TargetEntity != null)
                 {
                     var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
@@ -541,7 +537,7 @@ public class UIComponent : CustomEntityComponent
 
                 Entity.ForEach((e) =>
                 {
-                    if (e.Has<AircraftAvionicsComponent>() && (e.Name != "player"))
+                    if (e.Has<AircraftAvionicsComponent>() && (e != this.Owner))
                     {
                         color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? Blue : Red);
 
@@ -608,7 +604,7 @@ public class UIComponent : CustomEntityComponent
                 translate(-1.25f, -0.2f);
                 scale(0.15f / 4, 0.15f);
                 {
-                    var times = player.Get<AircraftComponent>().ReloadTimes;
+                    var times = this.Owner.Get<AircraftComponent>().ReloadTimes;
 
                     for (int i = 0; i < AircraftComponent.WeaponCount; i++)
                     {
@@ -655,7 +651,7 @@ public class UIComponent : CustomEntityComponent
                     {
                         if (!((target == e) && (frame % 60 < 30)))
                         {
-                            color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? (e.Name == "player") ? Green : Blue : Red);
+                            color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? (e != this.Owner) ? Green : Blue : Red);
 
                             var transform2 = e.Get<TransformComponent>();
                             Matrix4x3 matrix = transform2.Matrix;
