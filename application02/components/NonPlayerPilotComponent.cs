@@ -22,8 +22,10 @@ class NonPlayerPilotComponent : AbstractPilotComponent
         }
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         var aircraft = this.Owner.Get<AircraftComponent>();
         aircraft.AutoPilot();
         aircraft.AutoAttack();

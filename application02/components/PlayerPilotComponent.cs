@@ -7,33 +7,13 @@ using static GameScript;
 
 class PlayerPilotComponent : AbstractPilotComponent
 {
-    protected override void ReceiveMessage(object message, object argument)
+    protected override void Update()
     {
-        base.ReceiveMessage(message, argument);
+        base.Update();
 
-        switch (message as string)
-        {
-            case UpdateMessage:
-                this.Update();
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    private void Update()
-    {
         var self = this.Owner;
         var aircraft = this.Owner.Get<AircraftComponent>();
         var avionics = this.Owner.Get<AircraftAvionicsComponent>();
-
-        aircraft.YawInput = 0.0f;
-        aircraft.RollInput = 0.0f;
-        aircraft.PitchInput = 0.0f;
-        aircraft.ThrottleInput = 0.0f;
-        aircraft.MissileLaunchInput = false;
-        aircraft.GunFireInput = false;
 
         aircraft.YawInput += pressed(KeyCode.Q) || pressed(GamePadButton.LB) ? -1.0f : 0.0f;
         aircraft.YawInput += pressed(KeyCode.E) || pressed(GamePadButton.RB) ? +1.0f : 0.0f;
