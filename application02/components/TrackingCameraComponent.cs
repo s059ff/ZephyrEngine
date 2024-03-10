@@ -29,26 +29,41 @@ class TrackingCameraComponent : AbstractCameraComponent
         if (player == null || transform == null || aircraft == null || avionics == null)
             return;
 
+        this.angleOffset.X = 0.9f * this.angleOffset.X;
+        this.angleOffset.Y = 0.9f * this.angleOffset.Y;
+
         if (!isConnectedGamePad())
         {
             if (pressed(KeyCode.J))
-                this.angleOffset.Y = 0.9f * this.angleOffset.Y + 0.1f * -PI;
+                this.angleOffset.Y += 0.1f * -PI;
             if (pressed(KeyCode.L))
-                this.angleOffset.Y = 0.9f * this.angleOffset.Y + 0.1f * +PI;
-            if (!pressed(KeyCode.J) && !pressed(KeyCode.L))
-                this.angleOffset.Y *= 0.9f;
-
+                this.angleOffset.Y += 0.1f * +PI;
             if (pressed(KeyCode.I))
-                this.angleOffset.X = 0.9f * this.angleOffset.X + 0.1f * -PIOver2;
+                this.angleOffset.X += 0.1f * -PIOver2;
             if (pressed(KeyCode.K))
-                this.angleOffset.X = 0.9f * this.angleOffset.X + 0.1f * +PIOver2;
-            if (!pressed(KeyCode.I) && !pressed(KeyCode.K))
-                this.angleOffset.X *= 0.9f;
+                this.angleOffset.X += 0.1f * +PIOver2;
         }
         else
         {
-            this.angleOffset.Y = 0.9f * this.angleOffset.Y + 0.1f * (float)getAnalogStickSubAxis().Item1 * PI;
-            this.angleOffset.X = 0.9f * this.angleOffset.X + 0.1f * (float)getAnalogStickSubAxis().Item2 * -PIOver2;
+            this.angleOffset.Y += 0.1f * (float)getAnalogStickSubAxis().Item1 * PI;
+            this.angleOffset.X += 0.1f * (float)getAnalogStickSubAxis().Item2 * -PIOver2;
+        }
+
+        this.angleOffset2.X = 0.9f * this.angleOffset2.X;
+        this.angleOffset2.Y = 0.9f * this.angleOffset2.Y;
+
+        if (max(getPressTimeLength(KeyCode.S), getPressTimeLength(GamePadButton.Y)) > 15 && avionics.TargetEntity != null)
+        {
+            Vector3 from = transform.Position;
+            Vector3 at = avionics.TargetEntity.Get<TransformComponent>().Position;
+            Matrix3x3 rotation = this.targetRotationHistory.Last.Value;
+            Vector3 dir = (at - from) * rotation.Inverse;
+
+            float dx = -atan2(dir.Y, abs(dir.Z));
+            float dy = atan2(dir.X, dir.Z);
+
+            this.angleOffset2.X += 0.1f * dx;
+            this.angleOffset2.Y += 0.1f * dy;
         }
 
         if ((!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D)) || nowpressed(GamePadButton.RSB))
@@ -90,7 +105,9 @@ class TrackingCameraComponent : AbstractCameraComponent
 
     protected override void ApplyCameraTransform()
     {
-        var angleOffset = new Matrix3x3().Identity().RotateY(this.angleOffset.Y).RotateX(this.angleOffset.X);
+        var angleOffset = new Matrix3x3().Identity()
+            .RotateY(this.angleOffset.Y + this.angleOffset2.Y)
+            .RotateX(this.angleOffset.X + this.angleOffset2.X);
         var rotation = angleOffset * this.targetRotationHistory.Last.Value;
         var position = this.trackingOffset * rotation + this.targetPositionHistroy.First.Value;
         this.Owner.Get<TransformComponent>().Matrix = new Matrix4x3(rotation);
@@ -107,6 +124,7 @@ class TrackingCameraComponent : AbstractCameraComponent
     CameraView cameraView = CameraView.ThirdPersonPerspective;
 
     Vector2 angleOffset = new Vector2();
+    Vector2 angleOffset2 = new Vector2();
 
     LinkedList<Matrix3x3> targetRotationHistory = new LinkedList<Matrix3x3>();
     LinkedList<Vector3> targetPositionHistroy = new LinkedList<Vector3>();
