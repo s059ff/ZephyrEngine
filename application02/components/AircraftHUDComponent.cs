@@ -358,8 +358,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                     var missile = this.Owner.Get<AircraftComponent>().ActiveMissile;
                     {
                         var world = e.Get<TransformComponent>().Matrix;
-                        var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
-                        var projection = Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
+                        var viewing = ViewingMatrix;
+                        var projection = ProjectionMatrix;
 
                         Vector4 v = new Vector4(Vector3.Zero, 1) * world * viewing * projection;
                         if (0 <= v.W && v.W <= SearchOperationRange)
@@ -454,8 +454,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                 var missile = this.Owner.Get<AircraftComponent>().ActiveMissile;
                 if (missile != null && missile.TargetEntity != null)
                 {
-                    var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
-                    var projection = Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
+                    var viewing = ViewingMatrix;
+                    var projection = ProjectionMatrix;
 
                     if (missile.Locking)
                     {

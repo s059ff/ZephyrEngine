@@ -271,14 +271,6 @@ public class AircraftComponent : CustomEntityComponent
         if (other.Has<GroundComponent>())
         {
             this.Armor = 0;
-
-            if (this.Owner.Name == "player")
-            {
-                var entity = Entity.Find("camera");
-                var camera = entity.Get<CameraComponent>();
-                camera.EnableTracking = false;
-            }
-
             this.Destroy();
         }
     }
@@ -701,6 +693,12 @@ public class AircraftComponent : CustomEntityComponent
                 this.Owner.Detach<PlayerPilotComponent>();
             if (this.Owner.Has<NonPlayerPilotComponent>())
                 this.Owner.Detach<NonPlayerPilotComponent>();
+
+            if (this.Owner.Name == "player")
+            {
+                var camera = Entity.Find("camera");
+                camera.Get<FixedPointCameraComponent>()?.Activate();
+            }
         }
     }
 

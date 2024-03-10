@@ -49,7 +49,7 @@ public class CustomEntityComponent : EntityComponent
     {
         get
         {
-            return new Matrix4x4(Entity.Find("camera").Get<CameraComponent>().ViewingMatrix);
+            return new Matrix4x4(Entity.Find("camera").Get<TransformComponent>().Matrix.Inverse);
         }
     }
     protected Matrix4x4 ProjectionMatrix

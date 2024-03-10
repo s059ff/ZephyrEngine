@@ -95,9 +95,10 @@ class Program
         Entity camera = Entity.Instantiate();
         camera.Name = "camera";
         camera.Attach(new TransformComponent());
+        camera.Attach(new TrackingCameraComponent());
         camera.Attach(new CameraComponent());
         camera.Attach(new SoundObserverComponent() { EffectRange = 10000, SonicSpeed = SonicSpeed * 2 });
-        camera.Attach(new TransformControlComponent());
+        camera.Get<TrackingCameraComponent>().Activate();
 
         Entity camera2d = Entity.Instantiate();
         camera2d.Name = "camera2d";

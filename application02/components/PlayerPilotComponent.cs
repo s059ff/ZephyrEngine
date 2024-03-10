@@ -1,8 +1,5 @@
 ﻿using ZephyrSharp.GameSystem;
-using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Input;
-using ZephyrSharp.Linalg;
-using static EngineScript;
 using static GameScript;
 
 class PlayerPilotComponent : AbstractPilotComponent
@@ -37,123 +34,43 @@ class PlayerPilotComponent : AbstractPilotComponent
             aircraft.AutoPilot(GunBulletComponent.ComputeOptimalAimPosition(this.Owner, avionics.TargetEntity));
         }
 
-        var camera = Entity.Find("camera").Get<CameraComponent>();
-
-        bool changeTargetInput = false;
-        bool enableGazingInput = false;
-        bool changeRadarRangeInput = false;
-
-        changeTargetInput |= (nowreleased(KeyCode.S) && getPressTimeLength(KeyCode.S) < 15);
-        changeTargetInput |= (nowreleased(GamePadButton.Y) && getPressTimeLength(GamePadButton.Y) < 15);
-
-        enableGazingInput |= (pressed(KeyCode.S) && getPressTimeLength(KeyCode.S) >= 15);
-        enableGazingInput |= (pressed(GamePadButton.Y) && getPressTimeLength(GamePadButton.Y) >= 15);
-
-        changeRadarRangeInput |= nowpressed(KeyCode.A);
-        changeRadarRangeInput |= nowpressed(GamePadButton.X);
-
-        if (!isConnectedGamePad())
         {
-            if (pressed(KeyCode.J))
-                AngleOffsetY = 0.9f * AngleOffsetY + 0.1f * -PI;
-            if (pressed(KeyCode.L))
-                AngleOffsetY = 0.9f * AngleOffsetY + 0.1f * +PI;
-            if (!pressed(KeyCode.J) && !pressed(KeyCode.L))
-                AngleOffsetY *= 0.9f;
+            bool changeRadarRangeInput = false;
+            changeRadarRangeInput |= nowpressed(KeyCode.A);
+            changeRadarRangeInput |= nowpressed(GamePadButton.X);
 
-            if (pressed(KeyCode.I))
-                AngleOffsetX = 0.9f * AngleOffsetX + 0.1f * -PIOver2;
-            if (pressed(KeyCode.K))
-                AngleOffsetX = 0.9f * AngleOffsetX + 0.1f * +PIOver2;
-            if (!pressed(KeyCode.I) && !pressed(KeyCode.K))
-                AngleOffsetX *= 0.9f;
-        }
-        else
-        {
-            AngleOffsetY = 0.9f * AngleOffsetY + 0.1f * (float)getAnalogStickSubAxis().Item1 * PI;
-            AngleOffsetX = 0.9f * AngleOffsetX + 0.1f * (float)getAnalogStickSubAxis().Item2 * -PIOver2;
-        }
-
-        if (changeTargetInput)
-        {
-            avionics.ChangeTarget();
-        }
-        if (enableGazingInput && avionics.TargetEntity != null)
-        {
-            camera.GazingPoint = avionics.TargetEntity.Get<TransformComponent>().Position;
-            camera.EnableGazing = true;
-        }
-        else
-        {
-            camera.EnableGazing = false;
-        }
-        if (changeRadarRangeInput)
-        {
-            this.Owner.Get<AircraftHUDComponent>()?.ChangeRadarRange();
-        }
-
-        camera.AngleOffset = new Matrix3x3().Identity().RotateY(AngleOffsetY).RotateX(AngleOffsetX);
-
-        if ((!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D)) || nowpressed(GamePadButton.RSB))
-        {
-            switch (this.cameraView)
+            if (changeRadarRangeInput)
             {
-                case CameraView.ThirdPersonPerspective:
-                    this.cameraView = CameraView.Cockpit;
-                    break;
-                case CameraView.Cockpit:
-                    this.cameraView = CameraView.ThirdPersonPerspective;
-                    break;
-                default:
-                    break;
+                this.Owner.Get<AircraftHUDComponent>()?.ChangeRadarRange();
             }
         }
 
-        switch (this.cameraView)
         {
-            case CameraView.ThirdPersonPerspective:
-                camera.TrackingOffset = 0.9f * camera.TrackingOffset + 0.1f * new Vector3(0, 4, -18);
-                break;
-            case CameraView.Cockpit:
-                camera.TrackingOffset = 0.9f * camera.TrackingOffset + 0.1f * aircraft.CockpitPos;
-                break;
-            default:
-                break;
+            bool changeTargetInput = false;
+            changeTargetInput |= (nowreleased(KeyCode.S) && getPressTimeLength(KeyCode.S) < 15);
+            changeTargetInput |= (nowreleased(GamePadButton.Y) && getPressTimeLength(GamePadButton.Y) < 15);
+
+            if (changeTargetInput)
+            {
+                this.Owner.Get<AircraftAvionicsComponent>()?.ChangeTarget();
+            }
         }
 
         {
-            var distance = (camera.TrackingOffset - aircraft.CockpitPos).Magnitude;
-            aircraft.Visibility = clamp(distance / 15, 0, 1);
-        }
+            Entity entity = Entity.Find("camera");
+            AbstractCameraComponent activeCameraComponent = null;
 
-        if (nowpressed(KeyCode.F1))
-        {
-            EnableCameraManualTransform = !EnableCameraManualTransform;
-        }
+            if (nowpressed(KeyCode.F1))
+                activeCameraComponent = entity.Get<TrackingCameraComponent>();
+            if (nowpressed(KeyCode.F2))
+                activeCameraComponent = entity.Get<FixedPointCameraComponent>();
+            if (aircraft.Armor == 0)
+                activeCameraComponent = entity.Get<FixedPointCameraComponent>();
 
-        if (EnableCameraManualTransform)
-        {
-            camera.EnableTracking = false;
-        }
-        else
-        {
-            camera.EnableTracking = true;
-            camera.TrackingPose = this.Transform.Matrix;
-            camera.TrackingLatency = (int)TrackingLatency;
+            if (activeCameraComponent != null)
+            {
+                activeCameraComponent.Activate();
+            }
         }
     }
-
-    enum CameraView
-    {
-        ThirdPersonPerspective,
-        Cockpit
-    }
-
-    const float TrackingLatency = 12;
-
-    CameraView cameraView = CameraView.ThirdPersonPerspective;
-
-    float AngleOffsetX, AngleOffsetY;
-
-    bool EnableCameraManualTransform = false;
 }

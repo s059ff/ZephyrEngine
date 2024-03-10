@@ -33,8 +33,8 @@ public class DebugMarkerComponent : CustomEntityComponent
             case RenderMessage:
                 {
                     Matrix4x4 world = new Matrix4x4(this.Owner.Get<TransformComponent>().Matrix);
-                    Matrix4x4 viewing = new Matrix4x4(Entity.Find("camera").Get<CameraComponent>().ViewingMatrix);
-                    Matrix4x4 projection = Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
+                    Matrix4x4 viewing = ViewingMatrix;
+                    Matrix4x4 projection = ProjectionMatrix;
 
                     GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
                     device.SetBlendState(NoBlend);

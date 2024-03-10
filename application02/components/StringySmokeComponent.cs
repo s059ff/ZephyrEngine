@@ -162,8 +162,8 @@ public class StringySmokeComponent : CustomEntityComponent
         device.SetVertexBuffer(VertexPositions, 0);
         device.SetVertexBuffer(VertexColors, 1);
 
-        var viewing = Entity.Find("camera").Get<CameraComponent>().ViewingMatrix;
-        var projection = Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
+        var viewing = ViewingMatrix;
+        var projection = ProjectionMatrix;
         var eye = Entity.Find("camera").Get<TransformComponent>().Position;
 
         Matrix4x4[] matrices = new Matrix4x4[Nodes.Count];
