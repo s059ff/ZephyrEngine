@@ -29,8 +29,9 @@ abstract class AbstractCameraComponent : CustomEntityComponent
     {
         this.Owner.Components
             .Where(c => c is AbstractCameraComponent)
-            .Select(c => (AbstractCameraComponent)c)
-            .Select(c => c.isActive = false);
+            .Select(c => c as AbstractCameraComponent)
+            .Select(c => c.isActive = false)
+            .ToArray();
         this.isActive = true;
     }
 
