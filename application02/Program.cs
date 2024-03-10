@@ -86,7 +86,11 @@ class Program
         Entity system = Entity.Instantiate();
         system.Name = "system";
         system.Attach(new SystemComponent());
-        system.Attach(new LoggerComponent());
+
+        Entity debugger = Entity.Instantiate();
+        debugger.Name = "debugger";
+        debugger.Attach(new LoggerComponent());
+        debugger.Attach(new DebugInformationDisplayComponent());
 
         Entity gamespace = Entity.Instantiate();
         gamespace.Name = "gamespace";
