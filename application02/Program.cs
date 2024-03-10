@@ -96,7 +96,7 @@ class Program
         camera.Name = "camera";
         camera.Attach(new TransformComponent());
         camera.Attach(new TrackingCameraComponent());
-        camera.Attach(new CameraComponent());
+        camera.Attach(new FixedPointCameraComponent());
         camera.Attach(new SoundObserverComponent() { EffectRange = 10000, SonicSpeed = SonicSpeed * 2 });
         camera.Get<TrackingCameraComponent>().Activate();
 
