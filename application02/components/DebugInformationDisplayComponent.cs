@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
 using static EngineScript;
@@ -7,6 +8,8 @@ using static GameScript;
 class DebugInformationDisplayComponent : CustomEntityComponent
 {
     public Dictionary<string, string> DebugMessages { get; private set; } = new Dictionary<string, string>();
+
+    private Stopwatch stopwatch = new Stopwatch();
 
     protected override void ReceiveMessage(object message, object argument)
     {
@@ -41,6 +44,20 @@ class DebugInformationDisplayComponent : CustomEntityComponent
         });
         this.DebugMessages["friend_count"] = friendCount.ToString();
         this.DebugMessages["enemy_count"] = enemeyCount.ToString();
+
+        int frameCount = Entity.Find("system").Get<SystemComponent>().FrameCount;
+        if (frameCount % 60 == 0)
+        {
+            this.stopwatch.Stop();
+
+            var milliseconds = this.stopwatch.ElapsedMilliseconds;
+            var frameRate = 60.0 * 1000.0 / (double)milliseconds;
+
+            this.DebugMessages["frames_per_sec"] = frameRate.ToString();
+
+            this.stopwatch.Reset();
+            this.stopwatch.Start();
+        }
     }
 
     private void draw()
