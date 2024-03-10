@@ -73,7 +73,7 @@ public class MissileSmokeComponent : CustomEntityComponent
 
         if (this.Owner.Has<TransformComponent>())
         {
-            Instances.AddFirst(new Instance()
+            this.Instances.AddFirst(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position,
                 Time = 0
@@ -104,29 +104,29 @@ public class MissileSmokeComponent : CustomEntityComponent
     {
         if (this.HasOwner && this.Owner.Has<TransformComponent>())
         {
-            Instances.AddFirst(new Instance()
+            this.Instances.AddFirst(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position + new Vector3(normal(0, 2), normal(0, 2), normal(0, 2)),
                 Time = 0
             });
         }
 
-        foreach (var instance in Instances.Where(instance => 1.0f <= instance.Time).ToArray())
+        foreach (var instance in this.Instances.Where(instance => 1.0f <= instance.Time).ToArray())
         {
-            Instances.Remove(instance);
+            this.Instances.Remove(instance);
         }
 
-        if (Instances.Count == 0)
+        if (this.Instances.Count == 0)
         {
             Entity.Kill(this.Owner);
         }
 
-        foreach (var node in Instances)
+        foreach (var node in this.Instances)
         {
             node.Time += CountSpeed;
         }
 
-        assert(Instances.Count < InstanceCount);
+        assert(this.Instances.Count < InstanceCount);
     }
 
     private void TranslucentRender()
@@ -146,11 +146,11 @@ public class MissileSmokeComponent : CustomEntityComponent
         PixelShader.SetSamplerState(Wrap, 0);
         PixelShader.SetTexture(Texture, 0);
 
-        Matrix4x4[] matrices = new Matrix4x4[Instances.Count];
-        float[] alphas = new float[Instances.Count];
+        Matrix4x4[] matrices = new Matrix4x4[this.Instances.Count];
+        float[] alphas = new float[this.Instances.Count];
         {
             int i = 0;
-            foreach (var instance in Instances)
+            foreach (var instance in this.Instances)
             {
                 Vector3 position = instance.Position;
                 float x = instance.Time;
@@ -158,10 +158,10 @@ public class MissileSmokeComponent : CustomEntityComponent
                 float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.15f;
 
                 var world = new Matrix4x3().Identity();
-                world.Translate(position * ViewingMatrix);
+                world.Translate(position * this.ViewingMatrix);
                 world.Scale(scale);
 
-                matrices[i] = world * ProjectionMatrix;
+                matrices[i] = world * this.ProjectionMatrix;
                 alphas[i] = alpha;
 
                 i++;
@@ -170,7 +170,7 @@ public class MissileSmokeComponent : CustomEntityComponent
 
         InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
         {
-            for (int i = 0; i < Instances.Count; i++)
+            for (int i = 0; i < this.Instances.Count; i++)
             {
                 InstanceWVPs.Write(i, matrices[i]);
             }
@@ -179,7 +179,7 @@ public class MissileSmokeComponent : CustomEntityComponent
 
         InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
         {
-            for (int i = 0; i < Instances.Count; i++)
+            for (int i = 0; i < this.Instances.Count; i++)
             {
                 InstanceAlphas.Write(i, alphas[i]);
             }
@@ -189,6 +189,6 @@ public class MissileSmokeComponent : CustomEntityComponent
         device.SetInstanceBuffer(InstanceAlphas, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);
 
-        device.DrawInstanced(4, Instances.Count);
+        device.DrawInstanced(4, this.Instances.Count);
     }
 }

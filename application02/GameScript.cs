@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Reflection;
-using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
 using ZephyrSharp.Sound;
+using static EngineScript;
 using Color = ZephyrSharp.Graphics.Color;
 using Font = ZephyrSharp.Graphics.Font;
-using static EngineScript;
 
-public class GameScript
+public static class GameScript
 {
     #region Constant values.
     public static BlendState NoBlend = new BlendState();
@@ -45,8 +44,8 @@ public class GameScript
     public const int Enemy = 1;
 
     public const float SearchOperationRange = 4000;
-    public const float DisplayWidth = 1920;
-    public const float DisplayHeight = 1080;
+    public const float DisplayWidth = 1280;
+    public const float DisplayHeight = 720;
     public const bool FullScreen = false;
     public const float DisplayAspect = DisplayWidth / DisplayHeight;
     #endregion
@@ -201,12 +200,12 @@ public class GameScript
 
     public static Tuple<double, double> getAnalogStickAxis()
     {
-        return _gamepad.IsConnected ? Tuple.Create(_gamepad.AxisX, _gamepad.AxisY) : Tuple.Create<double,double>(0, 0);
+        return _gamepad.IsConnected ? Tuple.Create(_gamepad.AxisX, _gamepad.AxisY) : Tuple.Create<double, double>(0, 0);
     }
 
     public static Tuple<double, double> getAnalogStickSubAxis()
     {
-        return _gamepad.IsConnected ? Tuple.Create(_gamepad.SubAxisX, _gamepad.SubAxisY) : Tuple.Create<double,double>(0, 0);
+        return _gamepad.IsConnected ? Tuple.Create(_gamepad.SubAxisX, _gamepad.SubAxisY) : Tuple.Create<double, double>(0, 0);
     }
 
     public static bool isConnectedGamePad()
@@ -308,17 +307,17 @@ public class GameScript
 
     public static void color(float rgb)
     {
-        Graphics2D.Instance.SetColor(new ZephyrSharp.Graphics.Color(rgb, rgb, rgb));
+        Graphics2D.Instance.SetColor(new Color(rgb, rgb, rgb));
     }
 
     public static void color(float r, float g, float b)
     {
-        Graphics2D.Instance.SetColor(new ZephyrSharp.Graphics.Color(r, g, b));
+        Graphics2D.Instance.SetColor(new Color(r, g, b));
     }
 
     public static void color(float r, float g, float b, float a)
     {
-        Graphics2D.Instance.SetColor(new ZephyrSharp.Graphics.Color(r, g, b, a));
+        Graphics2D.Instance.SetColor(new Color(r, g, b, a));
     }
 
     public static void color(Color color)

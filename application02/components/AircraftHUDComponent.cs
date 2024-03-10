@@ -1,4 +1,4 @@
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -324,8 +324,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                     var missile = this.Owner.Get<AircraftComponent>().ActiveMissile;
                     {
                         var world = e.Get<TransformComponent>().Matrix;
-                        var viewing = ViewingMatrix;
-                        var projection = ProjectionMatrix;
+                        var viewing = this.ViewingMatrix;
+                        var projection = this.ProjectionMatrix;
 
                         Vector4 v = new Vector4(Vector3.Zero, 1) * world * viewing * projection;
                         if (0 <= v.W && v.W <= SearchOperationRange)
@@ -387,8 +387,8 @@ public class AircraftHUDComponent : CustomEntityComponent
             #region ガンレティクル
             if (target != null)
             {
-                var viewing = ViewingMatrix;
-                var projection = ProjectionMatrix;
+                var viewing = this.ViewingMatrix;
+                var projection = this.ProjectionMatrix;
                 var time = GunBulletComponent.ComputeHitTime(this.Owner, target);
 
                 var p1 = new Vector3(0, 0, time * GunBulletComponent.BulletSpeed) * transform.Matrix;
@@ -420,8 +420,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                 var missile = this.Owner.Get<AircraftComponent>().ActiveMissile;
                 if (missile != null && missile.TargetEntity != null)
                 {
-                    var viewing = ViewingMatrix;
-                    var projection = ProjectionMatrix;
+                    var viewing = this.ViewingMatrix;
+                    var projection = this.ProjectionMatrix;
 
                     if (missile.Locking)
                     {
@@ -486,7 +486,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                     scale(0.5f, 0.5f);
                     translate(0.5f / sqrt(2), -0.5f / sqrt(2), 0);
                     scale(0.1f);
-                    write(RadarRange.ToString());
+                    write(this.RadarRange.ToString());
                 }
                 popMatrix();
 
@@ -514,7 +514,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                             if (matrix.Position.Magnitude < SearchOperationRange)
                             {
                                 Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
-                                point /= max(RadarRange, point.Magnitude);
+                                point /= max(this.RadarRange, point.Magnitude);
 
                                 Vector2 point2D;
                                 point2D.X = point.X * 0.5f / 2;
@@ -543,7 +543,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                         Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
                         if (point.Magnitude < SearchOperationRange)
                         {
-                            point /= max(RadarRange, point.Magnitude);
+                            point /= max(this.RadarRange, point.Magnitude);
 
                             Vector2 point2D;
                             point2D.X = point.X * 0.5f / 2;
@@ -700,11 +700,11 @@ public class AircraftHUDComponent : CustomEntityComponent
 
     public void ChangeRadarRange()
     {
-        if (RadarRange == 1000)
-            RadarRange = 2000;
-        else if (RadarRange == 2000)
-            RadarRange = 4000;
-        else if (RadarRange == 4000)
-            RadarRange = 1000;
+        if (this.RadarRange == 1000)
+            this.RadarRange = 2000;
+        else if (this.RadarRange == 2000)
+            this.RadarRange = 4000;
+        else if (this.RadarRange == 4000)
+            this.RadarRange = 1000;
     }
 }

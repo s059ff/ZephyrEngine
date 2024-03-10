@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CsvHelper;
-using CsvHelper.Configuration;
 using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -55,7 +55,7 @@ public class AircraftComponent : CustomEntityComponent
                 return null;
         }
     }
-    public bool Locking { get { return (ActiveMissile != null) && (ActiveMissile.Locking); } }
+    public bool Locking { get { return (this.ActiveMissile != null) && (this.ActiveMissile.Locking); } }
     public float[] ReloadTimes { get { return this.Weapons.Select(w => w.ReloadTime).ToArray(); } }
     public float Armor { get; private set; } = 1.0f;
 
@@ -111,20 +111,20 @@ public class AircraftComponent : CustomEntityComponent
     {
         public AircraftParameterClassMap()
         {
-            Map(x => x.Name).Index(0);
-            Map(x => x.Weight).Index(1);
-            Map(x => x.InertiaMoment).Index(2);
-            Map(x => x.Thrust).Index(3);
-            Map(x => x.EngineNozzlePos).Index(4).TypeConverter<CsvVector3Converter>();
-            Map(x => x.CanardPos).Index(5).TypeConverter<CsvVector3Converter>();
-            Map(x => x.ElevatorPos).Index(6).TypeConverter<CsvVector3Converter>();
-            Map(x => x.WeaponPos0).Index(7).TypeConverter<CsvVector3Converter>();
-            Map(x => x.WeaponPos1).Index(8).TypeConverter<CsvVector3Converter>();
-            Map(x => x.WeaponPos2).Index(9).TypeConverter<CsvVector3Converter>();
-            Map(x => x.WeaponPos3).Index(10).TypeConverter<CsvVector3Converter>();
-            Map(x => x.WingEdgePos).Index(11).TypeConverter<CsvVector3Converter>();
-            Map(x => x.CockpitPos).Index(12).TypeConverter<CsvVector3Converter>();
-            Map(x => x.GunPos).Index(13).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.Name).Index(0);
+            this.Map(x => x.Weight).Index(1);
+            this.Map(x => x.InertiaMoment).Index(2);
+            this.Map(x => x.Thrust).Index(3);
+            this.Map(x => x.EngineNozzlePos).Index(4).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.CanardPos).Index(5).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.ElevatorPos).Index(6).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.WeaponPos0).Index(7).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.WeaponPos1).Index(8).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.WeaponPos2).Index(9).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.WeaponPos3).Index(10).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.WingEdgePos).Index(11).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.CockpitPos).Index(12).TypeConverter<CsvVector3Converter>();
+            this.Map(x => x.GunPos).Index(13).TypeConverter<CsvVector3Converter>();
         }
     }
 
@@ -260,10 +260,10 @@ public class AircraftComponent : CustomEntityComponent
     {
         base.OnAttach();
 
-        Collision.Object = new SphereCollisionObject(new Sphere() { Radius = AircraftComponent.Radius });
-        Collision.Group = 1;
-        Collision.OtherGroups = 4;
-        Collision.Collided += Collided;
+        this.Collision.Object = new SphereCollisionObject(new Sphere() { Radius = AircraftComponent.Radius });
+        this.Collision.Group = 1;
+        this.Collision.OtherGroups = 4;
+        this.Collision.Collided += this.Collided;
     }
 
     private void Collided(Entity other, Vector3 point)
@@ -294,7 +294,7 @@ public class AircraftComponent : CustomEntityComponent
 
     public void AutoPilot(Vector3 destination)
     {
-        var p = destination * Transform.Matrix.Inverse;
+        var p = destination * this.Transform.Matrix.Inverse;
         var z = Vector3.Angle(p, new Vector3(0, 0, 1));
 
         var y = Vector3.Angle(new Vector3(p.X, p.Y, 0), new Vector3(0, 1, 0));
@@ -338,7 +338,7 @@ public class AircraftComponent : CustomEntityComponent
                 if (missile != null && missile.TargetEntity == this.Owner && missile.Locking)
                 {
                     Vector3 position = missile.Owner.Get<TransformComponent>().Position;
-                    float distance = (Transform.Position - position).Magnitude;
+                    float distance = (this.Transform.Position - position).Magnitude;
 
                     // 発射前ミサイルよりも発射済みミサイルを優先する
                     if (distance < threatMissileDistance || !isThreatMissileLaunched)
@@ -351,12 +351,12 @@ public class AircraftComponent : CustomEntityComponent
             });
         }
 
-        if (Transform.Position.Y < 1000)
+        if (this.Transform.Position.Y < 1000)
         {
             // 高度が低い場合, 上昇する
-            this.AutoPilot(new Vector3(Transform.Position.X, 2000, Transform.Position.Z));
+            this.AutoPilot(new Vector3(this.Transform.Position.X, 2000, this.Transform.Position.Z));
         }
-        else if (min(Transform.Position.X, Transform.Position.Z) < -8000 || max(Transform.Position.X, Transform.Position.Z) > +8000)
+        else if (min(this.Transform.Position.X, this.Transform.Position.Z) < -8000 || max(this.Transform.Position.X, this.Transform.Position.Z) > +8000)
         {
             // 戦闘エリアからの離脱を防ぐ
             this.AutoPilot(new Vector3(0, 2000, 0));
@@ -364,11 +364,11 @@ public class AircraftComponent : CustomEntityComponent
         else if (threatMissilePosition != null)
         {
             // ミサイルにロックされている場合, 回避行動を行う
-            Vector3 n = (Transform.Position - (Vector3)threatMissilePosition).Normalize();
-            Vector3 a = Transform.Forward;
+            Vector3 n = (this.Transform.Position - (Vector3)threatMissilePosition).Normalize();
+            Vector3 a = this.Transform.Forward;
             Vector3 b = Vector3.Inner(a, n) * n;
             Vector3 v = a - b;
-            Vector3 destination = Transform.Position + v;
+            Vector3 destination = this.Transform.Position + v;
             this.AutoPilot(destination);
 
             // 確認用
@@ -403,8 +403,8 @@ public class AircraftComponent : CustomEntityComponent
 
         #region 機関砲の操作
         {
-            var viewing = ViewingMatrix;
-            var projection = ProjectionMatrix;
+            var viewing = this.ViewingMatrix;
+            var projection = this.ProjectionMatrix;
             var time = GunBulletComponent.ComputeHitTime(this.Owner, avionics.TargetEntity);
 
             var p1 = new Vector3(0, 0, time * GunBulletComponent.BulletSpeed) * this.Transform.Matrix;
@@ -498,11 +498,11 @@ public class AircraftComponent : CustomEntityComponent
         {
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.WingEdgePos);
-            this.LeftSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = Physics.AngularVelocity.Magnitude * 60;
+            this.LeftSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
 
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.WingEdgePos));
-            this.RightSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = Physics.AngularVelocity.Magnitude * 60;
+            this.RightSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
         }
         #endregion
 
@@ -582,7 +582,8 @@ public class AircraftComponent : CustomEntityComponent
                     {
                         if (this.ActiveMissile.Seeking)
                         {
-                            if ((frame % 30) < 15)
+                            int frameCount = Entity.Find("system").Get<SystemComponent>().FrameCount;
+                            if ((frameCount % 30) < 15)
                             {
                                 if (!LockonSound.Playing)
                                     LockonSound.Play();
@@ -612,7 +613,7 @@ public class AircraftComponent : CustomEntityComponent
             }
             foreach (var e in this.GunFlushs)
             {
-                e.Get<TransformComponent>().Position = Transform.Position + this.GunPos * Transform.Matrix._Matrix3x3;
+                e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
             }
         }
         #endregion
@@ -629,7 +630,7 @@ public class AircraftComponent : CustomEntityComponent
                 weapon.MissileEntity = null;
                 weapon.ReloadTime = 0;
 
-                NextUseWeapon = (NextUseWeapon + 1) % WeaponCount;
+                this.NextUseWeapon = (this.NextUseWeapon + 1) % WeaponCount;
             }
         }
         #endregion
@@ -641,10 +642,10 @@ public class AircraftComponent : CustomEntityComponent
             {
                 {
                     Entity e = Entity.Instantiate();
-                    e.Attach(new TransformComponent() { Matrix = Transform.Matrix });
-                    e.Get<TransformComponent>().Position = Transform.Position + this.GunPos * Transform.Matrix._Matrix3x3;
+                    e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
+                    e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Get<TransformComponent>().Matrix.RotateAroundAxis(new Vector3(uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f)).Normalize(), normal(0, 0.005f));
-                    e.Attach(new CollisionComponent() { Object = new PointCollisionObject(new Point()), OtherGroups = 1 | 4, Excludes = new CollisionComponent[] { Collision } });
+                    e.Attach(new CollisionComponent() { Object = new PointCollisionObject(new Point()), OtherGroups = 1 | 4, Excludes = new CollisionComponent[] { this.Collision } });
                     e.Attach(new GunBulletComponent(this.Owner));
                     e.Attach(new SoundComponent(BulletSound));
                     e.Get<SoundComponent>().VolumeFactor = 0.8f;
@@ -658,8 +659,8 @@ public class AircraftComponent : CustomEntityComponent
                 if (this.Visibility == 1.0f)
                 {
                     Entity e = Entity.Instantiate();
-                    e.Attach(new TransformComponent() { Matrix = Transform.Matrix });
-                    e.Get<TransformComponent>().Position = Transform.Position + this.GunPos * Transform.Matrix._Matrix3x3;
+                    e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
+                    e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Attach<GunFlushComponent>();
                     e.Attach(new LimitedLifeTimeComponent()
                     {
@@ -714,17 +715,17 @@ public class AircraftComponent : CustomEntityComponent
         device.SetPixelShader(PixelShader);
 
         PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(Texture, 0);
-        PixelShader.SetTexture(NormalMapTexture, 1);
+        PixelShader.SetTexture(this.Texture, 0);
+        PixelShader.SetTexture(this.NormalMapTexture, 1);
 
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("camera").Get<TransformComponent>().Position, 1), 2);
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 3);
         PixelShader.SetConstantBuffer(new Color(1, 1, 1, this.Visibility), 4);
 
         {
-            VertexShader.SetConstantBuffer(WVPMatrix, 0);
-            PixelShader.SetConstantBuffer(WorldMatrix, 0);
-            PixelShader.SetConstantBuffer(WorldMatrix.Inverse, 1);
+            VertexShader.SetConstantBuffer(this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer(this.WorldMatrix.Inverse, 1);
 
             device.SetVertexBuffer(this.Body.VertexPositions, 0);
             device.SetVertexBuffer(this.Body.VertexNormals, 1);
@@ -735,7 +736,7 @@ public class AircraftComponent : CustomEntityComponent
             device.DrawIndexed(this.Body.VertexIndices.Count);
         }
 
-        var angular = new Vector4(Physics.AngularVelocity, 0) * Transform.Matrix.Inverse;
+        var angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
 
         if (this.LeftCanard != null)
         {
@@ -743,9 +744,9 @@ public class AircraftComponent : CustomEntityComponent
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
-            VertexShader.SetConstantBuffer(adjustment * WVPMatrix, 0);
-            PixelShader.SetConstantBuffer(adjustment * WorldMatrix, 0);
-            PixelShader.SetConstantBuffer((adjustment * WorldMatrix).Inverse, 1);
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
             device.SetVertexBuffer(this.LeftCanard.VertexPositions, 0);
             device.SetVertexBuffer(this.LeftCanard.VertexNormals, 1);
@@ -762,9 +763,9 @@ public class AircraftComponent : CustomEntityComponent
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
-            VertexShader.SetConstantBuffer(adjustment * WVPMatrix, 0);
-            PixelShader.SetConstantBuffer(adjustment * WorldMatrix, 0);
-            PixelShader.SetConstantBuffer((adjustment * WorldMatrix).Inverse, 1);
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
             device.SetVertexBuffer(this.RightCanard.VertexPositions, 0);
             device.SetVertexBuffer(this.RightCanard.VertexNormals, 1);
@@ -781,9 +782,9 @@ public class AircraftComponent : CustomEntityComponent
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 + angular.Z * 0.5f) * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
-            VertexShader.SetConstantBuffer(adjustment * WVPMatrix, 0);
-            PixelShader.SetConstantBuffer(adjustment * WorldMatrix, 0);
-            PixelShader.SetConstantBuffer((adjustment * WorldMatrix).Inverse, 1);
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
             device.SetVertexBuffer(this.LeftElevator.VertexPositions, 0);
             device.SetVertexBuffer(this.LeftElevator.VertexNormals, 1);
@@ -800,9 +801,9 @@ public class AircraftComponent : CustomEntityComponent
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 - angular.Z * 0.5f) * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
-            VertexShader.SetConstantBuffer(adjustment * WVPMatrix, 0);
-            PixelShader.SetConstantBuffer(adjustment * WorldMatrix, 0);
-            PixelShader.SetConstantBuffer((adjustment * WorldMatrix).Inverse, 1);
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
             device.SetVertexBuffer(this.RightElevator.VertexPositions, 0);
             device.SetVertexBuffer(this.RightElevator.VertexNormals, 1);
@@ -819,9 +820,9 @@ public class AircraftComponent : CustomEntityComponent
             if (this.Weapons[i].MissileEntity != null)
             {
                 Entity e = this.Weapons[i].MissileEntity;
-                e.Get<TransformComponent>().Matrix = Transform.Matrix;
+                e.Get<TransformComponent>().Matrix = this.Transform.Matrix;
                 e.Get<TransformComponent>().Matrix.Translate(this.Weapons[i].WeaponPos);
-                e.Get<PhysicsComponent>().Velocity = Physics.Velocity;
+                e.Get<PhysicsComponent>().Velocity = this.Physics.Velocity;
                 e.Get<MissileComponent>().TargetEntity = (this.Owner.Has<AircraftAvionicsComponent>()) ? this.Owner.Get<AircraftAvionicsComponent>().TargetEntity : null;
             }
         }
@@ -835,12 +836,12 @@ public class AircraftComponent : CustomEntityComponent
             Entity e = Entity.Instantiate();
             e.Attach(new TransformComponent()
             {
-                Position = Transform.Position
+                Position = this.Transform.Position
             });
             e.Attach(new PhysicsComponent()
             {
-                Mass = Physics.Mass,
-                InertiaMoment = Physics.InertiaMoment,
+                Mass = this.Physics.Mass,
+                InertiaMoment = this.Physics.InertiaMoment,
                 Force = new Vector3(normal(0, 1), normal(0, 1), normal(0, 1)).Normalize() * 100
             });
             e.Attach(new CollisionComponent()
@@ -859,12 +860,12 @@ public class AircraftComponent : CustomEntityComponent
         {
             Entity e = Entity.Instantiate();
             e.Name = string.Format("{0}_{1}", this.Owner.Name, "residue");
-            e.Attach(new TransformComponent() { Position = Transform.Position });
+            e.Attach(new TransformComponent() { Position = this.Transform.Position });
             e.Attach(new SoundComponent(LargeExplosionSound, true));
             e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.005f });
         }
 
-        foreach (var weapon in Weapons)
+        foreach (var weapon in this.Weapons)
         {
             if (weapon.MissileEntity != null)
                 Entity.Kill(weapon.MissileEntity);

@@ -73,7 +73,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
 
         if (this.Owner.Has<TransformComponent>())
         {
-            Instances.AddFirst(new Instance()
+            this.Instances.AddFirst(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position,
                 Time = 0
@@ -104,29 +104,29 @@ public class AircraftSmokeComponent : CustomEntityComponent
     {
         if (this.HasOwner && this.Owner.Has<TransformComponent>())
         {
-            Instances.AddFirst(new Instance()
+            this.Instances.AddFirst(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position + new Vector3(normal(0, 2), normal(0, 2), normal(0, 2)),
                 Time = 0
             });
         }
 
-        foreach (var instance in Instances.Where(instance => 1.0f <= instance.Time).ToArray())
+        foreach (var instance in this.Instances.Where(instance => 1.0f <= instance.Time).ToArray())
         {
-            Instances.Remove(instance);
+            this.Instances.Remove(instance);
         }
 
-        if (Instances.Count == 0)
+        if (this.Instances.Count == 0)
         {
             Entity.Kill(this.Owner);
         }
 
-        foreach (var node in Instances)
+        foreach (var node in this.Instances)
         {
-            node.Time += CountSpeed;
+            node.Time += this.CountSpeed;
         }
 
-        assert(Instances.Count < InstanceCount);
+        assert(this.Instances.Count < InstanceCount);
     }
 
     private void TranslucentRender()
@@ -150,7 +150,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
         InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
 
         int k = 0;
-        foreach (var instance in Instances)
+        foreach (var instance in this.Instances)
         {
             Vector3 position = instance.Position;
             float x = instance.Time;
@@ -158,10 +158,10 @@ public class AircraftSmokeComponent : CustomEntityComponent
             float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.5f;
 
             var world = new Matrix4x3().Identity();
-            world.Translate(position * ViewingMatrix);
+            world.Translate(position * this.ViewingMatrix);
             world.Scale(scale);
 
-            InstanceWVPs.Write(k, world * ProjectionMatrix);
+            InstanceWVPs.Write(k, world * this.ProjectionMatrix);
             InstanceAlphas.Write(k, alpha);
 
             k++;
@@ -173,6 +173,6 @@ public class AircraftSmokeComponent : CustomEntityComponent
         device.SetInstanceBuffer(InstanceAlphas, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);
 
-        device.DrawInstanced(4, Instances.Count);
+        device.DrawInstanced(4, this.Instances.Count);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ZephyrSharp.GameSystem;
-using static EngineScript;
 using static GameScript;
 
 public class SystemComponent : CustomEntityComponent

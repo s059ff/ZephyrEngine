@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using ZephyrSharp.GameSystem;
-using ZephyrSharp.GameSystem.Components;
-using ZephyrSharp.Input;
-using ZephyrSharp.Linalg;
-using System.Linq;
-using static EngineScript;
+﻿using System.Linq;
 using static GameScript;
 
 abstract class AbstractCameraComponent : CustomEntityComponent

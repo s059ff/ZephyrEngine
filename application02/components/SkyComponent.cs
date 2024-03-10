@@ -112,7 +112,7 @@ public class SkyComponent : CustomEntityComponent
 
         PixelShader.SetSamplerState(Wrap, 0);
         PixelShader.SetTextureArray(Texture, 0);
-        VertexShader.SetConstantBuffer(WVPMatrix, 0);
+        VertexShader.SetConstantBuffer(this.WVPMatrix, 0);
 
         device.DrawIndexed(IndexBuffer.Count);
     }

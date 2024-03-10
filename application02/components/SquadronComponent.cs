@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ZephyrSharp.GameSystem;
 
 public class SquadronComponent : CustomEntityComponent

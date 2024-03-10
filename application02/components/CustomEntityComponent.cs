@@ -44,7 +44,7 @@ public class CustomEntityComponent : EntityComponent
     protected PhysicsComponent Physics { get; private set; }
     protected CollisionComponent Collision { get; private set; }
 
-    protected Matrix4x4 WorldMatrix { get { return new Matrix4x4(Transform.Matrix); } }
+    protected Matrix4x4 WorldMatrix { get { return new Matrix4x4(this.Transform.Matrix); } }
     protected Matrix4x4 ViewingMatrix
     {
         get
@@ -59,5 +59,5 @@ public class CustomEntityComponent : EntityComponent
             return Entity.Find("projector").Get<ProjectorComponent>().ProjectionMatrix;
         }
     }
-    protected Matrix4x4 WVPMatrix { get { return WorldMatrix * ViewingMatrix * ProjectionMatrix; } }
+    protected Matrix4x4 WVPMatrix { get { return this.WorldMatrix * this.ViewingMatrix * this.ProjectionMatrix; } }
 }

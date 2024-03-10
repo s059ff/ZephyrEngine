@@ -7,20 +7,20 @@ public class Graphics2D
     public void Create()
     {
         // Create shaders.
-        passes[0].vs.CreateFromFile("res/shader/2DVertexShader.hlsl", "pass0");
-        passes[0].ps.CreateFromFile("res/shader/2DPixelShader.hlsl", "pass0");
-        passes[1].vs.CreateFromFile("res/shader/2DVertexShader.hlsl", "pass1");
-        passes[1].ps.CreateFromFile("res/shader/2DPixelShader.hlsl", "pass1");
-        passes[2].vs.CreateFromFile("res/shader/2DVertexShader.hlsl", "pass2");
-        passes[2].ps.CreateFromFile("res/shader/2DPixelShader.hlsl", "pass2");
+        this.passes[0].vs.CreateFromFile("res/shader/2DVertexShader.hlsl", "pass0");
+        this.passes[0].ps.CreateFromFile("res/shader/2DPixelShader.hlsl", "pass0");
+        this.passes[1].vs.CreateFromFile("res/shader/2DVertexShader.hlsl", "pass1");
+        this.passes[1].ps.CreateFromFile("res/shader/2DPixelShader.hlsl", "pass1");
+        this.passes[2].vs.CreateFromFile("res/shader/2DVertexShader.hlsl", "pass2");
+        this.passes[2].ps.CreateFromFile("res/shader/2DPixelShader.hlsl", "pass2");
 
         // Create vertex layout.
         {
             VertexElement e1 = new VertexElement("POSITION", 0, Format.Float3, 0, 0, VertexElement.Classification.VertexData, 0);
             VertexElement e2 = new VertexElement("TEXCOORD", 0, Format.Float2, 1, 0, VertexElement.Classification.VertexData, 0);
-            passes[0].layout.Create(new VertexElement[] { e1 }, passes[0].vs);
-            passes[1].layout.Create(new VertexElement[] { e1, e2 }, passes[1].vs);
-            passes[2].layout = passes[1].layout;
+            this.passes[0].layout.Create(new VertexElement[] { e1 }, this.passes[0].vs);
+            this.passes[1].layout.Create(new VertexElement[] { e1, e2 }, this.passes[1].vs);
+            this.passes[2].layout = this.passes[1].layout;
         }
 
         // Create vertex buffers.
@@ -31,8 +31,8 @@ public class Graphics2D
                 new Vector3(-0.5f, -0.5f, 0),
                 new Vector3(+0.5f, -0.5f, 0)
             };
-            vb0.Create(vb0_src, Accessibility.None);
-            vb0_dynamic.Create(vb0_src, Accessibility.DynamicWriteOnly);
+            this.vb0.Create(vb0_src, Accessibility.None);
+            this.vb0_dynamic.Create(vb0_src, Accessibility.DynamicWriteOnly);
 
             Vector2[] vb1_src = {
                 new Vector2(0, 0),
@@ -40,29 +40,29 @@ public class Graphics2D
                 new Vector2(0, 1),
                 new Vector2(1, 1)
             };
-            vb1.Create(vb1_src, Accessibility.None);
-            vb1_dynamic.Create(vb1_src, Accessibility.DynamicWriteOnly);
+            this.vb1.Create(vb1_src, Accessibility.None);
+            this.vb1_dynamic.Create(vb1_src, Accessibility.DynamicWriteOnly);
         }
     }
 
     public void SetMatrix(Matrix4x4 value)
     {
-        passes[0].vs.SetConstantBuffer(value, 0);
+        this.passes[0].vs.SetConstantBuffer(value, 0);
     }
 
     public void SetColor(Color value)
     {
-        passes[0].ps.SetConstantBuffer(value, 0);
+        this.passes[0].ps.SetConstantBuffer(value, 0);
     }
 
     public void SetColor(ColorCode value)
     {
-        passes[0].ps.SetConstantBuffer(new Color(value), 0);
+        this.passes[0].ps.SetConstantBuffer(new Color(value), 0);
     }
 
     public void SetTexture(Texture2D value)
     {
-        passes[0].ps.SetTexture(value, 0);
+        this.passes[0].ps.SetTexture(value, 0);
     }
 
     public void SetFont(Font value)
@@ -78,8 +78,8 @@ public class Graphics2D
 
     public void SetAddreessMode(SamplerState value)
     {
-        passes[0].ps.SetSamplerState(value, 0);
-        passes[1].ps.SetSamplerState(value, 0);
+        this.passes[0].ps.SetSamplerState(value, 0);
+        this.passes[1].ps.SetSamplerState(value, 0);
     }
 
     public void SetColorThreshold(float r0, float g0, float b0, float a0, float r1, float g1, float b1, float a1)
@@ -108,56 +108,56 @@ public class Graphics2D
 
     public void SetVertexPositions(float x0, float y0, float x1, float y1)
     {
-        vb0_dynamic.Lock(Accessibility.DynamicWriteOnly);
+        this.vb0_dynamic.Lock(Accessibility.DynamicWriteOnly);
         {
-            vb0_dynamic.Write(0, new Vector3(x0, y0, 0));
-            vb0_dynamic.Write(1, new Vector3(x1, y0, 0));
-            vb0_dynamic.Write(2, new Vector3(x0, y1, 0));
-            vb0_dynamic.Write(3, new Vector3(x1, y1, 0));
+            this.vb0_dynamic.Write(0, new Vector3(x0, y0, 0));
+            this.vb0_dynamic.Write(1, new Vector3(x1, y0, 0));
+            this.vb0_dynamic.Write(2, new Vector3(x0, y1, 0));
+            this.vb0_dynamic.Write(3, new Vector3(x1, y1, 0));
         }
-        vb0_dynamic.Unlock();
+        this.vb0_dynamic.Unlock();
     }
 
     public void SetTextureCoords(float u0, float v0, float u1, float v1)
     {
-        vb1_dynamic.Lock(Accessibility.DynamicWriteOnly);
+        this.vb1_dynamic.Lock(Accessibility.DynamicWriteOnly);
         {
-            vb1_dynamic.Write(0, new Vector2(u0, v0));
-            vb1_dynamic.Write(1, new Vector2(u1, v0));
-            vb1_dynamic.Write(2, new Vector2(u0, v1));
-            vb1_dynamic.Write(3, new Vector2(u1, v1));
+            this.vb1_dynamic.Write(0, new Vector2(u0, v0));
+            this.vb1_dynamic.Write(1, new Vector2(u1, v0));
+            this.vb1_dynamic.Write(2, new Vector2(u0, v1));
+            this.vb1_dynamic.Write(3, new Vector2(u1, v1));
         }
-        vb1_dynamic.Unlock();
+        this.vb1_dynamic.Unlock();
     }
 
     public void DrawRectangle()
     {
-        DrawPass(0);
+        this.DrawPass(0);
     }
 
     public void DrawRectangleWithDynamical()
     {
-        DrawPass(0, true);
+        this.DrawPass(0, true);
     }
 
     public void DrawTexture()
     {
-        DrawPass(1);
+        this.DrawPass(1);
     }
 
     public void DrawTextureWithDynamical()
     {
-        DrawPass(1, true);
+        this.DrawPass(1, true);
     }
 
     public void DrawTextureWithThreshold()
     {
-        DrawPass(2, false);
+        this.DrawPass(2, false);
     }
 
     public void DrawText(string text, TextAlignment horizontal, TextAlignment vertical)
     {
-        SetTextureCoords(0, 0, 1, 1);
+        this.SetTextureCoords(0, 0, 1, 1);
 
         string[] textByLine = text.Split('\n');
 
@@ -166,10 +166,10 @@ public class Graphics2D
         switch (vertical)
         {
             case TextAlignment.Center:
-                y += getParagraphHeight(text) / 2;
+                y += this.getParagraphHeight(text) / 2;
                 break;
             case TextAlignment.Bottom:
-                y += getParagraphHeight(text);
+                y += this.getParagraphHeight(text);
                 break;
             default:
                 break;
@@ -181,10 +181,10 @@ public class Graphics2D
             switch (horizontal)
             {
                 case TextAlignment.Center:
-                    x -= getLineWidth(line) / 2;
+                    x -= this.getLineWidth(line) / 2;
                     break;
                 case TextAlignment.Right:
-                    x -= getLineWidth(line);
+                    x -= this.getLineWidth(line);
                     break;
                 default:
                     break;
@@ -210,9 +210,9 @@ public class Graphics2D
                             float h = (float)tex.Height / this.fontTex.Size;
                             this.SetTexture(tex);
 
-                            SetVertexPositions(x, y, x + w, y - h);
+                            this.SetVertexPositions(x, y, x + w, y - h);
 
-                            DrawPass(1, true);
+                            this.DrawPass(1, true);
 
                             x += w;
                         }
@@ -264,11 +264,11 @@ public class Graphics2D
     private void DrawPass(int pass, bool dynamic = false)
     {
         var dev = GraphicsDeviceContext.Instance;
-        dev.SetVertexBuffer(dynamic ? vb0_dynamic : vb0, 0);
-        dev.SetVertexBuffer(dynamic ? vb1_dynamic : vb1, 1);
-        dev.SetVertexShader(passes[pass].vs);
-        dev.SetPixelShader(passes[pass].ps);
-        dev.SetVertexLayout(passes[pass].layout);
+        dev.SetVertexBuffer(dynamic ? this.vb0_dynamic : this.vb0, 0);
+        dev.SetVertexBuffer(dynamic ? this.vb1_dynamic : this.vb1, 1);
+        dev.SetVertexShader(this.passes[pass].vs);
+        dev.SetPixelShader(this.passes[pass].ps);
+        dev.SetVertexLayout(this.passes[pass].layout);
         dev.SetPrimitiveTopology(PrimitiveTopology.TriangleStrip);
         dev.Draw(4);
     }

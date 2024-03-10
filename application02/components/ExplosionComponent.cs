@@ -52,10 +52,10 @@ public class ExplosionComponent : CustomEntityComponent
     {
         for (int i = 0; i < InstanceCount; i++)
         {
-            Instances[i] = new Instance();
+            this.Instances[i] = new Instance();
         }
 
-        foreach (var instance in Instances)
+        foreach (var instance in this.Instances)
         {
             instance.Position = new Vector3(normal(0, 5), normal(0, 5), normal(0, 5));
             instance.Scale = 50;
@@ -83,9 +83,9 @@ public class ExplosionComponent : CustomEntityComponent
 
     void Update()
     {
-        Time += CountSpeed;
+        this.Time += CountSpeed;
 
-        if (1.0f <= Time)
+        if (1.0f <= this.Time)
         {
             Entity.Kill(this.Owner);
         }
@@ -103,19 +103,19 @@ public class ExplosionComponent : CustomEntityComponent
         device.SetPixelShader(PixelShader);
 
         var position = this.Owner.Get<TransformComponent>().Position;
-        var viewing = ViewingMatrix;
-        var projection = ProjectionMatrix;
+        var viewing = this.ViewingMatrix;
+        var projection = this.ProjectionMatrix;
 
         for (int i = 0; i < InstanceCount; i++)
         {
-            var instance = Instances[i];
+            var instance = this.Instances[i];
 
             var world = new Matrix4x3().Identity();
             world.Translate((position + instance.Position) * viewing);
             world.Scale(instance.Scale);
 
             InstanceWVPs[i] = world * projection;
-            var a = (1.0f - Time) * 0.1f;
+            var a = (1.0f - this.Time) * 0.1f;
             InstanceColors[i] = new Color(a, a, a, a);
         }
 
@@ -125,7 +125,7 @@ public class ExplosionComponent : CustomEntityComponent
         VertexShader.SetConstantBuffer(InstanceColors, 1);
 
         PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(Textures[(int)(Time * TextureCount)], 0);
+        PixelShader.SetTexture(Textures[(int)(this.Time * TextureCount)], 0);
 
         device.DrawInstanced(4, InstanceCount);
     }

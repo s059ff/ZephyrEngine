@@ -67,9 +67,9 @@ public class WindComponent : CustomEntityComponent
     {
         for (int i = 0; i < InstanceCount; i++)
         {
-            Instances[i] = new Instance();
-            Instances[i].CountSpeed = uniform(0.05f, 0.1f);
-            Instances[i].Time = 1;
+            this.Instances[i] = new Instance();
+            this.Instances[i].CountSpeed = uniform(0.05f, 0.1f);
+            this.Instances[i].Time = 1;
         }
     }
 
@@ -109,7 +109,7 @@ public class WindComponent : CustomEntityComponent
 
         for (int i = 0; i < InstanceCount; i++)
         {
-            var instance = Instances[i];
+            var instance = this.Instances[i];
             instance.Time += instance.CountSpeed;
 
             if (1 < instance.Time)
@@ -152,9 +152,9 @@ public class WindComponent : CustomEntityComponent
         InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
         for (int i = 0; i < InstanceCount; i++)
         {
-            var instance = Instances[i];
-            InstanceWVPs.Write(i, instance.Matrix * ViewingMatrix * ProjectionMatrix);
-            
+            var instance = this.Instances[i];
+            InstanceWVPs.Write(i, instance.Matrix * this.ViewingMatrix * this.ProjectionMatrix);
+
             // 速度に応じて濃度を濃くする
             float alpha = 0.15f * instance.Time * max(this.Physics.Velocity.Magnitude - 3.0f, 0.0f);
             InstanceAlphas.Write(i, alpha);

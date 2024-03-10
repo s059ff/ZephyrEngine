@@ -44,10 +44,10 @@ class GunFlushComponent : CustomEntityComponent
     private void Render()
     {
         var world = new Matrix4x3().Identity();
-        world.Translate(Transform.Position * ViewingMatrix);
+        world.Translate(this.Transform.Position * this.ViewingMatrix);
         world.Scale(0.5f * sin(this.Owner.Get<LimitedLifeTimeComponent>().CountTime) * PI);
 
-        VertexShader.SetConstantBuffer(world * ProjectionMatrix, 0);
+        VertexShader.SetConstantBuffer(world * this.ProjectionMatrix, 0);
         PixelShader.SetTexture(GraphicsModel.Texture, 0);
         PixelShader.SetConstantBuffer(new Color(1, 1, 1, 1 - this.Owner.Get<LimitedLifeTimeComponent>().CountTime), 0);
 

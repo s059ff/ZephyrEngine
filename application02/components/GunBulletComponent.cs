@@ -87,8 +87,8 @@ class GunBulletComponent : CustomEntityComponent
     protected override void OnAttach()
     {
         base.OnAttach();
-        Collision.Collided += Collided;
-        Collision.Object.Velocity = Transform.Forward * BulletSpeed;
+        this.Collision.Collided += this.Collided;
+        this.Collision.Object.Velocity = this.Transform.Forward * BulletSpeed;
     }
 
     private void Collided(Entity other, Vector3 point)
@@ -108,7 +108,7 @@ class GunBulletComponent : CustomEntityComponent
             soundComponent.Play();
 
             var aircraft = other.Get<AircraftComponent>();
-            aircraft.Damage(Damage);
+            aircraft.Damage(this.Damage);
 
             var player = Entity.Find("player");
             if (player != null)
@@ -143,14 +143,14 @@ class GunBulletComponent : CustomEntityComponent
 
     private void Update()
     {
-        Transform.Position += Transform.Forward * BulletSpeed;
-        Collision.Object.Velocity = Transform.Forward * BulletSpeed;
+        this.Transform.Position += this.Transform.Forward * BulletSpeed;
+        this.Collision.Object.Velocity = this.Transform.Forward * BulletSpeed;
     }
 
     private void Render()
     {
-        VertexShader.SetConstantBuffer(ViewingMatrix * ProjectionMatrix, 0);
-        VertexShader.SetConstantBuffer(new Vector4[] { new Vector4(Transform.Position, 1), new Vector4(Transform.Position - Transform.Forward * BulletSpeed, 1) }, 1);
+        VertexShader.SetConstantBuffer(this.ViewingMatrix * this.ProjectionMatrix, 0);
+        VertexShader.SetConstantBuffer(new Vector4[] { new Vector4(this.Transform.Position, 1), new Vector4(this.Transform.Position - this.Transform.Forward * BulletSpeed, 1) }, 1);
 
         GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
         device.SetBlendState(Addition);

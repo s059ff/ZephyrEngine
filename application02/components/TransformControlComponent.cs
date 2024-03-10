@@ -1,5 +1,4 @@
 ﻿using ZephyrSharp.Linalg;
-using static EngineScript;
 using static GameScript;
 
 public class TransformControlComponent : CustomEntityComponent
@@ -11,7 +10,7 @@ public class TransformControlComponent : CustomEntityComponent
         switch (message as string)
         {
             case UpdateMessage:
-                Update();
+                this.Update();
                 break;
 
             default:

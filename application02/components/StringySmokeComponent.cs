@@ -81,7 +81,7 @@ public class StringySmokeComponent : CustomEntityComponent
 
         if (this.Owner.Has<TransformComponent>())
         {
-            Nodes.AddFirst(new Node()
+            this.Nodes.AddFirst(new Node()
             {
                 Position = this.Owner.Get<TransformComponent>().Position,
                 Alpha = 0,
@@ -118,34 +118,34 @@ public class StringySmokeComponent : CustomEntityComponent
     {
         if (this.Owner.Has<TransformComponent>())
         {
-            Nodes.AddFirst(new Node()
+            this.Nodes.AddFirst(new Node()
             {
-                Position = Transform.Position,
+                Position = this.Transform.Position,
                 Alpha = clamp(this.Intensity, 0.0f, 1.0f),
                 Time = 0
             });
         }
         if (this.Owner.Has<TransformComponent>())
         {
-            Nodes.First.Value.Position = Transform.Position;
+            this.Nodes.First.Value.Position = this.Transform.Position;
         }
 
-        foreach (var node in Nodes.Where(node => { return 1.0f <= node.Time; }).ToArray())
+        foreach (var node in this.Nodes.Where(node => { return 1.0f <= node.Time; }).ToArray())
         {
-            Nodes.Remove(node);
+            this.Nodes.Remove(node);
         }
 
-        if (Nodes.Count == 0)
+        if (this.Nodes.Count == 0)
         {
             Entity.Kill(this.Owner);
         }
 
-        foreach (var node in Nodes)
+        foreach (var node in this.Nodes)
         {
             node.Time += CountSpeed;
         }
 
-        assert(Nodes.Count <= InstanceCount);
+        assert(this.Nodes.Count <= InstanceCount);
     }
 
     private void TranslucentRender()
@@ -162,16 +162,16 @@ public class StringySmokeComponent : CustomEntityComponent
         device.SetVertexBuffer(VertexPositions, 0);
         device.SetVertexBuffer(VertexColors, 1);
 
-        var viewing = ViewingMatrix;
-        var projection = ProjectionMatrix;
+        var viewing = this.ViewingMatrix;
+        var projection = this.ProjectionMatrix;
         var eye = Entity.Find("camera").Get<TransformComponent>().Position;
 
-        Matrix4x4[] matrices = new Matrix4x4[Nodes.Count];
-        Color[] colors = new Color[Nodes.Count];
+        Matrix4x4[] matrices = new Matrix4x4[this.Nodes.Count];
+        Color[] colors = new Color[this.Nodes.Count];
 
         int k = 0;
-        Vector3 position2 = Nodes.First.Value.Position;
-        foreach (var node in Nodes)
+        Vector3 position2 = this.Nodes.First.Value.Position;
+        foreach (var node in this.Nodes)
         {
             Vector3 position1 = node.Position;
 
@@ -205,14 +205,14 @@ public class StringySmokeComponent : CustomEntityComponent
         }
 
         InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
-        for (int i = 0; i < Nodes.Count; i++)
+        for (int i = 0; i < this.Nodes.Count; i++)
         {
             InstanceWVPs.Write(i, matrices[i]);
         }
         InstanceWVPs.Unlock();
 
         InstanceColors.Lock(Accessibility.DynamicWriteOnly);
-        for (int i = 0; i < Nodes.Count; i++)
+        for (int i = 0; i < this.Nodes.Count; i++)
         {
             InstanceColors.Write(i, colors[i]);
         }
@@ -221,6 +221,6 @@ public class StringySmokeComponent : CustomEntityComponent
         device.SetInstanceBuffer(InstanceColors, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);
 
-        device.DrawInstanced(6, Nodes.Count - 1);
+        device.DrawInstanced(6, this.Nodes.Count - 1);
     }
 }

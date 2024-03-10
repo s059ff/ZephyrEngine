@@ -90,8 +90,8 @@ public class MissileComponent : CustomEntityComponent
     protected override void OnAttach()
     {
         base.OnAttach();
-        Physics.Mass = Weight;
-        Physics.InertiaMoment = InertiaMoment;
+        this.Physics.Mass = Weight;
+        this.Physics.InertiaMoment = InertiaMoment;
     }
 
     private void Update()
@@ -110,12 +110,12 @@ public class MissileComponent : CustomEntityComponent
                     this.Owner.Detach<GravityObjectComponent>();
 
                 // 前進移動
-                Physics.Force += Transform.Forward * Thrust;
+                this.Physics.Force += this.Transform.Forward * Thrust;
 
                 #region コンポーネント取り付け
                 {
                     if (!this.Owner.Has<JetComponent>())
-                        this.Owner.Attach<JetComponent>().OffsetPosition = EngineNozzlePos;
+                        this.Owner.Attach<JetComponent>().OffsetPosition = this.EngineNozzlePos;
 
                     if (!this.Owner.Has<MissileSmokeComponent>())
                         this.Owner.Attach<MissileSmokeComponent>();
@@ -129,7 +129,7 @@ public class MissileComponent : CustomEntityComponent
                             OtherGroups = 1 | 4,
                             Excludes = new CollisionComponent[] { this.From.Get<CollisionComponent>() }
                         });
-                        this.Owner.Get<CollisionComponent>().Collided += Collided;
+                        this.Owner.Get<CollisionComponent>().Collided += this.Collided;
                     }
                 }
                 #endregion
@@ -141,9 +141,9 @@ public class MissileComponent : CustomEntityComponent
                         var transform2 = this.TargetEntity.Get<TransformComponent>();
                         var physics2 = this.TargetEntity.Get<PhysicsComponent>();
 
-                        Vector3 forward = Transform.Forward;
-                        Vector3 relativeVector = transform2.Position - Transform.Position;
-                        Vector3 relativeVelocity = physics2.Velocity - Physics.Velocity;
+                        Vector3 forward = this.Transform.Forward;
+                        Vector3 relativeVector = transform2.Position - this.Transform.Position;
+                        Vector3 relativeVelocity = physics2.Velocity - this.Physics.Velocity;
 
                         var angle = Vector3.Angle(forward, relativeVector);
                         if (angle < deg2rad(LockableAngleRange) && relativeVector.Magnitude < LockableDistanceRange)
@@ -159,10 +159,10 @@ public class MissileComponent : CustomEntityComponent
                             //const float intermediate_distance = 1000f;
                             //float look_ahead_rate = 1.0f / (1.0f + exp(gain * (distance - intermediate_distance)));
                             //Vector3 interceptPoint = transform2.Position + physics2.Velocity * access_time * look_ahead_rate;
-                            Vector3 torque = Vector3.Outer(forward, (transform2.Position - Transform.Position).Normalize());
+                            Vector3 torque = Vector3.Outer(forward, (transform2.Position - this.Transform.Position).Normalize());
                             torque.Normalize();
                             torque *= TurningPerformance;
-                            Physics.Torque += torque;
+                            this.Physics.Torque += torque;
                         }
                         else
                         {
@@ -229,14 +229,14 @@ public class MissileComponent : CustomEntityComponent
                 if (this.TargetEntity != null)
                 {
                     var transform2 = this.TargetEntity.Get<TransformComponent>();
-                    var targetPosition = transform2.Position * Transform.Matrix.Inverse;
+                    var targetPosition = transform2.Position * this.Transform.Matrix.Inverse;
 
                     this.Seeking = Vector3.Angle(new Vector3(0, 0, 1), targetPosition) < deg2rad(SeekerAngleRange) && targetPosition.Z < SeekerDistanceRange;
                     if (this.Seeking)
                     {
                         if (this.Locking)
                         {
-                            SeekerAngle = aim(SeekerAngle, targetPosition);
+                            this.SeekerAngle = aim(this.SeekerAngle, targetPosition);
                         }
                         else
                         {
@@ -244,7 +244,7 @@ public class MissileComponent : CustomEntityComponent
                             forward.X = this.SeekerAngle.M31;
                             forward.Y = this.SeekerAngle.M32;
                             forward.Z = this.SeekerAngle.M33;
-                            SeekerAngle = aim(SeekerAngle, targetPosition, SeekerSpeed);
+                            this.SeekerAngle = aim(this.SeekerAngle, targetPosition, SeekerSpeed);
                             if (Vector3.Angle(forward, targetPosition) < deg2rad(1.0f))
                                 this.Locking = true;
                         }
@@ -252,7 +252,7 @@ public class MissileComponent : CustomEntityComponent
                     else
                     {
                         this.Locking = false;
-                        SeekerAngle = aim(SeekerAngle, new Vector3(0, 0, 1), SeekerSpeed);
+                        this.SeekerAngle = aim(this.SeekerAngle, new Vector3(0, 0, 1), SeekerSpeed);
                     }
                 }
             }
@@ -299,7 +299,7 @@ public class MissileComponent : CustomEntityComponent
         {
             var aircraftPhysics = other.Get<PhysicsComponent>();
 
-            Vector3 velocity_missile = Physics.Velocity;
+            Vector3 velocity_missile = this.Physics.Velocity;
             aircraftPhysics.Force += velocity_missile * 5;
             Vector3 angler_force = Vector3.Outer(aircraftPhysics.Velocity, velocity_missile);
             aircraftPhysics.Torque += angler_force * 0.02f;
@@ -379,8 +379,8 @@ public class MissileComponent : CustomEntityComponent
         PixelShader.SetTexture(GraphicsModel.Texture, 0);
 
         {
-            VertexShader.SetConstantBuffer(WVPMatrix, 0);
-            PixelShader.SetConstantBuffer(WorldMatrix, 0);
+            VertexShader.SetConstantBuffer(this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 1);
 
             device.SetVertexBuffer(GraphicsModel.VertexPositions, 0);

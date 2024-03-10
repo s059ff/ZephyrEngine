@@ -4,7 +4,6 @@ using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
 using static EngineScript;
-using static GameScript;
 
 class AircraftAvionicsComponent : CustomEntityComponent
 {
@@ -12,7 +11,7 @@ class AircraftAvionicsComponent : CustomEntityComponent
     {
         this.Organization = organization;
     }
-    
+
     public void ChangeTarget()
     {
         Entity highestPriorityEntity = null;

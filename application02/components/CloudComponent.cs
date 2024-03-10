@@ -2,7 +2,6 @@
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
-using static EngineScript;
 using static GameScript;
 
 public class CloudComponent : CustomEntityComponent
@@ -59,23 +58,23 @@ public class CloudComponent : CustomEntityComponent
 
     public CloudComponent(Vector3[] positions)
     {
-        Instances = new Instance[positions.Length];
-        for (int i = 0; i < Instances.Length; i++)
+        this.Instances = new Instance[positions.Length];
+        for (int i = 0; i < this.Instances.Length; i++)
         {
-            Instances[i] = new Instance()
+            this.Instances[i] = new Instance()
             {
                 Position = positions[i],
                 Scale = 250.0f,
             };
         }
-        InstanceWVPs.Create(Instances.Length, Accessibility.DynamicWriteOnly);
+        this.InstanceWVPs.Create(this.Instances.Length, Accessibility.DynamicWriteOnly);
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
 
-        InstanceWVPs.Dispose();
+        this.InstanceWVPs.Dispose();
     }
 
     protected override void ReceiveMessage(object message, object argument)
@@ -110,27 +109,27 @@ public class CloudComponent : CustomEntityComponent
         PixelShader.SetSamplerState(Wrap, 0);
         PixelShader.SetTexture(Texture, 0);
 
-        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
+        this.InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
 
         var eye = Entity.Find("camera").Get<TransformComponent>().Position;
 
-        for (int i = 0; i < Instances.Length; i++)
+        for (int i = 0; i < this.Instances.Length; i++)
         {
-            var instance = Instances[i];
+            var instance = this.Instances[i];
             Vector3 position = instance.Position;
             float scale = instance.Scale;
 
             var world = new Matrix4x3().Identity();
-            world.Translate(position * ViewingMatrix);
+            world.Translate(position * this.ViewingMatrix);
             world.Scale(scale);
 
-            InstanceWVPs.Write(i, world * ProjectionMatrix);
+            this.InstanceWVPs.Write(i, world * this.ProjectionMatrix);
         }
 
-        InstanceWVPs.Unlock();
+        this.InstanceWVPs.Unlock();
 
-        device.SetInstanceBuffer(InstanceWVPs, 2);
+        device.SetInstanceBuffer(this.InstanceWVPs, 2);
 
-        device.DrawInstanced(4, Instances.Length);
+        device.DrawInstanced(4, this.Instances.Length);
     }
 }

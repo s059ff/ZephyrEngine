@@ -68,29 +68,29 @@ public class AircraftFlameComponent : CustomEntityComponent
     {
         if (this.HasOwner && this.Owner.Has<TransformComponent>())
         {
-            Instances.AddFirst(new Instance()
+            this.Instances.AddFirst(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position + new Vector3(normal(0, 2), normal(0, 2), normal(0, 2)),
                 Time = 0
             });
         }
 
-        foreach (var instance in Instances.Where(instance => 1.0f <= instance.Time).ToArray())
+        foreach (var instance in this.Instances.Where(instance => 1.0f <= instance.Time).ToArray())
         {
-            Instances.Remove(instance);
+            this.Instances.Remove(instance);
         }
 
-        if (Instances.Count == 0)
+        if (this.Instances.Count == 0)
         {
             Entity.Kill(this.Owner);
         }
 
-        foreach (var node in Instances)
+        foreach (var node in this.Instances)
         {
             node.Time += CountSpeed;
         }
 
-        assert(Instances.Count < InstanceCount);
+        assert(this.Instances.Count < InstanceCount);
     }
 
     void TransparentRender()
@@ -104,11 +104,11 @@ public class AircraftFlameComponent : CustomEntityComponent
         device.SetVertexShader(VertexShader);
         device.SetPixelShader(PixelShader);
 
-        var viewing = ViewingMatrix;
-        var projection = ProjectionMatrix;
+        var viewing = this.ViewingMatrix;
+        var projection = this.ProjectionMatrix;
 
         int k = 0;
-        foreach (var instance in Instances)
+        foreach (var instance in this.Instances)
         {
             Vector3 position = instance.Position;
             float x = instance.Time;
@@ -116,10 +116,10 @@ public class AircraftFlameComponent : CustomEntityComponent
             float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.2f;
 
             var world = new Matrix4x3().Identity();
-            world.Translate(position * ViewingMatrix);
+            world.Translate(position * this.ViewingMatrix);
             world.Scale(scale);
 
-            InstanceWVPs[k] = world * ProjectionMatrix;
+            InstanceWVPs[k] = world * this.ProjectionMatrix;
             InstanceColors[k] = new Color(alpha, alpha, alpha, instance.Time);
 
             k++;

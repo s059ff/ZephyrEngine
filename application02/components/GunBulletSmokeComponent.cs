@@ -86,10 +86,10 @@ class GunBulletSmokeComponent : CustomEntityComponent
         var time = this.Owner.Get<LimitedLifeTimeComponent>().CountTime;
         var scale = sin(time * PI) * 6;
         var alpha = sin(time * PI) * 0.4f;
-        world.Translate(Transform.Position);
+        world.Translate(this.Transform.Position);
         world.RotateY(atan2(camera.Forward.X, camera.Forward.Z));
         world.Scale(0.5f * scale, scale, 1);
-        VertexShader.SetConstantBuffer(world * ViewingMatrix * ProjectionMatrix, 0);
+        VertexShader.SetConstantBuffer(world * this.ViewingMatrix * this.ProjectionMatrix, 0);
         PixelShader.SetConstantBuffer(new Color(alpha, alpha, alpha), 0);
 
         PixelShader.SetSamplerState(Wrap, 0);
