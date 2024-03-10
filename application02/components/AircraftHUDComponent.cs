@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -92,7 +92,8 @@ public class AircraftHUDComponent : CustomEntityComponent
             }
         });
 
-        bool playAlertSound = missileAlert || (lockonAlert && (frame % 60) < 30);
+        int frameCount = Entity.Find("system").Get<SystemComponent>().FrameCount;
+        bool playAlertSound = missileAlert || (lockonAlert && (frameCount % 60) < 30);
 
         if (playAlertSound && !AlertSound.Playing)
             AlertSound.LoopPlay();
@@ -344,7 +345,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                                         color(Red);
                                         draw(TargetTexture);
                                     }
-                                    else if ((target == e) && (frame % 30 < 15))
+                                    else if ((target == e) && (frameCount % 30 < 15))
                                     {
                                         color(Green);
                                         draw(TargetTexture);
@@ -506,7 +507,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? Blue : Red);
 
-                        if (!((e == target) && (frame % 60 < 30)))
+                        if (!((e == target) && (frameCount % 60 < 30)))
                         {
                             var transform2 = e.Get<TransformComponent>();
                             Matrix4x3 matrix = transform2.Matrix * local;
@@ -614,7 +615,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                 {
                     if (e.Has<AircraftAvionicsComponent>())
                     {
-                        if (!((target == e) && (frame % 60 < 30)))
+                        if (!((target == e) && (frameCount % 60 < 30)))
                         {
                             color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? (e != this.Owner) ? Green : Blue : Red);
 

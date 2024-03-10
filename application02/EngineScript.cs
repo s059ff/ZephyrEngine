@@ -5,12 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Timers;
 using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Linalg;
 
-public class EngineScript
+public static class EngineScript
 {
     #region Console functions.
     public static void print(string text, params object[] args)
@@ -460,13 +459,9 @@ public class EngineScript
     static Stack<Matrix4x4> _matrix_stack = new Stack<Matrix4x4>();
     #endregion
 
-    #region Frame count
-    public static int frame;
-    #endregion
+    public static void initialize() { }
 
-    public static void initialize() {}
-
-    public static void update() { frame++; }
+    public static void update() { }
 
     public static void finalize()
     {
