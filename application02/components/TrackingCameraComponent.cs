@@ -85,14 +85,14 @@ class TrackingCameraComponent : AbstractCameraComponent
                 this.trackingOffset = 0.9f * this.trackingOffset + 0.1f * new Vector3(0, 4, -18);
                 break;
             case CameraView.Cockpit:
-                this.trackingOffset = 0.9f * this.trackingOffset + 0.1f * aircraft.CockpitPos;
+                this.trackingOffset = 0.9f * this.trackingOffset + 0.1f * aircraft.Parameter.CockpitPos;
                 break;
             default:
                 break;
         }
 
         {
-            var distance = (this.trackingOffset - aircraft.CockpitPos).Magnitude;
+            var distance = (this.trackingOffset - aircraft.Parameter.CockpitPos).Magnitude;
             aircraft.Visibility = clamp(distance / 15.0f, 0.0f, 1.0f);
         }
 

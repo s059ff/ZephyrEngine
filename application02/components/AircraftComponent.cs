@@ -13,6 +13,24 @@ using static GameScript;
 
 public class AircraftComponent : CustomEntityComponent
 {
+    public class AircraftParameter
+    {
+        public string Name;
+        public float Weight;
+        public float InertiaMoment;
+        public float Thrust;
+        public Vector3 EngineNozzlePos;
+        public Vector3 CanardPos;
+        public Vector3 ElevatorPos;
+        public Vector3 WeaponPos0;
+        public Vector3 WeaponPos1;
+        public Vector3 WeaponPos2;
+        public Vector3 WeaponPos3;
+        public Vector3 WingEdgePos;
+        public Vector3 CockpitPos;
+        public Vector3 GunPos;
+    }
+
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
@@ -23,16 +41,8 @@ public class AircraftComponent : CustomEntityComponent
     public const float Radius = 5.0f;
     public const int WeaponCount = 4;
 
-    public readonly string Name;
-    readonly float Weight;
-    readonly float InertiaMoment;
-    readonly float Thrust;
-    readonly Vector3 CanardPos;
-    readonly Vector3 ElevatorPos;
-    readonly Vector3 WingEdgePos;
-    public readonly Vector3 CockpitPos;
-    public readonly Vector3 EngineNozzlePos;
-    readonly Vector3 GunPos;
+    public readonly AircraftParameter Parameter;
+
     readonly GraphicsModel Body = new GraphicsModel();
     readonly GraphicsModel LeftCanard = null;
     readonly GraphicsModel RightCanard = null;
@@ -75,24 +85,6 @@ public class AircraftComponent : CustomEntityComponent
     public float YawInput { get; set; }
     public bool MissileLaunchInput { get; set; }
     public bool GunFireInput { get; set; }
-
-    public class AircraftParameter
-    {
-        public string Name;
-        public float Weight;
-        public float InertiaMoment;
-        public float Thrust;
-        public Vector3 EngineNozzlePos;
-        public Vector3 CanardPos;
-        public Vector3 ElevatorPos;
-        public Vector3 WeaponPos0;
-        public Vector3 WeaponPos1;
-        public Vector3 WeaponPos2;
-        public Vector3 WeaponPos3;
-        public Vector3 WingEdgePos;
-        public Vector3 CockpitPos;
-        public Vector3 GunPos;
-    }
 
     static AircraftComponent()
     {
@@ -140,74 +132,63 @@ public class AircraftComponent : CustomEntityComponent
 
     public AircraftComponent(string aircraftName)
     {
-        var parameters = AircraftParameters.Where((parameter) => parameter.Name == aircraftName).First();
-        this.Name = parameters.Name.Replace(' ', '_');
-        this.Weight = parameters.Weight;
-        this.InertiaMoment = parameters.InertiaMoment;
-        this.Thrust = parameters.Thrust;
-        this.CanardPos = parameters.CanardPos;
-        this.ElevatorPos = parameters.ElevatorPos;
-        this.EngineNozzlePos = parameters.EngineNozzlePos;
+        this.Parameter = AircraftParameters.Where((parameter) => parameter.Name == aircraftName).First();
         for (int i = 0; i < WeaponCount; i++)
         {
             this.Weapons[i] = new Weapon();
             switch (i)
             {
                 case 0:
-                    this.Weapons[0].WeaponPos = parameters.WeaponPos0;
+                    this.Weapons[0].WeaponPos = this.Parameter.WeaponPos0;
                     break;
                 case 1:
-                    this.Weapons[1].WeaponPos = reverseX(parameters.WeaponPos0);
+                    this.Weapons[1].WeaponPos = reverseX(this.Parameter.WeaponPos0);
                     break;
                 case 2:
-                    this.Weapons[2].WeaponPos = parameters.WeaponPos1;
+                    this.Weapons[2].WeaponPos = this.Parameter.WeaponPos1;
                     break;
                 case 3:
-                    this.Weapons[3].WeaponPos = reverseX(parameters.WeaponPos1);
+                    this.Weapons[3].WeaponPos = reverseX(this.Parameter.WeaponPos1);
                     break;
                 case 4:
-                    this.Weapons[4].WeaponPos = parameters.WeaponPos2;
+                    this.Weapons[4].WeaponPos = this.Parameter.WeaponPos2;
                     break;
                 case 5:
-                    this.Weapons[5].WeaponPos = reverseX(parameters.WeaponPos2);
+                    this.Weapons[5].WeaponPos = reverseX(this.Parameter.WeaponPos2);
                     break;
                 case 6:
-                    this.Weapons[6].WeaponPos = parameters.WeaponPos3;
+                    this.Weapons[6].WeaponPos = this.Parameter.WeaponPos3;
                     break;
                 case 7:
-                    this.Weapons[7].WeaponPos = reverseX(parameters.WeaponPos3);
+                    this.Weapons[7].WeaponPos = reverseX(this.Parameter.WeaponPos3);
                     break;
             }
         }
 
-        this.WingEdgePos = parameters.WingEdgePos;
-        this.CockpitPos = parameters.CockpitPos;
-        this.GunPos = parameters.GunPos;
-
-        this.Body.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_Body.cx", this.Name));
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Name)))
+        this.Body.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_Body.cx", this.Parameter.Name));
+        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Parameter.Name)))
         {
             this.LeftCanard = new GraphicsModel();
-            this.LeftCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Name));
+            this.LeftCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Parameter.Name));
         }
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", this.Name)))
+        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", this.Parameter.Name)))
         {
             this.RightCanard = new GraphicsModel();
-            this.RightCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", this.Name));
+            this.RightCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", this.Parameter.Name));
         }
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", this.Name)))
+        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", this.Parameter.Name)))
         {
             this.LeftElevator = new GraphicsModel();
-            this.LeftElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", this.Name));
+            this.LeftElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", this.Parameter.Name));
         }
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", this.Name)))
+        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", this.Parameter.Name)))
         {
             this.RightElevator = new GraphicsModel();
-            this.RightElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", this.Name));
+            this.RightElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", this.Parameter.Name));
         }
 
-        this.Texture.Create(string.Format("res/mesh/aircraft/{0}/{0}_P01.png", this.Name), Accessibility.None);
-        this.NormalMapTexture.Create(string.Format("res/mesh/aircraft/{0}/{0}_N.png", this.Name), Accessibility.None);
+        this.Texture.Create(string.Format("res/mesh/aircraft/{0}/{0}_P01.png", this.Parameter.Name), Accessibility.None);
+        this.NormalMapTexture.Create(string.Format("res/mesh/aircraft/{0}/{0}_N.png", this.Parameter.Name), Accessibility.None);
 
         this.LeftSmokeGeneratorEntity = Entity.Instantiate();
         this.LeftSmokeGeneratorEntity.Attach(new TransformComponent());
@@ -412,9 +393,9 @@ public class AircraftComponent : CustomEntityComponent
         #region エンジン推力による前進
         {
             this.EnginePower = clamp(this.EnginePower + 0.004f * this.ThrottleInput, 0.25f, 1.0f);
-            this.Physics.Mass = this.Weight;
-            this.Physics.InertiaMoment = this.InertiaMoment;
-            this.Physics.Force += this.Transform.Forward * (this.Thrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
+            this.Physics.Mass = this.Parameter.Weight;
+            this.Physics.InertiaMoment = this.Parameter.InertiaMoment;
+            this.Physics.Force += this.Transform.Forward * (this.Parameter.Thrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
         }
         #endregion
 
@@ -484,11 +465,11 @@ public class AircraftComponent : CustomEntityComponent
         if (this.Armor > 0)
         {
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
-            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.WingEdgePos);
+            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.Parameter.WingEdgePos);
             this.LeftSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
 
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
-            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.WingEdgePos));
+            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.Parameter.WingEdgePos));
             this.RightSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
         }
         #endregion
@@ -600,7 +581,7 @@ public class AircraftComponent : CustomEntityComponent
             }
             foreach (var e in this.GunFlushs)
             {
-                e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
+                e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
             }
         }
         #endregion
@@ -630,7 +611,7 @@ public class AircraftComponent : CustomEntityComponent
                 {
                     Entity e = Entity.Instantiate();
                     e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
-                    e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
+                    e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Get<TransformComponent>().Matrix.RotateAroundAxis(new Vector3(uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f)).Normalize(), normal(0, 0.005f));
                     e.Attach(new CollisionComponent() {
                         Object = new PointCollisionObject(new Point()),
@@ -652,7 +633,7 @@ public class AircraftComponent : CustomEntityComponent
                 {
                     Entity e = Entity.Instantiate();
                     e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
-                    e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
+                    e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Attach<GunFlushComponent>();
                     e.Attach(new LimitedLifeTimeComponent()
                     {
@@ -732,7 +713,7 @@ public class AircraftComponent : CustomEntityComponent
 
         if (this.LeftCanard != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(this.CanardPos);
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(this.Parameter.CanardPos);
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
@@ -751,7 +732,7 @@ public class AircraftComponent : CustomEntityComponent
 
         if (this.RightCanard != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.CanardPos));
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.Parameter.CanardPos));
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
@@ -770,7 +751,7 @@ public class AircraftComponent : CustomEntityComponent
 
         if (this.LeftElevator != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(this.ElevatorPos);
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(this.Parameter.ElevatorPos);
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 + angular.Z * 0.5f) * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
@@ -789,7 +770,7 @@ public class AircraftComponent : CustomEntityComponent
 
         if (this.RightElevator != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.ElevatorPos));
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.Parameter.ElevatorPos));
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 - angular.Z * 0.5f) * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
