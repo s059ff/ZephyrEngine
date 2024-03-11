@@ -10,16 +10,18 @@
 #include "zephyr.graphics.dx11\GraphicsDevice.h"
 #include "zephyr.graphics.dx11\GraphicsDeviceContext.h"
 #include "zephyr.graphics.dx11\VertexShader.h"
-#include "zephyr.graphics.dx11\GeometryShader.h"
 #include "zephyr.graphics.dx11\PixelShader.h"
 #include "zephyr.graphics.dx11\VertexBuffer.h"
 #include "zephyr.graphics.dx11\VertexLayout.h"
 #include "zephyr.graphics.dx11\VertexElement.h"
 #include "zephyr.graphics.dx11\Texture2D.h"
+#include "zephyr.graphics.dx11\Texture2DArray.h"
+#include "zephyr.graphics.dx11\SamplerState.h"
 #include "zephyr.graphics.dx11\ShaderResourceView.h"
 #include "zephyr.graphics.dx11\ConstantBuffer.h"
 #include "zephyr.linalg\Vector2.h"
 #include "zephyr.linalg\Vector3.h"
+#include "zephyr.linalg\Vector4.h"
 #include "zephyr.linalg\Matrix4x4.h"
 
 using namespace zephyr;
@@ -32,10 +34,10 @@ float deg2rad(float degrees) { return degrees * 4.0f * atan(1.0f) / 180.0f; }
 void main()
 {
     Window window;
-    window.Create("DirectX11 ƒeƒXƒg", 800, 600);
+    window.Create("DirectX11 ï¿½eï¿½Xï¿½g", 800, 600);
 
-	GraphicsDevice& device = GraphicsDevice::Instance;
-	GraphicsDeviceContext& context = GraphicsDeviceContext::Instance;
+    GraphicsDevice& device = GraphicsDevice::Instance;
+    GraphicsDeviceContext& context = GraphicsDeviceContext::Instance;
     device.Create(window, false);
 
     struct Vertex
@@ -47,25 +49,17 @@ void main()
     VertexShader vs_shader;
     {
         vs_shader.CreateFromFile("res/VertexShader.hlsl");
-		context.SetVertexShader(vs_shader);
-    }
-
-    GeometryShader gs_shader;
-    {
-        gs_shader.CreateFromFile("res/GeometryShader.hlsl");
-		context.SetGeometryShader(gs_shader);
+        context.SetVertexShader(vs_shader);
     }
 
     PixelShader ps_shader;
     {
         ps_shader.CreateFromFile("res/PixelShader.hlsl");
-		context.SetPixelShader(ps_shader);
+        context.SetPixelShader(ps_shader);
     }
 
-    Texture2D texture;
-    Font font;
-    font.Create("DS-Digital", 32);
-    texture.Print(font, '0');
+    Texture2DArray texture;
+    texture.Create("res/explos.png", 32, 32, Accessibility::None);
 
     ShaderResourceView view;
     {
@@ -74,18 +68,24 @@ void main()
 
     ps_shader.SetTextureResource(view, 0);
 
+    SamplerState sampler_state;
+    {
+        sampler_state.Create(TextureAddressMode::Wrap, TextureAddressMode::Wrap, TextureAddressMode::Wrap);
+    }
+    ps_shader.SetSamplerState(sampler_state, 0);
+
     VertexBuffer vs_buffer;
     {
         vs_buffer.Create(
-        {
-            Vertex{ Vector3(-0.5f, 0.5f, 0), Vector2(0, 0) },
-            Vertex{ Vector3(0.5f, 0.5f, 0), Vector2(1, 0) },
-            Vertex{ Vector3(-0.5f, -0.5f, 0), Vector2(0, 1) },
-            Vertex{ Vector3(0.5f, -0.5f, 0), Vector2(1, 1) },
-        },
-        Accessibility::None);
+            {
+                Vertex{ Vector3(-0.5f, 0.5f, 0), Vector2(0, 0) },
+                Vertex{ Vector3(0.5f, 0.5f, 0), Vector2(1, 0) },
+                Vertex{ Vector3(-0.5f, -0.5f, 0), Vector2(0, 1) },
+                Vertex{ Vector3(0.5f, -0.5f, 0), Vector2(1, 1) },
+            },
+            Accessibility::None);
 
-		context.SetVertexBuffer(vs_buffer, 0);
+        context.SetVertexBuffer(vs_buffer, 0);
     }
 
     VertexLayout layout;
@@ -95,37 +95,49 @@ void main()
             VertexElement("TEXCOORD", 0, Format::Float2, 0, sizeof(float) * 3, VertexElement::Classification::VertexData, 0)
         };
         layout.Create(elements, vs_shader);
-		context.SetVertexLayout(layout);
+        context.SetVertexLayout(layout);
     }
 
-	context.SetPrimitiveTopology(PrimitiveTopology::TriangleStrip);
+    context.SetPrimitiveTopology(PrimitiveTopology::TriangleStrip);
 
-    ConstantBuffer constant_buffer;
+    int frame_count = 0;
+    struct
     {
-        struct
-        {
-            Matrix4x4 world, viewing, projection;
-        } data;
-        data.world.identity();
-        data.viewing.lookAt({ -1, 1, -1 }, { 0, 0, 0 });
-        data.viewing.invert();
-        data.projection.perspective(deg2rad(60.0f), 4.0f / 3.0f, 0.1f, 128.0f);
+        Matrix4x4 world;
+        Matrix4x4 viewing;
+        Matrix4x4 projection;
+    } constant_data1;
 
-        constant_buffer.Create(sizeof(data));
-        constant_buffer.Update(data);
-    }
-
-    vs_shader.SetConstantBuffer(constant_buffer, 0);
-
-    window.Updated += [&]()
+    struct
     {
-		context.Clear(ColorCode::DarkBlue);
-		context.Draw(4, 0);
-		context.Present();
+        float texindex;
+        float _dummy1, _dummy2, _dummy3;
+    } constant_data2;
+
+    ConstantBuffer constant_buffer1;
+    constant_buffer1.Create(sizeof(constant_data1));
+
+    ConstantBuffer constant_buffer2;
+    constant_buffer2.Create(sizeof(constant_data2));
+
+    window.Updated += [&]() {
+        constant_data1.world.identity();
+        constant_data1.viewing.lookAt({ -1, 1, -1 }, { 0, 0, 0 });
+        constant_data1.viewing.invert();
+        constant_data1.projection.perspective(deg2rad(60.0f), 4.0f / 3.0f, 0.1f, 128.0f);
+        constant_data2.texindex = (float)(frame_count++ % 64);
+
+        constant_buffer1.Update(constant_data1);
+        constant_buffer2.Update(constant_data2);
+        vs_shader.SetConstantBuffer(constant_buffer1, 0);
+        vs_shader.SetConstantBuffer(constant_buffer2, 1);
+
+        context.Clear(ColorCode::DarkBlue);
+        context.Draw(4, 0);
+        context.Present();
     };
 
-    window.Destroyed += [&]()
-    {
+    window.Destroyed += [&]() {
         device.Release();
     };
 
