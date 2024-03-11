@@ -98,6 +98,19 @@ namespace ZephyrSharp
             void Create(String^ path, Accessibility access);
 
             /// <summary>
+            /// 単一の画像ファイルを格子状に区切り、テクスチャ配列 リソースを作成します。テクスチャ数は内部で計算されます。
+            /// </summary>
+            /// <param name="path">WIC 対応形式ファイルパス。</param> 
+            /// <param name="width">作成されるテクスチャの幅。</param> 
+            /// <param name="height">作成されるテクスチャの高さ。</param> 
+            /// <param name="access">リソースのアクセス可能性。</param>
+            void Create(String^ path, int width, int height, Accessibility access)
+            {
+                Native->Create(to_string(path), width, height, (zephyr::graphics::dx11::Accessibility)access);
+                this->ResourceView->Native->Create(this->NativeRef);
+            }
+
+            /// <summary>
             /// 画像ファイルからテクスチャ リソースを作成します。
             /// </summary>
             /// <param name="paths">.dds 形式ファイルパス。</param> 

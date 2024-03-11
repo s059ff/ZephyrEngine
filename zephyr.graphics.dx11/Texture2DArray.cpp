@@ -46,8 +46,7 @@ namespace zephyr
                     desc.MipLevels = 1;
                     desc.ArraySize = count;
                     desc.Format = (DXGI_FORMAT)format;
-                    desc.Usage = [](Accessibility access) -> D3D11_USAGE
-                    {
+                    desc.Usage = [](Accessibility access) -> D3D11_USAGE {
                         switch (access)
                         {
                         case Accessibility::None:
@@ -59,8 +58,7 @@ namespace zephyr
                         }
                     }(access);;
                     desc.BindFlags = (D3D11_BIND_FLAG)flags;
-                    desc.CPUAccessFlags = [](Accessibility access) ->  UINT
-                    {
+                    desc.CPUAccessFlags = [](Accessibility access) ->  UINT {
                         switch (access)
                         {
                         case Accessibility::None:
@@ -96,14 +94,14 @@ namespace zephyr
                             _init.SysMemPitch = stride * width;
                         }
                     }
-                    HRESULT hr = device->CreateTexture2D(&desc, init,&this);
+                    HRESULT hr = device->CreateTexture2D(&desc, init, &this);
                     runtime_assert(SUCCEEDED(hr));
 
                     delete[] init;
                 }
                 else
                 {
-                    HRESULT hr = device->CreateTexture2D(&desc, nullptr,&this);
+                    HRESULT hr = device->CreateTexture2D(&desc, nullptr, &this);
                     runtime_assert(SUCCEEDED(hr));
                 }
 
@@ -139,6 +137,46 @@ namespace zephyr
                 }
 
                 this.Create(temp.get(), (int)metadata.width, (int)metadata.height, slices, (Format)metadata.format, access, BufferBindFlags::ShaderResource);
+            }
+
+            void Texture2DArray::Create(const string& path, int width, int height, Accessibility access)
+            {
+                std::unique_ptr<uint8_t[]> temp;
+                DirectX::TexMetadata metadata;
+                DirectX::ScratchImage scratchImage;
+
+                HRESULT hr = LoadFromWICFile(widen(path).c_str(), DirectX::WIC_FLAGS_NONE, &metadata, scratchImage);
+                runtime_assert(SUCCEEDED(hr));
+                runtime_assert(metadata.width % width == 0);
+                runtime_assert(metadata.height % height == 0);
+
+                size_t size = scratchImage.GetPixelsSize();
+                size_t count_h = metadata.width / width;
+                size_t count_v = metadata.height / height;
+                size_t count = count_h * count_v;
+                size_t pixel_size = DirectX::BitsPerPixel(metadata.format) / 8;
+
+                runtime_assert(size == count * width * height * pixel_size);
+                temp.reset(new uint8_t[size]);
+
+                const DirectX::Image* image = scratchImage.GetImage(0, 0, 0);
+
+                size_t offset = 0;
+                for (size_t v = 0; v < count_v; v++)
+                {
+                    for (size_t u = 0; u < count_h; u++)
+                    {
+                        for (size_t i = 0; i < height; i++)
+                        {
+                            size_t source_offset = (i + v * height) * image->rowPitch + (u * width) * pixel_size;
+                            size_t copy_size = pixel_size * width;
+                            memcpy(temp.get() + offset, image->pixels + source_offset, copy_size);
+                            offset += copy_size;
+                        }
+                    }
+                }
+
+                this.Create(temp.get(), (int)width, (int)height, count, (Format)metadata.format, access, BufferBindFlags::ShaderResource);
             }
 
             void Texture2DArray::Create(string paths[], int count, Accessibility access)
@@ -188,8 +226,7 @@ namespace zephyr
                     desc.MipLevels = 1;
                     desc.ArraySize = count;
                     desc.Format = (DXGI_FORMAT)format;
-                    desc.Usage = [](Accessibility access) -> D3D11_USAGE
-                    {
+                    desc.Usage = [](Accessibility access) -> D3D11_USAGE {
                         switch (access)
                         {
                         case Accessibility::None:
@@ -201,8 +238,7 @@ namespace zephyr
                         }
                     }(access);;
                     desc.BindFlags = (D3D11_BIND_FLAG)flags;
-                    desc.CPUAccessFlags = [](Accessibility access) ->  UINT
-                    {
+                    desc.CPUAccessFlags = [](Accessibility access) ->  UINT {
                         switch (access)
                         {
                         case Accessibility::None:
@@ -321,12 +357,12 @@ namespace zephyr
                             init[i].SysMemSlicePitch = 0;
                         }
                     }
-                    HRESULT hr = device->CreateTexture2D(&desc, init,&this);
+                    HRESULT hr = device->CreateTexture2D(&desc, init, &this);
                     runtime_assert(SUCCEEDED(hr));
                 }
                 else
                 {
-                    HRESULT hr = device->CreateTexture2D(&desc, nullptr,&this);
+                    HRESULT hr = device->CreateTexture2D(&desc, nullptr, &this);
                     runtime_assert(SUCCEEDED(hr));
                 }
 
@@ -401,7 +437,7 @@ namespace zephyr
                 assert(index < m_length);
 
                 D3D11_MAPPED_SUBRESOURCE info;
-                context->Map(this.ptr, D3D11CalcSubresource(0, index, 1), (D3D11_MAP)access, 0,&info);
+                context->Map(this.ptr, D3D11CalcSubresource(0, index, 1), (D3D11_MAP)access, 0, &info);
                 assert(info.pData != nullptr);
 
                 m_locked_ptr = info.pData;

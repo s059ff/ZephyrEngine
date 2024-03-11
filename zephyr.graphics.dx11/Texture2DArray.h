@@ -22,6 +22,8 @@ namespace zephyr
 
                 void Create(const string& path, Accessibility access);
 
+                void Create(const string& path, int width, int height, Accessibility access);
+
                 void Create(string paths[], int count, Accessibility access);
 
                 void CreateCubeMap(const void* source, int width, int height, Format format, Accessibility access, BufferBindFlags flags);
