@@ -125,8 +125,8 @@ public class MissileComponent : CustomEntityComponent
                         this.Owner.Attach(new CollisionComponent()
                         {
                             Object = new SphereCollisionObject(new Sphere() { Radius = 1.0f }),
-                            Group = 2,
-                            OtherGroups = 1 | 4,
+                            Group = CollisionGroupMissile,
+                            OtherGroups = CollisionGroupAircraft | CollisionGroupGround,
                             Excludes = new CollisionComponent[] { this.From.Get<CollisionComponent>() }
                         });
                         this.Owner.Get<CollisionComponent>().Collided += this.Collided;

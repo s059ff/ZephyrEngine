@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -42,6 +42,12 @@ public static class GameScript
 
     public const int Friend = 0;
     public const int Enemy = 1;
+
+    public const int CollisionGroupNone = 0;
+    public const int CollisionGroupAircraft = 1;
+    public const int CollisionGroupMissile = 2;
+    public const int CollisionGroupGunBullet = 4;
+    public const int CollisionGroupGround = 8;
 
     public const float SearchOperationRange = 4000;
     public const float DisplayWidth = 1280;

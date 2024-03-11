@@ -51,8 +51,8 @@ public class GroundComponent : CustomEntityComponent
         this.Owner.Get<TransformComponent>().Matrix.Scale(scale);
 
         this.Owner.Get<CollisionComponent>().Object = new CurvedSurfaceCollisionObject(new CurvedSurface() { Heights = Heights });
-        this.Owner.Get<CollisionComponent>().Group = 4;
-        this.Owner.Get<CollisionComponent>().OtherGroups = 0;
+        this.Owner.Get<CollisionComponent>().Group = CollisionGroupGround;
+        this.Owner.Get<CollisionComponent>().OtherGroups = CollisionGroupNone;
     }
 
     protected override void OnDestroy()

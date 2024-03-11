@@ -261,8 +261,8 @@ public class AircraftComponent : CustomEntityComponent
         base.OnAttach();
 
         this.Collision.Object = new SphereCollisionObject(new Sphere() { Radius = AircraftComponent.Radius });
-        this.Collision.Group = 1;
-        this.Collision.OtherGroups = 4;
+        this.Collision.Group = CollisionGroupAircraft;
+        this.Collision.OtherGroups = CollisionGroupGround;
         this.Collision.Collided += this.Collided;
     }
 
@@ -645,7 +645,12 @@ public class AircraftComponent : CustomEntityComponent
                     e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
                     e.Get<TransformComponent>().Position = this.Transform.Position + this.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Get<TransformComponent>().Matrix.RotateAroundAxis(new Vector3(uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f)).Normalize(), normal(0, 0.005f));
-                    e.Attach(new CollisionComponent() { Object = new PointCollisionObject(new Point()), OtherGroups = 1 | 4, Excludes = new CollisionComponent[] { this.Collision } });
+                    e.Attach(new CollisionComponent() {
+                        Object = new PointCollisionObject(new Point()),
+                        Group = CollisionGroupGunBullet,
+                        OtherGroups = CollisionGroupAircraft | CollisionGroupGround,
+                        Excludes = new CollisionComponent[] { this.Collision }
+                    });
                     e.Attach(new GunBulletComponent(this.Owner));
                     e.Attach(new SoundComponent(BulletSound));
                     e.Get<SoundComponent>().VolumeFactor = 0.8f;
@@ -846,8 +851,8 @@ public class AircraftComponent : CustomEntityComponent
             });
             e.Attach(new CollisionComponent()
             {
-                Group = 0,
-                OtherGroups = 4,
+                Group = CollisionGroupNone,
+                OtherGroups = CollisionGroupGround,
                 Object = new SphereCollisionObject(new Sphere() { Radius = 5.0f })
             });
             e.Get<CollisionComponent>().Collided += (_, __) => { Entity.Kill(e); };
