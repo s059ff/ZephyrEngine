@@ -393,7 +393,7 @@ public class AircraftComponent : CustomEntityComponent
 
         #region 主兵装の操作
         {
-            this.MissileLaunchInput = (this.ActiveMissile != null && this.Locking && uniform() < 0.001f);
+            this.MissileLaunchInput = (this.ActiveMissile != null && this.ActiveMissile.Locking && uniform() < 0.001f);
         }
         #endregion
 
