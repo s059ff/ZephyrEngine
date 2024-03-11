@@ -10,13 +10,15 @@ public class ExplosionComponent : CustomEntityComponent
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
-    static Texture2D[] Textures = new Texture2D[TextureCount];
-    static GraphicsModel GraphicsModel = new GraphicsModel();
+    static Texture2DArray Texture = new Texture2DArray();
     static Matrix4x4[] InstanceWVPs = new Matrix4x4[InstanceCount];
-    static Color[] InstanceColors = new Color[InstanceCount];
+    static Vector4[] InstanceAlphas = new Vector4[InstanceCount];
+    static Vector4[] InstanceTexIndices = new Vector4[InstanceCount];
+    static VertexBuffer<Vector3> VertexPositions = new VertexBuffer<Vector3>();
+    static VertexBuffer<Vector2> VertexTextureCoords = new VertexBuffer<Vector2>();
 
     const int TextureCount = 64;
-    const float CountSpeed = 0.0075f;
+    const float CountSpeed = 0.5f * 1.0f / TextureCount;
     const int InstanceCount = 64;
 
     class Instance
@@ -39,13 +41,23 @@ public class ExplosionComponent : CustomEntityComponent
             new VertexElement("TEXCOORD", 0, Format.Float2, 1, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
 
-        for (int i = 0; i < TextureCount; i++)
-        {
-            Textures[i] = new Texture2D();
-            Textures[i].Create(string.Format("res/texture/explos/explos ({0}).png", i + 1), Accessibility.None);
-        }
+        Texture.Create("res/texture/explos.png", 32, 32, Accessibility.None);
 
-        GraphicsModel.CreateBillBoard();
+        VertexPositions.Create(new Vector3[]
+        {
+            new Vector3(-0.5f, +0.5f, 0),
+            new Vector3(+0.5f, +0.5f, 0),
+            new Vector3(-0.5f, -0.5f, 0),
+            new Vector3(+0.5f, -0.5f, 0),
+        }, Accessibility.None);
+
+        VertexTextureCoords.Create(new Vector2[]
+        {
+            new Vector2(0, 0),
+            new Vector2(1, 0),
+            new Vector2(0, 1),
+            new Vector2(1, 1),
+        }, Accessibility.None);
     }
 
     public ExplosionComponent()
@@ -115,17 +127,18 @@ public class ExplosionComponent : CustomEntityComponent
             world.Scale(instance.Scale);
 
             InstanceWVPs[i] = world * projection;
-            var a = (1.0f - this.Time) * 0.1f;
-            InstanceColors[i] = new Color(a, a, a, a);
+            InstanceAlphas[i] = new Vector4((1.0f - this.Time) * 0.1f, 0, 0, 0);
+            InstanceTexIndices[i] = new Vector4(this.Time * TextureCount, 0, 0, 0);
         }
 
-        device.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
-        device.SetVertexBuffer(GraphicsModel.VertexTextureCoords, 1);
+        device.SetVertexBuffer(VertexPositions, 0);
+        device.SetVertexBuffer(VertexTextureCoords, 1);
         VertexShader.SetConstantBuffer(InstanceWVPs, 0);
-        VertexShader.SetConstantBuffer(InstanceColors, 1);
+        VertexShader.SetConstantBuffer(InstanceAlphas, 1);
+        VertexShader.SetConstantBuffer(InstanceTexIndices, 2);
 
         PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(Textures[(int)(this.Time * TextureCount)], 0);
+        PixelShader.SetTextureArray(Texture, 0);
 
         device.DrawInstanced(4, InstanceCount);
     }
