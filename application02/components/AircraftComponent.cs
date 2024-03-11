@@ -31,53 +31,57 @@ public class AircraftComponent : CustomEntityComponent
         public Vector3 GunPos;
     }
 
-    static VertexShader VertexShader = new VertexShader();
-    static PixelShader PixelShader = new PixelShader();
-    static VertexLayout VertexLayout = new VertexLayout();
-    static List<AircraftParameter> AircraftParameters = new List<AircraftParameter>();
-
-    const float MissileReloadSpeed = 1.0f / 1800;
-    const float GunReloadSpeed = 0.25f;
-    public const float Radius = 5.0f;
-    public const int WeaponCount = 4;
-
-    public readonly AircraftParameter Parameter;
-
-    readonly GraphicsModel Body = new GraphicsModel();
-    readonly GraphicsModel LeftCanard = null;
-    readonly GraphicsModel RightCanard = null;
-    readonly GraphicsModel LeftElevator = null;
-    readonly GraphicsModel RightElevator = null;
-    readonly Texture2D Texture = new Texture2D();
-    readonly Texture2D NormalMapTexture = new Texture2D();
-    readonly Entity LeftSmokeGeneratorEntity;
-    readonly Entity RightSmokeGeneratorEntity;
-    readonly Weapon[] Weapons = new Weapon[WeaponCount];
-
-    public MissileComponent ActiveMissile
-    {
-        get 
-        {
-            return this.Weapons[this.NextUseWeapon].MissileEntity?.Get<MissileComponent>();
-        }
-    }
-    public float[] ReloadTimes { get { return this.Weapons.Select(w => w.ReloadTime).ToArray(); } }
-    public float Armor { get; private set; } = 1.0f;
-
-    public float Visibility = 1.0f;
-
-    public float EnginePower = 0.5f;
-    const float EnginePowerThreshold = 0.9f;
-    float GunReloadTime = 0;
-    List<Entity> GunFlushs = new List<Entity>();
-
-    class Weapon
+    class WeaponSystem
     {
         public float ReloadTime = 1.0f;
         public Vector3 WeaponPos;
         public Entity MissileEntity;
     }
-    int NextUseWeapon = 0;
+
+    static VertexShader VertexShader = new VertexShader();
+    static PixelShader PixelShader = new PixelShader();
+    static VertexLayout VertexLayout = new VertexLayout();
+    static List<AircraftParameter> AircraftParameters = new List<AircraftParameter>();
+
+    public const float Radius = 5.0f;
+    public const int WeaponCount = 4;
+    private const float MissileReloadSpeed = 1.0f / 1800;
+    private const float GunReloadSpeed = 0.25f;
+    private const float EnginePowerThreshold = 0.9f;
+
+    public readonly AircraftParameter Parameter;
+    private readonly GraphicsModel Body = new GraphicsModel();
+    private readonly GraphicsModel LeftCanard = null;
+    private readonly GraphicsModel RightCanard = null;
+    private readonly GraphicsModel LeftElevator = null;
+    private readonly GraphicsModel RightElevator = null;
+    private readonly Texture2D Texture = new Texture2D();
+    private readonly Texture2D NormalMapTexture = new Texture2D();
+    private readonly Entity LeftSmokeGeneratorEntity;
+    private readonly Entity RightSmokeGeneratorEntity;
+    private readonly WeaponSystem[] Weapons = new WeaponSystem[WeaponCount];
+
+    public MissileComponent ActiveMissile
+    {
+        get
+        {
+            return this.Weapons[this.NextUseWeapon].MissileEntity?.Get<MissileComponent>();
+        }
+    }
+    public float[] ReloadTimes
+    {
+        get
+        {
+            return this.Weapons.Select(w => w.ReloadTime).ToArray();
+        }
+    }
+
+    public float Armor { get; private set; } = 1.0f;
+    public float Visibility { private get; set; } = 1.0f;
+    private float EnginePower = 0.5f;
+    private float GunReloadTime = 0;
+    private List<Entity> GunFlushs = new List<Entity>();
+    private int NextUseWeapon = 0;
 
     public float ThrottleInput { get; set; }
     public float PitchInput { get; set; }
@@ -135,7 +139,7 @@ public class AircraftComponent : CustomEntityComponent
         this.Parameter = AircraftParameters.Where((parameter) => parameter.Name == aircraftName).First();
         for (int i = 0; i < WeaponCount; i++)
         {
-            this.Weapons[i] = new Weapon();
+            this.Weapons[i] = new WeaponSystem();
             switch (i)
             {
                 case 0:
@@ -613,7 +617,8 @@ public class AircraftComponent : CustomEntityComponent
                     e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
                     e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Get<TransformComponent>().Matrix.RotateAroundAxis(new Vector3(uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f)).Normalize(), normal(0, 0.005f));
-                    e.Attach(new CollisionComponent() {
+                    e.Attach(new CollisionComponent()
+                    {
                         Object = new PointCollisionObject(new Point()),
                         Group = CollisionGroupGunBullet,
                         OtherGroups = CollisionGroupAircraft | CollisionGroupGround,
