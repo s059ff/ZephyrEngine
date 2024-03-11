@@ -51,7 +51,6 @@ public class AircraftComponent : CustomEntityComponent
             return this.Weapons[this.NextUseWeapon].MissileEntity?.Get<MissileComponent>();
         }
     }
-    public bool Locking { get { return (this.ActiveMissile != null) && (this.ActiveMissile.Locking); } }
     public float[] ReloadTimes { get { return this.Weapons.Select(w => w.ReloadTime).ToArray(); } }
     public float Armor { get; private set; } = 1.0f;
 
