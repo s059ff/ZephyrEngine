@@ -127,7 +127,7 @@ public class ExplosionComponent : CustomEntityComponent
             world.Scale(instance.Scale);
 
             InstanceWVPs[i] = world * projection;
-            InstanceAlphas[i] = new Vector4((1.0f - this.Time) * 0.1f, 0, 0, 0);
+            InstanceAlphas[i] = new Vector4((1.0f - this.Time) * 0.05f, 0, 0, 0);
             InstanceTexIndices[i] = new Vector4(this.Time * TextureCount, 0, 0, 0);
         }
 
