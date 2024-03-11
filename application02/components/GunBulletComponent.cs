@@ -13,8 +13,8 @@ class GunBulletComponent : CustomEntityComponent
     static VertexBuffer<uint> VertexPositions = new VertexBuffer<uint>();
 
     public const float BulletSpeed = 40.0f;
-    float Damage = 0.05f;
-    readonly bool ShootedByPlayer;
+    const float DestructivePower = 0.05f;
+    readonly bool FromPlayer;
 
     static GunBulletComponent()
     {
@@ -62,7 +62,7 @@ class GunBulletComponent : CustomEntityComponent
 
     public GunBulletComponent(Entity launchedSourceEntity)
     {
-        this.ShootedByPlayer = launchedSourceEntity.Name == "player";
+        this.FromPlayer = launchedSourceEntity.Name == "player";
     }
 
     protected override void ReceiveMessage(object message, object argument)
@@ -93,27 +93,27 @@ class GunBulletComponent : CustomEntityComponent
 
     private void Collided(Entity other, Vector3 point)
     {
+        // エフェクトを発生させる
+        Entity e = Entity.Instantiate();
+        e.Attach(new TransformComponent() { Position = point });
+        e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.04f });
+        e.Attach(new SoundComponent(BulletHitSound) { VolumeFactor = 0.5f });
+        e.Get<SoundComponent>().Play();
+
         if (other.Has<AircraftComponent>())
         {
-            Entity e = Entity.Instantiate();
-            e.Attach(new TransformComponent() { Position = point });
-            //e.Attach<GunBulletSmokeComponent>();
-            e.Attach(new LimitedLifeTimeComponent()
-            {
-                CountSpeed = 0.04f
-            });
-            var soundComponent = new SoundComponent(BulletHitSound);
-            soundComponent.VolumeFactor = 0.5f;
-            e.Attach(soundComponent);
-            soundComponent.Play();
-
             var aircraft = other.Get<AircraftComponent>();
-            aircraft.Damage(this.Damage);
 
+            // 機体にダメージを与える
+            {
+                aircraft.Damage(DestructivePower);
+            }
+
+            // HUD 通知処理
             var player = Entity.Find("player");
             if (player != null)
             {
-                if (this.ShootedByPlayer)
+                if (this.FromPlayer)
                 {
                     if (aircraft.Armor > 0)
                         Entity.SendMessage(player, "notice", "Hit");
@@ -126,17 +126,8 @@ class GunBulletComponent : CustomEntityComponent
         }
         else if (other.Has<GroundComponent>())
         {
-            Entity e = Entity.Instantiate();
-            e.Attach(new TransformComponent() { Position = point });
-            e.Attach<GunBulletSmokeComponent>();
-            e.Attach(new LimitedLifeTimeComponent()
-            {
-                CountSpeed = 0.04f
-            });
-            var soundComponent = new SoundComponent(BulletHitSound);
-            soundComponent.VolumeFactor = 0.5f;
-            e.Attach(soundComponent);
-            soundComponent.Play();
+            // 地面に衝突したときのみ, 煙エフェクトを発生させる
+            e.Attach(new GunBulletSmokeComponent());
         }
         Entity.Kill(this.Owner);
     }

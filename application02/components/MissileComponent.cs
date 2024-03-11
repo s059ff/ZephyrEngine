@@ -26,7 +26,7 @@ public class MissileComponent : CustomEntityComponent
     const float SeekerSpeed = 0.0075f;
     const float LockableAngleRange = 45.0f;
     const float LockableDistanceRange = 3000.0f;
-    const float Damage = 0.5f;
+    const float DestructivePower = 0.5f;
     public Vector3 EngineNozzlePos { get; private set; } = new Vector3(0, 0, -1.770481f);
 
     public Entity TargetEntity { get; set; }
@@ -291,23 +291,44 @@ public class MissileComponent : CustomEntityComponent
 
     private void Collided(Entity other, Vector3 point)
     {
-        Entity explos = Entity.Instantiate();
-        explos.Attach<TransformComponent>().Position = point;
-        explos.Attach<ExplosionComponent>();
+        {
+            Entity e = Entity.Instantiate();
+            e.Attach<TransformComponent>().Position = point;
+            e.Attach<ExplosionComponent>();
+            // MissileSmokeComponent にて一定時間後に自動消滅
+        }
+
+        {
+            Entity e = Entity.Instantiate();
+            e.Attach(this.Owner.Detach<MissileSmokeComponent>());
+            // MissileSmokeComponent にて一定時間後に自動消滅
+        }
+
+        {
+            Entity e = Entity.Instantiate();
+            e.Attach(new TransformComponent() { Position = point });
+            e.Attach(new SoundComponent(ExplosionSound, true));
+            e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.001f });
+        }
 
         if (other.Has<AircraftComponent>())
         {
-            var aircraftPhysics = other.Get<PhysicsComponent>();
-
-            Vector3 velocity_missile = this.Physics.Velocity;
-            aircraftPhysics.Force += velocity_missile * 5;
-            Vector3 angler_force = Vector3.Outer(aircraftPhysics.Velocity, velocity_missile);
-            aircraftPhysics.Torque += angler_force * 0.02f;
-            aircraftPhysics.Velocity = aircraftPhysics.Velocity * 0.8f;
-
+            var physics = other.Get<PhysicsComponent>();
             var aircraft = other.Get<AircraftComponent>();
-            aircraft.Damage(Damage);
 
+            // 機体に衝撃力を作用させる
+            {
+                Vector3 velocity = this.Physics.Velocity;
+                Vector3 torque = Vector3.Outer(physics.Velocity, velocity);
+                physics.Force += velocity * 5;
+                physics.Torque += torque * 0.02f;
+                physics.Velocity = physics.Velocity * 0.8f;
+            }
+
+            // 機体にダメージを与える
+            aircraft.Damage(DestructivePower);
+
+            // HUD 通知処理
             var player = Entity.Find("player");
             if (player != null)
             {
@@ -321,19 +342,6 @@ public class MissileComponent : CustomEntityComponent
                 if (other.Name == "player")
                     Entity.SendMessage(Entity.Find("player"), "notice", "Damaged");
             }
-        }
-
-        {
-            Entity e = Entity.Instantiate();
-            e.Attach(this.Owner.Detach<MissileSmokeComponent>());
-        }
-
-        {
-            Entity e = Entity.Instantiate();
-            e.Attach(new TransformComponent() { Position = point });
-            e.Attach(new SoundComponent(ExplosionSound, true));
-            e.Attach(new TimerComponent() { CountSpeed = 0.001f, Repeat = false });
-            e.Get<TimerComponent>().Ticked += () => { Entity.Kill(e); };
         }
 
         Entity.Kill(this.Owner);
