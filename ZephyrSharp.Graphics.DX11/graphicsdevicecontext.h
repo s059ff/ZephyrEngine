@@ -322,11 +322,20 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// スワップチェインを交換して、バッファを画面に表示します。
+            /// スワップチェインを交換して、モニターの垂直同期を待ったのちバッファを画面に表示します。
             /// </summary>
             void Present()
             {
-                Native->Present();
+                Native->Present(1);
+            }
+
+            /// <summary>
+            /// スワップチェインを交換して、バッファを画面に表示します。
+            /// </summary>
+            /// <param name="syncInterval">モニターの垂直同期を待つ場合は 1 待たない場合は 0 を指定します。</param> 
+            void Present(int syncInterval)
+            {
+                Native->Present(syncInterval);
             }
 
         public:

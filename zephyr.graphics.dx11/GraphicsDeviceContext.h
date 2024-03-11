@@ -79,7 +79,7 @@ namespace zephyr
 
                 void DrawIndexedInstanced(int indexCountPerInstance, int instanceCount, int startIndexLocation = 0, int baseVertexLocation = 0, int startInstanceLocation = 0);
 
-                void Present();
+                void Present(int syncInterval = 1);
 
             public:
 

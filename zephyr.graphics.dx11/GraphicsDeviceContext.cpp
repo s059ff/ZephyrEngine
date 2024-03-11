@@ -241,9 +241,9 @@ namespace zephyr
                 this->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startIndexLocation);
             }
 
-            void GraphicsDeviceContext::Present()
+            void GraphicsDeviceContext::Present(int syncInterval)
             {
-                m_swapChain->Present(1, 0);
+                m_swapChain->Present(syncInterval, 0);
             }
         }
     }
