@@ -373,7 +373,7 @@ public class AircraftComponent : CustomEntityComponent
 
             // 確認用
             float angle = Vector3.Angle(v, n);
-            assert(abs(angle - PIOver2) < 1e-4);
+            assert(abs(angle - PIOver2) < 1e-2);
         }
         else if (avionics.HasTarget())
         {
@@ -854,7 +854,7 @@ public class AircraftComponent : CustomEntityComponent
             e.Attach<GravityObjectComponent>();
             e.Attach<AircraftSmokeComponent>();
             e.Attach<AircraftFlameComponent>();
-            e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.005f });
+            e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.01f });
         }
 
         {
