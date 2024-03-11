@@ -675,7 +675,7 @@ public class AircraftComponent : CustomEntityComponent
         #endregion
     }
 
-    public void Damage(float damage)
+    public void TakeDamage(float damage)
     {
         this.Armor = clamp(this.Armor - damage, 0.0f, 1.0f);
 

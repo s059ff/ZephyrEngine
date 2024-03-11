@@ -326,7 +326,7 @@ public class MissileComponent : CustomEntityComponent
             }
 
             // 機体にダメージを与える
-            aircraft.Damage(DestructivePower);
+            aircraft.TakeDamage(DestructivePower);
 
             // HUD 通知処理
             var player = Entity.Find("player");

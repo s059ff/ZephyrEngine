@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using static GameScript;
 
@@ -31,7 +31,7 @@ public class GameSpaceComponent : CustomEntityComponent
                         flag |= (transform.Position.Z > +this.SpaceLength / 2);
                         if (flag)
                         {
-                            e.Get<AircraftComponent>().Damage(1.0f);
+                            e.Get<AircraftComponent>().TakeDamage(1.0f);
                         }
                     }
                 });

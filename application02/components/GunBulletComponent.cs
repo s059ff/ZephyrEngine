@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -106,7 +106,7 @@ class GunBulletComponent : CustomEntityComponent
 
             // 機体にダメージを与える
             {
-                aircraft.Damage(DestructivePower);
+                aircraft.TakeDamage(DestructivePower);
             }
 
             // HUD 通知処理
