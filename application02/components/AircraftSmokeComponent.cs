@@ -132,7 +132,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
     private void TranslucentRender()
     {
         GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
-        device.SetBlendState(AlphaBlend);
+        device.SetBlendState(Subtraction);
         device.SetRasterizerState(CullingOff);
         device.SetDepthStencilState(ZTestOnWriteOff);
         device.SetVertexLayout(VertexLayout);
@@ -155,7 +155,13 @@ public class AircraftSmokeComponent : CustomEntityComponent
             Vector3 position = instance.Position;
             float x = instance.Time;
             float scale = clamp(-3 * sin(x) * log(x), 0, 1) * 15 + 10;
-            float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.5f;
+            float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.2f;
+
+            if (this.Owner.Has<LimitedLifeTimeComponent>())
+            {
+                float t = this.Owner.Get<LimitedLifeTimeComponent>().CountTime;
+                alpha *= 1.0f - t;
+            }
 
             var world = new Matrix4x3().Identity();
             world.Translate(position * this.ViewingMatrix);
