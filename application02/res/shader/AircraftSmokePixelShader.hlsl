@@ -11,6 +11,7 @@ struct PSInput
 
 float4 main(PSInput input) : SV_TARGET
 {
-    float4 color = float4(0, 0, 0, input.alpha * g_texture.Sample(g_sampler, input.tex).a);
+    float alpha = input.alpha * g_texture.Sample(g_sampler, input.tex).r;
+    float4 color = float4(alpha, alpha, alpha, alpha);
     return color;
 }
