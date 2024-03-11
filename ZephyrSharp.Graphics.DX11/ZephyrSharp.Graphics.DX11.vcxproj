@@ -169,6 +169,7 @@
     <ClInclude Include="FontTexture.h" />
     <ClInclude Include="GeometryShader.h" />
     <ClInclude Include="GraphicsDevice.h" />
+    <ClInclude Include="GraphicsDeviceContext.h" />
     <ClInclude Include="GraphicsModel.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InstanceBuffer.h" />

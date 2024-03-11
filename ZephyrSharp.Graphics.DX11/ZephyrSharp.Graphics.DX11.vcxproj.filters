@@ -107,6 +107,9 @@
     <ClInclude Include="DepthStencilView.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsDeviceContext.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <_EmbedManagedResourceFile Include="box.cx" />
