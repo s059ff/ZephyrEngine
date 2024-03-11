@@ -1,4 +1,4 @@
-﻿using CsvHelper;
+using CsvHelper;
 using CsvHelper.Configuration;
 using System.Collections.Generic;
 using System.IO;
@@ -46,13 +46,9 @@ public class AircraftComponent : CustomEntityComponent
 
     public MissileComponent ActiveMissile
     {
-        get
+        get 
         {
-            var entity = this.Weapons[this.NextUseWeapon].MissileEntity;
-            if (entity != null)
-                return entity.Get<MissileComponent>();
-            else
-                return null;
+            return this.Weapons[this.NextUseWeapon].MissileEntity?.Get<MissileComponent>();
         }
     }
     public bool Locking { get { return (this.ActiveMissile != null) && (this.ActiveMissile.Locking); } }
