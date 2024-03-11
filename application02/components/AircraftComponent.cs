@@ -1,8 +1,8 @@
-using CsvHelper;
-using CsvHelper.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -16,7 +16,7 @@ public class AircraftComponent : CustomEntityComponent
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
-    static AircraftParameter[] AircraftParameters;
+    static List<AircraftParameter> AircraftParameters = new List<AircraftParameter>();
 
     const float MissileReloadSpeed = 1.0f / 1800;
     const float GunReloadSpeed = 0.25f;
@@ -95,35 +95,6 @@ public class AircraftComponent : CustomEntityComponent
         public Vector3 GunPos;
     }
 
-    public class CsvVector3Converter : CsvHelper.TypeConversion.DateTimeConverter
-    {
-        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
-        {
-            return Vector3.Parse(text);
-        }
-    }
-
-    public sealed class AircraftParameterClassMap : ClassMap<AircraftParameter>
-    {
-        public AircraftParameterClassMap()
-        {
-            this.Map(x => x.Name).Index(0);
-            this.Map(x => x.Weight).Index(1);
-            this.Map(x => x.InertiaMoment).Index(2);
-            this.Map(x => x.Thrust).Index(3);
-            this.Map(x => x.EngineNozzlePos).Index(4).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.CanardPos).Index(5).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.ElevatorPos).Index(6).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.WeaponPos0).Index(7).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.WeaponPos1).Index(8).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.WeaponPos2).Index(9).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.WeaponPos3).Index(10).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.WingEdgePos).Index(11).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.CockpitPos).Index(12).TypeConverter<CsvVector3Converter>();
-            this.Map(x => x.GunPos).Index(13).TypeConverter<CsvVector3Converter>();
-        }
-    }
-
     static AircraftComponent()
     {
         VertexShader.CreateFromFile("res/shader/AircraftVertexShader.hlsl");
@@ -138,12 +109,33 @@ public class AircraftComponent : CustomEntityComponent
             new VertexElement("BINORMAL", 0, Format.Float3, 4, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
 
-        using (var csv = new CsvReader(new StreamReader("res/data/aircrafts.csv")))
+        using (var stream = new StreamReader("res/data/aircrafts.csv"))
         {
-            csv.Configuration.HasHeaderRecord = true;
-            csv.Configuration.RegisterClassMap<AircraftParameterClassMap>();
-            csv.Configuration.Delimiter = "\t";
-            AircraftParameters = csv.GetRecords<AircraftParameter>().ToArray();
+            const char separator = '\t';
+
+            string[] headers = stream.ReadLine().Split(separator);
+            FieldInfo[] fields = typeof(AircraftParameter).GetFields();
+            assert(headers.SequenceEqual(fields.Select(f => f.Name)));
+
+            while (!stream.EndOfStream)
+            {
+                AircraftParameter param = new AircraftParameter();
+                {
+                    string[] values = stream.ReadLine().Split(separator);
+                    foreach (var tuple in fields.Zip(values, Tuple.Create))
+                    {
+                        FieldInfo field = tuple.Item1;
+                        string value = tuple.Item2;
+                        object obj = null;
+                        obj = (field.FieldType == typeof(string)) ? value : obj;
+                        obj = (field.FieldType == typeof(float)) ? float.Parse(value) : obj;
+                        obj = (field.FieldType == typeof(Vector3)) ? Vector3.Parse(value) : obj;
+                        assert(obj != null, "unhandleable parameter");
+                        field.SetValue(param, obj);
+                    }
+                }
+                AircraftParameters.Add(param);
+            }
         }
     }
 
