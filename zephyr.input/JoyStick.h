@@ -96,6 +96,11 @@ namespace zephyr
             /// <param name="code">ハットスイッチコード。</param>
             int GetHatSwitchState(HatSwitchCode code) const;
 
+            /// <summary>
+            /// デバイスが接続されているか調べます。
+            /// </summary>
+            bool IsConnected() const;
+
         public:
 
             /// <summary>
@@ -127,11 +132,6 @@ namespace zephyr
             /// アナログスティック第 2 軸のY値を取得します。
             /// </summary>
             const double& Axis2Y = this->axis2[1];
-
-            /// <summary>
-            /// デバイスが接続されているか調べます。
-            /// </summary>
-            bool IsConnected() const;
 
             /// <summary>
             /// アナログスティックのデッドゾーンの大きさを 0 から 1 の範囲で指定します。

@@ -45,6 +45,11 @@ namespace zephyr
             /// </summary>
             void Update();
 
+            /// <summary>
+            /// デバイスが接続されているか調べます。
+            /// </summary>
+            bool IsConnected() const;
+
         public:
 
             /// <summary>
@@ -86,11 +91,6 @@ namespace zephyr
             /// マウスの中央ボタンの状態を取得します。
             /// </summary>
             READONLY_PROPERTY(int, Center, { return this->button_state[(int)ButtonCode::Center]; });
-
-            /// <summary>
-            /// デバイスが接続されているか調べます。
-            /// </summary>
-            bool IsConnected() const;
 
         private:
 

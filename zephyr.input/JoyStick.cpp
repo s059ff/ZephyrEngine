@@ -40,7 +40,7 @@ namespace zephyr
             BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, void*)
             {
                 // ジョイスティックへのインターフェイスを取得する
-                if (FAILED(g_pDInput->CreateDevice(pdidInstance->guidInstance,&g_pDInputDevice, NULL)))
+                if (FAILED(g_pDInput->CreateDevice(pdidInstance->guidInstance, &g_pDInputDevice, NULL)))
                 {
                     return DIENUM_CONTINUE;
                 }
@@ -69,7 +69,7 @@ namespace zephyr
                 diprg.diph.dwHow = DIPH_BYID;
                 diprg.lMin = -AxisRangle;
                 diprg.lMax = AxisRangle;
-                return FAILED(g_pDInputDevice->SetProperty(DIPROP_RANGE,&diprg.diph)) ? DIENUM_STOP : DIENUM_CONTINUE;
+                return FAILED(g_pDInputDevice->SetProperty(DIPROP_RANGE, &diprg.diph)) ? DIENUM_STOP : DIENUM_CONTINUE;
             }
 
             // デッドゾーンを考慮したアナログスティックの値を取得する
@@ -160,7 +160,7 @@ namespace zephyr
 
                     // データを更新する
                     DIJOYSTATE2 state;
-                    auto result = this->GetDeviceState(sizeof(DIJOYSTATE2),&state);
+                    auto result = this->GetDeviceState(sizeof(DIJOYSTATE2), &state);
                     if (result == DIERR_NOTACQUIRED || result == DIERR_INPUTLOST)
                     {
                         this->Acquire();
@@ -247,7 +247,7 @@ namespace zephyr
         bool JoyStick::IsConnected() const
         {
             JOYINFO info;
-            return joyGetPos(0,&info) == JOYERR_NOERROR;
+            return joyGetPos(0, &info) == JOYERR_NOERROR;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "common.h"
-#include "ButtonState.h"
 
 namespace ZephyrSharp
 {
@@ -16,11 +15,31 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
+            /// マウスのボタンを表します。
+            /// </summary>
+            enum class ButtonCode
+            {
+                Left = (int)zephyr::input::Mouse::ButtonCode::Left,
+                Right = (int)zephyr::input::Mouse::ButtonCode::Right,
+                Center = (int)zephyr::input::Mouse::ButtonCode::Center
+            };
+
+        public:
+
+            /// <summary>
             /// デバイスの状態を更新します。このメソッドは毎フレーム呼び出す必要があります。
             /// </summary>
             void Update()
             {
                 Native->Update();
+            }
+
+            /// <summary>
+            /// コントローラが接続されているか調べます。
+            /// </summary>
+            bool IsConnected()
+            {
+                return Native->IsConnected();
             }
 
         public:
@@ -53,22 +72,17 @@ namespace ZephyrSharp
             /// <summary>
             /// マウスの左ボタンの状態を取得します。
             /// </summary>
-            property ButtonState Left { ButtonState get() { return (ButtonState)Native->Left; } };
+            property int Left { int get() { return Native->Left; } };
 
             /// <summary>
             /// マウスの右ボタンの状態を取得します。
             /// </summary>
-            property ButtonState Right { ButtonState get() { return (ButtonState)Native->Right; } };
+            property int Right { int get() { return Native->Right; } };
 
             /// <summary>
             /// マウスの右ボタンの状態を取得します。
             /// </summary>
-            property ButtonState Center { ButtonState get() { return (ButtonState)Native->Center; } };
-
-            /// <summary>
-            /// コントローラが接続されているか調べます。
-            /// </summary>
-            property bool IsConnected { bool get() { return Native->IsConnected; } }
+            property int Center { int get() { return Native->Center; } };
         };
     }
 }

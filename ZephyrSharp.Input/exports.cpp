@@ -1,6 +1,3 @@
-﻿#include "ButtonCode.h"
-#include "ButtonState.h"
-#include "JoyStick.h"
+﻿#include "JoyStick.h"
 #include "Keyboard.h"
-#include "KeyCode.h"
 #include "Mouse.h"

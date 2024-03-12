@@ -107,7 +107,7 @@ namespace zephyr
             /// デバイスが接続されているか調べます。
             /// </summary>
             bool IsConnected() const;
-            
+
         private:
 
             // 初期化する
