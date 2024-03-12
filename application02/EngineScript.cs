@@ -354,7 +354,7 @@ public static class EngineScript
         return nm / 1.852f;
     }
 
-    static readonly RandomEngine randomizer = new RandomEngine();
+    private static readonly RandomEngine randomizer = new RandomEngine();
     #endregion
 
     #region Setting functions.
@@ -431,12 +431,12 @@ public static class EngineScript
 
     public static void pushMatrix()
     {
-        _matrix_stack.Push(world);
+        matrix_stack.Push(world);
     }
 
     public static void popMatrix()
     {
-        world = _matrix_stack.Pop();
+        world = matrix_stack.Pop();
     }
 
     public static void loadMatrix(Matrix3x2 m)
@@ -456,7 +456,7 @@ public static class EngineScript
 
     public static Matrix4x4 world = new Matrix4x4().Identity();
 
-    static Stack<Matrix4x4> _matrix_stack = new Stack<Matrix4x4>();
+    private static Stack<Matrix4x4> matrix_stack = new Stack<Matrix4x4>();
     #endregion
 
     public static void initialize() { }

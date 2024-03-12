@@ -34,6 +34,14 @@ public static class GameScript
     public static DepthStencilState ZTestOnWriteOff = new DepthStencilState();
     public static DepthStencilState ZTestOff = new DepthStencilState();
 
+    public static SoundBuffer ExplosionSound = new SoundBuffer();
+    public static SoundBuffer LargeExplosionSound = new SoundBuffer();
+    public static SoundBuffer JetSound = new SoundBuffer();
+    public static SoundBuffer LockonSound = new SoundBuffer();
+    public static SoundBuffer AlertSound = new SoundBuffer();
+    public static SoundBuffer BulletSound = new SoundBuffer();
+    public static SoundBuffer BulletHitSound = new SoundBuffer();
+
     public const string UpdateMessage = "update";
     public const string RenderMessage = "render";
     public const string TranslucentRenderMessage = "translucent render";
@@ -132,16 +140,15 @@ public static class GameScript
     #endregion
 
     #region 2D Graphics scripts.
-    public static Matrix4x3 viewing { get { return Entity.Find("camera2d").Get<CameraComponent>().ViewingMatrix; } }
-    public static Matrix4x4 projection { get { return Entity.Find("projector2d").Get<ProjectorComponent>().ProjectionMatrix; } }
-
-    static RasterizerState _rasterizerState = new RasterizerState();
-    static DepthStencilState _depthStencilState = new DepthStencilState();
+    private static Matrix4x3 viewing { get { return Entity.Find("camera2d").Get<CameraComponent>().ViewingMatrix; } }
+    private static Matrix4x4 projection { get { return Entity.Find("projector2d").Get<ProjectorComponent>().ProjectionMatrix; } }
+    private static RasterizerState rasterizerState = new RasterizerState();
+    private static DepthStencilState depthStencilState = new DepthStencilState();
 
     public static void draw(Texture2D tex)
     {
-        GraphicsDeviceContext.Instance.SetRasterizerState(_rasterizerState);
-        GraphicsDeviceContext.Instance.SetDepthStencilState(_depthStencilState);
+        GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
+        GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetTexture(tex);
         Graphics2D.Instance.SetMatrix(world * viewing * projection);
         Graphics2D.Instance.DrawTexture();
@@ -149,8 +156,8 @@ public static class GameScript
 
     public static void draw(Texture2D tex, float u0, float v0, float u1, float v1)
     {
-        GraphicsDeviceContext.Instance.SetRasterizerState(_rasterizerState);
-        GraphicsDeviceContext.Instance.SetDepthStencilState(_depthStencilState);
+        GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
+        GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetTexture(tex);
         Graphics2D.Instance.SetMatrix(world * viewing * projection);
         Graphics2D.Instance.SetVertexPositions(-0.5f, 0.5f, 0.5f, -0.5f);
@@ -160,8 +167,8 @@ public static class GameScript
 
     public static void drawThreshold(Texture2D tex, float u0, float v0, float u1, float v1)
     {
-        GraphicsDeviceContext.Instance.SetRasterizerState(_rasterizerState);
-        GraphicsDeviceContext.Instance.SetDepthStencilState(_depthStencilState);
+        GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
+        GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetTexture(tex);
         Graphics2D.Instance.SetMatrix(world * viewing * projection);
         Graphics2D.Instance.SetColorThreshold(0, 0, 0, 0, 1, 1, 1, 1);
@@ -171,8 +178,8 @@ public static class GameScript
 
     public static void rectangle()
     {
-        GraphicsDeviceContext.Instance.SetRasterizerState(_rasterizerState);
-        GraphicsDeviceContext.Instance.SetDepthStencilState(_depthStencilState);
+        GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
+        GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetMatrix(world * viewing * projection);
         Graphics2D.Instance.DrawRectangle();
     }
@@ -209,8 +216,8 @@ public static class GameScript
 
     public static void write(string text, TextAlignment horizontal = TextAlignment.Left, TextAlignment vertical = TextAlignment.Top)
     {
-        GraphicsDeviceContext.Instance.SetRasterizerState(_rasterizerState);
-        GraphicsDeviceContext.Instance.SetDepthStencilState(_depthStencilState);
+        GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
+        GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetMatrix(world * viewing * projection);
         Graphics2D.Instance.DrawText(text, horizontal, vertical);
     }
@@ -225,14 +232,6 @@ public static class GameScript
         Graphics2D.Instance.SetAddreessMode(state);
     }
     #endregion
-
-    public static SoundBuffer ExplosionSound = new SoundBuffer();
-    public static SoundBuffer LargeExplosionSound = new SoundBuffer();
-    public static SoundBuffer JetSound = new SoundBuffer();
-    public static SoundBuffer LockonSound = new SoundBuffer();
-    public static SoundBuffer AlertSound = new SoundBuffer();
-    public static SoundBuffer BulletSound = new SoundBuffer();
-    public static SoundBuffer BulletHitSound = new SoundBuffer();
 
     public static void initialize()
     {
@@ -273,8 +272,8 @@ public static class GameScript
         Graphics2D.Instance.Create();
         color(ColorCode.White);
 
-        _rasterizerState.Create(CullMode.None, FillMode.Solid);
-        _depthStencilState.Create(false, false, false);
+        rasterizerState.Create(CullMode.None, FillMode.Solid);
+        depthStencilState.Create(false, false, false);
     }
 
     public static void update()
