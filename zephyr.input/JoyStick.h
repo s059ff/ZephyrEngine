@@ -101,6 +101,26 @@ namespace zephyr
             READONLY_PROPERTY(ButtonState, Down, { return getButtonState(this->povDown, this->prevPovDown); });
 
             /// <summary>
+            /// POV スイッチの左方向のボタンを押し続けている時間を取得します。
+            /// </summary>
+            READONLY_PROPERTY(int, LeftPressTimeLength, { return this->povLeftPressTimeLength; });
+
+            /// <summary>
+            /// POV スイッチの右方向のボタンを押し続けている時間を取得します。
+            /// </summary>
+            READONLY_PROPERTY(int, RightPressTimeLength, { return this->povRightPressTimeLength; });
+
+            /// <summary>
+            /// POV スイッチの上方向のボタンを押し続けている時間を取得します。
+            /// </summary>
+            READONLY_PROPERTY(int, UpPressTimeLength, { return this->povUpPressTimeLength; });
+
+            /// <summary>
+            /// POV スイッチの下方向のボタンを押し続けている時間を取得します。
+            /// </summary>
+            READONLY_PROPERTY(int, DownPressTimeLength, { return this->povDownPressTimeLength; });
+
+            /// <summary>
             /// コントローラが接続されているか調べます。
             /// </summary>
             __declspec(property(get = isConnected)) bool IsConnected;
@@ -142,6 +162,12 @@ namespace zephyr
 
             // 直前のPOVスイッチの状態
             bool prevPovLeft, prevPovRight, prevPovUp, prevPovDown;
+
+            // POVスイッチが押されている合計時間
+            int povLeftPressTimeLength;
+            int povRightPressTimeLength;
+            int povUpPressTimeLength;
+            int povDownPressTimeLength;
 
             // アナログスティック
             double axisX, axisY;

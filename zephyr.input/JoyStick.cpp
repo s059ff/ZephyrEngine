@@ -175,7 +175,7 @@ namespace zephyr
 
 					for (int i = 0; i < ButtonCount; i++)
 					{
-						// 長押しして離した状態も検知できるようにする (T < pressTime && NowReleased)
+						// 長押しして離した瞬間を検知できるようにする (T < pressTime && NowReleased)
 						if (0 < (this.prevButtonState[i] & 0x80))
 							this.pressTimeLength[i]++;
 						else
@@ -203,6 +203,12 @@ namespace zephyr
                         this.povUp = false;
                         this.povDown = false;
                     }
+
+                    // 長押しして離した瞬間を検知できるようにする (T < pressTime && NowReleased)
+                    this.povLeftPressTimeLength = this.prevPovLeft ? this.povLeftPressTimeLength + 1 : 0;
+                    this.povRightPressTimeLength = this.prevPovRight ? this.povRightPressTimeLength + 1 : 0;
+                    this.povUpPressTimeLength = this.prevPovUp ? this.povUpPressTimeLength + 1 : 0;
+                    this.povDownPressTimeLength = this.prevPovDown ? this.povDownPressTimeLength + 1 : 0;
                 }
                 else
                 {

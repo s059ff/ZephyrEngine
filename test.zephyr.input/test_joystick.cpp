@@ -42,17 +42,18 @@ void test_joystick()
         {
             auto name = std::to_string(i);
             auto state = joystick.GetButtonState((ButtonCode)i);
+            auto duration = joystick.GetPressTimeLength((ButtonCode)i);
 
-            println(std::cout, "{0} = {1}", name, to_string(state));
+            println(std::cout, "{0} = {1} ({2})", name, to_string(state), duration);
         }
         println(std::cout, "Axis1-X = {0}", joystick.AxisX);
         println(std::cout, "Axis1-Y = {0}", joystick.AxisY);
         println(std::cout, "Axis2-X = {0}", joystick.SubAxisX);
         println(std::cout, "Axis2-Y = {0}", joystick.SubAxisY);
-        println(std::cout, "POV-Left = {0}", to_string(joystick.Left));
-        println(std::cout, "POV-Right = {0}", to_string(joystick.Right));
-        println(std::cout, "POV-Up = {0}", to_string(joystick.Up));
-        println(std::cout, "POV-Down = {0}", to_string(joystick.Down));
+        println(std::cout, "POV-Left = {0} ({1})", to_string(joystick.Left), joystick.LeftPressTimeLength);
+        println(std::cout, "POV-Right = {0} ({1})", to_string(joystick.Right), joystick.RightPressTimeLength);
+        println(std::cout, "POV-Up = {0} ({1})", to_string(joystick.Up), joystick.UpPressTimeLength);
+        println(std::cout, "POV-Down = {0} ({1})", to_string(joystick.Down), joystick.DownPressTimeLength);
 
         Sleep(1000);
     }
