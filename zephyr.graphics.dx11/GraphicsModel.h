@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "enums.h"
@@ -28,141 +28,141 @@ namespace zephyr
             public:
 
                 /// <summary>
-                /// FBX ƒtƒ@ƒCƒ‹‚©‚ç 3D ƒ‚ƒfƒ‹‚ðì¬‚µ‚Ü‚·B
+                /// FBX ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ 3D ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="path">ƒtƒ@ƒCƒ‹ƒpƒXB</param> 
+                /// <param name="path">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã€‚</param> 
                 void CreateFromFBX(const string& path);
 
                 /// <summary>
-                /// “ÆŽ©ƒtƒH[ƒ}ƒbƒg‚ÌƒOƒ‰ƒtƒBƒbƒN ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Ý‚Ü‚·B
+                /// ç‹¬è‡ªãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã¿ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="path">ƒtƒ@ƒCƒ‹ƒpƒXB</param> 
+                /// <param name="path">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã€‚</param> 
                 void CreateFromCX(const string& path);
 
                 /// <summary>
-                /// ’¼Œa 1 ‚Ì‹…‘Ìƒ‚ƒfƒ‹‚ðì¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚èAƒ[ƒJƒ‹À•W‹y‚Ñ–@üƒxƒNƒgƒ‹‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ç›´å¾„ 1 ã®çƒä½“ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚Šã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™åŠã³æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="slices">ŽåŽ²‚ð‰ñ“]Ž²‚Æ‚µ‚½ƒXƒ‰ƒCƒX‚Ì”B</param>
-                /// <param name="stacks">ŽåŽ²‚É‰ˆ‚Á‚½ƒXƒ^ƒbƒN”B</param>
+                /// <param name="slices">ä¸»è»¸ã‚’å›žè»¢è»¸ã¨ã—ãŸã‚¹ãƒ©ã‚¤ã‚¹ã®æ•°ã€‚</param>
+                /// <param name="stacks">ä¸»è»¸ã«æ²¿ã£ãŸã‚¹ã‚¿ãƒƒã‚¯æ•°ã€‚</param>
                 void CreateSphere(int slices, int stacks);
 
                 /// <summary>
-                /// ˆê•Ð‚Ì’·‚³‚ª 1 ‚Ì—§•û‘Ìƒ‚ƒfƒ‹‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚èAƒ[ƒJƒ‹À•W‹y‚Ñ–@üƒxƒNƒgƒ‹‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ä¸€ç‰‡ã®é•·ã•ãŒ 1 ã®ç«‹æ–¹ä½“ãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚Šã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™åŠã³æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
                 //void CreateBox();
 
                 /// <summary>
-                /// ‰œs 1A’¼Œa 1 ‚Ì‰~’Œƒ‚ƒfƒ‹‚ð¶¬‚µ‚Ü‚·B¶¬‚³‚ê‚é‰~’Œƒ‚ƒfƒ‹‚ÍA Z •ûŒü‚©‚ç‚Ý‚Ä‰~‚ÉŒ©‚¦‚éƒ‚ƒfƒ‹‚É‚È‚è‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚èAˆÊ’u‹y‚Ñ–@üƒxƒNƒgƒ‹‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// å¥¥è¡Œ 1ã€ç›´å¾„ 1 ã®å††æŸ±ãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ç”Ÿæˆã•ã‚Œã‚‹å††æŸ±ãƒ¢ãƒ‡ãƒ«ã¯ã€ Z æ–¹å‘ã‹ã‚‰ã¿ã¦å††ã«è¦‹ãˆã‚‹ãƒ¢ãƒ‡ãƒ«ã«ãªã‚Šã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚Šã€ä½ç½®åŠã³æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="slices">ŽåŽ²‚ð‰ñ“]Ž²‚Æ‚µ‚½ƒXƒ‰ƒCƒX‚Ì”B</param>
+                /// <param name="slices">ä¸»è»¸ã‚’å›žè»¢è»¸ã¨ã—ãŸã‚¹ãƒ©ã‚¤ã‚¹ã®æ•°ã€‚</param>
                 //void CreateCylinder(int slices, int stacks);
 
                 /// <summary>
-                /// ƒg[ƒ‰ƒXƒ‚ƒfƒ‹‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚èAƒ[ƒJƒ‹À•W‹y‚Ñ–@üƒxƒNƒgƒ‹‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ãƒˆãƒ¼ãƒ©ã‚¹ãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚Šã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™åŠã³æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
                 //void CreateTorus();
 
                 /// <summary>
-                /// ƒeƒB[ƒ|ƒbƒgƒ‚ƒfƒ‹‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚èAƒ[ƒJƒ‹À•W‹y‚Ñ–@üƒxƒNƒgƒ‹‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ãƒ†ã‚£ãƒ¼ãƒãƒƒãƒˆãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚Šã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™åŠã³æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
                 //void CreateTeapot();
 
                 /// <summary>
-                /// ü•ªƒŠƒXƒg‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚ç‚¸Aƒ[ƒJƒ‹À•W‚Ì‚Ý‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ç·šåˆ†ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚‰ãšã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã®ã¿ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="positions">ü•ª‚ÌŽn“_‚ÌˆÊ’u‹y‚ÑI“_‚ÌˆÊ’u‚Ì”z—ñB”z—ñ‚Ì—v‘f”‚ÍA‚Q‚Ì”{”‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B</param>
+                /// <param name="positions">ç·šåˆ†ã®å§‹ç‚¹ã®ä½ç½®åŠã³çµ‚ç‚¹ã®ä½ç½®ã®é…åˆ—ã€‚é…åˆ—ã®è¦ç´ æ•°ã¯ã€ï¼’ã®å€æ•°ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚</param>
                 void CreateLineList(const vector<Vector3>& positions);
 
                 /// <summary>
-                /// ü•ªƒŠƒXƒg‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚ç‚¸Aƒ[ƒJƒ‹À•W‚Æ’¸“_ƒJƒ‰[‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ç·šåˆ†ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚‰ãšã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã¨é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="positions">ü•ª‚ÌŽn“_‚ÌˆÊ’u‹y‚ÑI“_‚ÌˆÊ’u‚Ì”z—ñB”z—ñ‚Ì—v‘f”‚ÍA‚Q‚Ì”{”‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B</param>
-                /// <param name="colors">Še’¸“_‚ÌF‚ð’è‹`‚·‚é’¸“_ƒJƒ‰[B</param>
+                /// <param name="positions">ç·šåˆ†ã®å§‹ç‚¹ã®ä½ç½®åŠã³çµ‚ç‚¹ã®ä½ç½®ã®é…åˆ—ã€‚é…åˆ—ã®è¦ç´ æ•°ã¯ã€ï¼’ã®å€æ•°ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚</param>
+                /// <param name="colors">å„é ‚ç‚¹ã®è‰²ã‚’å®šç¾©ã™ã‚‹é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã€‚</param>
                 void CreateLineList(const vector<Vector3>& positions, const vector<Color>& colors);
 
                 /// <summary>
-                /// ˜A‘±‚·‚éˆê‚Â‚Ìü•ª‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚ç‚¸Aƒ[ƒJƒ‹À•W‚Ì‚Ý‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// é€£ç¶šã™ã‚‹ä¸€ã¤ã®ç·šåˆ†ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚‰ãšã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã®ã¿ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="positions">’¸“_‚ÌˆÊ’u‚Ì”z—ñB</param>
+                /// <param name="positions">é ‚ç‚¹ã®ä½ç½®ã®é…åˆ—ã€‚</param>
                 void CreateLineStrip(const vector<Vector3>& positions);
 
                 /// <summary>
-                /// ˜A‘±‚·‚éˆê‚Â‚Ìü•ª‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚ç‚¸Aƒ[ƒJƒ‹À•W‚Æ’¸“_ƒJƒ‰[‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// é€£ç¶šã™ã‚‹ä¸€ã¤ã®ç·šåˆ†ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚‰ãšã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã¨é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="positions">ß“_‚ÌˆÊ’u‚Ì”z—ñB</param>
-                /// <param name="colors">Še’¸“_‚ÌF‚ð’è‹`‚·‚é’¸“_ƒJƒ‰[B</param>
+                /// <param name="positions">ç¯€ç‚¹ã®ä½ç½®ã®é…åˆ—ã€‚</param>
+                /// <param name="colors">å„é ‚ç‚¹ã®è‰²ã‚’å®šç¾©ã™ã‚‹é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã€‚</param>
                 void CreateLineStrip(const vector<Vector3>& positions, const vector<Color>& colors);
 
                 /// <summary>
-                /// ƒrƒ‹ƒ{[ƒhƒ‚ƒfƒ‹‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚ç‚¸Aƒ[ƒJƒ‹À•WA–@üƒxƒNƒgƒ‹AƒeƒNƒXƒ`ƒƒÀ•WA’¸“_ƒJƒ‰[‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚¨‚æ‚ÑƒeƒNƒXƒ`ƒƒ‚Í¶¬‚³‚ê‚Ü‚¹‚ñB
+                /// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰ãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚‰ãšã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã€æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã€é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ãŠã‚ˆã³ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯ç”Ÿæˆã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
                 void CreateBillBoard();
 
                 /// <summary>
-                /// ƒƒbƒVƒ…ƒ}ƒbƒv ƒ‚ƒfƒ‹‚ð¶¬‚µ‚Ü‚·Bƒ‚ƒfƒ‹‚Ì’¸“_‚ÍƒCƒ“ƒfƒbƒNƒX•t‚¯‚³‚ê‚Ä‚¨‚èAƒ[ƒJƒ‹À•WA–@üƒxƒNƒgƒ‹‚ðŽ‚¿‚Ü‚·Bƒ}ƒeƒŠƒAƒ‹‚ÆƒeƒNƒXƒ`ƒƒ‚ÍÝ’è‚³‚ê‚Ü‚¹‚ñB
+                /// ãƒ¡ãƒƒã‚·ãƒ¥ãƒžãƒƒãƒ— ãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ãƒ¢ãƒ‡ãƒ«ã®é ‚ç‚¹ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ã‘ã•ã‚Œã¦ãŠã‚Šã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã€æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æŒã¡ã¾ã™ã€‚ãƒžãƒ†ãƒªã‚¢ãƒ«ã¨ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯è¨­å®šã•ã‚Œã¾ã›ã‚“ã€‚
                 /// </summary>
-                /// <param name="heights">ƒOƒŠƒbƒhó‚É‹æØ‚Á‚½ƒƒbƒVƒ…ƒ}ƒbƒv‚ÌŠe’¸“_‚Ì‚‚³Bs¬•ª‚ª Y À•WA—ñ¬•ª‚ª X À•W‚É‘Î‰ž‚·‚éBs‚Æ—ñ‚Ì”‚Í“™‚µ‚­‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B</param>
+                /// <param name="heights">ã‚°ãƒªãƒƒãƒ‰çŠ¶ã«åŒºåˆ‡ã£ãŸãƒ¡ãƒƒã‚·ãƒ¥ãƒžãƒƒãƒ—ã®å„é ‚ç‚¹ã®é«˜ã•ã€‚è¡Œæˆåˆ†ãŒ Y åº§æ¨™ã€åˆ—æˆåˆ†ãŒ X åº§æ¨™ã«å¯¾å¿œã™ã‚‹ã€‚è¡Œã¨åˆ—ã®æ•°ã¯ç­‰ã—ããªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚</param>
                 void CreateMeshMap(const matrix<float>& heights);
 
             public:
 
                 /// <summary>
-                /// ’¸“_À•WB
+                /// é ‚ç‚¹åº§æ¨™ã€‚
                 /// </summary>
                 VertexBuffer VertexPositions;
 
                 /// <summary>
-                /// ’¸“_‚Ì–@üƒxƒNƒgƒ‹B
+                /// é ‚ç‚¹ã®æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã€‚
                 /// </summary>
                 VertexBuffer VertexNormals;
 
                 /// <summary>
-                /// ’¸“_‚ÌƒeƒNƒXƒ`ƒƒÀ•WB
+                /// é ‚ç‚¹ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã€‚
                 /// </summary>
                 VertexBuffer VertexTextureCoords;
 
                 /// <summary>
-                /// ’¸“_‚ÌFB
+                /// é ‚ç‚¹ã®è‰²ã€‚
                 /// </summary>
                 VertexBuffer VertexColors;
 
                 /// <summary>
-                /// ’¸“_‚Ì TangentB
+                /// é ‚ç‚¹ã® Tangentã€‚
                 /// </summary>
                 VertexBuffer VertexTangents;
 
                 /// <summary>
-                /// ’¸“_‚Ì BinormalB
+                /// é ‚ç‚¹ã® Binormalã€‚
                 /// </summary>
                 VertexBuffer VertexBinormals;
 
                 /// <summary>
-                /// ’¸“_ƒCƒ“ƒfƒbƒNƒXB
+                /// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚
                 /// </summary>
                 IndexBuffer VertexIndices;
 
                 /// <summary>
-                /// ƒeƒNƒXƒ`ƒƒB
+                /// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã€‚
                 /// </summary>
                 Texture2D Texture;
 
                 /// <summary>
-                /// –@üƒ}ƒbƒvƒeƒNƒXƒ`ƒƒB
+                /// æ³•ç·šãƒžãƒƒãƒ—ãƒ†ã‚¯ã‚¹ãƒãƒ£ã€‚
                 /// </summary>
                 Texture2D NormalMap;
 
                 /// <summary>
-                /// ƒ}ƒeƒŠƒAƒ‹î•ñB
+                /// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã€‚
                 /// </summary>
                 Material Material;
 
                 /// <summary>
-                /// ƒvƒŠƒ~ƒeƒBƒu‚Ì\‘¢B
+                /// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®æ§‹é€ ã€‚
                 /// </summary>
                 PrimitiveTopology Topology;
 
                 /// <summary>
-                /// Žqƒ‚ƒfƒ‹B
+                /// å­ãƒ¢ãƒ‡ãƒ«ã€‚
                 /// </summary>
                 vector<GraphicsModel> ChildModels;
             };

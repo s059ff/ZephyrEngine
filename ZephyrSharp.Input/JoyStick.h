@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
+#include "ButtonCode.h"
 #include "ButtonState.h"
 
 namespace ZephyrSharp
@@ -8,7 +9,7 @@ namespace ZephyrSharp
     namespace Input
     {
         /// <summary>
-        /// �W���C�X�e�B�b�N�R���g���[����\���܂��B
+        /// ジョイスティックコントローラを表します。
         /// </summary>
         public ref class JoyStick
             : public INativeWrapper<zephyr::input::JoyStick>
@@ -16,7 +17,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �f�o�C�X�̏�Ԃ��X�V���܂��B���̃��\�b�h�͖��t���[���Ăяo���K�v������܂��B
+            /// デバイスの状態を更新します。このメソッドは毎フレーム呼び出す必要があります。
             /// </summary>
             void Update()
             {
@@ -24,81 +25,81 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �{�^���̏�Ԃ��擾���܂��B
+            /// ボタンの状態を取得します。
             /// </summary>
-            /// <param name="id">�{�^���� ID �B</param>
-            ButtonState GetButtonState(int id)
+            /// <param name="code">ボタンコード。</param>
+            ButtonState GetButtonState(ButtonCode code)
             {
-                return (ButtonState)Native->GetButtonState(id);
+                return (ButtonState)Native->GetButtonState((zephyr::input::ButtonCode)code);
             }
 
 			/// <summary>
-			/// �{�^���̒��������Ԃ��擾���܂��B
+			/// ボタンの長押し時間を取得します。
 			/// </summary>
-			/// <param name="id">�{�^���� ID �B</param>
-			/// <returns>�{�^����������đ����Ă���t���[�����B</returns>
-			int GetPressTimeLength(int id)
+            /// <param name="code">ボタンコード。</param>
+			/// <returns>ボタンが押されて続けているフレーム数。</returns>
+			int GetPressTimeLength(ButtonCode code)
 			{
-				return Native->GetPressTimeLength(id);
+				return Native->GetPressTimeLength((zephyr::input::ButtonCode)code);
 			}
 
             /// <summary>
-            /// �{�^���̏�Ԃ��擾���܂��B
+            /// ボタンの状態を取得します。
             /// </summary>
-            property ButtonState default[int]
+            property ButtonState default[ButtonCode]
             {
-                ButtonState get(int id) { return this->GetButtonState(id); }
+                ButtonState get(ButtonCode code) { return this->GetButtonState(code); }
             }
 
         public:
 
             /// <summary>
-            /// �A�i���O�X�e�B�b�N�� 1 ���� X ���̒l���擾���܂��B
+            /// アナログスティック第 1 軸の X 軸の値を取得します。
             /// </summary>
             property double AxisX { double get() { return Native->AxisX; } }
 
             /// <summary>
-            /// �A�i���O�X�e�B�b�N�� 1 ���� Y ���̒l���擾���܂��B
+            /// アナログスティック第 1 軸の Y 軸の値を取得します。
             /// </summary>
             property double AxisY { double get() { return Native->AxisY; } }
 
             /// <summary>
-            /// �A�i���O�X�e�B�b�N�� 2 ���� X ���̒l���擾���܂��B
+            /// アナログスティック第 2 軸の X 軸の値を取得します。
             /// </summary>
             property double SubAxisX { double get() { return Native->SubAxisX; } }
 
             /// <summary>
-            /// �A�i���O�X�e�B�b�N�� 2 ���� Y ���̒l���擾���܂��B
+            /// アナログスティック第 2 軸の Y 軸の値を取得します。
             /// </summary>
             property double SubAxisY { double get() { return Native->SubAxisY; } }
 
             /// <summary>
-            /// POV �X�C�b�`�̍������̃{�^���̏�Ԃ��擾���܂��B
+            /// POV スイッチの左方向のボタンの状態を取得します。
             /// </summary>
             property ButtonState Left { ButtonState get() { return (ButtonState)Native->Left; } }
 
             /// <summary>
-            /// POV �X�C�b�`�̉E�����̃{�^���̏�Ԃ��擾���܂��B
+            /// POV スイッチの右方向のボタンの状態を取得します。
             /// </summary>
             property ButtonState Right { ButtonState get() { return (ButtonState)Native->Right; } }
 
             /// <summary>
-            /// POV �X�C�b�`�̏�����̃{�^���̏�Ԃ��擾���܂��B
+            /// POV スイッチの上方向のボタンの状態を取得します。
             /// </summary>
             property ButtonState Up { ButtonState get() { return (ButtonState)Native->Up; } }
 
             /// <summary>
-            /// POV �X�C�b�`�̉������̃{�^���̏�Ԃ��擾���܂��B
+            /// POV スイッチの下方向のボタンの状態を取得します。
             /// </summary>
             property ButtonState Down { ButtonState get() { return (ButtonState)Native->Down; } }
 
             /// <summary>
-            /// �R���g���[�����ڑ�����Ă��邩���ׂ܂��B
+            /// コントローラが接続されているか調べます。
             /// </summary>
             property bool IsConnected { bool get() { return Native->IsConnected; } }
 
             /// <summary>
-            /// �A�i���O�X�e�B�b�N�̃f�b�h�]�[���̑傫���� 0 ���� 1 �͈̔͂Ŏw�肵�܂��B
+            /// アナログスティックのデッドゾーンの大きさを 0 から 1 の範囲で指定します。
             /// </summary>
             property double DeadZone
             {

@@ -1,38 +1,38 @@
-#pragma once
+﻿#pragma once
 
 namespace zephyr
 {
     namespace input
     {
         /// <summary>
-        /// �{�^���̏�Ԃ�\���܂��B
+        /// ボタンの状態を表します。
         /// </summary>
         enum class ButtonState
         {
             /// <summary>
-            /// �{�^���͗�����Ă��܂��B
+            /// ボタンは離されています。
             /// </summary>
             Released,
 
             /// <summary>
-            /// �{�^���͉�����Ă��܂��B
+            /// ボタンは押されています。
             /// </summary>
             Pressed,
 
             /// <summary>
-            /// �{�^���͍�������܂����B
+            /// ボタンは今離されました。
             /// </summary>
             NowReleased,
 
             /// <summary>
-            /// �{�^���͍�������܂����B
+            /// ボタンは今押されました。
             /// </summary>
             NowPressed
         };
 
         namespace
         {
-            // �{�^���̏�Ԃ��擾����
+            // ボタンの状態を取得する
             inline ButtonState getButtonState(bool now, bool prev)
             {
                 if (now)

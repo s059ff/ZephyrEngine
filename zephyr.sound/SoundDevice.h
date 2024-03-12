@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\type.h"
 
@@ -11,19 +11,19 @@ namespace zephyr
     namespace sound
     {
         /// <summary>
-        /// ƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ğ“Š‡‚µ‚Ü‚·B
+        /// ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’çµ±æ‹¬ã—ã¾ã™ã€‚
         /// </summary>
         class SoundDevice : public Interface<IDirectSound>
         {
         public:
 
             /// <summary>
-            /// ƒfƒoƒCƒX‚ğì¬‚µAƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ğ‹N“®‚É‚µ‚Ü‚·B
+            /// ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆã—ã€ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’èµ·å‹•ã«ã—ã¾ã™ã€‚
             /// </summary>
             void Create(handle hWindow);
 
             /// <summary>
-            /// ƒfƒoƒCƒX‚ğ‰ğ•úAƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ğI—¹‚µ‚Ü‚·B
+            /// ãƒ‡ãƒã‚¤ã‚¹ã‚’è§£æ”¾ã€ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’çµ‚äº†ã—ã¾ã™ã€‚
             /// </summary>
             void Release();
         };

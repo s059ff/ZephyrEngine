@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <random>
 
@@ -11,24 +11,24 @@
 namespace ZephyrSharp
 {
     /// <summary>
-    /// ˆê—l•ª•z‚ğ•\‚µ‚Ü‚·B
+    /// ä¸€æ§˜åˆ†å¸ƒã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     public ref class UniformDistribution : INativeWrapper<std::uniform_real_distribution<float>>
     {
     public:
 
         /// <summary>
-        /// Šm—¦•ª•z‚ğì¬‚µ‚Ü‚·B
+        /// ç¢ºç‡åˆ†å¸ƒã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="min">—”‚ÌÅ¬’lB</param> 
-        /// <param name="max">—”‚ÌÅ‘å’lB</param> 
+        /// <param name="min">ä¹±æ•°ã®æœ€å°å€¤ã€‚</param> 
+        /// <param name="max">ä¹±æ•°ã®æœ€å¤§å€¤ã€‚</param> 
         UniformDistribution(float min, float max)
         {
             Native->param(std::uniform_real_distribution<float>::param_type(min, max));
         }
 
         /// <summary>
-        /// —”‚ÌÅ¬’l‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// ä¹±æ•°ã®æœ€å°å€¤ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         property float Min
         {
@@ -37,7 +37,7 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// —”‚ÌÅ‘å’l‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// ä¹±æ•°ã®æœ€å¤§å€¤ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         property float Max
         {

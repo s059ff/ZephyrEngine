@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr.graphics\Font.h"
 
@@ -11,7 +11,7 @@ namespace ZephyrSharp
         enum class FontOption;
 
         /// <summary>
-        /// ƒtƒHƒ“ƒg‚ğ•\‚µ‚Ü‚·B
+        /// ãƒ•ã‚©ãƒ³ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Font
             : public INativeWrapper<zephyr::graphics::Font>
@@ -19,65 +19,65 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// V‚µ‚¢ƒtƒHƒ“ƒg‚ğì¬‚µ‚Ü‚·B
+            /// æ–°ã—ã„ãƒ•ã‚©ãƒ³ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="fontname">ƒtƒHƒ“ƒgƒtƒ@ƒ~ƒŠ[B</param>
-            /// <param name="size">ƒtƒHƒ“ƒg‚ÌƒTƒCƒYB</param>
+            /// <param name="fontname">ãƒ•ã‚©ãƒ³ãƒˆãƒ•ã‚¡ãƒŸãƒªãƒ¼ã€‚</param>
+            /// <param name="size">ãƒ•ã‚©ãƒ³ãƒˆã®ã‚µã‚¤ã‚ºã€‚</param>
             void Create(String^ fontname, int size)
             {
                 Native->Create(to_string(fontname).c_str(), size);
             }
 
             /// <summary>
-            /// V‚µ‚¢ƒtƒHƒ“ƒg‚ğì¬‚µ‚Ü‚·B
+            /// æ–°ã—ã„ãƒ•ã‚©ãƒ³ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="fontname">ƒtƒHƒ“ƒgƒtƒ@ƒ~ƒŠ[B</param>
-            /// <param name="size">ƒtƒHƒ“ƒg‚ÌƒTƒCƒYB</param>
-            /// <param name="option">ƒ{[ƒ‹ƒh‘Ì‚âƒCƒ^ƒŠƒbƒN‘Ì‚È‚Ç‚ğw’è‚·‚éì¬ƒIƒvƒVƒ‡ƒ“B</param>
+            /// <param name="fontname">ãƒ•ã‚©ãƒ³ãƒˆãƒ•ã‚¡ãƒŸãƒªãƒ¼ã€‚</param>
+            /// <param name="size">ãƒ•ã‚©ãƒ³ãƒˆã®ã‚µã‚¤ã‚ºã€‚</param>
+            /// <param name="option">ãƒœãƒ¼ãƒ«ãƒ‰ä½“ã‚„ã‚¤ã‚¿ãƒªãƒƒã‚¯ä½“ãªã©ã‚’æŒ‡å®šã™ã‚‹ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã€‚</param>
             void Create(String^ fontname, int size, FontOption option)
             {
                 Native->Create(to_string(fontname).c_str(), size, (zephyr::graphics::FontOption)option);
             }
 
             /// <summary>
-            /// ƒtƒHƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒgƒnƒ“ƒhƒ‹‚ğæ“¾‚µ‚Ü‚·B
+            /// ãƒ•ã‚©ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property void* Handle { void* get() { return Native->handle; }}
 
             /// <summary>
-            /// ƒtƒHƒ“ƒg‚ÌƒTƒCƒY‚ğæ“¾‚µ‚Ü‚·B
+            /// ãƒ•ã‚©ãƒ³ãƒˆã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Size { int get() { return Native->size; }}
         };
 
         /// <summary>
-        /// ƒtƒHƒ“ƒg‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğ’è‹`‚µ‚Ü‚·B
+        /// ãƒ•ã‚©ãƒ³ãƒˆã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’å®šç¾©ã—ã¾ã™ã€‚
         /// </summary>
         [System::FlagsAttribute]
         public enum class FontOption
         {
             /// <summary>
-            /// ’Êí‘Ì‚ğ•\‚µ‚Ü‚·B
+            /// é€šå¸¸ä½“ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             Normal = (int)zephyr::graphics::FontOption::Normal,
 
             /// <summary>
-            /// ƒ{[ƒ‹ƒh‘Ì‚ğ•\‚µ‚Ü‚·B
+            /// ãƒœãƒ¼ãƒ«ãƒ‰ä½“ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             Bold = (int)zephyr::graphics::FontOption::Bold,
 
             /// <summary>
-            /// ƒCƒ^ƒŠƒbƒN‘Ì‚ğ•\‚µ‚Ü‚·B
+            /// ã‚¤ã‚¿ãƒªãƒƒã‚¯ä½“ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             Italic = (int)zephyr::graphics::FontOption::Italic,
 
             /// <summary>
-            /// ‰ºü•t‚«‚ğ•\‚µ‚Ü‚·B
+            /// ä¸‹ç·šä»˜ãã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             Underline = (int)zephyr::graphics::FontOption::Underline,
 
             /// <summary>
-            /// ‘ÅÁ‚µü‚ğ•\‚µ‚Ü‚·B
+            /// æ‰“æ¶ˆã—ç·šã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             StrikeOut = (int)zephyr::graphics::FontOption::StrikeOut
         };

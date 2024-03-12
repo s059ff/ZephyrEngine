@@ -157,6 +157,7 @@
     <ClCompile Include="imports.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonCode.h" />
     <ClInclude Include="ButtonState.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="JoyStick.h" />
@@ -174,6 +175,9 @@
     <ProjectReference Include="..\zephyr\zephyr.vcxproj">
       <Project>{ed51c3bc-59da-480d-bfac-12d608effc0b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

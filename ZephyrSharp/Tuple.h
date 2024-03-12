@@ -1,7 +1,7 @@
-namespace ZephyrSharp
+ï»¿namespace ZephyrSharp
 {
     /// <summary>
-    /// 1 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 1 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1> public value struct Tuple1
     {
@@ -14,7 +14,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 2 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 2 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2> public value struct Tuple2
     {
@@ -28,7 +28,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 3 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 3 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2, typename T3> public value struct Tuple3
     {
@@ -43,7 +43,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 4 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 4 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2, typename T3, typename T4> public value struct Tuple4
     {
@@ -59,7 +59,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 5 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 5 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2, typename T3, typename T4, typename T5> public value struct Tuple5
     {
@@ -76,7 +76,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 6 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 6 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6> public value struct Tuple6
     {
@@ -94,7 +94,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 7 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 7 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7> public value struct Tuple7
     {
@@ -113,7 +113,7 @@ namespace ZephyrSharp
     };
 
     /// <summary>
-    /// 8 ‚Â‚Ì—v‘f‚Ì‘g‚İ‡‚í‚¹‚ğ•\‚µ‚Ü‚·B
+    /// 8 ã¤ã®è¦ç´ ã®çµ„ã¿åˆã‚ã›ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8> public value struct Tuple8
     {

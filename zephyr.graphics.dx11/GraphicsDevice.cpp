@@ -1,4 +1,4 @@
-#include "GraphicsDevice.h"
+ï»¿#include "GraphicsDevice.h"
 #include "GraphicsDeviceContext.h"
 
 #define this (*this)
@@ -13,7 +13,7 @@ namespace zephyr
 
             void GraphicsDevice::Create(const Window& window, bool fullscreen)
             {
-                // ƒXƒƒbƒvƒ`ƒFƒCƒ“‚Ìİ’è
+                // ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®è¨­å®š
                 DXGI_SWAP_CHAIN_DESC swapChainDesc;
                 ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
                 swapChainDesc.BufferCount = 1;
@@ -29,7 +29,7 @@ namespace zephyr
                 swapChainDesc.Windowed = !fullscreen;
                 swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-                // ‹@”\ƒŒƒxƒ‹
+                // æ©Ÿèƒ½ãƒ¬ãƒ™ãƒ«
                 D3D_FEATURE_LEVEL featureLevels[] = {
                     D3D_FEATURE_LEVEL_11_0,
                     //D3D_FEATURE_LEVEL_10_1,
@@ -38,7 +38,7 @@ namespace zephyr
                 D3D_FEATURE_LEVEL actuallyFeatureLevel;
                 UINT numFeatureLevels = sizeof(featureLevels) / sizeof(featureLevels[0]);
 
-                // ƒfƒoƒCƒX‚ÆƒXƒƒbƒvƒ`ƒFƒCƒ“‚Ìì¬
+                // ãƒ‡ãƒã‚¤ã‚¹ã¨ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®ä½œæˆ
                 UINT flags = 0;
 #ifdef _DEBUG
                 flags |= D3D11_CREATE_DEVICE_DEBUG;

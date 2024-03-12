@@ -1,4 +1,4 @@
-#include "zephyr\algorithm.h"
+﻿#include "zephyr\algorithm.h"
 #include "zephyr.linalg\linalg.h"
 #include "zephyr.gamesystem\Entity.h"
 

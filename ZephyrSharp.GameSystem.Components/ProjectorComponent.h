@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 
@@ -9,37 +9,37 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// ƒvƒƒWƒFƒNƒ^[‚ğ•\‚µ‚Ü‚·B
+            /// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚¿ãƒ¼ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class ProjectorComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ‚±‚ÌƒNƒ‰ƒX‚ÌV‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚µ‚Ü‚·B
+                /// ã“ã®ã‚¯ãƒ©ã‚¹ã®æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚
                 /// </summary>
                 ProjectorComponent();
 
                 /// <summary>
-                /// “§‹“Š‰eƒ‚[ƒh‚ğİ’è‚µ‚Ü‚·B
+                /// é€è¦–æŠ•å½±ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="fovY">‹–ìŠpB</param> 
-                /// <param name="aspect">“Š‰e—Ìˆæ‚ÌƒAƒXƒyƒNƒg”äB</param> 
-                /// <param name="zn">“Š‰e—Ìˆæ‚Ì Z Near ’lB</param> 
-                /// <param name="zf">“Š‰e—Ìˆæ‚Ì Z Far ’lB</param> 
+                /// <param name="fovY">è¦–é‡è§’ã€‚</param> 
+                /// <param name="aspect">æŠ•å½±é ˜åŸŸã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã€‚</param> 
+                /// <param name="zn">æŠ•å½±é ˜åŸŸã® Z Near å€¤ã€‚</param> 
+                /// <param name="zf">æŠ•å½±é ˜åŸŸã® Z Far å€¤ã€‚</param> 
                 void SetPerspectiveMode(float fovY, float aspect, float zn, float zf);
 
                 /// <summary>
-                /// •½s“Š‰eƒ‚[ƒh‚ğİ’è‚µ‚Ü‚·B
+                /// å¹³è¡ŒæŠ•å½±ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="width">“Š‰e—Ìˆæ‚Ì•B</param> 
-                /// <param name="height">“Š‰e—Ìˆæ‚Ì‚‚³B</param> 
-                /// <param name="zn">“Š‰e—Ìˆæ‚Ì Z Near ’lB</param> 
-                /// <param name="zf">“Š‰e—Ìˆæ‚Ì Z Far ’lB</param> 
+                /// <param name="width">æŠ•å½±é ˜åŸŸã®å¹…ã€‚</param> 
+                /// <param name="height">æŠ•å½±é ˜åŸŸã®é«˜ã•ã€‚</param> 
+                /// <param name="zn">æŠ•å½±é ˜åŸŸã® Z Near å€¤ã€‚</param> 
+                /// <param name="zf">æŠ•å½±é ˜åŸŸã® Z Far å€¤ã€‚</param> 
                 void SetOrthogonalMode(float width, float height, float zn, float zf);
 
                 /// <summary>
-                /// ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ğæ“¾‚µ‚Ü‚·B
+                /// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 Matrix4x4 ProjectionMatrix;
             };

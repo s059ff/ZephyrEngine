@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace System::Collections::Generic;
 using namespace ZephyrSharp::Linalg;
@@ -10,47 +10,47 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// ƒ‰ƒCƒg‚ğ•\‚µ‚Ü‚·B
+            /// ãƒ©ã‚¤ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class LightComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒ‰ƒCƒg‚Ìİ’è‚ğ•\‚µ‚Ü‚·B
+                /// ãƒ©ã‚¤ãƒˆã®è¨­å®šã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 enum class LightMode
                 {
                     /// <summary>
-                    /// ƒ‰ƒCƒg‚ÍÃ~‚µ‚Ä‚¢‚éB
+                    /// ãƒ©ã‚¤ãƒˆã¯é™æ­¢ã—ã¦ã„ã‚‹ã€‚
                     /// </summary>
                     Stationary,
 
                     /// <summary>
-                    /// ƒ^[ƒQƒbƒg‚ğ’ÇÕ‚·‚éB
+                    /// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’è¿½è·¡ã™ã‚‹ã€‚
                     /// </summary>
                     Tracking
                 };
 
                 /// <summary>
-                /// ƒ‰ƒCƒg‚ÌŒü‚«‚ğİ’è‚µ‚Ü‚·B
+                /// ãƒ©ã‚¤ãƒˆã®å‘ãã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="eye">ƒ‰ƒCƒg‚ÌÀ•WB</param> 
-                /// <param name="at">’‹æ‚ÌÀ•WB</param> 
+                /// <param name="eye">ãƒ©ã‚¤ãƒˆã®åº§æ¨™ã€‚</param> 
+                /// <param name="at">æ³¨è¦–å…ˆã®åº§æ¨™ã€‚</param> 
                 void LookAt(Vector3 eye, Vector3 at);
 
                 /// <summary>
-                /// ƒgƒ‰ƒbƒLƒ“ƒO‚Ì‘ÎÛ‚Æ‚È‚éƒGƒ“ƒeƒBƒeƒBB
+                /// ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ã®å¯¾è±¡ã¨ãªã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã€‚
                 /// </summary>
                 property Entity^ TrackingTarget;
 
                 /// <summary>
-                /// ƒgƒ‰ƒbƒLƒ“ƒO‘ÎÛƒGƒ“ƒeƒBƒeƒB‚Æ‚±‚ÌƒGƒ“ƒeƒBƒeƒB‚Ì‘Š‘ÎˆÊ’uB
+                /// ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°å¯¾è±¡ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã¨ã“ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ç›¸å¯¾ä½ç½®ã€‚
                 /// </summary>
                 property Vector3 Offset;
 
                 /// <summary>
-                /// ƒ‰ƒCƒg‚Ì“®ìİ’è‚ğ•\‚µ‚Ü‚·B
+                /// ãƒ©ã‚¤ãƒˆã®å‹•ä½œè¨­å®šã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 property LightMode Mode;
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\math.h"
 #include "zephyr.linalg\Vector4.h"
@@ -11,26 +11,26 @@ namespace ZephyrSharp
     namespace Linalg
     {
         /// <summary>
-        /// lŸŒ³“¯ŸƒxƒNƒgƒ‹‚ğ•\‚µ‚Ü‚·B
+        /// å››æ¬¡å…ƒåŒæ¬¡ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public value class Vector4
         {
         public:
 
             /// <summary>
-            /// ‘S¬•ª‚Ì’l‚ğŒÂ•Ê‚Éw’è‚µ‚ÄƒxƒNƒgƒ‹‚ğì¬‚µ‚Ü‚·B
+            /// å…¨æˆåˆ†ã®å€¤ã‚’å€‹åˆ¥ã«æŒ‡å®šã—ã¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="v">X, Y, Z ‚Ì‰Šú’l</param> 
-            /// <param name="w">W ‚Ì‰Šú’l</param> 
+            /// <param name="v">X, Y, Z ã®åˆæœŸå€¤</param> 
+            /// <param name="w">W ã®åˆæœŸå€¤</param> 
             Vector4(Vector3 v, float w) : X(v.X), Y(v.Y), Z(v.Z), W(w) {}
 
             /// <summary>
-            /// ‘S¬•ª‚Ì’l‚ğŒÂ•Ê‚Éw’è‚µ‚ÄƒxƒNƒgƒ‹‚ğì¬‚µ‚Ü‚·B
+            /// å…¨æˆåˆ†ã®å€¤ã‚’å€‹åˆ¥ã«æŒ‡å®šã—ã¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">X ‚Ì‰Šú’l</param> 
-            /// <param name="y">Y ‚Ì‰Šú’l</param> 
-            /// <param name="z">Z ‚Ì‰Šú’l</param> 
-            /// <param name="w">W ‚Ì‰Šú’l</param> 
+            /// <param name="x">X ã®åˆæœŸå€¤</param> 
+            /// <param name="y">Y ã®åˆæœŸå€¤</param> 
+            /// <param name="z">Z ã®åˆæœŸå€¤</param> 
+            /// <param name="w">W ã®åˆæœŸå€¤</param> 
             Vector4(float x, float y, float z, float w) : X(x), Y(y), Z(z), W(w) {}
 
             Vector4(const zephyr::linalg::Vector4& v)
@@ -41,13 +41,13 @@ namespace ZephyrSharp
             System::String^ ToString() override;
 
             /// <summary>
-            /// •¶š—ñ‚ğƒxƒNƒgƒ‹‚É•ÏŠ·‚µ‚Ü‚·B
+            /// æ–‡å­—åˆ—ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«å¤‰æ›ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="str">•ÏŠ·Œ³‚Ì•¶š—ñBŠe—v‘f‚Í , ‚Å‹æØ‚é‚±‚ÆB</param> 
+            /// <param name="str">å¤‰æ›å…ƒã®æ–‡å­—åˆ—ã€‚å„è¦ç´ ã¯ , ã§åŒºåˆ‡ã‚‹ã“ã¨ã€‚</param> 
             static Vector4 Parse(System::String^ str);
 
             /// <summary>
-            /// ƒ[ƒƒxƒNƒgƒ‹B
+            /// ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«ã€‚
             /// </summary>
             static const Vector4 Zero = Vector4(0, 0, 0, 0);
 

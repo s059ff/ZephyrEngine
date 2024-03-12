@@ -1,4 +1,4 @@
-#define DIRECTINPUT_VERSION 0x0800
+ï»¿#define DIRECTINPUT_VERSION 0x0800
 
 #include <stdexcept>
 
@@ -30,22 +30,22 @@ namespace zephyr
             com_ptr<IDirectInput8A> input;
             com_assert(DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&input, NULL));
 
-            // IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ìæ“¾iƒ}ƒEƒXj
+            // IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å–å¾—ï¼ˆãƒã‚¦ã‚¹ï¼‰
             HRESULT result = input->CreateDevice(GUID_SysMouse, &this, NULL);
             if (FAILED(result))
-                throw runtime_error("IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
+                throw runtime_error("IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ");
 
-            // ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚Ìİ’èi’è‹`Ï‚İ‚Ìƒ}ƒEƒX—pƒtƒH[ƒ}ƒbƒg‚ğg—pj
+            // ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®šï¼ˆå®šç¾©æ¸ˆã¿ã®ãƒã‚¦ã‚¹ç”¨ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’ä½¿ç”¨ï¼‰
             result = this->SetDataFormat(&c_dfDIMouse2);
             if (FAILED(result))
-                throw runtime_error("ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½");
+                throw runtime_error("ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ");
 
-            // ‹¦’²ƒ‚[ƒh‚Ìİ’è
+            // å”èª¿ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®š
             result = this->SetCooperativeLevel(nullptr, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
             if (FAILED(result))
-                throw runtime_error("‹¦’²ƒ‚[ƒh‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½");
+                throw runtime_error("å”èª¿ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ");
 
-            // ²ƒ‚[ƒh‚ğİ’èi‘Š‘Î’lƒ‚[ƒh‚Éİ’èj
+            // è»¸ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šï¼ˆç›¸å¯¾å€¤ãƒ¢ãƒ¼ãƒ‰ã«è¨­å®šï¼‰
             DIPROPDWORD diprop;
             diprop.diph.dwSize = sizeof(diprop);
             diprop.diph.dwHeaderSize = sizeof(diprop.diph);
@@ -54,7 +54,7 @@ namespace zephyr
             diprop.dwData = DIPROPAXISMODE_REL;
             result = this->SetProperty(DIPROP_AXISMODE, &diprop.diph);
             if (FAILED(result))
-                throw runtime_error("²ƒ‚[ƒh‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½");
+                throw runtime_error("è»¸ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ");
         }
 
         void Mouse::Reset(IDirectInputDevice8A* ptr)

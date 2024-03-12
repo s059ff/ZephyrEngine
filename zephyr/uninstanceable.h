@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 
 #include "uncopyable.h"
 
 namespace zephyr
 {
     /// <summary>
-    /// ‚±‚ÌƒNƒ‰ƒX‚ğŒp³‚·‚éƒNƒ‰ƒX‚ÍAƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬‚Å‚«‚È‚­‚È‚è‚Ü‚·B
+    /// ã“ã®ã‚¯ãƒ©ã‚¹ã‚’ç¶™æ‰¿ã™ã‚‹ã‚¯ãƒ©ã‚¹ã¯ã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã§ããªããªã‚Šã¾ã™ã€‚
     /// </summary>
     class uninstanceable : uncopyable
     {
     public:
 
-        // ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^g—p•s‰Â
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ä½¿ç”¨ä¸å¯
         uninstanceable() = delete;
     };
 }

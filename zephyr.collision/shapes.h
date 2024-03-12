@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\property.h"
 #include "zephyr\matrix.h"
@@ -17,14 +17,14 @@ namespace zephyr
         };
 
         /// <summary>
-        /// �����̂�\���܂��B
+        /// 直方体を表します。
         /// </summary>
         class Box : public AbstractShape
         {
         public:
 
             /// <summary>
-            /// ���_�Ɉʒu���A�e�ӂ̒������P�̗����̂Ƃ��āA�V�����C���X�^���X�����������܂��B
+            /// 原点に位置し、各辺の長さが１の立方体として、新しいインスタンスを初期化します。
             /// </summary>
             Box()
             {
@@ -34,139 +34,139 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �ŏ��w���E���W���擾�܂��͐ݒ肵�܂��B
+            /// 最小Ｘ境界座標を取得または設定します。
             /// </summary>
             float minX;
 
             /// <summary>
-            /// �ŏ��x���E���W���擾�܂��͐ݒ肵�܂��B
+            /// 最小Ｙ境界座標を取得または設定します。
             /// </summary>
             float minY;
 
             /// <summary>
-            /// �ŏ��y���E���W���擾�܂��͐ݒ肵�܂��B
+            /// 最小Ｚ境界座標を取得または設定します。
             /// </summary>
             float minZ;
 
             /// <summary>
-            /// �ő�w���E���W���擾�܂��͐ݒ肵�܂��B
+            /// 最大Ｘ境界座標を取得または設定します。
             /// </summary>
             float maxX;
 
             /// <summary>
-            /// �ő�x���E���W���擾�܂��͐ݒ肵�܂��B
+            /// 最大Ｙ境界座標を取得または設定します。
             /// </summary>
             float maxY;
 
             /// <summary>
-            /// �ő�y���E���W���擾�܂��͐ݒ肵�܂��B
+            /// 最大Ｚ境界座標を取得または設定します。
             /// </summary>
             float maxZ;
 
             /// <summary>
-            /// �����w�肵��X���E���W��ݒ肵�܂��B�������͕����擾���܂��B
+            /// 幅を指定してX境界座標を設定します。もしくは幅を取得します。
             /// </summary>
             READWRITE_PROPERTY(float, lengthX, { return this->maxX - this->minX; }, { this->maxX = value / 2; this->minX = -value / 2; });
 
             /// <summary>
-            /// �������w�肵��Y���E���W��ݒ肵�܂��B�������͍������擾���܂��B
+            /// 高さを指定してY境界座標を設定します。もしくは高さを取得します。
             /// </summary>
             READWRITE_PROPERTY(float, lengthY, { return this->maxY - this->minY; }, { this->maxY = value / 2; this->minY = -value / 2; });
 
             /// <summary>
-            /// ���s�����w�肵��Z���E���W��ݒ肵�܂��B�������͉��s�����擾���܂��B
+            /// 奥行きを指定してZ境界座標を設定します。もしくは奥行きを取得します。
             /// </summary>
             READWRITE_PROPERTY(float, lengthZ, { return this->maxZ - this->minZ; }, { this->maxZ = value / 2; this->minZ = -value / 2; });
         };
 
         /// <summary>
-        /// �����̂��\������e�ӂ��AXYZ���ɕ��s�Ȓ����̂�\���܂��B
+        /// 直方体を構成する各辺が、XYZ軸に平行な直方体を表します。
         /// </summary>
         class AlignedBox : public Box
         {
         };
 
         /// <summary>
-        /// �����̒��_�ō\������郁�b�V���E�}�b�v��\���܂��B
+        /// 複数の頂点で構成されるメッシュ・マップを表します。
         /// </summary>
         class CurvedSurface : public AbstractShape
         {
         public:
 
             /// <summary>
-            /// �Ȗʂ��\������e���_�̍������擾�܂��͐ݒ肵�܂��B
+            /// 曲面を構成する各頂点の高さを取得または設定します。
             /// </summary>
             matrix<float> heights;
         };
 
         /// <summary>
-        /// �����ɐL�т钼����\���܂��B
+        /// 無限に伸びる直線を表します。
         /// </summary>
         class Line : public AbstractShape
         {
         public:
 
             /// <summary>
-            /// �����x�N�g�����擾�܂��͐ݒ肵�܂��B
+            /// 方向ベクトルを取得または設定します。
             /// </summary>
             Vector3 direction;
         };
 
         /// <summary>
-        /// ������\���܂��B
+        /// 線分を表します。
         /// </summary>
         class LineSegment : public AbstractShape
         {
         public:
 
             /// <summary>
-            /// �J�n�ʒu���擾�܂��͐ݒ肵�܂��B
+            /// 開始位置を取得または設定します。
             /// </summary>
             Vector3 begin;
 
             /// <summary>
-            /// �I�[�ʒu���擾�܂��͐ݒ肵�܂��B
+            /// 終端位置を取得または設定します。
             /// </summary>
             Vector3 end;
 
             /// <summary>
-            /// �J�n�ʒu����I�[�ʒu�ւ̑��΃x�N�g�����擾���܂��B
+            /// 開始位置から終端位置への相対ベクトルを取得します。
             /// </summary>
             READONLY_PROPERTY(Vector3, direction, const{ return end - begin; });
         };
 
         /// <summary>
-        /// �����ɍL���镽�ʂ�\���܂��B
+        /// 無限に広がる平面を表します。
         /// </summary>
         class PlaneSurface : public AbstractShape
         {
         public:
 
             /// <summary>
-            /// �@���x�N�g�����擾�܂��͐ݒ肵�܂��B�@���x�N�g���͐��K������Ă���K�v������܂��B
+            /// 法線ベクトルを取得または設定します。法線ベクトルは正規化されている必要があります。
             /// </summary>
             Vector3 normal;
         };
 
         /// <summary>
-        /// �_��\���܂��B
+        /// 点を表します。
         /// </summary>
         class Point : public AbstractShape {};
 
         /// <summary>
-        /// ���̂�\���܂��B
+        /// 球体を表します。
         /// </summary>
         class Sphere : public AbstractShape
         {
         public:
 
             /// <summary>
-            /// ���a���擾�܂��͐ݒ肵�܂��B
+            /// 半径を取得または設定します。
             /// </summary>
             float radius = 0.5f;
 
             /// <summary>
-            /// ���a���擾�܂��͐ݒ肵�܂��B
+            /// 直径を取得または設定します。
             /// </summary>
             READWRITE_PROPERTY(float, diameter, { return this->radius * 2; }, { this->radius = value / 2; });
         };

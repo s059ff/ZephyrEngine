@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "ConstantBuffer.h"
@@ -11,7 +11,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// �s�N�Z�� �V�F�[�_�[��\���܂��B
+        /// ピクセル シェーダーを表します。
         /// </summary>
         public ref class PixelShader
             : public INativeWrapper<zephyr::graphics::dx11::PixelShader>
@@ -36,9 +36,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �o�C�i���f�[�^����V�F�[�_���쐬���܂��B
+            /// バイナリデータからシェーダを作成します。
             /// </summary>
-            /// <param name="bytecode">�R���p�C���ς݂̃V�F�[�_ �o�C�i���f�[�^�B</param> 
+            /// <param name="bytecode">コンパイル済みのシェーダ バイナリデータ。</param> 
             void Create(array<byte>^ bytecode)
             {
                 pin_ptr<byte> ptr = &bytecode[0];
@@ -46,10 +46,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �\�[�X �X�N���v�g����V�F�[�_���쐬���܂��B
+            /// ソース スクリプトからシェーダを作成します。
             /// </summary>
-            /// <param name="source">�\�[�X �X�N���v�g�B</param> 
-            /// <param name="entryPointName">�G���g���[�|�C���g���B</param> 
+            /// <param name="source">ソース スクリプト。</param> 
+            /// <param name="entryPointName">エントリーポイント名。</param> 
             void Create(String^ source, String^ entryPointName)
             {
                 auto csource = to_string(source);
@@ -65,9 +65,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �R���p�C���ς݃V�F�[�_�t�@�C������V�F�[�_���쐬���܂��B
+            /// コンパイル済みシェーダファイルからシェーダを作成します。
             /// </summary>
-            /// <param name="path">�R���p�C���ς݃V�F�[�_�t�@�C���̃p�X�B</param> 
+            /// <param name="path">コンパイル済みシェーダファイルのパス。</param> 
             void CreateFromCompiledFile(String^ path)
             {
                 using System::IO::FileStream;
@@ -83,19 +83,19 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// "main"���G���g���[�|�C���g�Ɏ��V�F�[�_�t�@�C������V�F�[�_���쐬���܂��B
+            /// "main"をエントリーポイントに持つシェーダファイルからシェーダを作成します。
             /// </summary>
-            /// <param name="path">�V�F�[�_�t�@�C���̃p�X�B</param> 
+            /// <param name="path">シェーダファイルのパス。</param> 
             void CreateFromFile(String^ path)
             {
                 this->CreateFromFile(path, "main");
             }
 
             /// <summary>
-            /// �V�F�[�_�t�@�C������V�F�[�_���쐬���܂��B
+            /// シェーダファイルからシェーダを作成します。
             /// </summary>
-            /// <param name="path">�V�F�[�_�t�@�C���̃p�X�B</param> 
-            /// <param name="entryPointName">�G���g���[�|�C���g���B</param> 
+            /// <param name="path">シェーダファイルのパス。</param> 
+            /// <param name="entryPointName">エントリーポイント名。</param> 
             void CreateFromFile(String^ path, String^ entryPointName)
             {
                 using System::IO::StreamReader;
@@ -107,40 +107,40 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �e�N�X�`�� ���\�[�X���V�F�[�_�Ƀo�C���h���܂��B
+            /// テクスチャ リソースをシェーダにバインドします。
             /// </summary>
-            /// <param name="resource">�o�C���h����e�N�X�`���B</param> 
-            /// <param name="slot">���\�[�X �X���b�g�ԍ�</param> 
+            /// <param name="resource">バインドするテクスチャ。</param> 
+            /// <param name="slot">リソース スロット番号</param> 
             void SetTexture(Texture2D^ resource, int slot)
             {
                 Native->SetTextureResource(resource->ResourceView->NativeRef, slot);
             }
 
             /// <summary>
-            /// �e�N�X�`���z�� ���\�[�X���V�F�[�_�Ƀo�C���h���܂��B
+            /// テクスチャ配列 リソースをシェーダにバインドします。
             /// </summary>
-            /// <param name="resource">�o�C���h����e�N�X�`���B</param> 
-            /// <param name="slot">���\�[�X �X���b�g�ԍ�</param> 
+            /// <param name="resource">バインドするテクスチャ。</param> 
+            /// <param name="slot">リソース スロット番号</param> 
             void SetTextureArray(Texture2DArray^ resource, int slot)
             {
                 Native->SetTextureResource(resource->ResourceView->NativeRef, slot);
             }
 
             /// <summary>
-            /// �V�F�[�_�ϐ����V�F�[�_�Ƀo�C���h���܂��B
+            /// シェーダ変数をシェーダにバインドします。
             /// </summary>
-            /// <param name="data">�V�F�[�_�ϐ����܂Ƃ߂��\���̕ϐ��B</param> 
-            /// <param name="slot">���\�[�X �X���b�g�ԍ��B</param> 
+            /// <param name="data">シェーダ変数をまとめた構造体変数。</param> 
+            /// <param name="slot">リソース スロット番号。</param> 
             generic <typename T> where T : value struct void SetConstantBuffer(T data, int slot)
             {
                 this->SetConstantBuffer(&data, slot, (int)sizeof(T));
             }
 
             /// <summary>
-            /// �V�F�[�_�ϐ����V�F�[�_�Ƀo�C���h���܂��B
+            /// シェーダ変数をシェーダにバインドします。
             /// </summary>
-            /// <param name="data">�V�F�[�_�ϐ����܂Ƃ߂��\���̕ϐ��B</param> 
-            /// <param name="slot">���\�[�X �X���b�g�ԍ��B</param> 
+            /// <param name="data">シェーダ変数をまとめた構造体変数。</param> 
+            /// <param name="slot">リソース スロット番号。</param> 
             generic <typename T> where T : value struct void SetConstantBuffer(array<T>^ data, int slot)
             {
                 pin_ptr<T> ptr = &data[0];
@@ -148,11 +148,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �V�F�[�_�ϐ����V�F�[�_�Ƀo�C���h���܂��B
+            /// シェーダ変数をシェーダにバインドします。
             /// </summary>
-            /// <param name="data">�V�F�[�_�ϐ����܂Ƃ߂��\���̕ϐ��ւ̃|�C���^�B</param> 
-            /// <param name="slot">���\�[�X �X���b�g�ԍ��B</param> 
-            /// <param name="size">�\���̂̃o�C�g�T�C�Y�B</param> 
+            /// <param name="data">シェーダ変数をまとめた構造体変数へのポインタ。</param> 
+            /// <param name="slot">リソース スロット番号。</param> 
+            /// <param name="size">構造体のバイトサイズ。</param> 
             void SetConstantBuffer(const void* data, int slot, int size)
             {
                 assert(slot < MaxSlot);
@@ -174,10 +174,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �V�F�[�_�ϐ����V�F�[�_�Ƀo�C���h���܂��B
+            /// シェーダ変数をシェーダにバインドします。
             /// </summary>
-            /// <param name="data">�V�F�[�_�ϐ����܂Ƃ߂��f�[�^�B</param> 
-            /// <param name="slot">���\�[�X �X���b�g�ԍ��B</param> 
+            /// <param name="data">シェーダ変数をまとめたデータ。</param> 
+            /// <param name="slot">リソース スロット番号。</param> 
             void SetConstantBuffer(array<byte>^ data, int slot)
             {
                 pin_ptr<byte> ptr = &data[0];
@@ -185,10 +185,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �e�N�X�`�� �T���v���[�̐ݒ���s���܂��B
+            /// テクスチャ サンプラーの設定を行います。
             /// </summary>
-            /// <param name="state">�T���v���[ �X�e�[�g�B</param> 
-            /// <param name="slot">�T���v���[�ԍ��B</param> 
+            /// <param name="state">サンプラー ステート。</param> 
+            /// <param name="slot">サンプラー番号。</param> 
             void SetSamplerState(SamplerState^ state, int slot)
             {
                 Native->SetSamplerState(state->NativeRef, slot);

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <random>
 
@@ -11,7 +11,7 @@
 namespace ZephyrSharp
 {
     /// <summary>
-    /// —”¶¬Ší‚Å‚·B
+    /// ä¹±æ•°ç”Ÿæˆå™¨ã§ã™ã€‚
     /// </summary>
     public ref class RandomEngine : public INativeWrapper<std::mt19937_64>
     {
@@ -23,27 +23,27 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ˆê—l—”‚ğ¶¬‚µ‚Ü‚·B
+        /// ä¸€æ§˜ä¹±æ•°ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="distribution">ˆê—l—”‚ÌŠm—¦•ª•zB</param> 
+        /// <param name="distribution">ä¸€æ§˜ä¹±æ•°ã®ç¢ºç‡åˆ†å¸ƒã€‚</param> 
         float Random(UniformDistribution^ distribution)
         {
             return distribution->NativeRef(NativeRef);
         }
 
         /// <summary>
-        /// ³‹K•ª•z‚É]‚¤—”‚ğ¶¬‚µ‚Ü‚·B
+        /// æ­£è¦åˆ†å¸ƒã«å¾“ã†ä¹±æ•°ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="distribution">³‹K•ª•zB</param> 
+        /// <param name="distribution">æ­£è¦åˆ†å¸ƒã€‚</param> 
         float Random(NormalDistribution^ distribution)
         {
             return distribution->NativeRef(NativeRef);
         }
 
         /// <summary>
-        /// ”CˆÓ‚ÌŠm—¦•ª•z‚É]‚¤—”‚ğ¶¬‚µ‚Ü‚·B
+        /// ä»»æ„ã®ç¢ºç‡åˆ†å¸ƒã«å¾“ã†ä¹±æ•°ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="distribution">”CˆÓ‚ÌŠm—¦•ª•zB</param>
+        /// <param name="distribution">ä»»æ„ã®ç¢ºç‡åˆ†å¸ƒã€‚</param>
         int Random(DiscreteDistribution^ distribution)
         {
             return distribution->NativeRef(NativeRef);

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\math.h"
 #include "zephyr.linalg\Vector3.h"
@@ -12,18 +12,18 @@ namespace ZephyrSharp
     namespace Linalg
     {
         /// <summary>
-        /// OŸŒ³ƒxƒNƒgƒ‹‚ğ•\‚µ‚Ü‚·B
+        /// ä¸‰æ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public value class Vector3
         {
         public:
 
             /// <summary>
-            /// ‘S¬•ª‚Ì’l‚ğŒÂ•Ê‚Éw’è‚µ‚ÄƒxƒNƒgƒ‹‚ğì¬‚µ‚Ü‚·B
+            /// å…¨æˆåˆ†ã®å€¤ã‚’å€‹åˆ¥ã«æŒ‡å®šã—ã¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">X ‚Ì‰Šú’l</param> 
-            /// <param name="y">Y ‚Ì‰Šú’l</param> 
-            /// <param name="z">Z ‚Ì‰Šú’l</param> 
+            /// <param name="x">X ã®åˆæœŸå€¤</param> 
+            /// <param name="y">Y ã®åˆæœŸå€¤</param> 
+            /// <param name="z">Z ã®åˆæœŸå€¤</param> 
             Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
 
             Vector3(const zephyr::linalg::Vector3& v)
@@ -32,7 +32,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚ÌƒxƒNƒgƒ‹‚ğ³‹K‰»‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Vector3 Normalize()
             {
@@ -46,49 +46,49 @@ namespace ZephyrSharp
             System::String^ ToString() override;
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Ì‘å‚«‚³‚ğ•Ô‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã®å¤§ãã•ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
             property float Magnitude { float get() { return sqrt(X*X + Y*Y + Z*Z); } };
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Ì‘å‚«‚³‚Ì‚Qæ‚ğ•Ô‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã®å¤§ãã•ã®ï¼’ä¹—ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
             property float SquaredMagnitude { float get() { return X*X + Y*Y + Z*Z; } };
 
             /// <summary>
-            /// ³‹K‰»‚µ‚½ƒxƒNƒgƒ‹‚ğ•Ô‚µ‚Ü‚·B
+            /// æ­£è¦åŒ–ã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="v">³‹K‰»‚·‚éƒxƒNƒgƒ‹B</param> 
+            /// <param name="v">æ­£è¦åŒ–ã™ã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             static Vector3 Normalize(Vector3 v)
             {
                 return v.Normalize();
             }
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Ì“àÏ‚ğ•Ô‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">‰‰Z‘ÎÛ‚ÌƒxƒNƒgƒ‹B</param> 
-            /// <param name="b">‰‰Z‘ÎÛ‚ÌƒxƒNƒgƒ‹B</param> 
+            /// <param name="a">æ¼”ç®—å¯¾è±¡ã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="b">æ¼”ç®—å¯¾è±¡ã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             static float Inner(Vector3 a, Vector3 b)
             {
                 return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
             }
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚ÌŠOÏ‚ğ•Ô‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã®å¤–ç©ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">‰‰Z‘ÎÛ‚ÌƒxƒNƒgƒ‹B</param> 
-            /// <param name="b">‰‰Z‘ÎÛ‚ÌƒxƒNƒgƒ‹B</param> 
+            /// <param name="a">æ¼”ç®—å¯¾è±¡ã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="b">æ¼”ç®—å¯¾è±¡ã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             static Vector3 Outer(Vector3 a, Vector3 b)
             {
                 return Vector3(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
             }
 
             /// <summary>
-            /// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì¬‚·Šp‚ğ•Ô‚µ‚Ü‚·B
+            /// äºŒã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã®æˆã™è§’ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">‰‰Z‘ÎÛ‚ÌƒxƒNƒgƒ‹B</param> 
-            /// <param name="b">‰‰Z‘ÎÛ‚ÌƒxƒNƒgƒ‹B</param> 
+            /// <param name="a">æ¼”ç®—å¯¾è±¡ã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="b">æ¼”ç®—å¯¾è±¡ã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             static float Angle(Vector3 a, Vector3 b)
             {
                 float cos = Inner(a, b) / (a.Magnitude * b.Magnitude);
@@ -96,23 +96,23 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚ ‚éƒxƒNƒgƒ‹‚ğ•Ê‚ÌƒxƒNƒgƒ‹‚É“Š‰e‚µ‚½ƒxƒNƒgƒ‹‚ğ•Ô‚µ‚Ü‚·B
+            /// ã‚ã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã‚’åˆ¥ã®ãƒ™ã‚¯ãƒˆãƒ«ã«æŠ•å½±ã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="v">“Š‰e‚·‚éƒxƒNƒgƒ‹B</param> 
-            /// <param name="n">“Š‰e‚³‚ê‚éƒxƒNƒgƒ‹B</param> 
+            /// <param name="v">æŠ•å½±ã™ã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="n">æŠ•å½±ã•ã‚Œã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             static Vector3 Project(Vector3 v, Vector3 n)
             {
                 return n * (Inner(v, n) / n.SquaredMagnitude);
             }
 
             /// <summary>
-            /// •¶š—ñ‚ğƒxƒNƒgƒ‹‚É•ÏŠ·‚µ‚Ü‚·B
+            /// æ–‡å­—åˆ—ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«å¤‰æ›ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="str">•ÏŠ·Œ³‚Ì•¶š—ñBŠe—v‘f‚Í , ‚Å‹æØ‚é‚±‚ÆB</param> 
+            /// <param name="str">å¤‰æ›å…ƒã®æ–‡å­—åˆ—ã€‚å„è¦ç´ ã¯ , ã§åŒºåˆ‡ã‚‹ã“ã¨ã€‚</param> 
             static Vector3 Parse(System::String^ str);
 
             /// <summary>
-            /// ƒ[ƒƒxƒNƒgƒ‹B
+            /// ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«ã€‚
             /// </summary>
             static const Vector3 Zero = Vector3(0, 0, 0);
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -50,10 +50,10 @@ namespace zephyr
 
             private:
 
-                // ƒoƒbƒtƒ@ƒTƒCƒY
+                // ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
                 int m_size;
 
-                // ƒƒbƒN‚µ‚½—Ìˆæ
+                // ãƒ­ãƒƒã‚¯ã—ãŸé ˜åŸŸ
                 void* m_locked_ptr = nullptr;
             };
         }

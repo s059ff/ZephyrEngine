@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "Color.h"
@@ -8,27 +8,27 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ���̂̃}�e���A������\���܂��B
+        /// 物体のマテリアル情報を表します。
         /// </summary>
         public value struct Material
         {
             /// <summary>
-            /// �A���r�G���g �J���[���擾�܂��͐ݒ肵�܂��B
+            /// アンビエント カラーを取得または設定します。
             /// </summary>
             Color Ambient;
 
             /// <summary>
-            /// �f�B�t���[�Y �J���[���擾�܂��͐ݒ肵�܂��B
+            /// ディフューズ カラーを取得または設定します。
             /// </summary>
             Color Diffuse;
 
             /// <summary>
-            /// �X�y�L�����[ �J���[���擾�܂��͐ݒ肵�܂��B
+            /// スペキュラー カラーを取得または設定します。
             /// </summary>
             Color Specular;
 
             /// <summary>
-            /// �X�y�L�����[ �p���[���擾�܂��͐ݒ肵�܂��B
+            /// スペキュラー パワーを取得または設定します。
             /// </summary>
             float Power;
         };

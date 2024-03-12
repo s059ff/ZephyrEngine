@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 using namespace System::Collections::Generic;
 
@@ -10,19 +10,19 @@ namespace ZephyrSharp
         ref class EntityComponent;
 
         /// <summary>
-        /// �Q�[�� �G���e�B�e�B�̍\���v�f�ł���G���e�B�e�B �R���|�[�l���g��\���܂��B
+        /// ゲーム エンティティの構成要素であるエンティティ コンポーネントを表します。
         /// </summary>
         public ref class EntityComponent
         {
         public:
 
             /// <summary>
-            /// �R���|�[�l���g���G���e�B�e�B�Ɏ��t�����Ă��邩���ׂ܂��B
+            /// コンポーネントがエンティティに取り付けられているか調べます。
             /// </summary>
             property bool HasOwner { bool get() { return owner != nullptr; } }
 
             /// <summary>
-            /// �R���|�[�l���g���������Ă���G���e�B�e�B�B
+            /// コンポーネントを所持しているエンティティ。
             /// </summary>
             property Entity^ Owner
             {
@@ -32,9 +32,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �O���R���|�[�l���g�Ƀ��b�Z�[�W�𑗐M���܂��B
+            /// 外部コンポーネントにメッセージを送信します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�f�[�^�B</param> 
+            /// <param name="message">メッセージデータ。</param> 
             void SendMessage(EntityComponent^ one, System::Object^ message, System::Object^ argument)
             {
                 one->ReceiveMessage(message, argument);
@@ -43,24 +43,24 @@ namespace ZephyrSharp
         protected public:
 
             /// <summary>
-            /// �R���|�[�l���g���G���e�B�e�B�ɃA�^�b�`���ꂽ�Ƃ��ɌĂяo����܂��B
+            /// コンポーネントがエンティティにアタッチされたときに呼び出されます。
             /// </summary>
             virtual void OnAttach() {}
 
             /// <summary>
-            /// �R���|�[�l���g���G���e�B�e�B����f�^�b�`���ꂽ�Ƃ��ɌĂяo����܂��B
+            /// コンポーネントがエンティティからデタッチされたときに呼び出されます。
             /// </summary>
             virtual void OnDetach() {}
 
             /// <summary>
-            /// ���̃R���|�[�l���g���������Ă���G���e�B�e�B���j�������Ƃ��ɌĂяo����܂��B���\�[�X�̉���������s���܂��B���̃��\�b�h���Őe�G���e�B�e�B�ɃA�N�Z�X���邱�Ƃ͂ł��܂���B
+            /// このコンポーネントを所持しているエンティティが破棄されるときに呼び出されます。リソースの解放処理を行います。このメソッド内で親エンティティにアクセスすることはできません。
             /// </summary>
             virtual void OnDestroy() {}
 
             /// <summary>
-            /// �O���R���|�[�l���g����̃��b�Z�[�W����M���ď������s���܂��B
+            /// 外部コンポーネントからのメッセージを受信して処理を行います。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�f�[�^�B</param> 
+            /// <param name="message">メッセージデータ。</param> 
             virtual void ReceiveMessage(System::Object^ message, System::Object^ argument) {}
 
         internal:

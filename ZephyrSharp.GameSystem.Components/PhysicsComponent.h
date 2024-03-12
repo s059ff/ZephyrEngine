@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 
@@ -9,49 +9,49 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// •¨—‹óŠÔ‚É‚¨‚¯‚éƒGƒ“ƒeƒBƒeƒB‚ğ•\‚µ‚Ü‚·B
+            /// ç‰©ç†ç©ºé–“ã«ãŠã‘ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class PhysicsComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚É‚©‚©‚é—ÍB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‹ã‹ã‚‹åŠ›ã€‚
                 /// </summary>
                 Vector3 Force;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚É‚©‚©‚é‰ñ“]‚Ì—ÍB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‹ã‹ã‚‹å›è»¢ã®åŠ›ã€‚
                 /// </summary>
                 Vector3 Torque;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚Ì‘¬“xB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é€Ÿåº¦ã€‚
                 /// </summary>
                 Vector3 Velocity;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚ÌŠp‘¬“xB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§’é€Ÿåº¦ã€‚
                 /// </summary>
                 Vector3 AngularVelocity;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚Ì‰Á‘¬“xB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åŠ é€Ÿåº¦ã€‚
                 /// </summary>
                 Vector3 Acceleration;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚ÌŠp‰Á‘¬“xB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§’åŠ é€Ÿåº¦ã€‚
                 /// </summary>
                 Vector3 AngularAcceleration;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚Ì¿—ÊB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è³ªé‡ã€‚
                 /// </summary>
                 float Mass = 1.0f;
 
                 /// <summary>
-                /// ƒIƒuƒWƒFƒNƒg‚ÌŠµ«ƒ‚[ƒƒ“ƒgB
+                /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ…£æ€§ãƒ¢ãƒ¼ãƒ¡ãƒ³ãƒˆã€‚
                 /// </summary>
                 float InertiaMoment = 1.0f;
 

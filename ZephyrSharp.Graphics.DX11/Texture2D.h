@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -13,7 +13,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ð•\‚µ‚Ü‚·B
+        /// ãƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Texture2D
             : public INativeWrapper<zephyr::graphics::dx11::Texture2D>
@@ -47,12 +47,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// V‚µ‚­‹ó‚ÌƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ðì¬‚µ‚Ü‚·B
+            /// æ–°ã—ãç©ºã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="width">ƒeƒNƒXƒ`ƒƒ‚Ì•B</param> 
-            /// <param name="height">ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³B</param> 
-            /// <param name="format">ƒeƒNƒZƒ‹‚Ìƒf[ƒ^Œ^B</param> 
-            /// <param name="access">ƒŠƒ\[ƒX‚ÌƒAƒNƒZƒX‰Â”\«B</param> 
+            /// <param name="width">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¹…ã€‚</param> 
+            /// <param name="height">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é«˜ã•ã€‚</param> 
+            /// <param name="format">ãƒ†ã‚¯ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿åž‹ã€‚</param> 
+            /// <param name="access">ãƒªã‚½ãƒ¼ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½æ€§ã€‚</param> 
             void Create(int width, int height, Format format, Accessibility access)
             {
                 Native->Create(
@@ -65,13 +65,13 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// V‚µ‚­ƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ðì¬‚µ‚Ä‰Šú‰»‚µ‚Ü‚·B
+            /// æ–°ã—ããƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã—ã¦åˆæœŸåŒ–ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="source">ƒeƒNƒXƒ`ƒƒ‚Ì‰Šú’lB</param> 
-            /// <param name="width">ƒeƒNƒXƒ`ƒƒ‚Ì•B</param> 
-            /// <param name="height">ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³B</param> 
-            /// <param name="format">ƒeƒNƒZƒ‹‚Ìƒf[ƒ^Œ^B</param> 
-            /// <param name="access">ƒŠƒ\[ƒX‚ÌƒAƒNƒZƒX‰Â”\«B</param> 
+            /// <param name="source">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="width">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¹…ã€‚</param> 
+            /// <param name="height">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é«˜ã•ã€‚</param> 
+            /// <param name="format">ãƒ†ã‚¯ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿åž‹ã€‚</param> 
+            /// <param name="access">ãƒªã‚½ãƒ¼ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½æ€§ã€‚</param> 
             generic <typename T> where T : value struct
                 void Create(array<T>^ source, int width, int height, Format format, Accessibility access)
             {
@@ -80,20 +80,20 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‰æ‘œƒtƒ@ƒCƒ‹‚©‚çƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ðì¬‚µ‚Ü‚·B
+            /// ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="path">ƒtƒ@ƒCƒ‹ƒpƒXB</param> 
-            /// <param name="access">ƒŠƒ\[ƒX‚ÌƒAƒNƒZƒX‰Â”\«B</param> 
+            /// <param name="path">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã€‚</param> 
+            /// <param name="access">ãƒªã‚½ãƒ¼ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½æ€§ã€‚</param> 
             void Create(String^ path, Accessibility access);
 
             /// <summary>
-            /// V‚µ‚­ƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ðì¬‚µ‚Ä‰Šú‰»‚µ‚Ü‚·B
+            /// æ–°ã—ããƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã—ã¦åˆæœŸåŒ–ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="source">ƒeƒNƒXƒ`ƒƒ‚Ì‰Šú’lB</param> 
-            /// <param name="width">ƒeƒNƒXƒ`ƒƒ‚Ì•B</param> 
-            /// <param name="height">ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³B</param> 
-            /// <param name="format">ƒeƒNƒZƒ‹‚Ìƒf[ƒ^Œ^B</param> 
-            /// <param name="access">ƒŠƒ\[ƒX‚ÌƒAƒNƒZƒX‰Â”\«B</param> 
+            /// <param name="source">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="width">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¹…ã€‚</param> 
+            /// <param name="height">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é«˜ã•ã€‚</param> 
+            /// <param name="format">ãƒ†ã‚¯ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿åž‹ã€‚</param> 
+            /// <param name="access">ãƒªã‚½ãƒ¼ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½æ€§ã€‚</param> 
             void Create(const void* source, int width, int height, Format format, Accessibility access)
             {
                 Native->Create(
@@ -107,10 +107,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// [“xƒ}ƒbƒv ƒeƒNƒXƒ`ƒƒ‚ðì¬‚µ‚Ü‚·B
+            /// æ·±åº¦ãƒžãƒƒãƒ— ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="width">ƒeƒNƒXƒ`ƒƒ‚Ì•B</param> 
-            /// <param name="height">ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³B</param> 
+            /// <param name="width">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¹…ã€‚</param> 
+            /// <param name="height">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é«˜ã•ã€‚</param> 
             void CreateDepthMap(int width, int height)
             {
                 Native->CreateDepthMap(width, height);
@@ -119,10 +119,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// [“xƒoƒbƒtƒ@‚ðì¬‚µ‚Ü‚·B
+            /// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="width">ƒeƒNƒXƒ`ƒƒ‚Ì•B</param> 
-            /// <param name="height">ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³B</param> 
+            /// <param name="width">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¹…ã€‚</param> 
+            /// <param name="height">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é«˜ã•ã€‚</param> 
             void CreateDepthStencil(int width, int height)
             {
                 Native->CreateDepthStencil(width, height);
@@ -130,16 +130,16 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒŠƒ\[ƒX‚ðƒƒbƒN‚µ‚Ä CPU ‚©‚ç‘‚«ž‚ß‚éó‘Ô‚É‚µ‚Ü‚·B
+            /// ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒ­ãƒƒã‚¯ã—ã¦ CPU ã‹ã‚‰æ›¸ãè¾¼ã‚ã‚‹çŠ¶æ…‹ã«ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="access">ƒŠƒ\[ƒX‚ÌƒAƒNƒZƒX‰Â”\«B</param> 
+            /// <param name="access">ãƒªã‚½ãƒ¼ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½æ€§ã€‚</param> 
             void Lock(Accessibility access)
             {
                 Native->Lock((zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// ƒŠƒ\[ƒX‚ðƒAƒ“ƒƒbƒN‚µ‚Ü‚·B
+            /// ãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã—ã¾ã™ã€‚
             /// </summary>
             void Unlock()
             {
@@ -147,10 +147,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒeƒNƒZƒ‹ƒf[ƒ^‚ð“Ç‚ÝŽæ‚è‚Ü‚·BƒŠƒ\[ƒX‚ªƒƒbƒN‚³‚ê‚Ä‚¢‚È‚¢ê‡A‚±‚Ìƒƒ\ƒbƒh‚ÍŽ¸”s‚µ‚Ü‚·B
+            /// ãƒ†ã‚¯ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å–ã‚Šã¾ã™ã€‚ãƒªã‚½ãƒ¼ã‚¹ãŒãƒ­ãƒƒã‚¯ã•ã‚Œã¦ã„ãªã„å ´åˆã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯å¤±æ•—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">“Ç‚ÝŽæ‚éƒeƒNƒZƒ‹‚Ì X À•WB</param> 
-            /// <param name="y">“Ç‚ÝŽæ‚éƒeƒNƒZƒ‹‚Ì Y À•WB</param> 
+            /// <param name="x">èª­ã¿å–ã‚‹ãƒ†ã‚¯ã‚»ãƒ«ã® X åº§æ¨™ã€‚</param> 
+            /// <param name="y">èª­ã¿å–ã‚‹ãƒ†ã‚¯ã‚»ãƒ«ã® Y åº§æ¨™ã€‚</param> 
             generic <typename T> T Read(int x, int y)
             {
                 assert(sizeof(T) == Stride);
@@ -162,10 +162,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒeƒNƒZƒ‹ƒf[ƒ^‚ð‘‚«ž‚Ý‚Ü‚·BƒŠƒ\[ƒX‚ªƒƒbƒN‚³‚ê‚Ä‚¢‚È‚¢ê‡A‚±‚Ìƒƒ\ƒbƒh‚ÍŽ¸”s‚µ‚Ü‚·B
+            /// ãƒ†ã‚¯ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã¿ã¾ã™ã€‚ãƒªã‚½ãƒ¼ã‚¹ãŒãƒ­ãƒƒã‚¯ã•ã‚Œã¦ã„ãªã„å ´åˆã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯å¤±æ•—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">‘‚«‚±‚ÝæƒeƒNƒZƒ‹‚Ì X À•WB</param> 
-            /// <param name="y">‘‚«‚±‚ÝæƒeƒNƒZƒ‹‚Ì Y À•WB</param> 
+            /// <param name="x">æ›¸ãã“ã¿å…ˆãƒ†ã‚¯ã‚»ãƒ«ã® X åº§æ¨™ã€‚</param> 
+            /// <param name="y">æ›¸ãã“ã¿å…ˆãƒ†ã‚¯ã‚»ãƒ«ã® Y åº§æ¨™ã€‚</param> 
             generic <typename T> void Write(int x, int y, T value)
             {
                 assert(sizeof(T) == Stride);
@@ -174,9 +174,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// V‚µ‚­ƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ð‚·‚×‚Ä‘‚«Š·‚¦‚Ü‚·BƒŠƒ\[ƒX‚ªƒƒbƒN‚³‚ê‚Ä‚¢‚È‚¢ê‡A‚±‚Ìƒƒ\ƒbƒh‚ÍŽ¸”s‚µ‚Ü‚·B
+            /// æ–°ã—ããƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’ã™ã¹ã¦æ›¸ãæ›ãˆã¾ã™ã€‚ãƒªã‚½ãƒ¼ã‚¹ãŒãƒ­ãƒƒã‚¯ã•ã‚Œã¦ã„ãªã„å ´åˆã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯å¤±æ•—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="source">ã‘‚«‚·‚é’lB</param> 
+            /// <param name="source">ä¸Šæ›¸ãã™ã‚‹å€¤ã€‚</param> 
             generic <typename T> where T : value struct void Write(array<T>^ source)
             {
                 assert(sizeof(T) == Stride);
@@ -187,10 +187,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒeƒNƒXƒ`ƒƒ‚É•¶Žš‚ð‘‚«‚±‚Ý‚Ü‚·BƒTƒCƒY‚Í•¶Žš‚É‡‚í‚¹‚Ä•ÏX‚³‚ê‚Ü‚·B
+            /// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«æ–‡å­—ã‚’æ›¸ãã“ã¿ã¾ã™ã€‚ã‚µã‚¤ã‚ºã¯æ–‡å­—ã«åˆã‚ã›ã¦å¤‰æ›´ã•ã‚Œã¾ã™ã€‚
             /// </summary>
-            /// <param name="font">‘‚«‚±‚Þ•¶Žš‚ÌƒtƒHƒ“ƒgB</param> 
-            /// <param name="charactor">‘‚«‚±‚Þ•¶ŽšB</param> 
+            /// <param name="font">æ›¸ãã“ã‚€æ–‡å­—ã®ãƒ•ã‚©ãƒ³ãƒˆã€‚</param> 
+            /// <param name="charactor">æ›¸ãã“ã‚€æ–‡å­—ã€‚</param> 
             void Print(Font^ font, wchar_t charactor)
             {
                 Native->Print(*reinterpret_cast<zephyr::graphics::Font*>(font->NativePtr), charactor);
@@ -200,7 +200,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒeƒNƒXƒ`ƒƒ‚Ì•‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¹…ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Width
             {
@@ -208,7 +208,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é«˜ã•ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Height
             {
@@ -216,7 +216,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒeƒNƒZƒ‹ƒTƒCƒY‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ãƒ†ã‚¯ã‚»ãƒ«ã‚µã‚¤ã‚ºã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Stride
             {
@@ -224,7 +224,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒƒbƒN‚³‚ê‚½ƒŠƒ\[ƒX‚Ìƒƒ‚ƒŠƒAƒhƒŒƒX‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ãƒ­ãƒƒã‚¯ã•ã‚ŒãŸãƒªã‚½ãƒ¼ã‚¹ã®ãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property void* LockedPtr
             {

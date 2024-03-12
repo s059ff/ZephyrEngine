@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\type.h"
 #include "zephyr.sound\SoundBuffer.h"

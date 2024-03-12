@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\string.h"
 #include "zephyr.linalg\Vector3.h"
@@ -11,17 +11,17 @@ namespace zephyr
         namespace components
         {
             /// <summary>
-            /// ƒ‰ƒCƒg‚ğ•\‚µ‚Ü‚·B
+            /// ãƒ©ã‚¤ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             class LightComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒ‰ƒCƒg‚ÌŒü‚«‚ğİ’è‚µ‚Ü‚·B
+                /// ãƒ©ã‚¤ãƒˆã®å‘ãã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="eye">ƒ‰ƒCƒg‚ÌÀ•WB</param> 
-                /// <param name="at">’‹æ‚ÌÀ•WB</param> 
+                /// <param name="eye">ãƒ©ã‚¤ãƒˆã®åº§æ¨™ã€‚</param> 
+                /// <param name="at">æ³¨è¦–å…ˆã®åº§æ¨™ã€‚</param> 
                 void LookAt(linalg::Vector3 eye, linalg::Vector3 at);
             };
         }

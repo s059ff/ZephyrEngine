@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\uncopyable.h"
 
@@ -9,7 +9,7 @@ namespace zephyr
         enum class FontOption;
 
         /// <summary>
-        /// �t�H���g��\���܂��B
+        /// フォントを表します。
         /// </summary>
         class Font : uncopyable
         {
@@ -20,34 +20,34 @@ namespace zephyr
             ~Font();
 
             /// <summary>
-            /// �V�����t�H���g���쐬���܂��B
+            /// 新しいフォントを作成します。
             /// </summary>
-            /// <param name="fontname">�t�H���g�t�@�~���[�B</param>
-            /// <param name="size">�t�H���g�̃T�C�Y�B</param>
+            /// <param name="fontname">フォントファミリー。</param>
+            /// <param name="size">フォントのサイズ。</param>
             void Create(const char* fontname, int size);
 
             /// <summary>
-            /// �V�����t�H���g���쐬���܂��B
+            /// 新しいフォントを作成します。
             /// </summary>
-            /// <param name="fontname">�t�H���g�t�@�~���[�B</param>
-            /// <param name="size">�t�H���g�̃T�C�Y�B</param>
-            /// <param name="option">�{�[���h�̂�C�^���b�N�̂Ȃǂ��w�肷��쐬�I�v�V�����B</param>
+            /// <param name="fontname">フォントファミリー。</param>
+            /// <param name="size">フォントのサイズ。</param>
+            /// <param name="option">ボールド体やイタリック体などを指定する作成オプション。</param>
             void Create(const char* fontname, int size, FontOption option);
 
             /// <summary>
-            /// ���̃��\�[�X��������܂��B
+            /// このリソースを解放します。
             /// </summary>
             void Release();
 
             /// <summary>
-            /// �t�H���g�̃I�u�W�F�N�g�n���h�����擾���܂��B
+            /// フォントのオブジェクトハンドルを取得します。
             /// </summary>
             __declspec(property(get = get_handle)) void* handle;
 
             void* get_handle() const { return this->m_hFont; }
 
             /// <summary>
-            /// �t�H���g�̃T�C�Y���擾���܂��B
+            /// フォントのサイズを取得します。
             /// </summary>
             __declspec(property(get = get_size)) int size;
 
@@ -61,32 +61,32 @@ namespace zephyr
         };
 
         /// <summary>
-        /// �t�H���g�̍쐬�I�v�V�������`���܂��B
+        /// フォントの作成オプションを定義します。
         /// </summary>
         enum class FontOption
         {
             /// <summary>
-            /// �ʏ�̂�\���܂��B
+            /// 通常体を表します。
             /// </summary>
             Normal = 0,
 
             /// <summary>
-            /// �{�[���h�̂�\���܂��B
+            /// ボールド体を表します。
             /// </summary>
             Bold = 1,
 
             /// <summary>
-            /// �C�^���b�N�̂�\���܂��B
+            /// イタリック体を表します。
             /// </summary>
             Italic = 2,
 
             /// <summary>
-            /// �����t����\���܂��B
+            /// 下線付きを表します。
             /// </summary>
             Underline = 4,
 
             /// <summary>
-            /// �ŏ�������\���܂��B
+            /// 打消し線を表します。
             /// </summary>
             StrikeOut = 8
         };

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\com_ptr.h"
 

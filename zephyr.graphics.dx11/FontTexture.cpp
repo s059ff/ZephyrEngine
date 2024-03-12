@@ -1,4 +1,4 @@
-#include "FontTexture.h"
+﻿#include "FontTexture.h"
 #include "Texture2D.h"
 
 #define this (*this)

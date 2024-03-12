@@ -1,4 +1,4 @@
-#include "zephyr.gamesystem\Entity.h"
+﻿#include "zephyr.gamesystem\Entity.h"
 
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"

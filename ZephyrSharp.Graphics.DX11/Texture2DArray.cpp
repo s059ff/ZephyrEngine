@@ -1,4 +1,4 @@
-#include <memory>
+﻿#include <memory>
 #include <vector>
 
 #include "Texture2DArray.h"

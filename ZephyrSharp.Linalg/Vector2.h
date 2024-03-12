@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\math.h"
 #include "zephyr.linalg\Vector2.h"
@@ -10,17 +10,17 @@ namespace ZephyrSharp
     namespace Linalg
     {
         /// <summary>
-        /// “ñŸŒ³ƒxƒNƒgƒ‹‚ğ•\‚µ‚Ü‚·B
+        /// äºŒæ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public value class Vector2
         {
         public:
             
             /// <summary>
-            /// ‘S¬•ª‚Ì’l‚ğŒÂ•Ê‚Éw’è‚µ‚ÄƒxƒNƒgƒ‹‚ğì¬‚µ‚Ü‚·B
+            /// å…¨æˆåˆ†ã®å€¤ã‚’å€‹åˆ¥ã«æŒ‡å®šã—ã¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">X ‚Ì‰Šú’l</param> 
-            /// <param name="y">Y ‚Ì‰Šú’l</param> 
+            /// <param name="x">X ã®åˆæœŸå€¤</param> 
+            /// <param name="y">Y ã®åˆæœŸå€¤</param> 
             Vector2(float x, float y) : X(x), Y(y) {}
 
             Vector2(const zephyr::linalg::Vector2& v)
@@ -29,7 +29,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚ÌƒxƒNƒgƒ‹‚ğ³‹K‰»‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Vector2 Normalize()
             {
@@ -42,28 +42,28 @@ namespace ZephyrSharp
             System::String^ ToString() override;
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Ì‘å‚«‚³‚ğ•Ô‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã®å¤§ãã•ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
             property float Magnitude { float get() { return sqrt(X*X + Y*Y); } };
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Ì‘å‚«‚³‚Ì‚Qæ‚ğ•Ô‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã®å¤§ãã•ã®ï¼’ä¹—ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
             property float SquaredMagnitude { float get() { return X*X + Y*Y; } };
 
             /// <summary>
-            /// ³‹K‰»‚µ‚½ƒxƒNƒgƒ‹‚ğ•Ô‚µ‚Ü‚·B
+            /// æ­£è¦åŒ–ã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="v">³‹K‰»‚·‚éƒxƒNƒgƒ‹B</param> 
+            /// <param name="v">æ­£è¦åŒ–ã™ã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             static Vector2 Normalize(Vector2 v)
             {
                 return v.Normalize();
             }
 
             /// <summary>
-            /// •¶š—ñ‚ğƒxƒNƒgƒ‹‚É•ÏŠ·‚µ‚Ü‚·B
+            /// æ–‡å­—åˆ—ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«å¤‰æ›ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="str">•ÏŠ·Œ³‚Ì•¶š—ñBŠe—v‘f‚Í , ‚Å‹æØ‚é‚±‚ÆB</param> 
+            /// <param name="str">å¤‰æ›å…ƒã®æ–‡å­—åˆ—ã€‚å„è¦ç´ ã¯ , ã§åŒºåˆ‡ã‚‹ã“ã¨ã€‚</param> 
             static Vector2 Parse(System::String^ str);
 
             static Vector2 operator - (Vector2 a)
@@ -97,7 +97,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒ[ƒƒxƒNƒgƒ‹B
+            /// ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«ã€‚
             /// </summary>
             static const Vector2 Zero = Vector2(0, 0);
 

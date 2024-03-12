@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -7,14 +7,14 @@ namespace ZephyrSharp
     namespace Collision
     {
         /// <summary>
-        /// ’¼•û‘Ì‚ğ•\‚µ‚Ü‚·B
+        /// ç›´æ–¹ä½“ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Box : public INativeWrapper<zephyr::collision::Box>
         {
         public:
 
             /// <summary>
-            /// Å¬‚w‹«ŠEÀ•W‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æœ€å°ï¼¸å¢ƒç•Œåº§æ¨™ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float MinX
             {
@@ -23,7 +23,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Å¬‚x‹«ŠEÀ•W‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æœ€å°ï¼¹å¢ƒç•Œåº§æ¨™ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float MinY
             {
@@ -32,7 +32,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Å¬‚y‹«ŠEÀ•W‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æœ€å°ï¼ºå¢ƒç•Œåº§æ¨™ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float MinZ
             {
@@ -41,7 +41,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Å‘å‚w‹«ŠEÀ•W‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æœ€å¤§ï¼¸å¢ƒç•Œåº§æ¨™ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float MaxX
             {
@@ -50,7 +50,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Å‘å‚x‹«ŠEÀ•W‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æœ€å¤§ï¼¹å¢ƒç•Œåº§æ¨™ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float MaxY
             {
@@ -59,7 +59,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Å‘å‚y‹«ŠEÀ•W‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æœ€å¤§ï¼ºå¢ƒç•Œåº§æ¨™ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float MaxZ
             {
@@ -68,7 +68,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// •‚ğw’è‚µ‚ÄX‹«ŠEÀ•W‚ğİ’è‚µ‚Ü‚·B‚à‚µ‚­‚Í•‚ğæ“¾‚µ‚Ü‚·B
+            /// å¹…ã‚’æŒ‡å®šã—ã¦Xå¢ƒç•Œåº§æ¨™ã‚’è¨­å®šã—ã¾ã™ã€‚ã‚‚ã—ãã¯å¹…ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property float LengthX
             {
@@ -77,7 +77,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚‚³‚ğw’è‚µ‚ÄY‹«ŠEÀ•W‚ğİ’è‚µ‚Ü‚·B‚à‚µ‚­‚Í‚‚³‚ğæ“¾‚µ‚Ü‚·B
+            /// é«˜ã•ã‚’æŒ‡å®šã—ã¦Yå¢ƒç•Œåº§æ¨™ã‚’è¨­å®šã—ã¾ã™ã€‚ã‚‚ã—ãã¯é«˜ã•ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property float LengthY
             {
@@ -86,7 +86,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‰œs‚«‚ğw’è‚µ‚ÄZ‹«ŠEÀ•W‚ğİ’è‚µ‚Ü‚·B‚à‚µ‚­‚Í‰œs‚«‚ğæ“¾‚µ‚Ü‚·B
+            /// å¥¥è¡Œãã‚’æŒ‡å®šã—ã¦Zå¢ƒç•Œåº§æ¨™ã‚’è¨­å®šã—ã¾ã™ã€‚ã‚‚ã—ãã¯å¥¥è¡Œãã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property float LengthZ
             {
@@ -96,21 +96,21 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ’¼•û‘Ì‚ğ\¬‚·‚éŠe•Ó‚ªAXYZ²‚É•½s‚È’¼•û‘Ì‚ğ•\‚µ‚Ü‚·B
+        /// ç›´æ–¹ä½“ã‚’æ§‹æˆã™ã‚‹å„è¾ºãŒã€XYZè»¸ã«å¹³è¡Œãªç›´æ–¹ä½“ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class AlignedBox : public Box
         {
         };
 
         /// <summary>
-        /// ‹È–Ê‚ğ•\‚µ‚Ü‚·B
+        /// æ›²é¢ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class CurvedSurface : public INativeWrapper<zephyr::collision::CurvedSurface>
         {
         public:
 
             /// <summary>
-            /// Še’¸“_‚Ì‚‚³‚ğİ’è‚µ‚Ü‚·B
+            /// å„é ‚ç‚¹ã®é«˜ã•ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property array<float, 2>^ Heights
             {
@@ -124,14 +124,14 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// –³ŒÀ‚ÉL‚Ñ‚é’¼ü‚ğ•\‚µ‚Ü‚·B
+        /// ç„¡é™ã«ä¼¸ã³ã‚‹ç›´ç·šã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Line : public INativeWrapper<zephyr::collision::Line>
         {
         public:
 
             /// <summary>
-            /// •ûŒüƒxƒNƒgƒ‹‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property ZephyrSharp::Linalg::Vector3 Direction
             {
@@ -148,14 +148,14 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ü•ª‚ğ•\‚µ‚Ü‚·B
+        /// ç·šåˆ†ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class LineSegment : public INativeWrapper<zephyr::collision::LineSegment>
         {
         public:
 
             /// <summary>
-            /// •ûŒüƒxƒNƒgƒ‹‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property ZephyrSharp::Linalg::Vector3 Direction
             {
@@ -167,14 +167,14 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// –³ŒÀ‚ÉL‚ª‚é•½–Ê‚ğ•\‚µ‚Ü‚·B
+        /// ç„¡é™ã«åºƒãŒã‚‹å¹³é¢ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class PlaneSurface : public INativeWrapper<zephyr::collision::PlaneSurface>
         {
         public:
 
             /// <summary>
-            /// –@üƒxƒNƒgƒ‹‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B–@üƒxƒNƒgƒ‹‚Í³‹K‰»‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚è‚Ü‚·B
+            /// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã¯æ­£è¦åŒ–ã•ã‚Œã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
             /// </summary>
             property ZephyrSharp::Linalg::Vector3 Normal
             {
@@ -191,21 +191,21 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// “_‚ğ•\‚µ‚Ü‚·B
+        /// ç‚¹ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Point : public INativeWrapper<zephyr::collision::Point>
         {
         };
 
         /// <summary>
-        /// ‹…‘Ì‚ğ•\‚µ‚Ü‚·B
+        /// çƒä½“ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Sphere : public INativeWrapper<zephyr::collision::Sphere>
         {
         public:
 
             /// <summary>
-            /// ”¼Œa‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// åŠå¾„ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float Radius
             {
@@ -214,7 +214,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ’¼Œa‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// ç›´å¾„ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property float Diameter
             {

@@ -1,4 +1,4 @@
-#include <algorithm>
+﻿#include <algorithm>
 #include <filesystem>
 
 #include "zephyr\assert.h"

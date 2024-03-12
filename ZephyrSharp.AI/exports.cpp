@@ -1,4 +1,4 @@
-#include "NeuralNetwork.h"
+﻿#include "NeuralNetwork.h"
 #include "QNetwork.h"
 #include "Whitening.h"
 #include "VectorXd.h"

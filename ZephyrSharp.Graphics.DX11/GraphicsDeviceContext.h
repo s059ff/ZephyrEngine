@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "VertexBuffer.h"
@@ -17,7 +17,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðs‚¢‚Ü‚·B
+        /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’è¡Œã„ã¾ã™ã€‚
         /// </summary>
         public ref class GraphicsDeviceContext
             : public INativeSingletonWrapper<zephyr::graphics::dx11::GraphicsDeviceContext>
@@ -25,7 +25,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒpƒCƒvƒ‰ƒCƒ“‚ÉŠÖ˜A•t‚¯‚ç‚ê‚Ä‚¢‚é‚·‚×‚Ä‚ÌƒŠƒ\[ƒX‚ðƒAƒ“ƒoƒCƒ“ƒh‚µ‚Ü‚·B
+            /// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«é–¢é€£ä»˜ã‘ã‚‰ã‚Œã¦ã„ã‚‹ã™ã¹ã¦ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚¢ãƒ³ãƒã‚¤ãƒ³ãƒ‰ã—ã¾ã™ã€‚
             /// </summary>
             void UnbindAllResources()
             {
@@ -33,129 +33,129 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒoƒbƒNƒoƒbƒtƒ@‚ðƒNƒŠƒA‚µ‚Ü‚·B
+            /// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="color">ƒNƒŠƒA‚·‚éFB</param> 
+            /// <param name="color">ã‚¯ãƒªã‚¢ã™ã‚‹è‰²ã€‚</param> 
             void Clear(Color color)
             {
                 Native->Clear(reinterpret_cast<zephyr::graphics::Color&>(color));
             }
 
             /// <summary>
-            /// ƒoƒbƒNƒoƒbƒtƒ@‚ðƒNƒŠƒA‚µ‚Ü‚·B
+            /// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="color">ƒNƒŠƒA‚·‚éFB</param> 
+            /// <param name="color">ã‚¯ãƒªã‚¢ã™ã‚‹è‰²ã€‚</param> 
             void Clear(ColorCode color)
             {
                 Native->Clear(reinterpret_cast<zephyr::graphics::ColorCode&>(color));
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚·‚éƒo[ƒeƒbƒNƒX ƒVƒF[ƒ_‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ ã‚·ã‚§ãƒ¼ãƒ€ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="shader">ƒo[ƒeƒbƒNƒX ƒVƒF[ƒ_B</param> 
+            /// <param name="shader">ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ ã‚·ã‚§ãƒ¼ãƒ€ã€‚</param> 
             void SetVertexShader(VertexShader^ shader)
             {
                 Native->SetVertexShader(shader->NativeRef);
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚·‚éƒWƒIƒƒgƒŠ ƒVƒF[ƒ_‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹ã‚¸ã‚ªãƒ¡ãƒˆãƒª ã‚·ã‚§ãƒ¼ãƒ€ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="shader">ƒWƒIƒƒgƒŠ ƒVƒF[ƒ_B</param> 
+            /// <param name="shader">ã‚¸ã‚ªãƒ¡ãƒˆãƒª ã‚·ã‚§ãƒ¼ãƒ€ã€‚</param> 
             void SetGeometryShader(GeometryShader^ shader)
             {
                 Native->SetGeometryShader(shader->NativeRef);
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚·‚éƒsƒNƒZƒ‹ ƒVƒF[ƒ_‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹ãƒ”ã‚¯ã‚»ãƒ« ã‚·ã‚§ãƒ¼ãƒ€ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="shader">ƒsƒNƒZƒ‹ ƒVƒF[ƒ_B</param> 
+            /// <param name="shader">ãƒ”ã‚¯ã‚»ãƒ« ã‚·ã‚§ãƒ¼ãƒ€ã€‚</param> 
             void SetPixelShader(PixelShader^ shader)
             {
                 Native->SetPixelShader(shader->NativeRef);
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚·‚éƒo[ƒeƒbƒNƒX ƒoƒbƒtƒ@‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="buffer">’¸“_ƒoƒbƒtƒ@B</param> 
-            /// <param name="slot">ƒXƒƒbƒg”Ô†B</param> 
+            /// <param name="buffer">é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
+            /// <param name="slot">ã‚¹ãƒ­ãƒƒãƒˆç•ªå·ã€‚</param> 
             generic <typename V> where V : value class void SetVertexBuffer(VertexBuffer<V>^ buffer, int slot)
             {
                 Native->SetVertexBuffer(buffer->NativeRef, slot);
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚·‚éƒCƒ“ƒfƒbƒNƒX ƒoƒbƒtƒ@‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="buffer">’¸“_ƒoƒbƒtƒ@B</param> 
+            /// <param name="buffer">é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
             void SetIndexBuffer(IndexBuffer^ buffer)
             {
                 Native->SetIndexBuffer(buffer->NativeRef);
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX ƒoƒbƒtƒ@‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="buffer">ƒCƒ“ƒXƒ^ƒ“ƒX ƒoƒbƒtƒ@B</param> 
-            /// <param name="slot">ƒXƒƒbƒg”Ô†B</param> 
+            /// <param name="buffer">ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
+            /// <param name="slot">ã‚¹ãƒ­ãƒƒãƒˆç•ªå·ã€‚</param> 
             generic <typename I> where I : value class void SetInstanceBuffer(InstanceBuffer<I>^ buffer, int slot)
             {
                 Native->SetInstanceBuffer(buffer->NativeRef, slot);
             }
 
             /// <summary>
-            /// ’¸“_ƒoƒbƒtƒ@‚ÌƒŒƒCƒAƒEƒg‚ðÝ’è‚µ‚Ü‚·B
+            /// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="layout">’¸“_ƒŒƒCƒAƒEƒgB</param> 
+            /// <param name="layout">é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã€‚</param> 
             void SetVertexLayout(VertexLayout^ layout)
             {
                 Native->SetVertexLayout(layout->NativeRef);
             }
 
             /// <summary>
-            /// ’¸“_ƒoƒbƒtƒ@‚ÉŠi”[‚³‚ê‚Ä‚¢‚é’¸“_‚Ì‡”Ô‚Ì‹K‘¥«‚ðÝ’è‚µ‚Ü‚·B
+            /// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã«æ ¼ç´ã•ã‚Œã¦ã„ã‚‹é ‚ç‚¹ã®é †ç•ªã®è¦å‰‡æ€§ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="topology">’¸“_ƒf[ƒ^ ƒgƒ|ƒƒW[B</param> 
+            /// <param name="topology">é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ ãƒˆãƒãƒ­ã‚¸ãƒ¼ã€‚</param> 
             void SetPrimitiveTopology(PrimitiveTopology topology)
             {
                 Native->SetPrimitiveTopology((zephyr::graphics::dx11::PrimitiveTopology)topology);
             }
 
             /// <summary>
-            /// ƒuƒŒƒ“ƒfƒBƒ“ƒO ƒXƒe[ƒg‚ðƒŒƒ“ƒ_ƒŠƒ“ƒO ƒpƒCƒvƒ‰ƒCƒ“‚É“K—p‚µ‚Ü‚·B
+            /// ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚° ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«é©ç”¨ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="state">ƒuƒŒƒ“ƒfƒBƒ“ƒO ƒXƒe[ƒgB</param> 
+            /// <param name="state">ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã‚¹ãƒ†ãƒ¼ãƒˆã€‚</param> 
             void SetBlendState(BlendState^ state)
             {
                 Native->SetBlendState(state->NativeRef);
             }
 
             /// <summary>
-            /// ƒ‰ƒXƒ^ƒ‰ƒCƒU ƒXƒe[ƒg‚ðƒŒƒ“ƒ_ƒŠƒ“ƒO ƒpƒCƒvƒ‰ƒCƒ“‚É“K—p‚µ‚Ü‚·B
+            /// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚° ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«é©ç”¨ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="state">ƒ‰ƒXƒ^ƒ‰ƒCƒU ƒXƒe[ƒgB</param> 
+            /// <param name="state">ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ ã‚¹ãƒ†ãƒ¼ãƒˆã€‚</param> 
             void SetRasterizerState(RasterizerState^ state)
             {
                 Native->SetRasterizerState(state->NativeRef);
             }
 
             /// <summary>
-            /// [“xEƒXƒeƒ“ƒVƒ‹ ƒXƒe[ƒg‚ðƒŒƒ“ƒ_ƒŠƒ“ƒO ƒpƒCƒvƒ‰ƒCƒ“‚É“K—p‚µ‚Ü‚·B
+            /// æ·±åº¦ãƒ»ã‚¹ãƒ†ãƒ³ã‚·ãƒ« ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚° ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«é©ç”¨ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="state">[“xEƒXƒeƒ“ƒVƒ‹ ƒXƒe[ƒgB</param> 
+            /// <param name="state">æ·±åº¦ãƒ»ã‚¹ãƒ†ãƒ³ã‚·ãƒ« ã‚¹ãƒ†ãƒ¼ãƒˆã€‚</param> 
             void SetDepthStencilState(DepthStencilState^ state)
             {
                 Native->SetDepthStencilState(state->NativeRef);
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚Æ[“xƒoƒbƒtƒ@‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="target">ƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg ƒeƒNƒXƒ`ƒƒB</param> 
-            /// <param name="depth">[“xƒoƒbƒtƒ@ ƒeƒNƒXƒ`ƒƒB</param> 
+            /// <param name="target">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã€‚</param> 
+            /// <param name="depth">æ·±åº¦ãƒãƒƒãƒ•ã‚¡ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã€‚</param> 
             void SetRenderTargetAndDepthStencil(Texture2D^ target, Texture2D^ depth)
             {
                 if ((target != nullptr) && (depth != nullptr))
@@ -176,7 +176,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚Æ[“xƒoƒbƒtƒ@‚ðƒfƒtƒHƒ‹ƒg‚ÉÝ’è‚µ‚Ü‚·B
+            /// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             void ResetRenderTargetAndDepthStencil()
             {
@@ -184,145 +184,145 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒrƒ…[ƒ|[ƒg•ÏŠ·s—ñ‚ðÝ’è‚µ‚Ü‚·B
+            /// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¤‰æ›è¡Œåˆ—ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="width">ƒrƒ…[ƒ|[ƒg•B</param> 
-            /// <param name="height">ƒrƒ…[ƒ|[ƒg‚‚³B</param> 
+            /// <param name="width">ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¹…ã€‚</param> 
+            /// <param name="height">ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆé«˜ã•ã€‚</param> 
             void SetViewport(int width, int height)
             {
                 Native->SetViewport(width, height);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðŽg—p‚¹‚¸‚ÉAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã›ãšã«ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="vertexCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é’¸“_‚Ì”B</param> 
+            /// <param name="vertexCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹é ‚ç‚¹ã®æ•°ã€‚</param> 
             void Draw(int vertexCount)
             {
                 Native->Draw(vertexCount);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðŽg—p‚¹‚¸‚ÉAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã›ãšã«ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="vertexCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é’¸“_‚Ì”B</param> 
-            /// <param name="startVertexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é’¸“_‚ÌŠJŽnˆÊ’uB</param> 
+            /// <param name="vertexCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹é ‚ç‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startVertexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹é ‚ç‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
             void Draw(int vertexCount, int startVertexLocation)
             {
                 Native->Draw(vertexCount, startVertexLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
+            /// <param name="indexCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
             void DrawIndexed(int indexCount)
             {
                 Native->DrawIndexed(indexCount);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
-            /// <param name="startIndexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚ÌŠJŽnˆÊ’uB</param> 
+            /// <param name="indexCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startIndexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
             void DrawIndexed(int indexCount, int startIndexLocation)
             {
                 Native->DrawIndexed(indexCount, startIndexLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
-            /// <param name="startIndexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚ÌŠJŽnˆÊ’uB</param> 
-            /// <param name="baseVertexLocation">ƒCƒ“ƒfƒbƒNƒX‚Ì’l‚ÆAŽÀÛ‚Ì’¸“_ƒf[ƒ^”Ô†‚Æ‚ÌƒIƒtƒZƒbƒgB</param> 
+            /// <param name="indexCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startIndexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
+            /// <param name="baseVertexLocation">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å€¤ã¨ã€å®Ÿéš›ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç•ªå·ã¨ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚</param> 
             void DrawIndexed(int indexCount, int startIndexLocation, int baseVertexLocation)
             {
                 Native->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="vertexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚Ì’¸“_‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
+            /// <param name="vertexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®é ‚ç‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
             void DrawInstanced(int vertexCountPerInstance, int instanceCount)
             {
                 Native->DrawInstanced(vertexCountPerInstance, instanceCount);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="vertexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚Ì’¸“_‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
-            /// <param name="startVertexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é’¸“_‚ÌŠJŽnˆÊ’uB</param> 
+            /// <param name="vertexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®é ‚ç‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startVertexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹é ‚ç‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
             void DrawInstanced(int vertexCountPerInstance, int instanceCount, int startVertexLocation)
             {
                 Native->DrawInstanced(vertexCountPerInstance, instanceCount, startVertexLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="vertexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚Ì’¸“_‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
-            /// <param name="startVertexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é’¸“_‚ÌŠJŽnˆÊ’uB</param> 
-            /// <param name="startInstanceLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚ÌŠJŽnˆÊ’uB</param> 
+            /// <param name="vertexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®é ‚ç‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startVertexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹é ‚ç‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
+            /// <param name="startInstanceLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
             void DrawInstanced(int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation)
             {
                 Native->DrawInstanced(vertexCountPerInstance, instanceCount, startVertexLocation, startInstanceLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÆƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚ÌƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
+            /// <param name="indexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
             void DrawIndexedInstanced(int indexCountPerInstance, int instanceCount)
             {
                 Native->DrawIndexedInstanced(indexCountPerInstance, instanceCount);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÆƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚ÌƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
-            /// <param name="startIndexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚ÌŠJŽnˆÊ’uB</param> 
+            /// <param name="indexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startIndexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
             void DrawIndexedInstanced(int indexCountPerInstance, int instanceCount, int startIndexLocation)
             {
                 Native->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÆƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚ÌƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
-            /// <param name="startIndexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚ÌŠJŽnˆÊ’uB</param> 
-            /// <param name="baseVertexLocation">ƒCƒ“ƒfƒbƒNƒX‚Ì’l‚ÆAŽÀÛ‚Ì’¸“_ƒf[ƒ^”Ô†‚Æ‚ÌƒIƒtƒZƒbƒgB</param> 
+            /// <param name="indexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startIndexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
+            /// <param name="baseVertexLocation">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å€¤ã¨ã€å®Ÿéš›ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç•ªå·ã¨ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚</param> 
             void DrawIndexedInstanced(int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation)
             {
                 Native->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation);
             }
 
             /// <summary>
-            /// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÆƒCƒ“ƒXƒ^ƒ“ƒXƒoƒbƒtƒ@‚ðŽg—p‚µ‚ÄAƒŒƒ“ƒ_ƒŠƒ“ƒO‚ðŽÀs‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="indexCountPerInstance">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚é 1 ƒCƒ“ƒXƒ^ƒ“ƒX‚ ‚½‚è‚ÌƒCƒ“ƒfƒbƒNƒX‚Ì”B</param> 
-            /// <param name="instanceCount">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”B</param> 
-            /// <param name="startIndexLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒfƒbƒNƒX‚ÌŠJŽnˆÊ’uB</param> 
-            /// <param name="baseVertexLocation">ƒCƒ“ƒfƒbƒNƒX‚Ì’l‚ÆAŽÀÛ‚Ì’¸“_ƒf[ƒ^”Ô†‚Æ‚ÌƒIƒtƒZƒbƒgB</param> 
-            /// <param name="startInstanceLocation">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ÉŽg—p‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒX‚ÌŠJŽnˆÊ’uB</param> 
+            /// <param name="indexCountPerInstance">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ 1 ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ãŸã‚Šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="instanceCount">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®æ•°ã€‚</param> 
+            /// <param name="startIndexLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
+            /// <param name="baseVertexLocation">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å€¤ã¨ã€å®Ÿéš›ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç•ªå·ã¨ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã€‚</param> 
+            /// <param name="startInstanceLocation">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã«ä½¿ç”¨ã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é–‹å§‹ä½ç½®ã€‚</param> 
             void DrawIndexedInstanced(int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation)
             {
                 Native->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation);
             }
 
             /// <summary>
-            /// ƒXƒƒbƒvƒ`ƒFƒCƒ“‚ðŒðŠ·‚µ‚ÄAƒ‚ƒjƒ^[‚Ì‚’¼“¯Šú‚ð‘Ò‚Á‚½‚Ì‚¿ƒoƒbƒtƒ@‚ð‰æ–Ê‚É•\Ž¦‚µ‚Ü‚·B
+            /// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã‚’äº¤æ›ã—ã¦ã€ãƒ¢ãƒ‹ã‚¿ãƒ¼ã®åž‚ç›´åŒæœŸã‚’å¾…ã£ãŸã®ã¡ãƒãƒƒãƒ•ã‚¡ã‚’ç”»é¢ã«è¡¨ç¤ºã—ã¾ã™ã€‚
             /// </summary>
             void Present()
             {
@@ -330,9 +330,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒXƒƒbƒvƒ`ƒFƒCƒ“‚ðŒðŠ·‚µ‚ÄAƒoƒbƒtƒ@‚ð‰æ–Ê‚É•\Ž¦‚µ‚Ü‚·B
+            /// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã‚’äº¤æ›ã—ã¦ã€ãƒãƒƒãƒ•ã‚¡ã‚’ç”»é¢ã«è¡¨ç¤ºã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="syncInterval">ƒ‚ƒjƒ^[‚Ì‚’¼“¯Šú‚ð‘Ò‚Âê‡‚Í 1 ‘Ò‚½‚È‚¢ê‡‚Í 0 ‚ðŽw’è‚µ‚Ü‚·B</param> 
+            /// <param name="syncInterval">ãƒ¢ãƒ‹ã‚¿ãƒ¼ã®åž‚ç›´åŒæœŸã‚’å¾…ã¤å ´åˆã¯ 1 å¾…ãŸãªã„å ´åˆã¯ 0 ã‚’æŒ‡å®šã—ã¾ã™ã€‚</param> 
             void Present(int syncInterval)
             {
                 Native->Present(syncInterval);
@@ -341,7 +341,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ‚±‚ÌƒNƒ‰ƒX‚ÌƒVƒ“ƒOƒ‹ƒgƒ“ ƒCƒ“ƒXƒ^ƒ“ƒX‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ã“ã®ã‚¯ãƒ©ã‚¹ã®ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             static GraphicsDeviceContext^ Instance = gcnew GraphicsDeviceContext();
 

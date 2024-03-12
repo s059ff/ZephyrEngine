@@ -1,4 +1,4 @@
-#include <fstream>
+ï»¿#include <fstream>
 #include <vector>
 #include <string>
 #include <memory>
@@ -116,7 +116,7 @@ namespace zephyr
                 //layer->Z = MatrixXd::Zero(J, N);
                 layer->W = MatrixXd::Random(J, I) * 0.1;
                 layer->B = VectorXd::Random(J) * 0.1;
-                //layer->ƒ¢ = MatrixXd::Zero(J, N);
+                //layer->Delta = MatrixXd::Zero(J, N);
                 layer->dW = MatrixXd::Zero(J, I);
                 layer->db = VectorXd::Zero(J);
                 layer->f = functions(fname);
@@ -140,7 +140,7 @@ namespace zephyr
         double NeuralNetwork::_get_loss() const
         {
             const auto N = input.cols();
-            return end->ƒ¢.unaryExpr([](double x) { return x * x; }).sum() * 0.5 / N;
+            return end->Delta.unaryExpr([](double x) { return x * x; }).sum() * 0.5 / N;
         }
 
         MatrixXd NeuralNetwork::forward(const MatrixXd& X)
@@ -163,13 +163,13 @@ namespace zephyr
 
         void NeuralNetwork::backward(const MatrixXd& D)
         {
-            end->ƒ¢ = end->Z - D;
+            end->Delta = end->Z - D;
 
             Layer* layer = end->back;
             while (layer != begin)
             {
                 Layer* next = layer->next;
-                layer->ƒ¢ = layer->U.unaryExpr(layer->df).array() * (next->W.transpose() * next->ƒ¢).array();
+                layer->Delta = layer->U.unaryExpr(layer->df).array() * (next->W.transpose() * next->Delta).array();
 
                 layer = layer->back;
             }
@@ -183,8 +183,8 @@ namespace zephyr
             while (layer != nullptr)
             {
                 Layer* back = layer->back;
-                layer->W -= ƒÃ / N * layer->ƒ¢ * back->Z.transpose();
-                layer->B -= ƒÃ / N * layer->ƒ¢.rowwise().sum();
+                layer->W -= epsilon / N * layer->Delta * back->Z.transpose();
+                layer->B -= epsilon / N * layer->Delta.rowwise().sum();
 
                 layer = layer->next;
             }
@@ -214,12 +214,12 @@ namespace zephyr
             ifstream ifs(path, ios::binary);
             runtime_assert(ifs.good());
 
-            // ƒo[ƒWƒ‡ƒ“î•ñ‚ğ“Ç‚İ‚Ş
+            // ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
             char version[64];
             ifs.read(version, sizeof(version));
             runtime_assert(string(version) == Version);
 
-            // ƒƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+            // ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
             NetworkMetadata meta;
             ifs.read((char*)&meta, sizeof(NetworkMetadata));
             for (int i = 0; i < 16; i++)
@@ -230,7 +230,7 @@ namespace zephyr
                 this.attach(md_layer.D, md_layer.fname, md_layer.dfname);
             }
 
-            // ƒpƒ‰ƒ[ƒ^ƒf[ƒ^‚ğ•œŒ³‚·‚é
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å¾©å…ƒã™ã‚‹
             unique_ptr<byte[]> data(new byte[meta.datasize]);
 
             ifs.read((char*)data.get(), meta.datasize);
@@ -253,10 +253,10 @@ namespace zephyr
             ofstream ofs(path, ios::binary | ios::trunc);
             runtime_assert(ofs.good());
 
-            // ƒo[ƒWƒ‡ƒ“î•ñ‚ğ‘‚«‚Ş
+            // ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã‚’æ›¸ãè¾¼ã‚€
             ofs.write(Version, sizeof(Version));
 
-            // ƒƒ^ƒf[ƒ^‚ğİ’è‚·‚é
+            // ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
             NetworkMetadata meta;
             meta.datasize = 0;
 
@@ -277,7 +277,7 @@ namespace zephyr
                 layer = layer->next;
             }
 
-            // ƒpƒ‰ƒ[ƒ^ƒf[ƒ^‚ğİ’è‚·‚é
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
             unique_ptr<byte[]> data(new byte[meta.datasize]);
             layer = this.begin;
             for (int i = 0; i < 16; i++)
@@ -292,10 +292,10 @@ namespace zephyr
                 layer = layer->next;
             }
 
-            // ƒƒ^ƒf[ƒ^‚ğ‘‚«‚Ş
+            // ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
             ofs.write((char*)&meta, sizeof(NetworkMetadata));
 
-            // ƒpƒ‰ƒ[ƒ^‚ğ‘‚«‚Ş
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
             ofs.write((char*)data.get(), meta.datasize);
         }
     }

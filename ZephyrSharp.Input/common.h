@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+#include "zephyr.input\ButtonCode.h"
 #include "zephyr.input\ButtonState.h"
 #include "zephyr.input\Interface.h"
 #include "zephyr.input\JoyStick.h"

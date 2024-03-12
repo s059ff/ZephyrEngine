@@ -1,4 +1,4 @@
-#include "EntityComponent.h"
+﻿#include "EntityComponent.h"
 #include "Entity.h"
 
 namespace ZephyrSharp

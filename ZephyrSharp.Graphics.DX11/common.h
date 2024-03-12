@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr.graphics\Font.h"
 #include "zephyr.graphics\Window.h"

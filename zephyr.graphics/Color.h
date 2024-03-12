@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\math.h"
 #include "zephyr\string.h"
@@ -10,33 +10,33 @@ namespace zephyr
     namespace graphics
     {
         /// <summary>
-        /// �����x���܂� RGB �J���[��\���܂��B
+        /// 透明度を含む RGB カラーを表します。
         /// </summary>
         struct Color
         {
             Color() : r(0), g(0), b(0), a(1) {}
 
             /// <summary>
-            /// �����l���w�肵�āA�V�����C���X�^���X�����������܂��B�A���t�@������ 1.0f �ƂȂ�܂��B
+            /// 初期値を指定して、新しいインスタンスを初期化します。アルファ成分は 1.0f となります。
             /// </summary>
-            /// <param name="r">�ԁB0.0f �` 1.0f �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0.0f �` 1.0f �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0.0f �` 1.0f �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0.0f ～ 1.0f の範囲で指定。</param>
+            /// <param name="g">緑。0.0f ～ 1.0f の範囲で指定。</param>
+            /// <param name="b">青。0.0f ～ 1.0f の範囲で指定。</param>
             Color(float r, float g, float b) : r(r), g(g), b(b), a(1) {}
 
             /// <summary>
-            /// �����l���w�肵�āA�V�����C���X�^���X�����������܂��B
+            /// 初期値を指定して、新しいインスタンスを初期化します。
             /// </summary>
-            /// <param name="r">�ԁB0.0f �` 1.0f �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0.0f �` 1.0f �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0.0f �` 1.0f �͈̔͂Ŏw��B</param>
-            /// <param name="a">�A���t�@�B0.0f �` 1.0f �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0.0f ～ 1.0f の範囲で指定。</param>
+            /// <param name="g">緑。0.0f ～ 1.0f の範囲で指定。</param>
+            /// <param name="b">青。0.0f ～ 1.0f の範囲で指定。</param>
+            /// <param name="a">アルファ。0.0f ～ 1.0f の範囲で指定。</param>
             Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
 
             /// <summary>
-            /// �J���[�R�[�h����V�����C���X�^���X�����������܂��B
+            /// カラーコードから新しいインスタンスを初期化します。
             /// </summary>
-            /// <param name="code">�J���[�R�[�h�B</param>
+            /// <param name="code">カラーコード。</param>
             Color(ColorCode code) :
                 r(float(code.r) / 255.0f),
                 g(float(code.g) / 255.0f),
@@ -46,12 +46,12 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �J���[�R�[�h���擾���܂��B
+            /// カラーコードを取得します。
             /// </summary>
             __declspec(property(get = get_code)) ColorCode code;
 
             /// <summary>
-            /// �J���[�R�[�h���擾���܂��B
+            /// カラーコードを取得します。
             /// </summary>
             ColorCode get_code() const
             {
@@ -64,28 +64,28 @@ namespace zephyr
             }
 
             /// <summary>
-            /// RGB �\�F�n���� Color �\���̂��쐬���܂��B�A���t�@������ 1 �ɂȂ�܂��B
+            /// RGB 表色系から Color 構造体を作成します。アルファ成分は 1 になります。
             /// </summary>
-            /// <param name="r">�Ԑ����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="g">�ΐ����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="b">�����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
+            /// <param name="r">赤成分の値。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="g">緑成分の値。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="b">青成分の値。0 ～ 1.0f 内で指定する。</param>
             static Color FromRGB(float r, float g, float b) { return Color(r, g, b); }
 
             /// <summary>
-            /// RGBA �\�F�n���� Color �\���̂��쐬���܂��B�A���t�@������ 1 �ɂȂ�܂��B
+            /// RGBA 表色系から Color 構造体を作成します。アルファ成分は 1 になります。
             /// </summary>
-            /// <param name="r">�Ԑ����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="g">�ΐ����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="b">�����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="a">�A���t�@�����̒l�B0 �` 1.0f ���Ŏw�肷��B</param>
+            /// <param name="r">赤成分の値。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="g">緑成分の値。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="b">青成分の値。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="a">アルファ成分の値。0 ～ 1.0f 内で指定する。</param>
             static Color FromRGB(float r, float g, float b, float a) { return Color(r, g, b, a); }
 
             /// <summary>
-            /// HSV �\�F�n���� Color �\���̂��쐬���܂��B�A���t�@������ 1 �ɂȂ�܂��B
+            /// HSV 表色系から Color 構造体を作成します。アルファ成分は 1 になります。
             /// </summary>
-            /// <param name="hue">�F���B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="saturation">�ʓx�B0 �` 1.0f ���Ŏw�肷��B</param>
-            /// <param name="brightness">���x�B0 �` 1.0f ���Ŏw�肷��B</param>
+            /// <param name="hue">色相。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="saturation">彩度。0 ～ 1.0f 内で指定する。</param>
+            /// <param name="brightness">明度。0 ～ 1.0f 内で指定する。</param>
             static Color FromHSV(float hue, float saturation, float brightness)
             {
                 float v = brightness;
@@ -156,9 +156,9 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �J���[�R�[�h���� Color �\���̂��쐬���܂��B
+            /// カラーコードから Color 構造体を作成します。
             /// </summary>
-            /// <param name="code">32bit ARGB �J���[�R�[�h�B</param>
+            /// <param name="code">32bit ARGB カラーコード。</param>
             static Color FromCode(ColorCode code) { return Color(code); }
 
             static Color Parse(const string& str);

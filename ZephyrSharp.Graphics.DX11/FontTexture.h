@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -9,23 +9,23 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒeƒLƒXƒg‚ðƒŒƒ“ƒ_ƒŠƒ“ƒO‚·‚é‚½‚ß‚ÌƒeƒNƒXƒ`ƒƒ ƒŠƒ\[ƒX‚ð•\‚µ‚Ü‚·B
+        /// ãƒ†ã‚­ã‚¹ãƒˆã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã™ã‚‹ãŸã‚ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒªã‚½ãƒ¼ã‚¹ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class FontTexture
         {
         public:
 
             /// <summary>
-            /// ƒŠƒ\[ƒX‚ðì¬‚µ‚Ü‚·B
+            /// ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="font">ƒeƒLƒXƒg‚ÌƒtƒHƒ“ƒgB</param> 
+            /// <param name="font">ãƒ†ã‚­ã‚¹ãƒˆã®ãƒ•ã‚©ãƒ³ãƒˆã€‚</param> 
             void Create(Font^ font)
             {
                 this->font = font;
             }
 
             /// <summary>
-            /// ƒŠƒ\[ƒX‚ðŠJ•ú‚µ‚Ü‚·B
+            /// ãƒªã‚½ãƒ¼ã‚¹ã‚’é–‹æ”¾ã—ã¾ã™ã€‚
             /// </summary>
             void Release()
             {
@@ -45,9 +45,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// •¶Žš‚É‘Î‰ž‚·‚éƒeƒNƒXƒ`ƒƒ‚ðŽæ“¾‚µ‚Ü‚·B
+            /// æ–‡å­—ã«å¯¾å¿œã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="c">•¶ŽšƒR[ƒhB</param> 
+            /// <param name="c">æ–‡å­—ã‚³ãƒ¼ãƒ‰ã€‚</param> 
             Texture2D^ GetTexture(wchar_t c)
             {
                 Texture2D^ tex = textures[c];
@@ -59,7 +59,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒtƒHƒ“ƒg‚ÌƒfƒtƒHƒ‹ƒgƒTƒCƒY‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ãƒ•ã‚©ãƒ³ãƒˆã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚µã‚¤ã‚ºã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Size { int get() { return this->font->Size; }}
 

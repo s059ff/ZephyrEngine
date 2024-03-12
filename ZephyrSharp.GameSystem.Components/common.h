@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "ZephyrSharp\common.h"
 #include "ZephyrSharp\assert.h"

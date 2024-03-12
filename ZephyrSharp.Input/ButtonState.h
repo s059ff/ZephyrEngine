@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -7,27 +7,27 @@ namespace ZephyrSharp
     namespace Input
     {
         /// <summary>
-        /// ƒ{ƒ^ƒ“‚Ìó‘Ô‚ğ•\‚µ‚Ü‚·B
+        /// ãƒœã‚¿ãƒ³ã®çŠ¶æ…‹ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class ButtonState
         {
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í—£‚³‚ê‚Ä‚¢‚Ü‚·B
+            /// ãƒœã‚¿ãƒ³ã¯é›¢ã•ã‚Œã¦ã„ã¾ã™ã€‚
             /// </summary>
             Released = (int)zephyr::input::ButtonState::Released,
 
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í‰Ÿ‚³‚ê‚Ä‚¢‚Ü‚·B
+            /// ãƒœã‚¿ãƒ³ã¯æŠ¼ã•ã‚Œã¦ã„ã¾ã™ã€‚
             /// </summary>
             Pressed = (int)zephyr::input::ButtonState::Pressed,
 
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í¡—£‚³‚ê‚Ü‚µ‚½B
+            /// ãƒœã‚¿ãƒ³ã¯ä»Šé›¢ã•ã‚Œã¾ã—ãŸã€‚
             /// </summary>
             NowReleased = (int)zephyr::input::ButtonState::NowReleased,
 
             /// <summary>
-            /// ƒ{ƒ^ƒ“‚Í¡‰Ÿ‚³‚ê‚Ü‚µ‚½B
+            /// ãƒœã‚¿ãƒ³ã¯ä»ŠæŠ¼ã•ã‚Œã¾ã—ãŸã€‚
             /// </summary>
             NowPressed = (int)zephyr::input::ButtonState::NowPressed
         };

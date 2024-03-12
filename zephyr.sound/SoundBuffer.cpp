@@ -1,4 +1,4 @@
-#include <memory>
+ï»¿#include <memory>
 
 #include <Windows.h>
 #include <dsound.h>
@@ -27,35 +27,35 @@ namespace zephyr
 
         void SoundBuffer::Create(SoundDevice& device, const string& path)
         {
-            runtime_assert(File::Exists(path), "ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ü‚¹‚ñB");
-            runtime_assert(Path::GetExtension(path) == ".wav", "w’è‚³‚ê‚½ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚Íg—p‚Å‚«‚Ü‚¹‚ñB");
+            runtime_assert(File::Exists(path), "ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
+            runtime_assert(Path::GetExtension(path) == ".wav", "æŒ‡å®šã•ã‚ŒãŸã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã¯ä½¿ç”¨ã§ãã¾ã›ã‚“ã€‚");
 
-            // Waveƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+            // Waveãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
             MMIOINFO mmioInfo;
             ZeroMemory(&mmioInfo, sizeof(MMIOINFO));
             HMMIO hMmio = mmioOpen((char*)path.c_str(),&mmioInfo, MMIO_READ);
-            runtime_assert(hMmio != nullptr, "ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“‚É¸”s‚µ‚Ü‚µ‚½B");
+            runtime_assert(hMmio != nullptr, "ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
 
-            // RIFFƒ`ƒƒƒ“ƒNŒŸõ
+            // RIFFãƒãƒ£ãƒ³ã‚¯æ¤œç´¢
             MMCKINFO riffChunk;
             riffChunk.fccType = mmioFOURCC('W', 'A', 'V', 'E');
             if (mmioDescend(hMmio,&riffChunk, nullptr, MMIO_FINDRIFF) != MMSYSERR_NOERROR)
             {
                 mmioClose(hMmio, 0);
-                runtime_assert(false, "RIFFƒ`ƒƒƒ“ƒN‚ÌŒŸõ‚É¸”s‚µ‚Ü‚µ‚½B");
+                runtime_assert(false, "RIFFãƒãƒ£ãƒ³ã‚¯ã®æ¤œç´¢ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
             }
 
-            // ƒtƒH[ƒ}ƒbƒgƒ`ƒƒƒ“ƒNŒŸõ
+            // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒãƒ£ãƒ³ã‚¯æ¤œç´¢
             MMCKINFO formatChunk;
             formatChunk.ckid = mmioFOURCC('f', 'm', 't', ' ');
             if (mmioDescend(hMmio,&formatChunk,&riffChunk, MMIO_FINDCHUNK) != MMSYSERR_NOERROR)
             {
                 mmioClose(hMmio, 0);
-                runtime_assert(false, "ƒtƒH[ƒ}ƒbƒgƒ`ƒƒƒ“ƒN‚ÌŒŸõ‚É¸”s‚µ‚Ü‚µ‚½B");
+                runtime_assert(false, "ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒãƒ£ãƒ³ã‚¯ã®æ¤œç´¢ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
             }
             auto fmsize = formatChunk.cksize;
 
-            // ƒtƒH[ƒ}ƒbƒgæ“¾
+            // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå–å¾—
             WAVEFORMATEX wave_format;
             if (mmioRead(hMmio, reinterpret_cast<HPSTR>(&wave_format), fmsize) != fmsize)
             {
@@ -64,24 +64,24 @@ namespace zephyr
             }
             mmioAscend(hMmio,&formatChunk, 0);
 
-            // ƒf[ƒ^ƒ`ƒƒƒ“ƒNŒŸõ
+            // ãƒ‡ãƒ¼ã‚¿ãƒãƒ£ãƒ³ã‚¯æ¤œç´¢
             MMCKINFO dataChunk;
             dataChunk.ckid = mmioFOURCC('d', 'a', 't', 'a');
             if (mmioDescend(hMmio,&dataChunk,&riffChunk, MMIO_FINDCHUNK) != MMSYSERR_NOERROR)
             {
                 mmioClose(hMmio, 0);
-                runtime_assert(false, "ƒf[ƒ^ƒ`ƒƒƒ“ƒN‚ÌŒŸõ‚É¸”s‚µ‚Ü‚µ‚½B");
+                runtime_assert(false, "ãƒ‡ãƒ¼ã‚¿ãƒãƒ£ãƒ³ã‚¯ã®æ¤œç´¢ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
             }
 
-            // ƒf[ƒ^‚ğ“Ç‚İæ‚é
+            // ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å–ã‚‹
             unique_ptr<byte[]> data(new byte[dataChunk.cksize]);
             DWORD size = mmioRead(hMmio, reinterpret_cast<HPSTR>(data.get()), dataChunk.cksize);
             runtime_assert(size == dataChunk.cksize);
 
-            // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
+            // ãƒãƒ³ãƒ‰ãƒ«ã‚¯ãƒ­ãƒ¼ã‚º
             mmioClose(hMmio, 0);
 
-            // ƒZƒJƒ“ƒ_ƒŠƒoƒbƒtƒ@İ’è
+            // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒãƒƒãƒ•ã‚¡è¨­å®š
             DSBUFFERDESC desc;
             desc.dwSize = sizeof(DSBUFFERDESC);
             desc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLPAN;
@@ -90,10 +90,10 @@ namespace zephyr
             desc.lpwfxFormat =&wave_format;
             desc.guid3DAlgorithm = GUID_NULL;
 
-            // ƒZƒJƒ“ƒ_ƒŠƒoƒbƒtƒ@ì¬
+            // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒãƒƒãƒ•ã‚¡ä½œæˆ
             base::Create(device, desc, data.get());
 
-            // ƒTƒEƒ“ƒh‚Ì’·‚³‚ğæ“¾‚·‚é
+            // ã‚µã‚¦ãƒ³ãƒ‰ã®é•·ã•ã‚’å–å¾—ã™ã‚‹
             this.Duration = this.BufferSize / desc.lpwfxFormat->nAvgBytesPerSec;
         }
 

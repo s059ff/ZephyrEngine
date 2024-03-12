@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 
 /// <summary>
-/// XepherSharp Class Library ‚Å‹¤’Ê‚Ég—p‚³‚ê‚é‹@”\‚ğ’ñ‹Ÿ‚µ‚Ü‚·B
+/// XepherSharp Class Library ã§å…±é€šã«ä½¿ç”¨ã•ã‚Œã‚‹æ©Ÿèƒ½ã‚’æä¾›ã—ã¾ã™ã€‚
 /// </summary>
 namespace XepherSharp
 {

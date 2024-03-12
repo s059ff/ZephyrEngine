@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// �C���X�^���X�o�b�t�@ ���\�[�X��\���܂��B
+        /// インスタンスバッファ リソースを表します。
         /// </summary>
         generic <typename I> where I : value struct
             public ref class InstanceBuffer
@@ -17,20 +17,20 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ��̃C���X�^���X�o�b�t�@���쐬���܂��B
+            /// 空のインスタンスバッファを作成します。
             /// </summary>
-            /// <param name="count">�C���X�^���X���B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="count">インスタンス数。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(int count, Accessibility access)
             {
                 Native->Create(sizeof(I), count, (zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// �����l���w�肵�ăC���X�^���X�o�b�t�@���쐬���܂��B
+            /// 初期値を指定してインスタンスバッファを作成します。
             /// </summary>
-            /// <param name="source">�C���X�^���X�f�[�^�B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="source">インスタンスデータ。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(array<I>^ source, Accessibility access)
             {
                 int count = source->Length;
@@ -40,9 +40,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ��̃C���X�^���X�f�[�^��ǂݎ��܂��B�C���X�^���X�o�b�t�@�����b�N����Ă��Ȃ��ꍇ�A���̃��\�b�h�͎��s���܂��B
+            /// 一つのインスタンスデータを読み取ります。インスタンスバッファがロックされていない場合、このメソッドは失敗します。
             /// </summary>
-            /// <param name="index">�C���X�^���X�̃C���f�b�N�X�B</param>
+            /// <param name="index">インスタンスのインデックス。</param>
             I Read(int index)
             {
                 I v;
@@ -51,26 +51,26 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ��̃C���X�^���X�f�[�^���������݂܂��B�C���X�^���X�o�b�t�@�����b�N����Ă��Ȃ��ꍇ�A���̃��\�b�h�͎��s���܂��B
+            /// 一つのインスタンスデータを書き込みます。インスタンスバッファがロックされていない場合、このメソッドは失敗します。
             /// </summary>
-            /// <param name="index">�C���X�^���X�̃C���f�b�N�X�B</param>
-            /// <param name="value">�C���X�^���X�f�[�^�B</param>
+            /// <param name="index">インスタンスのインデックス。</param>
+            /// <param name="value">インスタンスデータ。</param>
             void Write(int index, I value)
             {
                 memcpy(Native->Access(index), &value, sizeof(I));
             }
 
             /// <summary>
-            /// ���\�[�X�����b�N���āA�ǂݏ������\�ȏ�Ԃɂ��܂��B
+            /// リソースをロックして、読み書きが可能な状態にします。
             /// </summary>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Lock(Accessibility access)
             {
                 Native->Lock((zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// ���\�[�X���A�����b�N���āA�`��\�ȏ�Ԃɂ��܂��B
+            /// リソースをアンロックして、描画可能な状態にします。
             /// </summary>
             void Unlock()
             {
@@ -80,12 +80,12 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �������̃C���X�^���X�̃o�C�g�T�C�Y���擾���܂��B
+            /// 一つ当たりのインスタンスのバイトサイズを取得します。
             /// </summary>
             property int Stride { int get() { return Native->stride; } }
 
             /// <summary>
-            /// �C���X�^���X�o�b�t�@�Ɋi�[����Ă���C���X�^���X�̐����擾���܂��B
+            /// インスタンスバッファに格納されているインスタンスの数を取得します。
             /// </summary>
             property int Count { int get() { return Native->count; } }
         };

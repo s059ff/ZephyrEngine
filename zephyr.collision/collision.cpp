@@ -1,4 +1,4 @@
-#include "zephyr\algorithm.h"
+ï»¿#include "zephyr\algorithm.h"
 #include "zephyr.linalg\Vector3.h"
 #include "zephyr.linalg\Vector4.h"
 #include "zephyr.linalg\Matrix4x3.h"
@@ -225,13 +225,13 @@ static Vector3 CollisionPoint_LineSegment_AlignedBox(
         zt = -1;
     }
 
-    // ƒ{ƒbƒNƒX‚Ì’†‚È‚çnull‚ğ•Ô‚·
+    // ãƒœãƒƒã‚¯ã‚¹ã®ä¸­ãªã‚‰nullã‚’è¿”ã™
     if (inside)
     {
         return NANVector;
     }
 
-    // ‚à‚Á‚Æ‚à‰“‚¢•½–Ê‚ÆÕ“Ë‚µ‚Ä‚¢‚é
+    // ã‚‚ã£ã¨ã‚‚é ã„å¹³é¢ã¨è¡çªã—ã¦ã„ã‚‹
     int which = 0;
     auto t = xt;
     if (yt > t)
@@ -248,7 +248,7 @@ static Vector3 CollisionPoint_LineSegment_AlignedBox(
     switch (which)
     {
     case 0: {
-        // yz•½–Ê‚ÆÕ“Ë
+        // yzå¹³é¢ã¨è¡çª
         auto y = segment_start.y + segment_direction.y * t;
         if (y < miny || y > maxy)
         {
@@ -263,7 +263,7 @@ static Vector3 CollisionPoint_LineSegment_AlignedBox(
     }
 
     case 1: {
-        // xz•½–Ê‚ÆÕ“Ë
+        // xzå¹³é¢ã¨è¡çª
         auto x = segment_start.x + segment_direction.x * t;
         if (x < minx || x > maxx)
         {
@@ -278,7 +278,7 @@ static Vector3 CollisionPoint_LineSegment_AlignedBox(
     }
 
     default: {
-        // xy•½–Ê‚ÆÕ“Ë
+        // xyå¹³é¢ã¨è¡çª
         auto x = segment_start.x + segment_direction.x * t;
         if (x < minx || x > maxx)
         {
@@ -333,12 +333,12 @@ static Vector3 CollisionPoint_LineSegment_Polygon3(
 {
     Vector3 normal = outer(polygon_vertex2 - polygon_vertex1, polygon_vertex3 - polygon_vertex1).normalize();
 
-    // •½–Ê‚Æ‚ÌÕ“Ë’n“_‚ğŒvZ‚·‚é
+    // å¹³é¢ã¨ã®è¡çªåœ°ç‚¹ã‚’è¨ˆç®—ã™ã‚‹
     Vector3 point = CollisionPoint_LineSegment_PlaneSurface(segment_start, segment_direction, polygon_vertex1, normal);
     if (!collided(point))
         return NANVector;
 
-    // “à•”‚É‚ ‚é‚©’²‚×‚é
+    // å†…éƒ¨ã«ã‚ã‚‹ã‹èª¿ã¹ã‚‹
     Vector3 outer1 = outer(polygon_vertex2 - polygon_vertex1, point - polygon_vertex1);
     Vector3 outer2 = outer(polygon_vertex3 - polygon_vertex2, point - polygon_vertex2);
     Vector3 outer3 = outer(polygon_vertex1 - polygon_vertex3, point - polygon_vertex3);
@@ -493,16 +493,16 @@ static float Height_Point_CurvedSurface(
     Vector3 v3 = Vector3(x3, y3, z3) * surface_matrix;
     Vector3 v4 = Vector3(x4, y4, z4) * surface_matrix;
 
-    // ¶ã‚©‰E‰º‚©’²‚×‚é
+    // å·¦ä¸Šã‹å³ä¸‹ã‹èª¿ã¹ã‚‹
     if ((x1 - point.x) + (z1 - point.z) < 1)
     {
-        // ¶ã
+        // å·¦ä¸Š
         Vector3 n = outer(v1 - v3, v2 - v3);
         return Height_Point_PlaneSurface(point, v1, n);
     }
     else
     {
-        // ‰E‰º
+        // å³ä¸‹
         Vector3 n = outer(v2 - v3, v4 - v3);
         return Height_Point_PlaneSurface(point, v1, n);
     }

@@ -1,4 +1,4 @@
-#include "MessageBox.h"
+﻿#include "MessageBox.h"
 #include "ArrayCache.h"
 #include "AssertException.h"
 #include "RuntimeException.h"

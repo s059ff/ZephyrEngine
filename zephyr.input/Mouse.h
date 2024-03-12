@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\property.h"
 
@@ -13,99 +13,99 @@ namespace zephyr
         enum class ButtonState;
 
         /// <summary>
-        /// �}�E�X�f�o�C�X��\���܂��B
+        /// マウスデバイスを表します。
         /// </summary>
         class Mouse : public Interface<IDirectInputDevice8A>
         {
         public:
 
             /// <summary>
-            /// ���̃N���X�̐V�����C���X�^���X�����������܂��B
+            /// このクラスの新しいインスタンスを初期化します。
             /// </summary>
             Mouse() = default;
 
             /// <summary>
-            /// �C���X�^���X��j�����܂��B
+            /// インスタンスを破棄します。
             /// </summary>
             ~Mouse();
 
             /// <summary>
-            /// �f�o�C�X�̏�Ԃ��X�V���܂��B���̃��\�b�h�͖��t���[���Ăяo���K�v������܂��B
+            /// デバイスの状態を更新します。このメソッドは毎フレーム呼び出す必要があります。
             /// </summary>
             void Update();
 
         public:
 
             /// <summary>
-            /// �}�E�X�̃X�N���[�����W�n�ł� X ���W���擾���܂��B
+            /// マウスのスクリーン座標系での X 座標を取得します。
             /// </summary>
             READONLY_PROPERTY(int, X, { return this->mouseX; });
 
             /// <summary>
-            /// �}�E�X�̃X�N���[�����W�n�ł� Y ���W���擾���܂��B
+            /// マウスのスクリーン座標系での Y 座標を取得します。
             /// </summary>
             READONLY_PROPERTY(int, Y, { return this->mouseY; });
 
             /// <summary>
-            /// �}�E�X�� X �����̈ړ��ʂ��擾���܂��B
+            /// マウスの X 方向の移動量を取得します。
             /// </summary>
             READONLY_PROPERTY(int, MovementX, { return this->moveX; });
 
             /// <summary>
-            /// �}�E�X�� Y �����̈ړ��ʂ��擾���܂��B
+            /// マウスの Y 方向の移動量を取得します。
             /// </summary>
             READONLY_PROPERTY(int, MovementY, { return this->moveY; });
 
             /// <summary>
-            /// �}�E�X�� Z �����̈ړ��ʂ��擾���܂��B
+            /// マウスの Z 方向の移動量を取得します。
             /// </summary>
             READONLY_PROPERTY(int, MovementZ, { return this->moveZ; });
 
             /// <summary>
-            /// �}�E�X�̍��{�^���̏�Ԃ��擾���܂��B
+            /// マウスの左ボタンの状態を取得します。
             /// </summary>
             READONLY_PROPERTY(ButtonState, Left, ;);
 
             /// <summary>
-            /// �}�E�X�̉E�{�^���̏�Ԃ��擾���܂��B
+            /// マウスの右ボタンの状態を取得します。
             /// </summary>
             READONLY_PROPERTY(ButtonState, Right, ;);
 
             /// <summary>
-            /// �}�E�X�̒����{�^���̏�Ԃ��擾���܂��B
+            /// マウスの中央ボタンの状態を取得します。
             /// </summary>
             READONLY_PROPERTY(ButtonState, Center, ;);
 
             /// <summary>
-            /// �R���g���[�����ڑ�����Ă��邩���ׂ܂��B
+            /// コントローラが接続されているか調べます。
             /// </summary>
             __declspec(property(get = isConnected)) bool IsConnected;
 
             /// <summary>
-            /// �}�E�X���ڑ�����Ă��邩���ׂ܂��B
+            /// マウスが接続されているか調べます。
             /// </summary>
             bool isConnected() const;
 
         private:
 
-            // ����������
+            // 初期化する
             void Create();
 
-            // ���Z�b�g����
+            // リセットする
             void Reset(IDirectInputDevice8A* ptr = nullptr);
 
         private:
 
-            // �}�E�X�̈ʒu
+            // マウスの位置
             long mouseX, mouseY;
 
-            // �}�E�X�̈ړ���
+            // マウスの移動量
             long moveX, moveY, moveZ;
 
-            // �{�^���̏��
+            // ボタンの状態
             bool left, right, center;
 
-            // �O�t���[���̃{�^���̏��
+            // 前フレームのボタンの状態
             bool prevLeft, prevRight, prevCenter;
         };
     }

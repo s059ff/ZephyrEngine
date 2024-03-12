@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒTƒ“ƒvƒ‰[ ƒXƒe[ƒg‚ğ•\‚µ‚Ü‚·B
+        /// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class SamplerState
             : public INativeWrapper<zephyr::graphics::dx11::SamplerState>
@@ -16,11 +16,11 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒTƒ“ƒvƒ‰[ ƒXƒe[ƒg‚ğì¬‚µ‚Ü‚·B
+            /// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="addressU">U À•W‚ÌƒAƒhƒŒƒbƒVƒ“ƒOƒ‚[ƒhB</param> 
-            /// <param name="addressV">V À•W‚ÌƒAƒhƒŒƒbƒVƒ“ƒOƒ‚[ƒhB</param> 
-            /// <param name="addressW">W À•W‚ÌƒAƒhƒŒƒbƒVƒ“ƒOƒ‚[ƒhB</param> 
+            /// <param name="addressU">U åº§æ¨™ã®ã‚¢ãƒ‰ãƒ¬ãƒƒã‚·ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã€‚</param> 
+            /// <param name="addressV">V åº§æ¨™ã®ã‚¢ãƒ‰ãƒ¬ãƒƒã‚·ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã€‚</param> 
+            /// <param name="addressW">W åº§æ¨™ã®ã‚¢ãƒ‰ãƒ¬ãƒƒã‚·ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã€‚</param> 
             void Create(TextureAddressMode addressU, TextureAddressMode addressV, TextureAddressMode addressW)
             {
                 Native->Create(
@@ -30,7 +30,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ”äŠrƒTƒ“ƒvƒ‰[ ƒXƒe[ƒg‚ğì¬‚µ‚Ü‚·B
+            /// æ¯”è¼ƒã‚µãƒ³ãƒ—ãƒ©ãƒ¼ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
             void CreateComparator()
             {

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -7,7 +7,7 @@ namespace ZephyrSharp
     namespace Input
     {
         /// <summary>
-        /// ƒL[ƒ{[ƒh‚Ìƒ{ƒ^ƒ“‚ğ•\‚µ‚Ü‚·B
+        /// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ãƒœã‚¿ãƒ³ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class KeyCode
         {

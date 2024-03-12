@@ -1,4 +1,4 @@
-#include "zephyr.gamesystem\Entity.h"
+ï»¿#include "zephyr.gamesystem\Entity.h"
 #include "zephyr.linalg\linalg.h"
 #include "zephyr.linalg\Quaternion.h"
 #include "zephyr.linalg\Matrix4x3.h"
@@ -27,31 +27,31 @@ namespace zephyr
             {
                 auto& Matrix = this.Owner->Get<TransformComponent>()->Matrix;
 
-                // ‹ó‹C’ïR‚ğŒvZ‚·‚é
+                // ç©ºæ°—æŠµæŠ—ã‚’è¨ˆç®—ã™ã‚‹
                 this.Force += -this.Velocity * 0.5f * this.Velocity.magnitude;
 
-                // ‰Á‘¬“x‚ğŒvZ‚·‚é
+                // åŠ é€Ÿåº¦ã‚’è¨ˆç®—ã™ã‚‹
                 this.Acceleration = this.Force / this.Mass;
 
-                // ‘¬“x‚ğXV‚·‚é
+                // é€Ÿåº¦ã‚’æ›´æ–°ã™ã‚‹
                 this.Velocity += this.Acceleration;
 
-                // À•W‚ğXV‚·‚é
+                // åº§æ¨™ã‚’æ›´æ–°ã™ã‚‹
                 Matrix.position += this.Velocity;
 
-                // ƒIƒuƒWƒFƒNƒg‚É‚©‚©‚é—Í‚ğƒŠƒZƒbƒg‚·‚é
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‹ã‹ã‚‹åŠ›ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
                 this.Force = linalg::Vector3::Zero;
 
-                // ‹ó‹C’ïR‚ğŒvZ‚·‚é
+                // ç©ºæ°—æŠµæŠ—ã‚’è¨ˆç®—ã™ã‚‹
                 this.Torque += -this.AngularVelocity * 0.2f;
 
-                // ‰Á‘¬“x‚ğŒvZ‚·‚é
+                // åŠ é€Ÿåº¦ã‚’è¨ˆç®—ã™ã‚‹
                 this.AngularAcceleration = this.Torque / this.InertiaMoment;
 
-                // ‘¬“x‚ğXV‚·‚é
+                // é€Ÿåº¦ã‚’æ›´æ–°ã™ã‚‹
                 this.AngularVelocity += this.AngularAcceleration;
 
-                // Šp“x‚ğXV‚·‚é
+                // è§’åº¦ã‚’æ›´æ–°ã™ã‚‹
                 float squareMag = this.AngularVelocity.squared_magnitude;
                 if (squareMag > 0)
                 {
@@ -66,7 +66,7 @@ namespace zephyr
                     }
                 }
 
-                // ƒIƒuƒWƒFƒNƒg‚É‚©‚©‚é—Í‚ğƒŠƒZƒbƒg‚·‚é
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‹ã‹ã‚‹åŠ›ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
                 this.Torque = linalg::Vector3::Zero;
             }
         }

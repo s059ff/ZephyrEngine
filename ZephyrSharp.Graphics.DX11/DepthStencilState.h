@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// [“xEƒXƒeƒ“ƒVƒ‹ƒoƒbƒtƒ@ ƒXƒe[ƒg‚ğ•\‚µ‚Ü‚·B
+        /// æ·±åº¦ãƒ»ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒãƒƒãƒ•ã‚¡ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class DepthStencilState
             : public INativeWrapper<zephyr::graphics::dx11::DepthStencilState>
@@ -16,11 +16,11 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// V‚µ‚¢ƒuƒŒƒ“ƒfƒBƒ“ƒO ƒXƒe[ƒg‚ğì¬‚µ‚Ü‚·B
+            /// æ–°ã—ã„ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="depthEnable">[“xƒoƒbƒtƒ@‚ğg—p‚·‚éê‡‚Í trueB</param> 
-            /// <param name="stencilEnable">ƒXƒeƒ“ƒVƒ‹ƒoƒbƒtƒ@‚ğg—p‚·‚éê‡‚Í trueB</param> 
-            /// <param name="depthWriteEnable">[“xƒoƒbƒtƒ@‚Ö‚Ì‘‚«‚İ‚ğ‹–‰Â‚·‚éê‡‚Í trueB</param> 
+            /// <param name="depthEnable">æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯ trueã€‚</param> 
+            /// <param name="stencilEnable">ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯ trueã€‚</param> 
+            /// <param name="depthWriteEnable">æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã¸ã®æ›¸ãè¾¼ã¿ã‚’è¨±å¯ã™ã‚‹å ´åˆã¯ trueã€‚</param> 
             void Create(bool depthEnable, bool stencilEnable, bool depthWriteEnable)
             {
                 Native->Create(depthEnable, stencilEnable, depthWriteEnable);

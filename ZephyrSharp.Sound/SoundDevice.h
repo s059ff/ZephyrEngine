@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -7,7 +7,7 @@ namespace ZephyrSharp
     namespace Sound
     {
         /// <summary>
-        /// ƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ð“Š‡‚µ‚Ü‚·B
+        /// ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’çµ±æ‹¬ã—ã¾ã™ã€‚
         /// </summary>
         public ref class SoundDevice
             : public INativeWrapper<zephyr::sound::SoundDevice>
@@ -15,25 +15,25 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒfƒoƒCƒX‚ðì¬‚µAƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ð‹N“®‚É‚µ‚Ü‚·B
+            /// ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆã—ã€ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’èµ·å‹•ã«ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="hWindow">ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹B</param>
+            /// <param name="hWindow">ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã€‚</param>
             void Create(handle hWindow)
             {
                 Native->Create(hWindow);
             }
 
             /// <summary>
-            /// ƒfƒoƒCƒX‚ðì¬‚µAƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ð‹N“®‚É‚µ‚Ü‚·B
+            /// ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆã—ã€ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’èµ·å‹•ã«ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="hWindow">ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹B</param>
+            /// <param name="hWindow">ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã€‚</param>
             void Create(unsigned long long hWindow)
             {
                 Native->Create((handle)hWindow);
             }
 
             /// <summary>
-            /// ƒfƒoƒCƒX‚ð‰ð•úAƒTƒEƒ“ƒhƒVƒXƒeƒ€‚ðI—¹‚µ‚Ü‚·B
+            /// ãƒ‡ãƒã‚¤ã‚¹ã‚’è§£æ”¾ã€ã‚µã‚¦ãƒ³ãƒ‰ã‚·ã‚¹ãƒ†ãƒ ã‚’çµ‚äº†ã—ã¾ã™ã€‚
             /// </summary>
             void Release()
             {

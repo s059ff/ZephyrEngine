@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒ‰ƒXƒ^ƒ‰ƒCƒU[ ƒXƒe[ƒg‚ğ•\‚µ‚Ü‚·B
+        /// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class RasterizerState
             : public INativeWrapper<zephyr::graphics::dx11::RasterizerState>
@@ -16,10 +16,10 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒ‰ƒXƒ^ƒ‰ƒCƒU[ ƒXƒe[ƒg‚ğì¬‚µ‚Ü‚·B
+            /// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="cullMode">ƒJƒŠƒ“ƒO‚Ìİ’èB</param> 
-            /// <param name="fillMode">“h‚è‚Â‚Ô‚µ—Ìˆæ‚Ìİ’èB</param> 
+            /// <param name="cullMode">ã‚«ãƒªãƒ³ã‚°ã®è¨­å®šã€‚</param> 
+            /// <param name="fillMode">å¡—ã‚Šã¤ã¶ã—é ˜åŸŸã®è¨­å®šã€‚</param> 
             void Create(CullMode cullMode, FillMode fillMode)
             {
                 Native->Create((zephyr::graphics::dx11::CullMode)cullMode, (zephyr::graphics::dx11::FillMode)fillMode);

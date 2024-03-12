@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 using namespace ZephyrSharp::Sound;
@@ -10,16 +10,16 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// 3D ƒTƒEƒ“ƒh‚ğ–Â‚ç‚µ‚Ü‚·B
+            /// 3D ã‚µã‚¦ãƒ³ãƒ‰ã‚’é³´ã‚‰ã—ã¾ã™ã€‚
             /// </summary>
             public ref class SoundComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‰Šú‰»‚µ‚Ü‚·B
+                /// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="buffer">ƒTƒEƒ“ƒhƒoƒbƒtƒ@B</param> 
+                /// <param name="buffer">ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
                 SoundComponent(SoundBuffer^ buffer)
                 {
                     Sound = gcnew SoundBuffer();
@@ -28,10 +28,10 @@ namespace ZephyrSharp
                 }
 
                 /// <summary>
-                /// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‰Šú‰»‚µ‚Ü‚·B
+                /// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="buffer">ƒTƒEƒ“ƒhƒoƒbƒtƒ@B</param> 
-                /// <param name="play">true ‚Ìê‡A‚·‚®‚ÉÄ¶‚·‚éB</param> 
+                /// <param name="buffer">ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
+                /// <param name="play">true ã®å ´åˆã€ã™ãã«å†ç”Ÿã™ã‚‹ã€‚</param> 
                 SoundComponent(SoundBuffer^ buffer, bool play)
                     : SoundComponent(buffer)
                 {
@@ -40,7 +40,7 @@ namespace ZephyrSharp
                 }
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ğÄ¶‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿã—ã¾ã™ã€‚
                 /// </summary>
                 void Play()
                 {
@@ -48,7 +48,7 @@ namespace ZephyrSharp
                 }
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ğƒ‹[ƒvÄ¶‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’ãƒ«ãƒ¼ãƒ—å†ç”Ÿã—ã¾ã™ã€‚
                 /// </summary>
                 void LoopPlay()
                 {
@@ -56,27 +56,27 @@ namespace ZephyrSharp
                 }
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property SoundBuffer^ Sound;
 
                 /// <summary>
-                /// ‰¹—Ê‚ğ’²®‚µ‚Ü‚·B
+                /// éŸ³é‡ã‚’èª¿æ•´ã—ã¾ã™ã€‚
                 /// </summary>
                 property double VolumeFactor;
 
                 /// <summary>
-                /// ü”g”‚ğæ“¾‚µ‚Ü‚·B
+                /// å‘¨æ³¢æ•°ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property unsigned long Frequency { unsigned long get() { return Sound->Frequency; } }
 
                 /// <summary>
-                /// ‰¹—Ê‚ğæ“¾‚µ‚Ü‚·B
+                /// éŸ³é‡ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property double Volume { double get() { return Sound->Volume; } }
 
                 /// <summary>
-                /// ƒpƒ“‚ğæ“¾‚µ‚Ü‚·B
+                /// ãƒ‘ãƒ³ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property double Pan { double get() { return Sound->Pan; } }
 

@@ -1,4 +1,4 @@
-#define DIRECTINPUT_VERSION 0x0800
+ï»¿#define DIRECTINPUT_VERSION 0x0800
 
 #include <dinput.h>
 
@@ -29,22 +29,22 @@ namespace zephyr
 			com_ptr<IDirectInput8A> input;
 			com_assert(DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&input, NULL));
 
-			// IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ìæ“¾iƒL[ƒ{[ƒhj
+			// IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å–å¾—ï¼ˆã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ï¼‰
 			IDirectInputDevice8A* device = nullptr;
 			HRESULT result = input->CreateDevice(GUID_SysKeyboard, &device, NULL);
 			if (FAILED(result))
-				throw runtime_error("IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
+				throw runtime_error("IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ");
 			this.reset(device);
 
-			// ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚Ìİ’èi’è‹`Ï‚İ‚ÌƒL[ƒ{[ƒh—pƒtƒH[ƒ}ƒbƒg‚ğg—pj
+			// ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®šï¼ˆå®šç¾©æ¸ˆã¿ã®ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ç”¨ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’ä½¿ç”¨ï¼‰
 			result = this->SetDataFormat(&c_dfDIKeyboard);
 			if (FAILED(result))
-				throw runtime_error("ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½");
+				throw runtime_error("ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ");
 
-			// ‹¦’²ƒ‚[ƒh‚Ìİ’è
+			// å”èª¿ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®š
 			result = this->SetCooperativeLevel(nullptr, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
 			if (FAILED(result))
-				throw runtime_error("‹¦’²ƒ‚[ƒh‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½");
+				throw runtime_error("å”èª¿ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ");
 		}
 
 		void Keyboard::Reset(IDirectInputDevice8A* ptr)
@@ -74,7 +74,7 @@ namespace zephyr
 					}
 					for (int i = 0; i < KeyCount; i++)
 					{
-						// ’·‰Ÿ‚µ‚µ‚Ä—£‚µ‚½ó‘Ô‚àŒŸ’m‚Å‚«‚é‚æ‚¤‚É‚·‚é (T < pressTime && NowReleased)
+						// é•·æŠ¼ã—ã—ã¦é›¢ã—ãŸçŠ¶æ…‹ã‚‚æ¤œçŸ¥ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ (T < pressTime && NowReleased)
 						if (0 < (this.prevKeyState[i] & 0x80))
 							this.pressTimeLength[i]++;
 						else

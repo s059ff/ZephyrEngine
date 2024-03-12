@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 //#include <d3d11.h>
 
@@ -10,7 +10,7 @@ namespace zephyr
         {
             enum class Accessibility
             {
-                None = 0,               // ÉAÉNÉZÉXïsâ¬
+                None = 0,               // „Ç¢„ÇØ„Çª„Çπ‰∏çÂèØ
                 ReadOnly = 1,           // D3D11_MAP_READ
                 WriteOnly = 2,          // D3D11_MAP_WRITE
                 ReadWrite = 3,          // D3D11_MAP_READ_WRITE

@@ -1,37 +1,37 @@
-#pragma once
+﻿#pragma once
 
 namespace ZephyrSharp
 {
     namespace Graphics
     {
         /// <summary>
-        /// �e�L�X�g�̑������@��\���܂��B
+        /// テキストの揃え方法を表します。
         /// </summary>
         [System::FlagsAttribute]
         public enum class TextAlignment
         {
             /// <summary>
-            /// �e�L�X�g�̒��S�����_�Ɉʒu���邱�Ƃ������B
+            /// テキストの中心が原点に位置することを示す。
             /// </summary>
             Center = 1,
 
             /// <summary>
-            /// �e�L�X�g�̍��[�����_�Ɉʒu���邱�Ƃ������B
+            /// テキストの左端が原点に位置することを示す。
             /// </summary>
             Left = 2,
 
             /// <summary>
-            /// �e�L�X�g�̉E�[�����_�Ɉʒu���邱�Ƃ������B
+            /// テキストの右端が原点に位置することを示す。
             /// </summary>
             Right = 4,
 
             /// <summary>
-            /// �e�L�X�g�̏�[�����_�Ɉʒu���邱�Ƃ������B
+            /// テキストの上端が原点に位置することを示す。
             /// </summary>
             Top = 8,
 
             /// <summary>
-            /// �e�L�X�g�̉��[�����_�Ɉʒu���邱�Ƃ������B
+            /// テキストの下端が原点に位置することを示す。
             /// </summary>
             Bottom = 16
         };

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒuƒŒƒ“ƒfƒBƒ“ƒO ƒXƒe[ƒg‚ð•\‚µ‚Ü‚·B
+        /// ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class BlendState 
             : public INativeWrapper<zephyr::graphics::dx11::BlendState>
@@ -16,20 +16,20 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒuƒŒƒ“ƒh‚ð‚µ‚È‚¢ƒuƒŒƒ“ƒfƒBƒ“ƒO ƒXƒe[ƒg‚ðì¬‚µ‚Ü‚·B
+            /// ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’ã—ãªã„ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="operation">( BlendOperation::None ‚É‚·‚é‚±‚Æ )</param> 
+            /// <param name="operation">( BlendOperation::None ã«ã™ã‚‹ã“ã¨ )</param> 
             void Create(BlendOperation operation)
             {
                 Native->Create((zephyr::graphics::dx11::BlendOperation)operation);
             }
 
             /// <summary>
-            /// V‚µ‚¢ƒuƒŒƒ“ƒfƒBƒ“ƒO ƒXƒe[ƒg‚ðì¬‚µ‚Ü‚·B
+            /// æ–°ã—ã„ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="operation">‰‰ŽZ•û–@B</param> 
-            /// <param name="srcFactor">ƒsƒNƒZƒ‹ ƒVƒF[ƒ_‚ªo—Í‚µ‚½Fî•ñ‚É‘Î‚·‚éŒW”B</param> 
-            /// <param name="destFactor">ƒŒƒ“ƒ_ƒŠƒ“ƒO ƒ^[ƒQƒbƒg‚©‚ç“Ç‚ÝŽæ‚Á‚½Fî•ñ‚É‘Î‚·‚éŒW”B</param> 
+            /// <param name="operation">æ¼”ç®—æ–¹æ³•ã€‚</param> 
+            /// <param name="srcFactor">ãƒ”ã‚¯ã‚»ãƒ« ã‚·ã‚§ãƒ¼ãƒ€ãŒå‡ºåŠ›ã—ãŸè‰²æƒ…å ±ã«å¯¾ã™ã‚‹ä¿‚æ•°ã€‚</param> 
+            /// <param name="destFactor">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚° ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‹ã‚‰èª­ã¿å–ã£ãŸè‰²æƒ…å ±ã«å¯¾ã™ã‚‹ä¿‚æ•°ã€‚</param> 
             void Create(BlendOperation operation, BlendFactor srcFactor, BlendFactor destFactor)
             {
                 Native->Create(

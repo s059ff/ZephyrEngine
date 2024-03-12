@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Vector3.h"
@@ -12,31 +12,31 @@ namespace ZephyrSharp
     namespace Linalg
     {
         /// <summary>
-        /// 4x4 s—ñ‚ğ•\‚µ‚Ü‚·BŠe—v‘f‚Ís—Dæ‚ÅŠi”[‚³‚ê‚Ü‚·B
+        /// 4x4 è¡Œåˆ—ã‚’è¡¨ã—ã¾ã™ã€‚å„è¦ç´ ã¯è¡Œå„ªå…ˆã§æ ¼ç´ã•ã‚Œã¾ã™ã€‚
         /// </summary>
         public value class Matrix4x4
         {
         public:
 
             /// <summary>
-            /// ‘S¬•ª‚Ì’l‚ğŒÂ•Ê‚Éw’è‚µ‚Äs—ñ‚ğì¬‚µ‚Ü‚·B
+            /// å…¨æˆåˆ†ã®å€¤ã‚’å€‹åˆ¥ã«æŒ‡å®šã—ã¦è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m11">(1,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m12">(1,2) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m13">(1,3) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m14">(1,4) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m21">(2,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m22">(2,2) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m23">(2,3) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m24">(2,4) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m31">(3,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m32">(3,2) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m33">(3,3) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m34">(3,4) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m41">(4,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m42">(4,2) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m43">(4,3) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m44">(4,4) ¬•ª‚Ì‰Šú’lB</param> 
+            /// <param name="m11">(1,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m12">(1,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m13">(1,3) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m14">(1,4) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m21">(2,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m22">(2,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m23">(2,3) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m24">(2,4) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m31">(3,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m32">(3,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m33">(3,3) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m34">(3,4) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m41">(4,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m42">(4,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m43">(4,3) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m44">(4,4) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
             Matrix4x4(
                 float m11, float m12, float m13, float m14,
                 float m21, float m22, float m23, float m24,
@@ -50,9 +50,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ”z—ñ‚ÉŠi”[‚³‚ê‚½’l‚©‚çs—ñ‚ğì¬‚µ‚Ü‚·B
+            /// é…åˆ—ã«æ ¼ç´ã•ã‚ŒãŸå€¤ã‹ã‚‰è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">Še¬•ª‚Ì‰Šú’l‚ğs—Dæ‡‚ÉŠi”[‚µ‚½”z—ñB</param> 
+            /// <param name="m">å„æˆåˆ†ã®åˆæœŸå€¤ã‚’è¡Œå„ªå…ˆé †ã«æ ¼ç´ã—ãŸé…åˆ—ã€‚</param> 
             Matrix4x4(array<float>^ m) :
                 Matrix4x4(
                     m[0], m[1], m[2], m[3],
@@ -64,9 +64,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒH[ƒ^ƒjƒIƒ“‚Æ“¯‚¶•ÏŠ·‚ğ•\‚·s—ñ‚ğì¬‚µ‚Ü‚·B
+            /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã¨åŒã˜å¤‰æ›ã‚’è¡¨ã™è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="q">ƒNƒH[ƒ^ƒjƒIƒ“B</param> 
+            /// <param name="q">ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
             Matrix4x4(Quaternion q)
             {
                 zephyr::linalg::Matrix4x4 _m(reinterpret_cast<zephyr::linalg::Quaternion&>(q));
@@ -74,9 +74,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// 2 ŸŒ³•ÏŠ·s—ñ‚ğ 3 ŸŒ³•ÏŠ·s—ñ‚ÉƒAƒbƒvƒLƒƒƒXƒg‚µ‚Ü‚·B
+            /// 2 æ¬¡å…ƒå¤‰æ›è¡Œåˆ—ã‚’ 3 æ¬¡å…ƒå¤‰æ›è¡Œåˆ—ã«ã‚¢ãƒƒãƒ—ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">3x2 s—ñB</param> 
+            /// <param name="m">3x2 è¡Œåˆ—ã€‚</param> 
             Matrix4x4(Matrix3x2 m)
             {
                 zephyr::linalg::Matrix4x4 _m(reinterpret_cast<zephyr::linalg::Matrix3x2&>(m));
@@ -84,9 +84,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// 3x3 s—ñ‚ğ 4x4 s—ñ‚ÉƒAƒbƒvƒLƒƒƒXƒg‚µ‚Ü‚·B
+            /// 3x3 è¡Œåˆ—ã‚’ 4x4 è¡Œåˆ—ã«ã‚¢ãƒƒãƒ—ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">3x3 s—ñB</param> 
+            /// <param name="m">3x3 è¡Œåˆ—ã€‚</param> 
             Matrix4x4(Matrix3x3 m)
             {
                 zephyr::linalg::Matrix4x4 _m(reinterpret_cast<zephyr::linalg::Matrix3x3&>(m));
@@ -94,9 +94,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// 4x3 s—ñ‚ğ 4x4 s—ñ‚ÉƒAƒbƒvƒLƒƒƒXƒg‚µ‚Ü‚·B
+            /// 4x3 è¡Œåˆ—ã‚’ 4x4 è¡Œåˆ—ã«ã‚¢ãƒƒãƒ—ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">4x3 s—ñB</param> 
+            /// <param name="m">4x3 è¡Œåˆ—ã€‚</param> 
             Matrix4x4(Matrix4x3 m)
                 : M11(m.M11), M12(m.M12), M13(m.M13), M14(0),
                 M21(m.M21), M22(m.M22), M23(m.M23), M24(0),
@@ -126,7 +126,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚Ìs—ñ‚ğP“™s—ñ‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®è¡Œåˆ—ã‚’æ’ç­‰è¡Œåˆ—ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Matrix4x4 Identity()
             {
@@ -135,7 +135,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚Ìs—ñ‚ğ‹ts—ñ‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®è¡Œåˆ—ã‚’é€†è¡Œåˆ—ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Matrix4x4 Invert()
             {
@@ -144,12 +144,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Ë‰e•ÏŠ·s—ñ‚ğì¬‚µ‚Ü‚·B
+            /// å°„å½±å¤‰æ›è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="fovY">Y •ûŒü‚Ì‹–ìŠpBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
-            /// <param name="aspect">• / ‚‚³‚ÌƒAƒXƒyƒNƒg”äB</param> 
-            /// <param name="zn">ƒjƒA[ Z ’lB</param> 
-            /// <param name="zf">ƒtƒ@[ Z ’lB</param> 
+            /// <param name="fovY">Y æ–¹å‘ã®è¦–é‡è§’ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
+            /// <param name="aspect">å¹… / é«˜ã•ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã€‚</param> 
+            /// <param name="zn">ãƒ‹ã‚¢ãƒ¼ Z å€¤ã€‚</param> 
+            /// <param name="zf">ãƒ•ã‚¡ãƒ¼ Z å€¤ã€‚</param> 
             Matrix4x4 Perspective(float fovY, float aspect, float zn, float zf)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).perspective(fovY, aspect, zn, zf);
@@ -157,12 +157,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// •½s“Š‰e•ÏŠ·s—ñ‚ğì¬‚µ‚Ü‚·B
+            /// å¹³è¡ŒæŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="w">‹–ì•B</param> 
-            /// <param name="h">‹–ì‚‚³B</param> 
-            /// <param name="zn">ƒjƒA[ Z ’lB</param> 
-            /// <param name="zf">ƒtƒ@[ Z ’lB</param> 
+            /// <param name="w">è¦–é‡å¹…ã€‚</param> 
+            /// <param name="h">è¦–é‡é«˜ã•ã€‚</param> 
+            /// <param name="zn">ãƒ‹ã‚¢ãƒ¼ Z å€¤ã€‚</param> 
+            /// <param name="zf">ãƒ•ã‚¡ãƒ¼ Z å€¤ã€‚</param> 
             Matrix4x4 Orthogonal(float w, float h, float zn, float zf)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).orthogonal(w, h, zn, zf);
@@ -170,10 +170,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒrƒ…[ƒ|[ƒg•ÏŠ·s—ñ‚ğì¬‚µ‚Ü‚·B
+            /// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¤‰æ›è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="width">ƒrƒ…[ƒ|[ƒg•B</param> 
-            /// <param name="height">ƒrƒ…[ƒ|[ƒg‚‚³B</param> 
+            /// <param name="width">ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¹…ã€‚</param> 
+            /// <param name="height">ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆé«˜ã•ã€‚</param> 
             Matrix4x4 Viewport(float width, float height)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).viewport(width, height);
@@ -181,11 +181,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚Ìs—ñ‚ğ‚ ‚é’n“_‚©‚ç•Ê‚Ì‚ ‚é’n“_‚ğ’‹‚·‚és—ñ‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®è¡Œåˆ—ã‚’ã‚ã‚‹åœ°ç‚¹ã‹ã‚‰åˆ¥ã®ã‚ã‚‹åœ°ç‚¹ã‚’æ³¨è¦–ã™ã‚‹è¡Œåˆ—ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="from">’‹Œ³B</param> 
-            /// <param name="at">’‹æB</param> 
-            /// <param name="up">ã•ûŒü‚ğ¦‚·ƒxƒNƒgƒ‹B</param> 
+            /// <param name="from">æ³¨è¦–å…ƒã€‚</param> 
+            /// <param name="at">æ³¨è¦–å…ˆã€‚</param> 
+            /// <param name="up">ä¸Šæ–¹å‘ã‚’ç¤ºã™ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
             Matrix4x4 LookAt(Vector3 from, Vector3 at, Vector3 up)
             {
                 auto& _from = reinterpret_cast<zephyr::linalg::Vector3&>(from);
@@ -196,10 +196,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚Ìs—ñ‚ğ‚ ‚é’n“_‚©‚ç•Ê‚Ì‚ ‚é’n“_‚ğ’‹‚·‚és—ñ‚É‚µ‚Ä•Ô‚µ‚Ü‚·Bã•ûŒü‚Í (0, 1, 0) ‚É‚È‚è‚Ü‚·B
+            /// ã“ã®è¡Œåˆ—ã‚’ã‚ã‚‹åœ°ç‚¹ã‹ã‚‰åˆ¥ã®ã‚ã‚‹åœ°ç‚¹ã‚’æ³¨è¦–ã™ã‚‹è¡Œåˆ—ã«ã—ã¦è¿”ã—ã¾ã™ã€‚ä¸Šæ–¹å‘ã¯ (0, 1, 0) ã«ãªã‚Šã¾ã™ã€‚
             /// </summary>
-            /// <param name="from">’‹Œ³B</param> 
-            /// <param name="at">’‹æB</param> 
+            /// <param name="from">æ³¨è¦–å…ƒã€‚</param> 
+            /// <param name="at">æ³¨è¦–å…ˆã€‚</param> 
             Matrix4x4 LookAt(Vector3 from, Vector3 at)
             {
                 auto& _from = reinterpret_cast<zephyr::linalg::Vector3&>(from);
@@ -209,10 +209,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ˆÚ“®•ÏŠ·‚ğs‚¢‚Ü‚·BZ •ûŒü‚ÌˆÚ“®—Ê‚Í 0 ‚É‚È‚è‚Ü‚·B
+            /// ç§»å‹•å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚Z æ–¹å‘ã®ç§»å‹•é‡ã¯ 0 ã«ãªã‚Šã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">X •ûŒü‚ÌˆÚ“®—ÊB</param> 
-            /// <param name="y">Y •ûŒü‚ÌˆÚ“®—ÊB</param> 
+            /// <param name="x">X æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
+            /// <param name="y">Y æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
             Matrix4x4 Translate(float x, float y)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).translate(x, y);
@@ -220,11 +220,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ˆÚ“®•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ç§»å‹•å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">X •ûŒü‚ÌˆÚ“®—ÊB</param> 
-            /// <param name="y">Y •ûŒü‚ÌˆÚ“®—ÊB</param> 
-            /// <param name="z">Z •ûŒü‚ÌˆÚ“®—ÊB</param> 
+            /// <param name="x">X æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
+            /// <param name="y">Y æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
+            /// <param name="z">Z æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
             Matrix4x4 Translate(float x, float y, float z)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).translate(x, y, z);
@@ -232,9 +232,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ˆÚ“®•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ç§»å‹•å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="v">ˆÚ“®—ÊB</param> 
+            /// <param name="v">ç§»å‹•é‡ã€‚</param> 
             Matrix4x4 Translate(Vector3 v)
             {
                 auto& _v = reinterpret_cast<zephyr::linalg::Vector3&>(v);
@@ -243,11 +243,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Šg‘å•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// æ‹¡å¤§å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="sx">X •ûŒüŠg‘å—¦B</param> 
-            /// <param name="sy">Y •ûŒüŠg‘å—¦B</param> 
-            /// <param name="sz">Z •ûŒüŠg‘å—¦B</param> 
+            /// <param name="sx">X æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
+            /// <param name="sy">Y æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
+            /// <param name="sz">Z æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
             Matrix4x4 Scale(float sx, float sy, float sz)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).scale(sx, sy, sz);
@@ -255,9 +255,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Šg‘å•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// æ‹¡å¤§å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="s">X, Y, Z •ûŒüŠg‘å—¦B</param> 
+            /// <param name="s">X, Y, Z æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
             Matrix4x4 Scale(float s)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).scale(s);
@@ -265,9 +265,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// X ²ü‚è‚Å‰ñ“]•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// X è»¸å‘¨ã‚Šã§å›è»¢å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="r">‰ñ“]Šp“xBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="r">å›è»¢è§’åº¦ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Matrix4x4 RotateX(float r)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).rotateX(r);
@@ -275,9 +275,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Y ²ü‚è‚Å‰ñ“]•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// Y è»¸å‘¨ã‚Šã§å›è»¢å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="r">‰ñ“]Šp“xBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="r">å›è»¢è§’åº¦ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Matrix4x4 RotateY(float r)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).rotateY(r);
@@ -285,9 +285,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Z ²ü‚è‚Å‰ñ“]•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// Z è»¸å‘¨ã‚Šã§å›è»¢å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="r">‰ñ“]Šp“xBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="r">å›è»¢è§’åº¦ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Matrix4x4 RotateZ(float r)
             {
                 reinterpret_cast<zephyr::linalg::Matrix4x4&>(*this).rotateZ(r);
@@ -295,12 +295,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ”CˆÓ‚Ì²ü‚è‚Å‰ñ“]•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ä»»æ„ã®è»¸å‘¨ã‚Šã§å›è»¢å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="ax">‰ñ“]²‚Ì X ¬•ªB</param> 
-            /// <param name="ay">‰ñ“]²‚Ì Y ¬•ªB</param> 
-            /// <param name="az">‰ñ“]²‚Ì Z ¬•ªB</param> 
-            /// <param name="r">‰ñ“]Šp“xBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="ax">å›è»¢è»¸ã® X æˆåˆ†ã€‚</param> 
+            /// <param name="ay">å›è»¢è»¸ã® Y æˆåˆ†ã€‚</param> 
+            /// <param name="az">å›è»¢è»¸ã® Z æˆåˆ†ã€‚</param> 
+            /// <param name="r">å›è»¢è§’åº¦ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Matrix4x4 RotateAroundAxis(float ax, float ay, float az, float r)
             {
                 auto q = Quaternion(Vector3(ax, ay, az), r);
@@ -308,10 +308,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ”CˆÓ‚Ì²ü‚è‚Å‰ñ“]•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ä»»æ„ã®è»¸å‘¨ã‚Šã§å›è»¢å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="axis">‰ñ“]²B</param> 
-            /// <param name="r">‰ñ“]Šp“xBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="axis">å›è»¢è»¸ã€‚</param> 
+            /// <param name="r">å›è»¢è§’åº¦ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Matrix4x4 RotateAroundAxis(Vector3 axis, float r)
             {
                 auto q = Quaternion(axis, r);
@@ -319,9 +319,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ”CˆÓ‚Ì•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ä»»æ„ã®å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">•ÏŠ·s—ñB</param> 
+            /// <param name="m">å¤‰æ›è¡Œåˆ—ã€‚</param> 
             Matrix4x4 Transform(Matrix4x4 m)
             {
                 auto& _m = reinterpret_cast<zephyr::linalg::Matrix4x4&>(m);
@@ -334,7 +334,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// s—ñ®‚ğæ“¾‚µ‚Ü‚·B
+            /// è¡Œåˆ—å¼ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property float Determinant
             {
@@ -345,7 +345,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‹ts—ñ‚ğæ“¾‚µ‚Ü‚·B
+            /// é€†è¡Œåˆ—ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property Matrix4x4 Inverse
             {
@@ -356,7 +356,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// 3x3 s—ñ‚Éƒ_ƒEƒ“ƒLƒƒƒXƒg‚µ‚Ü‚·B
+            /// 3x3 è¡Œåˆ—ã«ãƒ€ã‚¦ãƒ³ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
             /// </summary>
             property Matrix3x3 _Matrix3x3
             {
@@ -374,7 +374,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// 4x3 s—ñ‚Éƒ_ƒEƒ“ƒLƒƒƒXƒg‚µ‚Ü‚·B
+            /// 4x3 è¡Œåˆ—ã«ãƒ€ã‚¦ãƒ³ã‚­ãƒ£ã‚¹ãƒˆã—ã¾ã™ã€‚
             /// </summary>
             property Matrix4x3 _Matrix4x3
             {
@@ -454,9 +454,9 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ‹ts—ñ‚ğæ“¾‚µ‚Ü‚·B
+            /// é€†è¡Œåˆ—ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">‹ts—ñ‚ğŒvZ‚·‚és—ñB</param> 
+            /// <param name="m">é€†è¡Œåˆ—ã‚’è¨ˆç®—ã™ã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix4x4 Invert(Matrix4x4 m)
             {
                 auto& _m = reinterpret_cast<zephyr::linalg::Matrix4x4&>(m);
@@ -464,79 +464,79 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// s—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">¶‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
-            /// <param name="b">‰E‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
+            /// <param name="a">å·¦å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
+            /// <param name="b">å³å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix4x4 operator *(Matrix4x4 a, Matrix4x4 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// s—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">¶‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
-            /// <param name="b">‰E‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
+            /// <param name="a">å·¦å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
+            /// <param name="b">å³å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix4x4 operator *(Matrix4x3 a, Matrix4x4 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// s—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">¶‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
-            /// <param name="b">‰E‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
+            /// <param name="a">å·¦å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
+            /// <param name="b">å³å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix4x4 operator *(Matrix3x3 a, Matrix4x4 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// s—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">¶‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
-            /// <param name="b">‰E‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
+            /// <param name="a">å·¦å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
+            /// <param name="b">å³å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix4x4 operator *(Matrix4x4 a, Matrix4x3 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// s—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">¶‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
-            /// <param name="b">‰E‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
+            /// <param name="a">å·¦å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
+            /// <param name="b">å³å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix4x4 operator *(Matrix4x4 a, Matrix3x3 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Æs—ñ‚ÌæZ‚ğs‚¢‚Ü‚·BƒxƒNƒgƒ‹‚Ì w ¬•ª‚Í 1 ‚Æ‚µ‚ÄŒvZ‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚ãƒ™ã‚¯ãƒˆãƒ«ã® w æˆåˆ†ã¯ 1 ã¨ã—ã¦è¨ˆç®—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">ƒxƒNƒgƒ‹B</param> 
-            /// <param name="b">s—ñB</param> 
+            /// <param name="a">ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="b">è¡Œåˆ—ã€‚</param> 
             static Vector3 operator *(Vector3 a, Matrix4x4 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Æs—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">ƒxƒNƒgƒ‹B</param> 
-            /// <param name="b">s—ñB</param> 
+            /// <param name="a">ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="b">è¡Œåˆ—ã€‚</param> 
             static Vector4 operator *(Vector4 a, Matrix4x4 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// •¶š—ñ‚©‚çs—ñ‚É•ÏŠ·‚µ‚Ü‚·B
+            /// æ–‡å­—åˆ—ã‹ã‚‰è¡Œåˆ—ã«å¤‰æ›ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="str">Še—v‘f‚ª , ‚Å‹æØ‚ç‚ê‚½•¶š—ñB</param> 
+            /// <param name="str">å„è¦ç´ ãŒ , ã§åŒºåˆ‡ã‚‰ã‚ŒãŸæ–‡å­—åˆ—ã€‚</param> 
             static Matrix4x4 Parse(System::String^ str);
 
         public:

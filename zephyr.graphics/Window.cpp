@@ -1,4 +1,4 @@
-#include <Windows.h>
+﻿#include <Windows.h>
 
 #include <algorithm>
 #include <string>
@@ -18,7 +18,7 @@ namespace zephyr
     {
         static Window* s_window = nullptr;
 
-        // �E�B���h�E�v���V�[�W��
+        // ウィンドウプロシージャ
         static LRESULT __stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             switch (msg)
@@ -41,30 +41,30 @@ namespace zephyr
         {
             m_hInstance = GetModuleHandle(0);
 
-            // �E�B���h�E�N���X�̒�`
+            // ウィンドウクラスの定義
             string className = "zephyr.graphics.Window ";
             className += to_string((uint64_t)&this);
 
-            // �E�B���h�E�N���X�̓o�^
+            // ウィンドウクラスの登録
             WNDCLASSEX wcex = {
                 sizeof(WNDCLASSEX), NULL, WndProc, 0, 0, (HINSTANCE)m_hInstance, LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW), NULL, NULL, className.c_str(), NULL
             };
             if (RegisterClassEx(&wcex) == 0)
                 exit(EXIT_FAILURE);
 
-            // �E�B���h�E�̍쐬
+            // ウィンドウの作成
             m_hWindow = CreateWindow(className.c_str(), name, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, (HINSTANCE)m_hInstance, NULL);
 
-            // WM_PAINT���Ă΂�Ȃ��悤�ɂ���
+            // WM_PAINTが呼ばれないようにする
             ValidateRect((HWND)m_hWindow, 0);
 
-            // �T�C�Y���C������
+            // サイズを修正する
             this.SetSize(width, height);
 
-            // �E�B���h�E��\������
+            // ウィンドウを表示する
             ShowWindow((HWND)m_hWindow, SW_SHOW);
 
-            // ����̃A�C�R����ݒ肷��
+            // 既定のアイコンを設定する
             m_hIcon = LoadImage(GetModuleHandle(NULL), IDI_APPLICATION, IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_DEFAULTCOLOR);
             m_hIconSmall = LoadImage(GetModuleHandle(NULL), IDI_APPLICATION, IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_DEFAULTCOLOR);
             SendMessage((HWND)m_hWindow, WM_SETICON, ICON_BIG, (LPARAM)m_hIcon);

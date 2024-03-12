@@ -1,4 +1,4 @@
-#include <dsound.h>
+ï»¿#include <dsound.h>
 
 #include <vorbis/vorbisfile.h>
 
@@ -17,7 +17,7 @@ namespace zephyr
 {
     namespace sound
     {
-        // ƒtƒ@ƒCƒ‹‚©‚çƒ‹[ƒv‚µ‚È‚¢oggƒTƒEƒ“ƒhƒf[ƒ^‚ð“Ç‚ÝŽæ‚é
+        // ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ«ãƒ¼ãƒ—ã—ãªã„oggã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å–ã‚‹
         static void read_ogg(byte* dest, OggVorbis_File* oggFile, int length)
         {
             ZeroMemory(dest, length);
@@ -31,7 +31,7 @@ namespace zephyr
                 dest += readLength;
                 length -= readLength;
 
-                // ƒtƒ@ƒCƒ‹‚ÌI’[‚É’B‚µ‚½‚Æ‚«
+                // ãƒ•ã‚¡ã‚¤ãƒ«ã®çµ‚ç«¯ã«é”ã—ãŸã¨ã
                 if (readLength == 0)
                 {
                     eof = true;
@@ -42,7 +42,7 @@ namespace zephyr
             //return eof;
         }
 
-        // ƒtƒ@ƒCƒ‹‚©‚çƒ‹[ƒv‚·‚éoggƒTƒEƒ“ƒhƒf[ƒ^‚ð“Ç‚ÝŽæ‚é
+        // ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ«ãƒ¼ãƒ—ã™ã‚‹oggã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å–ã‚‹
         static void read_loop_ogg(byte* dest, OggVorbis_File* oggFile, int length)
         {
             ZeroMemory(dest, length);
@@ -55,7 +55,7 @@ namespace zephyr
                 dest += readLength;
                 length -= readLength;
 
-                // ƒtƒ@ƒCƒ‹‚ÌI’[‚É’B‚µ‚½‚Æ‚«
+                // ãƒ•ã‚¡ã‚¤ãƒ«ã®çµ‚ç«¯ã«é”ã—ãŸã¨ã
                 if (readLength == 0)
                 {
                     ov_time_seek(oggFile, 0.0);
@@ -80,21 +80,21 @@ namespace zephyr
 
             if (!File::Exists(path))
             {
-                throw runtime_error("ƒtƒ@ƒCƒ‹‚ª‘¶Ý‚µ‚Ü‚¹‚ñB");
+                throw runtime_error("ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
             }
             if (Path::GetExtension(path) != ".ogg")
             {
-                throw runtime_error("Žw’è‚³‚ê‚½ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ÍŽg—p‚Å‚«‚Ü‚¹‚ñB");
+                throw runtime_error("æŒ‡å®šã•ã‚ŒãŸã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã¯ä½¿ç”¨ã§ãã¾ã›ã‚“ã€‚");
             }
 
             if (ov_fopen(path.c_str(), this.oggFile) != 0)
             {
-                throw runtime_error("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‚ÉŽ¸”s‚µ‚Ü‚µ‚½B");
+                throw runtime_error("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
             }
 
             vorbis_info* info = ov_info(this.oggFile, -1);
 
-            // WAVEî•ñ
+            // WAVEæƒ…å ±
             WAVEFORMATEX waveFormat;
             waveFormat.wFormatTag = WAVE_FORMAT_PCM;
             waveFormat.nChannels = info->channels;
@@ -104,7 +104,7 @@ namespace zephyr
             waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign;
             waveFormat.cbSize = 0;
 
-            // DirectSoundBufferî•ñ
+            // DirectSoundBufferæƒ…å ±
             DSBUFFERDESC desc;
             desc.dwSize = sizeof(DSBUFFERDESC);
             desc.dwFlags = 0;
@@ -113,10 +113,10 @@ namespace zephyr
             desc.lpwfxFormat = &waveFormat;
             desc.guid3DAlgorithm = GUID_NULL;
 
-            // ƒZƒJƒ“ƒ_ƒŠƒoƒbƒtƒ@ì¬
+            // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒãƒƒãƒ•ã‚¡ä½œæˆ
             base::Create(device, desc);
 
-            // æ“ª‚Ìƒf[ƒ^‚ð“Ç‚Ýž‚Þ
+            // å…ˆé ­ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
             void* buffer = nullptr;
             DWORD bytes = 0;
             if (SUCCEEDED(this->Lock(0, this.BufferSize / 2, &buffer, &bytes, nullptr, nullptr, 0)))

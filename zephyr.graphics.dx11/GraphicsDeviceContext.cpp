@@ -1,4 +1,4 @@
-#include "zephyr\runtime_assert.h"
+ï»¿#include "zephyr\runtime_assert.h"
 #include "zephyr.graphics\Window.h"
 #include "zephyr.graphics\Color.h"
 
@@ -33,28 +33,28 @@ namespace zephyr
                 this.reset(deviceContext);
                 m_swapChain.reset(swapChain);
 
-                // ƒoƒbƒNƒoƒbƒtƒ@Žæ“¾
+                // ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡å–å¾—
                 Texture2D backBuffer;
                 auto hr = GraphicsDeviceContext::Instance.m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
                 runtime_assert(SUCCEEDED(hr));
 
-                // ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ð¶¬
+                // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã‚’ç”Ÿæˆ
                 hr = GraphicsDevice::Instance->CreateRenderTargetView(backBuffer.ptr, NULL, &GraphicsDeviceContext::Instance.m_renderTargetView);
                 runtime_assert(SUCCEEDED(hr));
 
-                // [“xƒoƒbƒtƒ@‚ðì¬
+                // æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
                 GraphicsDeviceContext::Instance.m_depthStencil.CreateDepthStencil(window.width, window.height);
                 GraphicsDeviceContext::Instance.m_depthStencilView.Create(GraphicsDeviceContext::Instance.m_depthStencil);
 
-                // o—Íƒ}ƒl[ƒWƒƒ‚ÉƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ðÝ’è
+                // å‡ºåŠ›ãƒžãƒãƒ¼ã‚¸ãƒ£ã«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã‚’è¨­å®š
                 ID3D11RenderTargetView* renderTargetViews[] = { GraphicsDeviceContext::Instance.m_renderTargetView.ptr };
                 GraphicsDeviceContext::Instance->OMSetRenderTargets(1, renderTargetViews, GraphicsDeviceContext::Instance.m_depthStencilView.ptr);
 
-                // [“xƒXƒe[ƒg‚ÌÝ’è
+                // æ·±åº¦ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
                 GraphicsDeviceContext::Instance.m_depthStencilState.Create(true, false, true);
                 GraphicsDeviceContext::Instance->OMSetDepthStencilState(GraphicsDeviceContext::Instance.m_depthStencilState.ptr, 0);
 
-                // ƒrƒ…[ƒ|[ƒg‚ÌÝ’è
+                // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
                 D3D11_VIEWPORT vp;
                 {
                     vp.Width = (float)window.width;
@@ -72,7 +72,7 @@ namespace zephyr
 
             void GraphicsDeviceContext::Release()
             {
-                // ‚·‚×‚Ä‚ÌƒŠƒ\[ƒX‚ÆƒpƒCƒvƒ‰ƒCƒ“‚Æ‚ÌƒoƒCƒ“ƒh‚ð‰ðœ‚·‚é
+                // ã™ã¹ã¦ã®ãƒªã‚½ãƒ¼ã‚¹ã¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã¨ã®ãƒã‚¤ãƒ³ãƒ‰ã‚’è§£é™¤ã™ã‚‹
                 if (this.available())
                     this->ClearState();
 
@@ -88,7 +88,7 @@ namespace zephyr
 
             void GraphicsDeviceContext::UnbindAllResources()
             {
-                // ‚·‚×‚Ä‚ÌƒŠƒ\[ƒX‚ÆƒpƒCƒvƒ‰ƒCƒ“‚Æ‚ÌƒoƒCƒ“ƒh‚ð‰ðœ‚·‚é
+                // ã™ã¹ã¦ã®ãƒªã‚½ãƒ¼ã‚¹ã¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã¨ã®ãƒã‚¤ãƒ³ãƒ‰ã‚’è§£é™¤ã™ã‚‹
                 this->ClearState();
             }
 

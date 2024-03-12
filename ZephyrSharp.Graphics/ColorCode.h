@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\type.h"
 
@@ -7,33 +7,33 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// �����x���܂� RGB �J���[��\���܂��B�e�v�f�� byte �^�ɂȂ�܂��B
+        /// 透明度を含む RGB カラーを表します。各要素は byte 型になります。
         /// </summary>
         public value struct ColorCode
         {
             /// <summary>
-            /// �����l���w�肵�āA�V�����C���X�^���X�����������܂��B�A���t�@������ 255 �ƂȂ�܂��B
+            /// 初期値を指定して、新しいインスタンスを初期化します。アルファ成分は 255 となります。
             /// </summary>
-            /// <param name="r">�ԁB0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0 �` 255 �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0 〜 255 の範囲で指定。</param>
+            /// <param name="g">緑。0 〜 255 の範囲で指定。</param>
+            /// <param name="b">青。0 〜 255 の範囲で指定。</param>
             ColorCode(byte r, byte g, byte b) : r(r), g(g), b(b), a(255) {}
 
             /// <summary>
-            /// �����l���w�肵�āA�V�����C���X�^���X�����������܂��B
+            /// 初期値を指定して、新しいインスタンスを初期化します。
             /// </summary>
-            /// <param name="r">�ԁB0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="a">�A���t�@�B0 �` 255 �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0 〜 255 の範囲で指定。</param>
+            /// <param name="g">緑。0 〜 255 の範囲で指定。</param>
+            /// <param name="b">青。0 〜 255 の範囲で指定。</param>
+            /// <param name="a">アルファ。0 〜 255 の範囲で指定。</param>
             ColorCode(byte r, byte g, byte b, byte a) : r(r), g(g), b(b), a(a) {}
 
             byte r, g, b, a;
 
             /// <summary>
-            /// RGBA �̏��Ɋe�v�f���i�[����Ă��� 32bit ������ ColorCode �ɕϊ����܂��B
+            /// RGBA の順に各要素が格納されている 32bit 整数を ColorCode に変換します。
             /// </summary>
-            /// <param name="code">32bit RGBA �R�[�h�B</param>
+            /// <param name="code">32bit RGBA コード。</param>
             static ColorCode FromRGBA(uint32_t code)
             {
                 byte r = (code >> 24) & 0xff;
@@ -44,9 +44,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ARGB �̏��Ɋe�v�f���i�[����Ă��� 32bit ������ ColorCode �ɕϊ����܂��B
+            /// ARGB の順に各要素が格納されている 32bit 整数を ColorCode に変換します。
             /// </summary>
-            /// <param name="code">32bit ARGB �R�[�h�B</param>
+            /// <param name="code">32bit ARGB コード。</param>
             static ColorCode FromARGB(uint32_t code)
             {
                 byte a = (code >> 24) & 0xff;
@@ -57,9 +57,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ABGR �̏��Ɋe�v�f���i�[����Ă��� 32bit ������ ColorCode �ɕϊ����܂��B
+            /// ABGR の順に各要素が格納されている 32bit 整数を ColorCode に変換します。
             /// </summary>
-            /// <param name="code">32bit ABGR �R�[�h�B</param>
+            /// <param name="code">32bit ABGR コード。</param>
             static ColorCode FromABGR(uint32_t code)
             {
                 byte a = (code >> 24) & 0xff;
@@ -70,9 +70,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// BGRA �̏��Ɋe�v�f���i�[����Ă��� 32bit ������ ColorCode �ɕϊ����܂��B
+            /// BGRA の順に各要素が格納されている 32bit 整数を ColorCode に変換します。
             /// </summary>
-            /// <param name="code">32bit BGRA �R�[�h�B</param>
+            /// <param name="code">32bit BGRA コード。</param>
             static ColorCode FromBGRA(uint32_t code)
             {
                 byte b = (code >> 24) & 0xff;
@@ -83,84 +83,84 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ColorCode �� 32bit RGBA �R�[�h�ɕϊ����܂��B
+            /// ColorCode を 32bit RGBA コードに変換します。
             /// </summary>
-            /// <param name="code">�ϊ����� ColorCode�B</param>
+            /// <param name="code">変換元の ColorCode。</param>
             static uint32_t ToRGBA(ColorCode code)
             {
                 return (code.r << 24) | (code.g << 16) | (code.b << 8) | code.a;
             }
 
             /// <summary>
-            /// ColorCode �� 32bit ARGB �R�[�h�ɕϊ����܂��B
+            /// ColorCode を 32bit ARGB コードに変換します。
             /// </summary>
-            /// <param name="code">�ϊ����� ColorCode�B</param>
+            /// <param name="code">変換元の ColorCode。</param>
             static uint32_t ToARGB(ColorCode code)
             {
                 return (code.a << 24) | (code.r << 16) | (code.g << 8) | code.b;
             }
 
             /// <summary>
-            /// ColorCode �� 32bit ABGR �R�[�h�ɕϊ����܂��B
+            /// ColorCode を 32bit ABGR コードに変換します。
             /// </summary>
-            /// <param name="code">�ϊ����� ColorCode�B</param>
+            /// <param name="code">変換元の ColorCode。</param>
             static uint32_t ToABGR(ColorCode code)
             {
                 return (code.a << 24) | (code.b << 16) | (code.g << 8) | code.r;
             }
 
             /// <summary>
-            /// ColorCode �� 32bit BGRA �R�[�h�ɕϊ����܂��B
+            /// ColorCode を 32bit BGRA コードに変換します。
             /// </summary>
-            /// <param name="code">�ϊ����� ColorCode�B</param>
+            /// <param name="code">変換元の ColorCode。</param>
             static uint32_t ToBGRA(ColorCode code)
             {
                 return (code.b << 24) | (code.g << 16) | (code.r << 8) | code.a;
             }
 
             /// <summary>
-            /// �e�v�f��ʁX�Ɏw�肵�� ColorCode ���쐬���܂��B
+            /// 各要素を別々に指定して ColorCode を作成します。
             /// </summary>
-            /// <param name="r">�ԁB0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="a">�A���t�@�B0 �` 255 �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0 〜 255 の範囲で指定。</param>
+            /// <param name="g">緑。0 〜 255 の範囲で指定。</param>
+            /// <param name="b">青。0 〜 255 の範囲で指定。</param>
+            /// <param name="a">アルファ。0 〜 255 の範囲で指定。</param>
             static ColorCode FromRGBA(byte r, byte g, byte b, byte a)
             {
                 return ColorCode(r, g, b, a);
             }
 
             /// <summary>
-            /// �e�v�f��ʁX�Ɏw�肵�� ColorCode ���쐬���܂��B
+            /// 各要素を別々に指定して ColorCode を作成します。
             /// </summary>
-            /// <param name="r">�ԁB0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="a">�A���t�@�B0 �` 255 �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0 〜 255 の範囲で指定。</param>
+            /// <param name="g">緑。0 〜 255 の範囲で指定。</param>
+            /// <param name="b">青。0 〜 255 の範囲で指定。</param>
+            /// <param name="a">アルファ。0 〜 255 の範囲で指定。</param>
             static ColorCode FromARGB(byte a, byte r, byte g, byte b)
             {
                 return ColorCode(r, g, b, a);
             }
 
             /// <summary>
-            /// �e�v�f��ʁX�Ɏw�肵�� ColorCode ���쐬���܂��B
+            /// 各要素を別々に指定して ColorCode を作成します。
             /// </summary>
-            /// <param name="r">�ԁB0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="a">�A���t�@�B0 �` 255 �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0 〜 255 の範囲で指定。</param>
+            /// <param name="g">緑。0 〜 255 の範囲で指定。</param>
+            /// <param name="b">青。0 〜 255 の範囲で指定。</param>
+            /// <param name="a">アルファ。0 〜 255 の範囲で指定。</param>
             static ColorCode FromABGR(byte a, byte b, byte g, byte r)
             {
                 return ColorCode(r, g, b, a);
             }
 
             /// <summary>
-            /// �e�v�f��ʁX�Ɏw�肵�� ColorCode ���쐬���܂��B
+            /// 各要素を別々に指定して ColorCode を作成します。
             /// </summary>
-            /// <param name="r">�ԁB0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="g">�΁B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="b">�B0 �` 255 �͈̔͂Ŏw��B</param>
-            /// <param name="a">�A���t�@�B0 �` 255 �͈̔͂Ŏw��B</param>
+            /// <param name="r">赤。0 〜 255 の範囲で指定。</param>
+            /// <param name="g">緑。0 〜 255 の範囲で指定。</param>
+            /// <param name="b">青。0 〜 255 の範囲で指定。</param>
+            /// <param name="a">アルファ。0 〜 255 の範囲で指定。</param>
             static ColorCode FromBGRA(byte b, byte g, byte r, byte a)
             {
                 return ColorCode(r, g, b, a);

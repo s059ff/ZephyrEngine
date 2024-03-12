@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace System::Collections::Generic;
 using namespace ZephyrSharp::Collision;
@@ -11,26 +11,26 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// Õ“Ë‚ªŒŸo‚³‚ê‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éƒfƒŠƒQ[ƒg‚Å‚·B
+            /// è¡çªãŒæ¤œå‡ºã•ã‚ŒãŸã¨ãã«å‘¼ã³å‡ºã•ã‚Œã‚‹ãƒ‡ãƒªã‚²ãƒ¼ãƒˆã§ã™ã€‚
             /// </summary>
-            /// <param name="other">Õ“Ë‚µ‚½‘Šè‚ÌƒGƒ“ƒeƒBƒeƒBB</param> 
-            /// <param name="point">Õ“Ë’n“_B</param> 
+            /// <param name="other">è¡çªã—ãŸç›¸æ‰‹ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã€‚</param> 
+            /// <param name="point">è¡çªåœ°ç‚¹ã€‚</param> 
             public delegate void CollideDelegate(Entity^ other, Vector3 point);
 
             /// <summary>
-            /// •¨‘Ì‚ÌÕ“Ë”»’è‚ğs‚¢‚Ü‚·B
+            /// ç‰©ä½“ã®è¡çªåˆ¤å®šã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
             public ref class CollisionComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒ[ƒ‹ƒh‹óŠÔ‚É•¨‘Ì‚ğ“o˜^‚µ‚Ü‚·B
+                /// ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ã«ç‰©ä½“ã‚’ç™»éŒ²ã—ã¾ã™ã€‚
                 /// </summary>
                 void OnAttach() override;
 
                 /// <summary>
-                /// ƒ[ƒ‹ƒh‹óŠÔ‚©‚ç“o˜^‚ğ‰ğœ‚µ‚Ü‚·B
+                /// ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ã‹ã‚‰ç™»éŒ²ã‚’è§£é™¤ã—ã¾ã™ã€‚
                 /// </summary>
                 void OnDetach() override;
 
@@ -45,32 +45,32 @@ namespace ZephyrSharp
             public:
 
                 /// <summary>
-                /// Õ“Ë‚ª”­¶‚µ‚½‚Æ‚«‚É”­¶‚µ‚Ü‚·B
+                /// è¡çªãŒç™ºç”Ÿã—ãŸã¨ãã«ç™ºç”Ÿã—ã¾ã™ã€‚
                 /// </summary>
                 event CollideDelegate^ Collided;
 
                 /// <summary>
-                /// Õ“ËƒIƒuƒWƒFƒNƒg‚ğİ’è‚µ‚Ü‚·B
+                /// è¡çªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property AbstractCollisionObject^ Object;
 
                 /// <summary>
-                /// ©•ª‚ÌÕ“ËŒŸoƒOƒ‹[ƒv‚ğİ’è‚µ‚Ü‚·B
+                /// è‡ªåˆ†ã®è¡çªæ¤œå‡ºã‚°ãƒ«ãƒ¼ãƒ—ã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property unsigned long long Group;
 
                 /// <summary>
-                /// Õ“ËŒŸo‚ğs‚¤‘Šè‚ÌÕ“ËŒŸoƒOƒ‹[ƒv‚ğİ’è‚µ‚Ü‚·B
+                /// è¡çªæ¤œå‡ºã‚’è¡Œã†ç›¸æ‰‹ã®è¡çªæ¤œå‡ºã‚°ãƒ«ãƒ¼ãƒ—ã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property unsigned long long OtherGroups;
 
                 /// <summary>
-                /// ‚±‚ÌƒvƒƒpƒeƒB‚ª true ‚Ìê‡‚ÍAˆêƒtƒŒ[ƒ€’†‚É•¡”‚Ì•¨‘Ì‚ÆÕ“Ë‚ª”­¶‚µ‚Ü‚·B
+                /// ã“ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒ true ã®å ´åˆã¯ã€ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ä¸­ã«è¤‡æ•°ã®ç‰©ä½“ã¨è¡çªãŒç™ºç”Ÿã—ã¾ã™ã€‚
                 /// </summary>
                 property bool Penetration;
 
                 /// <summary>
-                /// Õ“ËŒŸo‚©‚çœŠO‚·‚é‘ÎÛ‚ÌƒŠƒXƒg‚ğİ’è‚µ‚Ü‚·B
+                /// è¡çªæ¤œå‡ºã‹ã‚‰é™¤å¤–ã™ã‚‹å¯¾è±¡ã®ãƒªã‚¹ãƒˆã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property System::Collections::Generic::IEnumerable<CollisionComponent^>^ Excludes;
 

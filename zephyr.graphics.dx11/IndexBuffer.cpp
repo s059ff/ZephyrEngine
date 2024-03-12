@@ -1,4 +1,4 @@
-#include "enums.h"
+﻿#include "enums.h"
 #include "IndexBuffer.h"
 
 #define this (*this)

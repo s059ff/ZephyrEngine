@@ -1,4 +1,4 @@
-#include "zephyr\runtime_assert.h"
+﻿#include "zephyr\runtime_assert.h"
 
 #include "GraphicsDevice.h"
 #include "Texture2D.h"

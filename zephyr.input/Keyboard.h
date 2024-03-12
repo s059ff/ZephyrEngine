@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\array.h"
 #include "zephyr\property.h"
@@ -15,43 +15,43 @@ namespace zephyr
         enum class KeyCode;
 
         /// <summary>
-        /// �L�[�{�[�h�f�o�C�X��\���܂��B
+        /// キーボードデバイスを表します。
         /// </summary>
         class Keyboard : public Interface<IDirectInputDevice8A>
         {
         public:
 
             /// <summary>
-            /// ���̃N���X�̐V�����C���X�^���X�����������܂��B
+            /// このクラスの新しいインスタンスを初期化します。
             /// </summary>
             Keyboard() = default;
 
             /// <summary>
-            /// �C���X�^���X��j�����܂��B
+            /// インスタンスを破棄します。
             /// </summary>
             ~Keyboard();
 
             /// <summary>
-            /// �f�o�C�X�̏�Ԃ��X�V���܂��B���̃��\�b�h�͖��t���[���Ăяo���K�v������܂��B
+            /// デバイスの状態を更新します。このメソッドは毎フレーム呼び出す必要があります。
             /// </summary>
             void Update();
 
             /// <summary>
-            /// �L�[�̏�Ԃ��擾���܂��B
+            /// キーの状態を取得します。
             /// </summary>
-            /// <param name="key">�L�[�R�[�h�B</param>
-            /// <returns>�L�[�̏�ԁB</returns>
+            /// <param name="key">キーコード。</param>
+            /// <returns>キーの状態。</returns>
             ButtonState GetKeyState(KeyCode key) const;
 
 			/// <summary>
-			/// �L�[�̒��������Ԃ��擾���܂��B
+			/// キーの長押し時間を取得します。
 			/// </summary>
-			/// <param name="key">�L�[�R�[�h�B</param>
-			/// <returns>�L�[��������đ����Ă���t���[�����B</returns>
+			/// <param name="key">キーコード。</param>
+			/// <returns>キーが押されて続けているフレーム数。</returns>
 			int GetPressTimeLength(KeyCode key) const;
 
             /// <summary>
-            /// �L�[�̏�Ԃ��擾���܂��B
+            /// キーの状態を取得します。
             /// </summary>
             ButtonState operator [](KeyCode key)
             {
@@ -59,30 +59,30 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �R���g���[�����ڑ�����Ă��邩���ׂ܂��B
+            /// コントローラが接続されているか調べます。
             /// </summary>
             READONLY_PROPERTY(bool, IsConnected, { return true; });
 
         private:
 
-            // ����������
+            // 初期化する
             void Create();
 
-            // ���Z�b�g����
+            // リセットする
             void Reset(IDirectInputDevice8A* ptr = nullptr);
 
         private:
 
-            // �L�[�̐�
+            // キーの数
             enum { KeyCount = 256 };
 
-            // �O��̃L�[�{�[�h�̏��
+            // 前回のキーボードの状態
             array<byte, KeyCount> prevKeyState;
 
-            // �L�[�{�[�h�̏��
+            // キーボードの状態
             array<byte, KeyCount> keyState;
 
-			// �L�[��������Ă��鍇�v����
+			// キーが押されている合計時間
 			array<int, KeyCount> pressTimeLength;
         };
     }

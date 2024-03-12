@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "Vector2.h"
@@ -9,21 +9,21 @@ namespace ZephyrSharp
     namespace Linalg
     {
         /// <summary>
-        /// 3 —ñ–Ú‚Ì¬•ª‚ğ 0, 0, 1 ‚Æ‚·‚é 3x3 s—ñ‚ğ•\‚µ‚Ü‚·BŠe—v‘f‚Ís—Dæ‚ÅŠi”[‚³‚ê‚Ü‚·B
+        /// 3 åˆ—ç›®ã®æˆåˆ†ã‚’ 0, 0, 1 ã¨ã™ã‚‹ 3x3 è¡Œåˆ—ã‚’è¡¨ã—ã¾ã™ã€‚å„è¦ç´ ã¯è¡Œå„ªå…ˆã§æ ¼ç´ã•ã‚Œã¾ã™ã€‚
         /// </summary>
         public value class Matrix3x2
         {
         public:
 
             /// <summary>
-            /// ‘S¬•ª‚Ì’l‚ğŒÂ•Ê‚Éw’è‚µ‚Äs—ñ‚ğì¬‚µ‚Ü‚·B
+            /// å…¨æˆåˆ†ã®å€¤ã‚’å€‹åˆ¥ã«æŒ‡å®šã—ã¦è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m11">(1,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m12">(1,2) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m21">(2,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m22">(2,2) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m31">(3,1) ¬•ª‚Ì‰Šú’lB</param> 
-            /// <param name="m32">(3,2) ¬•ª‚Ì‰Šú’lB</param> 
+            /// <param name="m11">(1,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m12">(1,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m21">(2,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m22">(2,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m31">(3,1) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
+            /// <param name="m32">(3,2) æˆåˆ†ã®åˆæœŸå€¤ã€‚</param> 
             Matrix3x2(
                 float m11, float m12,
                 float m21, float m22,
@@ -35,9 +35,9 @@ namespace ZephyrSharp
             }
             
             /// <summary>
-            /// ”z—ñ‚ÉŠi”[‚³‚ê‚½’l‚©‚çs—ñ‚ğì¬‚µ‚Ü‚·B
+            /// é…åˆ—ã«æ ¼ç´ã•ã‚ŒãŸå€¤ã‹ã‚‰è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">Še¬•ª‚Ì‰Šú’l‚ğs—Dæ‡‚ÉŠi”[‚µ‚½”z—ñB</param> 
+            /// <param name="m">å„æˆåˆ†ã®åˆæœŸå€¤ã‚’è¡Œå„ªå…ˆé †ã«æ ¼ç´ã—ãŸé…åˆ—ã€‚</param> 
             Matrix3x2(array<float>^ m)
                 : Matrix3x2(
                     m[0], m[1],
@@ -58,7 +58,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚Ìs—ñ‚ğP“™s—ñ‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®è¡Œåˆ—ã‚’æ’ç­‰è¡Œåˆ—ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Matrix3x2 Identity()
             {
@@ -67,7 +67,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚Ìs—ñ‚ğ‹ts—ñ‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã“ã®è¡Œåˆ—ã‚’é€†è¡Œåˆ—ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Matrix3x2 Invert()
             {
@@ -76,10 +76,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ˆÚ“®•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ç§»å‹•å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">X •ûŒü‚ÌˆÚ“®—ÊB</param> 
-            /// <param name="y">Y •ûŒü‚ÌˆÚ“®—ÊB</param> 
+            /// <param name="x">X æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
+            /// <param name="y">Y æ–¹å‘ã®ç§»å‹•é‡ã€‚</param> 
             Matrix3x2 Translate(float x, float y)
             {
                 reinterpret_cast<zephyr::linalg::Matrix3x2&>(*this).translate(x, y);
@@ -87,9 +87,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ˆÚ“®•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ç§»å‹•å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="v">ˆÚ“®—ÊB</param> 
+            /// <param name="v">ç§»å‹•é‡ã€‚</param> 
             Matrix3x2 Translate(Vector2 v)
             {
                 reinterpret_cast<zephyr::linalg::Matrix3x2&>(*this).translate(reinterpret_cast<zephyr::linalg::Vector2&>(v));
@@ -97,10 +97,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Šg‘å•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// æ‹¡å¤§å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="sx">X •ûŒüŠg‘å—¦B</param> 
-            /// <param name="sy">Y •ûŒüŠg‘å—¦B</param> 
+            /// <param name="sx">X æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
+            /// <param name="sy">Y æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
             Matrix3x2 Scale(float sx, float sy)
             {
                 reinterpret_cast<zephyr::linalg::Matrix3x2&>(*this).scale(sx, sy);
@@ -108,9 +108,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Šg‘å•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// æ‹¡å¤§å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="s">X, Y •ûŒüŠg‘å—¦B</param> 
+            /// <param name="s">X, Y æ–¹å‘æ‹¡å¤§ç‡ã€‚</param> 
             Matrix3x2 Scale(float s)
             {
                 reinterpret_cast<zephyr::linalg::Matrix3x2&>(*this).scale(s);
@@ -118,9 +118,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‰ñ“]•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// å›è»¢å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="r">‰ñ“]Šp“xBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="r">å›è»¢è§’åº¦ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Matrix3x2 Rotate(float r)
             {
                 reinterpret_cast<zephyr::linalg::Matrix3x2&>(*this).rotate(r);
@@ -128,9 +128,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ”CˆÓ‚Ì•ÏŠ·‚ğs‚¢‚Ü‚·B
+            /// ä»»æ„ã®å¤‰æ›ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">•ÏŠ·s—ñB</param> 
+            /// <param name="m">å¤‰æ›è¡Œåˆ—ã€‚</param> 
             Matrix3x2 Transform(Matrix3x2 m)
             {
                 reinterpret_cast<zephyr::linalg::Matrix3x2&>(*this).transform(reinterpret_cast<zephyr::linalg::Matrix3x2&>(m));
@@ -142,7 +142,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// s—ñ®‚ğæ“¾‚µ‚Ü‚·B
+            /// è¡Œåˆ—å¼ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property float Determinant
             {
@@ -153,7 +153,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‹ts—ñ‚ğæ“¾‚µ‚Ü‚·B
+            /// é€†è¡Œåˆ—ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property Matrix3x2 Inverse
             {
@@ -165,7 +165,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ˆÚ“®—Ê‚ğæ“¾‚µ‚Ü‚·B
+            /// ç§»å‹•é‡ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property Vector2 Position
             {
@@ -214,9 +214,9 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ‹ts—ñ‚ğæ“¾‚µ‚Ü‚·B
+            /// é€†è¡Œåˆ—ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="m">‹ts—ñ‚ğŒvZ‚·‚és—ñB</param> 
+            /// <param name="m">é€†è¡Œåˆ—ã‚’è¨ˆç®—ã™ã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix3x2 Invert(Matrix3x2 m)
             {
                 auto& _m = reinterpret_cast<zephyr::linalg::Matrix3x2&>(m);
@@ -224,29 +224,29 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// s—ñ‚ÌæZ‚ğs‚¢‚Ü‚·B
+            /// è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">¶‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
-            /// <param name="b">‰E‘¤‚©‚ç‚©‚¯‚ç‚ê‚és—ñB</param> 
+            /// <param name="a">å·¦å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
+            /// <param name="b">å³å´ã‹ã‚‰ã‹ã‘ã‚‰ã‚Œã‚‹è¡Œåˆ—ã€‚</param> 
             static Matrix3x2 operator *(Matrix3x2 a, Matrix3x2 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// ƒxƒNƒgƒ‹‚Æs—ñ‚ÌæZ‚ğs‚¢‚Ü‚·BƒxƒNƒgƒ‹‚Ì w ¬•ª‚Í 1 ‚Æ‚µ‚ÄŒvZ‚µ‚Ü‚·B
+            /// ãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®ä¹—ç®—ã‚’è¡Œã„ã¾ã™ã€‚ãƒ™ã‚¯ãƒˆãƒ«ã® w æˆåˆ†ã¯ 1 ã¨ã—ã¦è¨ˆç®—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="a">ƒxƒNƒgƒ‹B</param> 
-            /// <param name="b">s—ñB</param> 
+            /// <param name="a">ãƒ™ã‚¯ãƒˆãƒ«ã€‚</param> 
+            /// <param name="b">è¡Œåˆ—ã€‚</param> 
             static Vector3 operator *(Vector3 a, Matrix3x2 b)
             {
                 return Mul(a, b);
             }
 
             /// <summary>
-            /// •¶š—ñ‚©‚çs—ñ‚É•ÏŠ·‚µ‚Ü‚·B
+            /// æ–‡å­—åˆ—ã‹ã‚‰è¡Œåˆ—ã«å¤‰æ›ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="str">Še—v‘f‚ª , ‚Å‹æØ‚ç‚ê‚½•¶š—ñB</param> 
+            /// <param name="str">å„è¦ç´ ãŒ , ã§åŒºåˆ‡ã‚‰ã‚ŒãŸæ–‡å­—åˆ—ã€‚</param> 
             static Matrix3x2 Parse(System::String^ str);
 
         public:

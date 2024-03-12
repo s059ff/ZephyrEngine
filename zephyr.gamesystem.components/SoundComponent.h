@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\property.h"
 #include "zephyr.sound\SoundBuffer.h"
@@ -10,17 +10,17 @@ namespace zephyr
         namespace components
         {
             /// <summary>
-            /// 3D ƒTƒEƒ“ƒh‚ğ–Â‚ç‚µ‚Ü‚·B
+            /// 3D ã‚µã‚¦ãƒ³ãƒ‰ã‚’é³´ã‚‰ã—ã¾ã™ã€‚
             /// </summary>
             class SoundComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‰Šú‰»‚µ‚Ü‚·B
+                /// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="device">ƒTƒEƒ“ƒhƒfƒoƒCƒXB</param> 
-                /// <param name="buffer">ƒTƒEƒ“ƒhƒoƒbƒtƒ@B</param> 
+                /// <param name="device">ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã€‚</param> 
+                /// <param name="buffer">ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
                 SoundComponent(sound::SoundDevice& device, sound::SoundBuffer& buffer)
                 {
                     this->Sound.Create(device, buffer);
@@ -28,11 +28,11 @@ namespace zephyr
                 }
 
                 /// <summary>
-                /// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‰Šú‰»‚µ‚Ü‚·B
+                /// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="device">ƒTƒEƒ“ƒhƒfƒoƒCƒXB</param> 
-                /// <param name="buffer">ƒTƒEƒ“ƒhƒoƒbƒtƒ@B</param> 
-                /// <param name="play">true ‚Ìê‡A‚·‚®‚ÉÄ¶‚·‚éB</param> 
+                /// <param name="device">ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã€‚</param> 
+                /// <param name="buffer">ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã€‚</param> 
+                /// <param name="play">true ã®å ´åˆã€ã™ãã«å†ç”Ÿã™ã‚‹ã€‚</param> 
                 SoundComponent(sound::SoundDevice& device, sound::SoundBuffer& buffer, bool play)
                     : SoundComponent(device, buffer)
                 {
@@ -41,7 +41,7 @@ namespace zephyr
                 }
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ğÄ¶‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿã—ã¾ã™ã€‚
                 /// </summary>
                 void Play()
                 {
@@ -49,7 +49,7 @@ namespace zephyr
                 }
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ğƒ‹[ƒvÄ¶‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’ãƒ«ãƒ¼ãƒ—å†ç”Ÿã—ã¾ã™ã€‚
                 /// </summary>
                 void LoopPlay()
                 {
@@ -57,27 +57,27 @@ namespace zephyr
                 }
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 sound::SoundBuffer Sound;
 
                 /// <summary>
-                /// ‰¹—Ê‚ğ’²®‚µ‚Ü‚·B
+                /// éŸ³é‡ã‚’èª¿æ•´ã—ã¾ã™ã€‚
                 /// </summary>
                 double VolumeFactor;
 
                 /// <summary>
-                /// ü”g”‚ğæ“¾‚µ‚Ü‚·B
+                /// å‘¨æ³¢æ•°ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 READONLY_PROPERTY(unsigned long, Frequency, const{ return Sound.Frequency; });
 
                     /// <summary>
-                    /// ‰¹—Ê‚ğæ“¾‚µ‚Ü‚·B
+                    /// éŸ³é‡ã‚’å–å¾—ã—ã¾ã™ã€‚
                     /// </summary>
                 READONLY_PROPERTY(double, Volume, const{ return Sound.Volume; });
 
                 /// <summary>
-                /// ƒpƒ“‚ğæ“¾‚µ‚Ü‚·B
+                /// ãƒ‘ãƒ³ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 READONLY_PROPERTY(double, Pan, const{ return Sound.Pan; });
 

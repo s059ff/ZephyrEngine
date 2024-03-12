@@ -1,4 +1,4 @@
-#include "Entity.h"
+ï»¿#include "Entity.h"
 
 #include "zephyr\print.h"
 #include "zephyr\smart_ptr.h"
@@ -112,7 +112,7 @@ namespace zephyr
         {
             if (!name.empty())
             {
-                runtime_assert(s_name_entity_map.find(name) == s_name_entity_map.end(), "‚·‚Å‚É“¯‚¶–¼‘O‚ÌƒGƒ“ƒeƒBƒeƒB‚ª‘¶Ý‚µ‚Ü‚·B");
+                runtime_assert(s_name_entity_map.find(name) == s_name_entity_map.end(), "ã™ã§ã«åŒã˜åå‰ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãŒå­˜åœ¨ã—ã¾ã™ã€‚");
                 entity->name = name;
                 s_name_entity_map[name] = entity;
             }
@@ -241,8 +241,8 @@ namespace zephyr
         {
             auto& type = component->GetType();
 
-            runtime_assert(!component->HasOwner, "ˆê‚Â‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ð•¡”‚ÌƒGƒ“ƒeƒBƒeƒB‚ÉŽæ‚è•t‚¯‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB");
-            runtime_assert(!this->Has(type), "‚±‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgƒ^ƒCƒv‚Í‚·‚Å‚É‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB‚ÉŽæ‚è•t‚¯Ï‚Ý‚Å‚·B");
+            runtime_assert(!component->HasOwner, "ä¸€ã¤ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¤‡æ•°ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã«å–ã‚Šä»˜ã‘ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚");
+            runtime_assert(!this->Has(type), "ã“ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¿ã‚¤ãƒ—ã¯ã™ã§ã«å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã«å–ã‚Šä»˜ã‘æ¸ˆã¿ã§ã™ã€‚");
 
             this->components->back->next = component;
             component->back = this->components->back;

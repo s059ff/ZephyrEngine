@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <Unknwn.h>
 
@@ -7,7 +7,7 @@
 namespace zephyr
 {
     /// <summary>
-    /// COM �I�u�W�F�N�g���Ǘ�����X�}�[�g�|�C���^�ł��B
+    /// COM オブジェクトを管理するスマートポインタです。
     /// </summary>
     template <typename I> class com_ptr
     {
@@ -16,12 +16,12 @@ namespace zephyr
     public:
 
         /// <summary>
-        /// �f�t�H���g�̃R���X�g���N�^�ł��B
+        /// デフォルトのコンストラクタです。
         /// </summary>
         com_ptr() = default;
 
         /// <summary>
-        /// ���\�[�X���I�u�W�F�N�g�Ɋi�[���܂��B
+        /// リソースをオブジェクトに格納します。
         /// </summary>
         explicit com_ptr(interface_t* p)
             : p(p)
@@ -29,7 +29,7 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X��������A�I�u�W�F�N�g��j�����܂��B
+        /// リソースを解放し、オブジェクトを破棄します。
         /// </summary>
         ~com_ptr()
         {
@@ -37,14 +37,14 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���̃I�u�W�F�N�g�̓R�s�[�ł��܂���B
+        /// このオブジェクトはコピーできません。
         /// </summary>
         com_ptr(com_ptr&) = delete;
 
         /// <summary>
-        /// ���\�[�X�̏��L�����ړ����܂��B
+        /// リソースの所有権を移動します。
         /// </summary>
-        /// <param name="src">���\�[�X�̏��L���I�u�W�F�N�g�B</param>
+        /// <param name="src">リソースの所有元オブジェクト。</param>
         com_ptr(com_ptr&& src)
             : p(src.p)
         {
@@ -52,7 +52,7 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X��������܂��B
+        /// リソースを解放します。
         /// </summary>
         void operator =(nullptr_t)
         {
@@ -60,14 +60,14 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���̃I�u�W�F�N�g�̓R�s�[�ł��܂���B
+        /// このオブジェクトはコピーできません。
         /// </summary>
         void operator =(com_ptr&) = delete;
 
         /// <summary>
-        /// ���\�[�X�̏��L�����ړ����܂��B
+        /// リソースの所有権を移動します。
         /// </summary>
-        /// <param name="src">���\�[�X�̏��L���I�u�W�F�N�g�B</param>
+        /// <param name="src">リソースの所有元オブジェクト。</param>
         void operator =(com_ptr&& src)
         {
             this->reset(src.p);
@@ -75,7 +75,7 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X�ւ̐��̃|�C���^���擾���܂��B
+        /// リソースへの生のポインタを取得します。
         /// </summary>
         I* const get() const
         {
@@ -83,9 +83,9 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���݂̃��\�[�X��������A�V���Ƀ��\�[�X��ݒ肵�܂��B
+        /// 現在のリソースを解放し、新たにリソースを設定します。
         /// </summary>
-        /// <param name="p">�V�������L���郊�\�[�X�B</param>
+        /// <param name="p">新しく所有するリソース。</param>
         void reset(interface_t* p)
         {
             if (this->p != p)
@@ -100,7 +100,7 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X��������܂��B
+        /// リソースを解放します。
         /// </summary>
         void reset()
         {
@@ -112,17 +112,17 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X�����L���Ă��邩���ׂ܂��B
+        /// リソースを所有しているか調べます。
         /// </summary>
         bool available() const { return this->p != nullptr; }
 
         /// <summary>
-        /// ���\�[�X�����L���Ă��Ȃ������ׂ܂��B
+        /// リソースを所有していないか調べます。
         /// </summary>
         bool expired() const { return this->p == nullptr; }
 
         /// <summary>
-        /// ���\�[�X����L����|�C���^�̃A�h���X���擾���܂��B
+        /// リソースを主有するポインタのアドレスを取得します。
         /// </summary>
         I** operator& ()
         {
@@ -131,7 +131,7 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X�̃��\�b�h���Ăяo���܂��B
+        /// リソースのメソッドを呼び出します。
         /// </summary>
         I* operator-> () const
         {
@@ -140,7 +140,7 @@ namespace zephyr
         }
 
         /// <summary>
-        /// ���\�[�X�ւ̎Q�Ƃ��擾���܂��B
+        /// リソースへの参照を取得します。
         /// </summary>
         I& operator* () const
         {
@@ -149,7 +149,7 @@ namespace zephyr
         }
         
         /// <summary>
-        /// ���\�[�X�ւ̐��̃|�C���^���擾���܂��B
+        /// リソースへの生のポインタを取得します。
         /// </summary>
         __declspec(property(get = get, put = reset)) I* ptr;
 

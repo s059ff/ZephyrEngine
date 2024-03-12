@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// �C���f�b�N�X�o�b�t�@ ���\�[�X��\���܂��B
+        /// インデックスバッファ リソースを表します。
         /// </summary>
         public ref class IndexBuffer
             : public INativeWrapper<zephyr::graphics::dx11::IndexBuffer>
@@ -16,20 +16,20 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �ÓI�ȋ�̃C���f�b�N�X�o�b�t�@���쐬���܂��B
+            /// 静的な空のインデックスバッファを作成します。
             /// </summary>
-            /// <typeparam name="count">�C���f�b�N�X�f�[�^���B</typeparam>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <typeparam name="count">インデックスデータ数。</typeparam>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(int count, Accessibility access)
             {
                 Native->Create<int>(count, (zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// �����l���w�肵�ăC���f�b�N�X�o�b�t�@���쐬���܂��B
+            /// 初期値を指定してインデックスバッファを作成します。
             /// </summary>
-            /// <param name="source">�C���f�b�N�X�f�[�^�B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="source">インデックスデータ。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(array<int>^ source, Accessibility access)
             {
                 int count = source->Length;
@@ -39,11 +39,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �����l���w�肵�ăC���f�b�N�X�o�b�t�@���쐬���܂��B
+            /// 初期値を指定してインデックスバッファを作成します。
             /// </summary>
-            /// <param name="source">���_�f�[�^�B</param>
-            /// <param name="count">���_�̐��B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="source">頂点データ。</param>
+            /// <param name="count">頂点の数。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(const void* source, int count, Accessibility access)
             {
                 int stride = sizeof(int);
@@ -51,35 +51,35 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �o�b�t�@����C���f�b�N�X�f�[�^��ǂݎ��܂��B�C���f�b�N�X�o�b�t�@�����b�N����Ă��Ȃ��ꍇ�A���̃��\�b�h�͎��s���܂��B
+            /// バッファからインデックスデータを読み取ります。インデックスバッファがロックされていない場合、このメソッドは失敗します。
             /// </summary>
-            /// <param name="index">�ǂݎ���f�[�^�̃C���f�b�N�X�B</param>
+            /// <param name="index">読み取り先データのインデックス。</param>
             int Read(int index)
             {
                 return Native->Read<int>(index);
             }
 
             /// <summary>
-            /// �C���f�b�N�X�f�[�^���o�b�t�@�ɏ������݂܂��B�C���f�b�N�X�o�b�t�@�����b�N����Ă��Ȃ��ꍇ�A���̃��\�b�h�͎��s���܂��B
+            /// インデックスデータをバッファに書き込みます。インデックスバッファがロックされていない場合、このメソッドは失敗します。
             /// </summary>
-            /// <param name="index">�������ݐ�̃o�b�t�@�ɂ�����C���f�b�N�X�B</param>
-            /// <param name="value">�������܂��C���f�b�N�X�f�[�^�B</param>
+            /// <param name="index">書き込み先のバッファにおけるインデックス。</param>
+            /// <param name="value">書き込まれるインデックスデータ。</param>
             void Write(int index, int value)
             {
                 Native->Write<int>(index, value);
             }
 
             /// <summary>
-            /// ���\�[�X�����b�N���āA�ǂݏ������\�ȏ�Ԃɂ��܂��B
+            /// リソースをロックして、読み書きが可能な状態にします。
             /// </summary>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Lock(Accessibility access)
             {
                 Native->Lock((zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// ���\�[�X���A�����b�N���āA�`��\�ȏ�Ԃɂ��܂��B
+            /// リソースをアンロックして、描画可能な状態にします。
             /// </summary>
             void Unlock()
             {
@@ -89,12 +89,12 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �������̒��_�̃o�C�g�T�C�Y���擾���܂��B
+            /// 一つ当たりの頂点のバイトサイズを取得します。
             /// </summary>
             property int Stride { int get() { return Native->stride; } }
 
             /// <summary>
-            /// ���_�o�b�t�@�Ɋi�[����Ă��钸�_�̐����擾���܂��B
+            /// 頂点バッファに格納されている頂点の数を取得します。
             /// </summary>
             property int Count { int get() { return Native->count; } }
         };

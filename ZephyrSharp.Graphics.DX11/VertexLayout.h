@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "VertexElement.h"
@@ -9,7 +9,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ’¸“_ƒf[ƒ^‚Ìƒf[ƒ^\‘¢‚ğ•\‚µ‚Ü‚·B
+        /// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€ ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class VertexLayout 
             : public INativeWrapper<zephyr::graphics::dx11::VertexLayout>
@@ -17,10 +17,10 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ’¸“_ƒŒƒCƒAƒEƒg‚ğì¬‚µ‚Ü‚·B
+            /// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="elements">’¸“_—v‘f‚Ì”z—ñB</param> 
-            /// <param name="shader">ƒŒƒCƒAƒEƒg‚ğ“K—p‚·‚é’¸“_ƒVƒF[ƒ_B</param> 
+            /// <param name="elements">é ‚ç‚¹è¦ç´ ã®é…åˆ—ã€‚</param> 
+            /// <param name="shader">ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’é©ç”¨ã™ã‚‹é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã€‚</param> 
             void Create(array<VertexElement^>^ elements, VertexShader^ shader)
             {
                 auto count = elements->Length;

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\string.h"
 
@@ -12,7 +12,7 @@ namespace zephyr
     namespace sound
     {
         /// <summary>
-        /// �Đ��Ɠǂݏo���𓯎��ɍs���T�E���h ���\�[�X�ł��B
+        /// 再生と読み出しを同時に行うサウンド リソースです。
         /// </summary>
         class StreamingSoundBuffer : public AbstractSoundBuffer
         {
@@ -22,70 +22,70 @@ namespace zephyr
         public:
 
             /// <summary>
-            /// ���̃N���X�̐V�����C���X�^���X�����������܂��B
+            /// このクラスの新しいインスタンスを初期化します。
             /// </summary>
             StreamingSoundBuffer();
 
             /// <summary>
-            /// �C���X�^���X��j�����܂��B
+            /// インスタンスを破棄します。
             /// </summary>
             ~StreamingSoundBuffer();
 
             /// <summary>
-            /// �T�E���h�t�@�C�����J���āA�T�E���h���Đ��\�ȏ�Ԃɂ��܂��B
+            /// サウンドファイルを開いて、サウンドを再生可能な状態にします。
             /// </summary>
-            /// <param name="device">�T�E���h�f�o�C�X�B</param>
-            /// <param name="path">�T�E���h�t�@�C���̃p�X�B</param>
+            /// <param name="device">サウンドデバイス。</param>
+            /// <param name="path">サウンドファイルのパス。</param>
             void Create(SoundDevice& device, const string& path);
 
             /// <summary>
-            /// �T�E���h�f�[�^��j�����A�T�E���h�t�@�C������܂��B
+            /// サウンドデータを破棄し、サウンドファイルを閉じます。
             /// </summary>
             void Close();
 
             /// <summary>
-            /// �b�P�ʂōĐ��ʒu��ύX���܂��B
+            /// 秒単位で再生位置を変更します。
             /// </summary>
-            /// <param name="time">�Đ��ʒu�B</param>
+            /// <param name="time">再生位置。</param>
             void Seek(int time);
 
             /// <summary>
-            /// �T�E���h��擪����Đ����܂��B
+            /// サウンドを先頭から再生します。
             /// </summary>
             void Play();
 
             /// <summary>
-            /// �T�E���h��擪���烋�[�v�Đ����܂��B
+            /// サウンドを先頭からループ再生します。
             /// </summary>
             void LoopPlay();
 
             /// <summary>
-            /// �T�E���h���~���A�Đ��ʒu��擪�ɖ߂��܂��B
+            /// サウンドを停止し、再生位置を先頭に戻します。
             /// </summary>
             void Stop();
 
             /// <summary>
-            /// �T�E���h���ꎞ��~�������͍ĊJ���܂��B
+            /// サウンドを一時停止もしくは再開します。
             /// </summary>
             void Pause();
 
             /// <summary>
-            /// �Đ��󋵂ɉ����āA�T�E���h���������ɓǂݍ��݂܂��B���̃��\�b�h�͖��t���[���Ăяo���K�v������܂��B
+            /// 再生状況に応じて、サウンドをメモリに読み込みます。このメソッドは毎フレーム呼び出す必要があります。
             /// </summary>
             void Update();
 
         private:
 
-            // ogg�t�@�C��
+            // oggファイル
             OggVorbis_File* oggFile;
 
-            // �t�@�C�����J���Ă��邩
+            // ファイルを開いているか
             bool isOpened;
 
-            // ���[�v�Đ����s���Ă��邩
+            // ループ再生を行っているか
             bool isLooping;
 
-            // �������ݐ�u���b�N
+            // 書き込み先ブロック
             enum class Block { First, Second } next;
         };
     }

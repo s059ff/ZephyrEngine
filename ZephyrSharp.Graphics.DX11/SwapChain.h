@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -7,7 +7,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒXƒƒbƒvƒ`ƒFƒCƒ“‚ğ•\‚µ‚Ü‚·B
+        /// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class SwapChain
             : public INativeWrapper<zephyr::graphics::dx11::SwapChain>

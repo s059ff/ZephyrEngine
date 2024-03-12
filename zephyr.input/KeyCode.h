@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -9,7 +9,7 @@ namespace zephyr
     namespace input
     {
         /// <summary>
-        /// ƒL[ƒ{[ƒh‚Ìƒ{ƒ^ƒ“‚ğ•\‚µ‚Ü‚·B
+        /// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ãƒœã‚¿ãƒ³ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         enum class KeyCode
         {

@@ -1,4 +1,4 @@
-#include "zephyr\buffer.h"
+ï»¿#include "zephyr\buffer.h"
 #include "zephyr\vector.h"
 #include "zephyr\matrix.h"
 #include "zephyr\runtime_assert.h"
@@ -218,28 +218,28 @@ namespace zephyr
 
             void Texture2D::Print(const Font& font, wchar_t charactor)
             {
-                // ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒgƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+                // ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
                 auto hdc = GetDC(nullptr);
 
                 try
                 {
-                    // Œ»İ‚ÌƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg‚ÌƒtƒHƒ“ƒg‚ğİ’è‚·‚é
+                    // ç¾åœ¨ã®ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ãƒ•ã‚©ãƒ³ãƒˆã‚’è¨­å®šã™ã‚‹
                     SelectObject(hdc, font.handle);
 
-                    // •K—v‚Èƒoƒbƒtƒ@‚ÌƒTƒCƒY‚ğæ“¾‚·‚é
+                    // å¿…è¦ãªãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
                     GLYPHMETRICS glyphmetrics;
                     MAT2 mat2 = { { 0, 1 },{ 0, 0 },{ 0, 0 },{ 0, 1 } };
                     auto buffer_size = GetGlyphOutlineW(hdc, charactor, GGO_GRAY8_BITMAP, &glyphmetrics, 0, nullptr, &mat2);
-                    runtime_assert(buffer_size != 0, "w’è‚³‚ê‚½•¶š‚ÍAˆóš‰Â”\•¶š‚Å‚Í‚ ‚è‚Ü‚¹‚ñB");
+                    runtime_assert(buffer_size != 0, "æŒ‡å®šã•ã‚ŒãŸæ–‡å­—ã¯ã€å°å­—å¯èƒ½æ–‡å­—ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚");
 
-                    // ƒrƒbƒgƒ}ƒbƒv‚ğæ“¾‚·‚é
+                    // ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã‚’å–å¾—ã™ã‚‹
                     vector<byte> bitmap(buffer_size);
                     GetGlyphOutlineW(hdc, charactor, GGO_GRAY8_BITMAP, &glyphmetrics, buffer_size, bitmap.data(), &mat2);
 
                     TEXTMETRICW metric;
                     GetTextMetricsW(hdc, &metric);
 
-                    // ƒeƒNƒXƒ`ƒƒ‚ğÄ\’z‚·‚é
+                    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å†æ§‹ç¯‰ã™ã‚‹
                     unsigned width = (unsigned)glyphmetrics.gmCellIncX;
                     unsigned height = (unsigned)metric.tmHeight;
                     matrix<ColorCode> init(height, width);
@@ -268,7 +268,7 @@ namespace zephyr
                 {
                 }
 
-                // ƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
                 ReleaseDC(nullptr, hdc);
             }
         }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <Windows.h>
 
@@ -7,49 +7,49 @@
 namespace ZephyrSharp
 {
     /// <summary>
-    /// ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚É•\¦‚³‚ê‚éƒAƒCƒRƒ“‚ğ•\‚µ‚Ü‚·B
+    /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã«è¡¨ç¤ºã•ã‚Œã‚‹ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     public enum class MessageBoxIcon
     {
         /// <summary>
-        /// î•ñ ‚Å‚ ‚é‚±‚Æ‚ğ•\‚µ‚Ü‚·B
+        /// æƒ…å ± ã§ã‚ã‚‹ã“ã¨ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         Information = MB_ICONINFORMATION,
 
         /// <summary>
-        /// Œx ‚Å‚ ‚é‚±‚Æ‚ğ•\‚µ‚Ü‚·B
+        /// è­¦å‘Š ã§ã‚ã‚‹ã“ã¨ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         Warning = MB_ICONWARNING,
 
         /// <summary>
-        /// ƒGƒ‰[ ‚Å‚ ‚é‚±‚Æ‚ğ•\‚µ‚Ü‚·B
+        /// ã‚¨ãƒ©ãƒ¼ ã§ã‚ã‚‹ã“ã¨ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         Error = MB_ICONERROR
     };
 
     /// <summary>
-    /// ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğ•\¦‚µ‚Ü‚·B
+    /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
     /// </summary>
     public ref class MessageBox
     {
     public:
 
         /// <summary>
-        /// ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğ•\¦‚µ‚Ü‚·B
+        /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="contents">ƒƒbƒZ[ƒW–{•¶B</param>
-        /// <param name="caption">ƒƒbƒZ[ƒWŠT—vB</param>
+        /// <param name="contents">ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æœ¬æ–‡ã€‚</param>
+        /// <param name="caption">ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ¦‚è¦ã€‚</param>
         static void Show(String^ contents, String^ caption)
         {
             MessageBoxA(nullptr, to_string(contents).c_str(), to_string(caption).c_str(), (unsigned int)MessageBoxIcon::Information);
         }
 
         /// <summary>
-        /// ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğ•\¦‚µ‚Ü‚·B
+        /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="contents">ƒƒbƒZ[ƒW–{•¶B</param>
-        /// <param name="caption">ƒƒbƒZ[ƒWŠT—vB</param>
-        /// <param name="icon">ƒAƒCƒRƒ“B</param>
+        /// <param name="contents">ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æœ¬æ–‡ã€‚</param>
+        /// <param name="caption">ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ¦‚è¦ã€‚</param>
+        /// <param name="icon">ã‚¢ã‚¤ã‚³ãƒ³ã€‚</param>
         static void Show(String^ contents, String^ caption, MessageBoxIcon icon)
         {
             MessageBoxA(nullptr, to_string(contents).c_str(), to_string(caption).c_str(), (unsigned int)icon);

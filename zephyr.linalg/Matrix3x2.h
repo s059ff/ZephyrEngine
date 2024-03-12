@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\assert.h"
 #include "zephyr\string.h"
@@ -124,12 +124,12 @@ namespace zephyr
 
             Matrix3x2& rotate(float r)
             {
-                float cos—¶ = cos(r);
-                float sin—¶ = sin(r);
-                float m11 = this->m11 * cos—¶ + this->m21 * sin—¶;
-                float m12 = this->m12 * cos—¶ + this->m22 * sin—¶;
-                float m21 = -this->m11 * sin—¶ + this->m21 * cos—¶;
-                float m22 = -this->m12 * sin—¶ + this->m22 * cos—¶;
+                float cosæ…® = cos(r);
+                float sinæ…® = sin(r);
+                float m11 = this->m11 * cosæ…® + this->m21 * sinæ…®;
+                float m12 = this->m12 * cosæ…® + this->m22 * sinæ…®;
+                float m21 = -this->m11 * sinæ…® + this->m21 * cosæ…®;
+                float m22 = -this->m12 * sinæ…® + this->m22 * cosæ…®;
                 this->m11 = m11; this->m12 = m12;
                 this->m21 = m21; this->m22 = m22;
                 return *this;

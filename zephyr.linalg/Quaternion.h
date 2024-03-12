@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\assert.h"
 #include "zephyr\property.h"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\property.h"
 #include "zephyr\type.h"
@@ -14,75 +14,75 @@ namespace zephyr
     namespace sound
     {
         /// <summary>
-        /// �T�E���h ���\�[�X�̊��N���X�ł��B
+        /// サウンド リソースの基底クラスです。
         /// </summary>
         class AbstractSoundBuffer : public Interface<IDirectSoundBuffer>
         {
         public:
 
             /// <summary>
-            /// �p�������Z�b�g���܂��B
+            /// パンをリセットします。
             /// </summary>
             void ResetPan();
 
             /// <summary>
-            /// �T���v�����O���g�������Z�b�g���܂��B
+            /// サンプリング周波数をリセットします。
             /// </summary>
             void ResetFrequency();
 
             /// <summary>
-            /// �{�����[�������Z�b�g���܂��B
+            /// ボリュームをリセットします。
             /// </summary>
             void ResetVolume();
 
             /// <summary>
-            /// �T�E���h�����Đ��������ׂ܂��B
+            /// サウンドがを再生中か調べます。
             /// </summary>
             READONLY_PROPERTY(bool, IsPlaying, const;);
 
             /// <summary>
-            /// �T�E���h����~�������ׂ܂��B
+            /// サウンドが停止中か調べます。
             /// </summary>
             READONLY_PROPERTY(bool, IsStopped, const;);
 
             /// <summary>
-            /// �T���v�����O���g���� Hz �P�ʂŎ擾�܂��͐ݒ肵�܂��B
+            /// サンプリング周波数を Hz 単位で取得または設定します。
             /// </summary>
             READWRITE_PROPERTY(unsigned long, Frequency, const;, ;);
 
             /// <summary>
-            /// ���ʂ� 0 �` 1 �͈̔͂Ŏ擾�܂��͐ݒ肵�܂��B 0 �̂Ƃ��ŏ��A 1 �̂Ƃ��ő��\���܂��B
+            /// 音量を 0 ～ 1 の範囲で取得または設定します。 0 のとき最小、 1 のとき最大を表します。
             /// </summary>
             READWRITE_PROPERTY(double, Volume, const; , ;);
 
             /// <summary>
-            /// �p���� -1 �` +1 �͈̔͂Ŏ擾�܂��͐ݒ肵�܂��B -1 �̂Ƃ������̃X�s�[�J�[����̂݉�����A +1 �̂Ƃ��E���̃X�s�[�J�[����̂݉�����܂��B
+            /// パンを -1 ～ +1 の範囲で取得または設定します。 -1 のとき左側のスピーカーからのみ音が鳴り、 +1 のとき右側のスピーカーからのみ音が鳴ります。
             /// </summary>
             READWRITE_PROPERTY(double, Pan, const;, ;);
 
             /// <summary>
-            /// �����̃T���v�����O���g�����擾���܂��B
+            /// 原音のサンプリング周波数を取得します。
             /// </summary>
             READONLY_PROPERTY(unsigned long, OriginalFrequency, const{ return this->originalFrequency; });
 
-            // ��̃T�E���h�o�b�t�@�𐶐�����
+            // 空のサウンドバッファを生成する
             void Create(SoundDevice& device, _DSBUFFERDESC desc);
 
-            // �T�E���h�o�b�t�@�𐶐�����
+            // サウンドバッファを生成する
             void Create(SoundDevice& device, _DSBUFFERDESC desc, const byte* data);
 
-            // �ʂ̃T�E���h�o�b�t�@�����L����
+            // 別のサウンドバッファを共有する
             void Create(SoundDevice& device, AbstractSoundBuffer& buffer);
 
-            // �o�b�t�@�T�C�Y
+            // バッファサイズ
             READONLY_PROPERTY(int, BufferSize, { return this->bufferSize; });
 
         private:
 
-            // �����̎��g��
+            // 原音の周波数
             unsigned long originalFrequency;
 
-            // �o�b�t�@�T�C�Y
+            // バッファサイズ
             int bufferSize;
         };
     }

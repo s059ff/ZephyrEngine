@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -7,7 +7,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒEƒBƒ“ƒhƒE‚ð•\‚µ‚Ü‚·B
+        /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Window
             : public INativeWrapper<zephyr::graphics::Window>
@@ -23,30 +23,30 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒE‚ðì¬‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="name">ƒLƒƒƒvƒVƒ‡ƒ“‚Ì–¼‘OB</param>
-            /// <param name="width">ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì•B</param>
-            /// <param name="height">ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì‚‚³B</param>
+            /// <param name="name">ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³ã®åå‰ã€‚</param>
+            /// <param name="width">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®å¹…ã€‚</param>
+            /// <param name="height">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®é«˜ã•ã€‚</param>
             void Create(String^ name, int width, int height)
             {
                 Native->Create(to_string(name).c_str(), width, height);
             }
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒE‚ðì¬‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="name">ƒLƒƒƒvƒVƒ‡ƒ“‚Ì–¼‘OB</param>
-            /// <param name="width">ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì•B</param>
-            /// <param name="height">ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì‚‚³B</param>
-            /// <param name="showFrame">ƒtƒŒ[ƒ€‚ð•\Ž¦‚·‚éê‡‚Í true, •\Ž¦‚µ‚È‚¢ê‡‚Í falseB</param>
+            /// <param name="name">ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³ã®åå‰ã€‚</param>
+            /// <param name="width">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®å¹…ã€‚</param>
+            /// <param name="height">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®é«˜ã•ã€‚</param>
+            /// <param name="showFrame">ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’è¡¨ç¤ºã™ã‚‹å ´åˆã¯ true, è¡¨ç¤ºã—ãªã„å ´åˆã¯ falseã€‚</param>
             void Create(String^ name, int width, int height, bool showFrame)
             {
                 Native->Create(to_string(name).c_str(), width, height, showFrame);
             }
 
             /// <summary>
-            /// ƒƒbƒZ[ƒWƒ‹[ƒv‚ðŠJŽn‚µ‚Ü‚·BƒEƒBƒ“ƒhƒE‚ª•Â‚¶‚ç‚ê‚é‚Ü‚ÅA‚±‚ÌŠÖ”‚ÍI—¹‚µ‚Ü‚¹‚ñB
+            /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’é–‹å§‹ã—ã¾ã™ã€‚ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‰ã˜ã‚‰ã‚Œã‚‹ã¾ã§ã€ã“ã®é–¢æ•°ã¯çµ‚äº†ã—ã¾ã›ã‚“ã€‚
             /// </summary>
             void Start()
             {
@@ -56,7 +56,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒƒbƒZ[ƒWƒ‹[ƒv‚ðI—¹‚µAƒEƒBƒ“ƒhƒE‚ð•Â‚¶‚Ü‚·B
+            /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’çµ‚äº†ã—ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¾ã™ã€‚
             /// </summary>
             void Close()
             {
@@ -64,27 +64,27 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ð•ÏX‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å¤‰æ›´ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="x">ƒEƒBƒ“ƒhƒE‚Ì¶ã’[‚Ì X À•WB</param>
-            /// <param name="y">ƒEƒBƒ“ƒhƒE‚Ì¶ã’[‚Ì Y À•WB</param>
+            /// <param name="x">ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å·¦ä¸Šç«¯ã® X åº§æ¨™ã€‚</param>
+            /// <param name="y">ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å·¦ä¸Šç«¯ã® Y åº§æ¨™ã€‚</param>
             void SetPosition(int x, int y)
             {
                 Native->SetPosition(x, y);
             }
 
             /// <summary>
-            /// ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì‘å‚«‚³‚ð•ÏX‚µ‚Ü‚·B
+            /// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®å¤§ãã•ã‚’å¤‰æ›´ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="sx">ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì•B</param>
-            /// <param name="sy">ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì‚‚³B</param>
+            /// <param name="sx">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®å¹…ã€‚</param>
+            /// <param name="sy">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®é«˜ã•ã€‚</param>
             void SetSize(int sx, int sy)
             {
                 Native->SetSize(sx, sy);
             }
 
             /// <summary>
-            /// ƒtƒŒ[ƒ€‚ð•\Ž¦‚µ‚Ü‚·B
+            /// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
             /// </summary>
             void ShowFrame()
             {
@@ -92,7 +92,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒtƒŒ[ƒ€‚ð‰B‚µ‚Ü‚·B
+            /// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’éš ã—ã¾ã™ã€‚
             /// </summary>
             void HideFrame()
             {
@@ -100,7 +100,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒJ[ƒ\ƒ‹‚ð•\Ž¦‚µ‚Ü‚·B
+            /// ã‚«ãƒ¼ã‚½ãƒ«ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
             /// </summary>
             void ShowCursor()
             {
@@ -108,7 +108,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒJ[ƒ\ƒ‹‚ð”ñ•\Ž¦‚É‚µ‚Ü‚·B
+            /// ã‚«ãƒ¼ã‚½ãƒ«ã‚’éžè¡¨ç¤ºã«ã—ã¾ã™ã€‚
             /// </summary>
             void HideCursor()
             {
@@ -116,7 +116,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒE‚ðƒAƒNƒeƒBƒu‚É‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã—ã¾ã™ã€‚
             /// </summary>
             void Activate()
             {
@@ -124,7 +124,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property unsigned long long InstanceHandle
             {
@@ -135,7 +135,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property unsigned long long Handle
             {
@@ -146,7 +146,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì•‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®å¹…ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Width
             {
@@ -157,7 +157,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì‚‚³‚ðŽæ“¾‚µ‚Ü‚·B
+            /// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®é«˜ã•ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int Height
             {
@@ -170,22 +170,22 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒƒbƒZ[ƒWƒ‹[ƒv‚ÌŠJŽnŽž‚ÉŽÀs‚³‚ê‚Ü‚·B
+            /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã®é–‹å§‹æ™‚ã«å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
             /// </summary>
             event System::Action^ Started;
 
             /// <summary>
-            /// ƒƒbƒZ[ƒWƒ‹[ƒv‚Ì“x‚ÉŽÀs‚³‚ê‚Ü‚·B
+            /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã®åº¦ã«å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
             /// </summary>
             event System::Action^ Updated;
 
             /// <summary>
-            /// ƒƒbƒZ[ƒWƒ‹[ƒv‚ÌI—¹Žž‚ÉŽÀs‚³‚ê‚Ü‚·B
+            /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã®çµ‚äº†æ™‚ã«å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
             /// </summary>
             event System::Action^ Closed;
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚ªŽ¸Œø‚·‚é’¼‘O‚ÉŽÀs‚³‚ê‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ãŒå¤±åŠ¹ã™ã‚‹ç›´å‰ã«å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
             /// </summary>
             event System::Action^ Destroyed;
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr.ai\NeuralNetwork.h"
 #include "zephyr.ai\QNetwork.h"

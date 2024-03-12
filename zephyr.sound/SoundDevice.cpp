@@ -1,4 +1,4 @@
-#include <dsound.h>
+﻿#include <dsound.h>
 
 #include "SoundDevice.h"
 

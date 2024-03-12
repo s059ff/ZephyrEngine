@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\functional.h"
 #include "zephyr\map.h"
@@ -18,111 +18,111 @@ namespace zephyr
         class EntityComponent;
 
         /// <summary>
-        /// �Q�[�� �G���e�B�e�B��\���܂��B
+        /// ゲーム エンティティを表します。
         /// </summary>
         class Entity
         {
         public:
 
             /// <summary>
-            /// �V�K�ɃG���e�B�e�B���쐬���܂��B
+            /// 新規にエンティティを作成します。
             /// </summary>
             static Entity* Instantiate();
 
             /// <summary>
-            /// �w��̃G���e�B�e�B���폜���܂��B�G���e�B�e�B����������R���|�[�l���g���ꊇ���č폜����܂��B
+            /// 指定のエンティティを削除します。エンティティが所持するコンポーネントも一括して削除されます。
             /// </summary>
-            /// <param name="entity">�폜����G���e�B�e�B�B</param>
+            /// <param name="entity">削除するエンティティ。</param>
             static void Kill(Entity* entity);
 
             /// <summary>
-            /// �i���� kill ��ԂɂȂ��Ă���G���e�B�e�B�����S�ɍ폜���܂��B���̃��\�b�h�̓t���[�����ɌĂяo���K�v������܂��B�j
+            /// （仮に kill 状態になっているエンティティを完全に削除します。このメソッドはフレーム毎に呼び出す必要があります。）
             /// </summary>
             static void Update();
 
             /// <summary>
-            /// ���ׂẴG���e�B�e�B���폜���܂��B
+            /// すべてのエンティティを削除します。
             /// </summary>
             static void Clear();
 
             /// <summary>
-            /// �G���e�B�e�B�ɖ��O�����܂��B
+            /// エンティティに名前をつけます。
             /// </summary>
-            /// <param name="entity">�����Ώۂ̃G���e�B�e�B�B</param>
-            /// <param name="name">�G���e�B�e�B�̖��O�B</param>
+            /// <param name="entity">命名対象のエンティティ。</param>
+            /// <param name="name">エンティティの名前。</param>
             static void Rename(Entity* entity, const string& name);
 
             /// <summary>
-            /// �w��̖��O�����G���e�B�e�B���������܂��B
+            /// 指定の名前を持つエンティティを検索します。
             /// </summary>
-            /// <param name="name">�G���e�B�e�B�̖��O�B</param>
+            /// <param name="name">エンティティの名前。</param>
             static Entity* Find(const string& name);
 
             /// <summary>
-            /// �����Ɉ�v����ŏ��̃G���e�B�e�B���擾���܂��B
+            /// 条件に一致する最初のエンティティを取得します。
             /// </summary>
-            /// <param name="pred">���������B</param>
+            /// <param name="pred">検索条件。</param>
             static Entity* Find(function<bool(Entity*)> pred);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W���w��̃G���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージを指定のエンティティに対して発行します。
             /// </summary>
-            /// <param name="one">�G���e�B�e�B�B</param> 
-            /// <param name="message">���b�Z�[�W�B</param> 
-            /// <param name="argument">���b�Z�[�W�����B</param> 
+            /// <param name="one">エンティティ。</param> 
+            /// <param name="message">メッセージ。</param> 
+            /// <param name="argument">メッセージ引数。</param> 
             static void SendMessage(Entity* one, const string& message, void* params[]);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W���w��̃G���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージを指定のエンティティに対して発行します。
             /// </summary>
-            /// <param name="one">�G���e�B�e�B�B</param> 
-            /// <param name="message">���b�Z�[�W�B</param> 
+            /// <param name="one">エンティティ。</param> 
+            /// <param name="message">メッセージ。</param> 
             static void SendMessage(Entity* one, const string& message)
             {
                 SendMessage(one, message, nullptr);
             }
 
             /// <summary>
-            /// �w��̃��b�Z�[�W�����ׂẴG���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージをすべてのエンティティに対して発行します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�B</param> 
-            /// <param name="argument">���b�Z�[�W�����B</param> 
+            /// <param name="message">メッセージ。</param> 
+            /// <param name="argument">メッセージ引数。</param> 
             static void BroadcastMessage(const string& message, void* params[]);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W�����ׂẴG���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージをすべてのエンティティに対して発行します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�B</param> 
+            /// <param name="message">メッセージ。</param> 
             static void BroadcastMessage(const string& message)
             {
                 BroadcastMessage(message, nullptr);
             }
 
             /// <summary>
-            /// �S�ẴG���e�B�e�B�ɑ΂��ď������s���܂��B
+            /// 全てのエンティティに対して処理を行います。
             /// </summary>
-            /// <param name="callback">�R�[���o�b�N�֐��B</param> 
+            /// <param name="callback">コールバック関数。</param> 
             static void ForEach(function<void(Entity*)> callback);
 
             /// <summary>
-            /// �Q�[���V�X�e�����V���A���f�[�^�ɕϊ����܂��B
+            /// ゲームシステムをシリアルデータに変換します。
             /// </summary>
-            /// <param name="stream">�V���A���f�[�^���������ރX�g���[���B</param> 
+            /// <param name="stream">シリアルデータを書き込むストリーム。</param> 
             static void Serialize(ostream& stream);
 
             /// <summary>
-            /// �V���A���f�[�^���Q�[���V�X�e���ɕϊ����܂��B
+            /// シリアルデータをゲームシステムに変換します。
             /// </summary>
-            /// <param name="stream">�V���A���f�[�^��ǂݍ��ރX�g���[���B</param> 
+            /// <param name="stream">シリアルデータを読み込むストリーム。</param> 
             static void Deserialize(istream& stream);
 
             /// <summary>
-            /// �������g�p�󋵂�\�����܂��B
+            /// メモリ使用状況を表示します。
             /// </summary>
             static void ShowMemoryStatus();
 
             /// <summary>
-            /// �G���e�B�e�B�̑������擾���܂��B
+            /// エンティティの総数を取得します。
             /// </summary>
             static const int& EntityCount;
 
@@ -133,15 +133,15 @@ namespace zephyr
         public:
 
             /// <summary>
-            /// �G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
-            /// <param name="component">�R���|�[�l���g�B</param> 
+            /// <param name="component">コンポーネント。</param> 
             EntityComponent* Attach(EntityComponent* component);
 
             /// <summary>
-            /// �G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             //EntityComponent* Attach(System::Type* type)
             //{
             //    EntityComponent* component = dynamic_cast<EntityComponent*>(System::Activator::CreateInstance(type));
@@ -149,44 +149,44 @@ namespace zephyr
             //}
 
             /// <summary>
-            /// �G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// エンティティから指定のコンポーネントを取り外します。
             /// </summary>
-            /// <param name="component">�R���|�[�l���g�B</param> 
+            /// <param name="component">コンポーネント。</param> 
             EntityComponent* Detach(EntityComponent* component);
 
             /// <summary>
-            /// �G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// エンティティから指定のコンポーネントを取り外します。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             EntityComponent* Detach(const type_info& type)
             {
                 return this->Detach(this->Get(type));
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���������Ă��邩���ׂ܂��B
+            /// 指定のコンポーネントを所持しているか調べます。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             bool Has(const type_info& type)
             {
                 return Get(type) != nullptr;
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���擾���܂��B
+            /// 指定のコンポーネントを取得します。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             EntityComponent* Get(const type_info& type);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W�����̃G���e�B�e�B�������ׂẴR���|�[�l���g�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージをこのエンティティが持つすべてのコンポーネントに対して発行します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�B</param> 
-            /// <param name="argument">���b�Z�[�W�����B</param> 
+            /// <param name="message">メッセージ。</param> 
+            /// <param name="argument">メッセージ引数。</param> 
             void ReceiveMessage(const string& message, void* params[]);
 
             /// <summary>
-            /// �G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
             template <typename ComponentType> ComponentType* Attach()
             {
@@ -194,7 +194,7 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// エンティティから指定のコンポーネントを取り外します。
             /// </summary>
             template <typename ComponentType> ComponentType* Detach()
             {
@@ -202,7 +202,7 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���������Ă��邩���ׂ܂��B
+            /// 指定のコンポーネントを所持しているか調べます。
             /// </summary>
             template <typename ComponentType> bool Has()
             {
@@ -210,7 +210,7 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���擾���܂��B
+            /// 指定のコンポーネントを取得します。
             /// </summary>
             template <typename ComponentType> ComponentType* Get()
             {
@@ -218,7 +218,7 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g�����łɎ��t�����Ă��Ȃ��ꍇ�A�G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// 指定のコンポーネントがすでに取り付けられていない場合、エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
             template <typename ComponentType> ComponentType* TryAttach()
             {
@@ -230,7 +230,7 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g�����łɎ��t�����Ă���ꍇ�A�G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// 指定のコンポーネントがすでに取り付けられている場合、エンティティから指定のコンポーネントを取り外します。
             /// </summary>
             template <typename ComponentType> void TryDetach()
             {
@@ -240,34 +240,34 @@ namespace zephyr
             }
 
             /// <summary>
-            /// �R���|�[�l���g�̈ꗗ���擾���܂��B
+            /// コンポーネントの一覧を取得します。
             /// </summary>
             READONLY_PROPERTY(EntityComponent*, BeginComponent, const;);
 
             /// <summary>
-            /// �R���|�[�l���g�̈ꗗ���擾���܂��B
+            /// コンポーネントの一覧を取得します。
             /// </summary>
             READONLY_PROPERTY(EntityComponent*, EndComponent, const;);
 
             /// <summary>
-            /// �R���|�[�l���g�̈ꗗ���擾���܂��B
+            /// コンポーネントの一覧を取得します。
             /// </summary>
             READONLY_PROPERTY(vector<EntityComponent*>, Components, const;);
 
         public:
 
             /// <summary>
-            /// �G���e�B�e�B�̖��O�B�����̏ꍇ�́Anull�B
+            /// エンティティの名前。無名の場合は、null。
             /// </summary>
             READWRITE_PROPERTY(string, Name, const{ return name; }, { Rename(this, value); });
 
             /// <summary>
-            /// ���̃G���e�B�e�B�̎��ʔԍ����擾���܂��B
+            /// このエンティティの識別番号を取得します。
             /// </summary>
             READONLY_PROPERTY(unsigned long long, ID, const{ return id; });
 
             /// <summary>
-            /// �G���e�B�e�B�� Kill ����Ă��Ȃ����擾���܂��B
+            /// エンティティが Kill されていないか取得します。
             /// </summary>
             READONLY_PROPERTY(bool, IsAlive, const{ return !killed; });
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\property.h"
 #include "zephyr.linalg\Matrix4x3.h"
@@ -12,7 +12,7 @@ namespace zephyr
         namespace components
         {
             /// <summary>
-            /// 3D ‹óŠÔ‚É‚¨‚¯‚éƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğ•\‚µ‚Ü‚·B
+            /// 3D ç©ºé–“ã«ãŠã‘ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             class TransformComponent : public EntityComponent
             {
@@ -24,29 +24,29 @@ namespace zephyr
                 }
                 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ìp¨s—ñ‚ğ•\‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®å§¿å‹¢è¡Œåˆ—ã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 linalg::Matrix4x3 Matrix;
 
             public:
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +X •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +X æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 READONLY_PROPERTY(linalg::Vector3, Rightward, const{ return linalg::Vector3(Matrix.m11, Matrix.m12, Matrix.m13); });
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +Y •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +Y æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 READONLY_PROPERTY(linalg::Vector3, Upward, const{ return linalg::Vector3(Matrix.m21, Matrix.m22, Matrix.m23); });
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +Z •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +Z æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 READONLY_PROPERTY(linalg::Vector3, Forward, const{ return linalg::Vector3(Matrix.m31, Matrix.m32, Matrix.m33); });
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğ•\‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 READWRITE_PROPERTY(linalg::Vector3, Position, const{ return Matrix.position; }, { Matrix.position = value; });
             };

@@ -1,4 +1,4 @@
-#include "QNetwork.h"
+ï»¿#include "QNetwork.h"
 
 using namespace Eigen;
 
@@ -6,8 +6,8 @@ namespace zephyr
 {
     namespace ai
     {
-        static constexpr double ƒ¿ = 0.1;
-        static constexpr double ƒÁ = 0.9;
+        static constexpr double alpha = 0.1;
+        static constexpr double gamma = 0.9;
 
         QNetwork::QNetwork(int S, int A) : S(S), A(A), D(S + A), N(N)
         {
@@ -38,13 +38,13 @@ namespace zephyr
             RowVectorXd Q__(N);
             RowVectorXd Q_ = network.forward(X_);
             RowVectorXd Q = network.forward(X);
-            RowVectorXd ƒ¢Q = ƒ¿ * (r + ƒÁ * Q_ - Q);
-            Q__ = Q + ƒ¢Q;
+            RowVectorXd DeltaQ = alpha * (r + gamma * Q_ - Q);
+            Q__ = Q + DeltaQ;
 
             network.backward(Q__);
             network.update();
 
-            dq = ƒ¢Q.sum() / N;
+            dq = DeltaQ.sum() / N;
         }
     }
 }

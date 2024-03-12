@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "ButtonState.h"
@@ -9,14 +9,14 @@ namespace ZephyrSharp
     namespace Input
     {
         /// <summary>
-        /// ƒL[ƒ{[ƒhƒfƒoƒCƒX‚ğ•\‚µ‚Ü‚·B
+        /// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class Keyboard : public INativeWrapper<zephyr::input::Keyboard>
         {
         public:
 
             /// <summary>
-            /// ƒfƒoƒCƒX‚Ìó‘Ô‚ğXV‚µ‚Ü‚·B‚±‚Ìƒƒ\ƒbƒh‚Í–ˆƒtƒŒ[ƒ€ŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
+            /// ãƒ‡ãƒã‚¤ã‚¹ã®çŠ¶æ…‹ã‚’æ›´æ–°ã—ã¾ã™ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
             /// </summary>
             void Update()
             {
@@ -24,27 +24,27 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒL[‚Ìó‘Ô‚ğæ“¾‚µ‚Ü‚·B
+            /// ã‚­ãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="key">ƒL[ƒR[ƒhB</param>
-            /// <returns>ƒL[‚Ìó‘ÔB</returns>
+            /// <param name="key">ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã€‚</param>
+            /// <returns>ã‚­ãƒ¼ã®çŠ¶æ…‹ã€‚</returns>
             ButtonState GetKeyState(KeyCode key)
             {
                 return (ButtonState)Native->GetKeyState((zephyr::input::KeyCode)key);
             }
 
 			/// <summary>
-			/// ƒL[‚Ì’·‰Ÿ‚µŠÔ‚ğæ“¾‚µ‚Ü‚·B
+			/// ã‚­ãƒ¼ã®é•·æŠ¼ã—æ™‚é–“ã‚’å–å¾—ã—ã¾ã™ã€‚
 			/// </summary>
-			/// <param name="key">ƒL[ƒR[ƒhB</param>
-			/// <returns>ƒL[‚ª‰Ÿ‚³‚ê‚Ä‘±‚¯‚Ä‚¢‚éƒtƒŒ[ƒ€”B</returns>
+			/// <param name="key">ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã€‚</param>
+			/// <returns>ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ç¶šã‘ã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã€‚</returns>
 			int GetPressTimeLength(KeyCode key)
 			{
 				return Native->GetPressTimeLength((zephyr::input::KeyCode)key);
 			}
 
             /// <summary>
-            /// ƒL[‚Ìó‘Ô‚ğæ“¾‚µ‚Ü‚·B
+            /// ã‚­ãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property ButtonState default [KeyCode]
             {
@@ -52,7 +52,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒRƒ“ƒgƒ[ƒ‰‚ªÚ‘±‚³‚ê‚Ä‚¢‚é‚©’²‚×‚Ü‚·B
+            /// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãŒæ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã¾ã™ã€‚
             /// </summary>
             property bool IsConnected { bool get() { return Native->IsConnected; } };
         };

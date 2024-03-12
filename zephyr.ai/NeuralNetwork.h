@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 #include <Core>
 
@@ -44,7 +44,7 @@ namespace zephyr
 
         public:
 
-            double É√ = 0.01f;
+            double epsilon = 0.01f;
 
         private:
 
@@ -60,7 +60,7 @@ namespace zephyr
 
                 VectorXd B;
 
-                MatrixXd É¢;
+                MatrixXd Delta;
 
                 MatrixXd dW;
 

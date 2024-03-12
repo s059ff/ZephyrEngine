@@ -1,4 +1,4 @@
-#include "zephyr.gamesystem\Entity.h"
+﻿#include "zephyr.gamesystem\Entity.h"
 #include "zephyr.linalg\linalg.h"
 #include "zephyr.linalg\Quaternion.h"
 #include "zephyr.linalg\Matrix4x3.h"

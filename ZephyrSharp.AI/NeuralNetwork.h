@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "MatrixXd.h"
@@ -78,11 +78,11 @@ namespace ZephyrSharp
                 }
             }
 
-            property double ƒÃ
+            property double epsilon
             {
-                double get() { return Native->ƒÃ; }
+                double get() { return Native->epsilon; }
 
-                void set(double value) { Native->ƒÃ = value; }
+                void set(double value) { Native->epsilon = value; }
             }
         };
     }

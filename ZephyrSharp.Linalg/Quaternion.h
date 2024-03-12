@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr.linalg\Quaternion.h"
 
@@ -12,17 +12,17 @@ namespace ZephyrSharp
         value class Matrix3x3;
 
         /// <summary>
-        /// ”CˆÓ‚Ì²ü‚è‚Ì‰ñ“]‚ğ•\‚µ‚Ü‚·B
+        /// ä»»æ„ã®è»¸å‘¨ã‚Šã®å›è»¢ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public value class Quaternion
         {
         public:
 
             /// <summary>
-            /// ”CˆÓ‚Ì²ü‚è‚Ì‰ñ“]‚ğ•\‚·ƒNƒH[ƒ^ƒjƒIƒ“‚ğì¬‚µ‚Ü‚·B
+            /// ä»»æ„ã®è»¸å‘¨ã‚Šã®å›è»¢ã‚’è¡¨ã™ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="axis">‰ñ“]²B</param> 
-            /// <param name="theta">‰ñ“]—ÊBƒ‰ƒWƒAƒ“‚Åw’èB</param> 
+            /// <param name="axis">å›è»¢è»¸ã€‚</param> 
+            /// <param name="theta">å›è»¢é‡ã€‚ãƒ©ã‚¸ã‚¢ãƒ³ã§æŒ‡å®šã€‚</param> 
             Quaternion(Vector3 axis, float theta)
             {
                 zephyr::linalg::Vector3 _a(axis.Native);
@@ -31,15 +31,15 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‰ñ“]s—ñ‚ğƒNƒH[ƒ^ƒjƒIƒ“‚É•ÏŠ·‚µ‚Ü‚·B
+            /// å›è»¢è¡Œåˆ—ã‚’ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«å¤‰æ›ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="matrix">‰ñ“]s—ñB</param> 
+            /// <param name="matrix">å›è»¢è¡Œåˆ—ã€‚</param> 
             Quaternion(Matrix3x3 matrix);
 
             /// <summary>
-            /// OŸŒ³ã‚Ì“_‚ğƒNƒH[ƒ^ƒjƒIƒ“‚ÉŠg’£‚µ‚Ü‚·B
+            /// ä¸‰æ¬¡å…ƒä¸Šã®ç‚¹ã‚’ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«æ‹¡å¼µã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="point">OŸŒ³ã‚Ì“_B</param> 
+            /// <param name="point">ä¸‰æ¬¡å…ƒä¸Šã®ç‚¹ã€‚</param> 
             Quaternion(Vector3 point)
             {
                 zephyr::linalg::Vector3 _p(point.Native);
@@ -48,7 +48,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// P“™•ÏŠ·‚ğ•\‚·ƒNƒH[ƒ^ƒjƒIƒ“‚É‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// æ’ç­‰å¤‰æ›ã‚’è¡¨ã™ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Quaternion Identity()
             {
@@ -57,7 +57,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒH[ƒ^ƒjƒIƒ“‚ğ³‹K‰»‚µ‚Ä•Ô‚µ‚Ü‚·B
+            /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’æ­£è¦åŒ–ã—ã¦è¿”ã—ã¾ã™ã€‚
             /// </summary>
             Quaternion Normalize()
             {
@@ -66,10 +66,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒH[ƒ^ƒjƒIƒ“‚Ì“àÏ‚ğ•Ô‚µ‚Ü‚·B
+            /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å†…ç©ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="q1">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
-            /// <param name="q2">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
+            /// <param name="q1">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
+            /// <param name="q2">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
             static float Inner(Quaternion q1, Quaternion q2)
             {
                 auto& _q1 = reinterpret_cast<zephyr::linalg::Quaternion&>(q1);
@@ -79,11 +79,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// “ñ‚Â‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ğ•âŠÔ‚·‚éƒNƒH[ƒ^ƒjƒIƒ“‚ğ•Ô‚µ‚Ü‚·B
+            /// äºŒã¤ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’è£œé–“ã™ã‚‹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’è¿”ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="q0">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
-            /// <param name="q1">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
-            /// <param name="t">q0 ‚©‚ç q1 ‚É‹ß‚Ã‚¯‚éŠ„‡B</param> 
+            /// <param name="q0">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
+            /// <param name="q1">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
+            /// <param name="t">q0 ã‹ã‚‰ q1 ã«è¿‘ã¥ã‘ã‚‹å‰²åˆã€‚</param> 
             static Quaternion Slerp(Quaternion q0, Quaternion q1, float t)
             {
                 auto& _q0 = reinterpret_cast<zephyr::linalg::Quaternion&>(q0);
@@ -94,10 +94,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‚×‚«æ‚ğŒvZ‚µ‚Ü‚·B
+            /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®ã¹ãä¹—ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="q">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
-            /// <param name="t">‰ñ“]‚ÌŠ„‡B t = 0 ‚Ì‚Æ‚«AP“™ƒNƒH[ƒ^ƒjƒIƒ“A t = 1 ‚Ì‚Æ‚«A‚à‚Æ‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚Æ“¯‚¶B</param> 
+            /// <param name="q">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
+            /// <param name="t">å›è»¢ã®å‰²åˆã€‚ t = 0 ã®ã¨ãã€æ’ç­‰ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€ t = 1 ã®ã¨ãã€ã‚‚ã¨ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã¨åŒã˜ã€‚</param> 
             static Quaternion Pow(Quaternion q, float t)
             {
                 auto& _q = reinterpret_cast<zephyr::linalg::Quaternion&>(q);
@@ -107,9 +107,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‹¤–ğ‚ğŒvZ‚µ‚Ü‚·B
+            /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å…±å½¹ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="q">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
+            /// <param name="q">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
             static Quaternion operator -(Quaternion q)
             {
                 auto _q = -reinterpret_cast<zephyr::linalg::Quaternion&>(q);
@@ -117,10 +117,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒNƒH[ƒ^ƒjƒIƒ“‚ÌŠOÏ‚ğŒvZ‚µ‚Ü‚·B
+            /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å¤–ç©ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="q1">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
-            /// <param name="q2">‰‰Z‘ÎÛ‚ÌƒNƒH[ƒ^ƒjƒIƒ“B</param> 
+            /// <param name="q1">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
+            /// <param name="q2">æ¼”ç®—å¯¾è±¡ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã€‚</param> 
             static Quaternion operator *(Quaternion q1, Quaternion q2)
             {
                 auto& _q1 = reinterpret_cast<zephyr::linalg::Quaternion&>(q1);
@@ -131,12 +131,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ‚±‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ª•\‚·‰ñ“]‚Ì‰ñ“]²‚ğæ“¾‚µ‚Ü‚·B
+            /// ã“ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ãŒè¡¨ã™å›è»¢ã®å›è»¢è»¸ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property Vector3 Axis { Vector3 get() { return reinterpret_cast<Vector3&>(reinterpret_cast<zephyr::linalg::Quaternion&>(*this).axis); }}
 
             /// <summary>
-            /// ‚±‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ª•\‚·‰ñ“]‚Ì‰ñ“]Šp‚ğæ“¾‚µ‚Ü‚·B
+            /// ã“ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ãŒè¡¨ã™å›è»¢ã®å›è»¢è§’ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property float Theta { float get() { return reinterpret_cast<zephyr::linalg::Quaternion&>(*this).theta; }}
 

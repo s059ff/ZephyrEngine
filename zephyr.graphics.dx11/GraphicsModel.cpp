@@ -1,4 +1,4 @@
-#include <fbxsdk.h>
+ï»¿#include <fbxsdk.h>
 
 #include "zephyr\buffer.h"
 #include "zephyr\com_ptr.h"
@@ -68,7 +68,7 @@ namespace zephyr
 
                         if (mesh)
                         {
-                            // ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ì¬
+                            // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆ
                             {
                                 const int* indices = mesh->GetPolygonVertices();
                                 const int count = mesh->GetPolygonVertexCount();
@@ -80,7 +80,7 @@ namespace zephyr
                                 //}
                             }
 
-                            // ’¸“_ƒoƒbƒtƒ@ì¬iˆÊ’uj
+                            // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆï¼ˆä½ç½®ï¼‰
                             {
                                 vector<float3> positions(mesh->GetControlPointsCount());
                                 for (int i = 0; i < positions.size(); i++)
@@ -101,7 +101,7 @@ namespace zephyr
                                 out->VertexPositions.Create(positions.data(), (int)positions.size(), Accessibility::None);
                             }
 
-                            // ’¸“_ƒoƒbƒtƒ@ì¬i–@üj
+                            // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆï¼ˆæ³•ç·šï¼‰
                             {
                                 FbxLayer* layer = mesh->GetLayer(0);
                                 FbxLayerElementNormal* elem = layer->GetNormals();
@@ -141,12 +141,12 @@ namespace zephyr
                                     }
                                     else if (mappingMode == FbxLayerElement::eByControlPoint)
                                     {
-                                        runtime_assert(false, "ƒ}ƒbƒsƒ“ƒOƒ‚[ƒh‚ª”ñ‘Î‰‚Å‚·B");
+                                        runtime_assert(false, "ãƒãƒƒãƒ”ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãŒéå¯¾å¿œã§ã™ã€‚");
                                     }
                                 }
                             }
 
-                            // ’¸“_ƒoƒbƒtƒ@ì¬iUVÀ•Wj
+                            // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆï¼ˆUVåº§æ¨™ï¼‰
                             {
                                 FbxLayer* layer = mesh->GetLayer(0);
                                 FbxLayerElementUV* elem = layer->GetUVs();
@@ -447,10 +447,10 @@ namespace zephyr
 
             void GraphicsModel::CreateMeshMap(const matrix<float>& heights)
             {
-                // ˆê•Ó‚Ì’¸“_”
+                // ä¸€è¾ºã®é ‚ç‚¹æ•°
                 const int N = (int)sqrt(heights.rows);
 
-                // ƒ[ƒJƒ‹À•W‚ğ¶¬‚·‚é
+                // ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã‚’ç”Ÿæˆã™ã‚‹
                 matrix<Vector3> positions(N, N);
                 for (int y = 0; y < N; y++)
                 {
@@ -462,7 +462,7 @@ namespace zephyr
                     }
                 }
 
-                // –@ü‚ğì¬‚·‚é
+                // æ³•ç·šã‚’ä½œæˆã™ã‚‹
                 matrix<Vector3> normals(N, N);
                 for (int y = 1; y < N - 1; y++)
                 {
@@ -487,7 +487,7 @@ namespace zephyr
                     normals(N - 1, i) = Vector3(0, 0, -1);
                 }
 
-                // ƒeƒNƒXƒ`ƒƒÀ•W‚ğì¬‚·‚é
+                // ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã‚’ä½œæˆã™ã‚‹
                 matrix<Vector2> texcoords(N, N);
                 for (int y = 0; y < N; y++)
                 {
@@ -498,7 +498,7 @@ namespace zephyr
                     }
                 }
 
-                // ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬‚·‚é
+                // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆã™ã‚‹
                 vector<int> indices(3 * 2 * (N - 1) * (N - 1));
                 int k = 0;
                 for (int y = 0; y < N - 1; y++)

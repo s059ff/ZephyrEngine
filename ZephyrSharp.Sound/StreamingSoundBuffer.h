@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "SoundDevice.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Sound
     {
         /// <summary>
-        /// �Đ��Ɠǂݏo���𓯎��ɍs���T�E���h ���\�[�X�ł��B
+        /// 再生と読み出しを同時に行うサウンド リソースです。
         /// </summary>
         public ref class StreamingSoundBuffer
             : public INativeWrapper<zephyr::sound::StreamingSoundBuffer>
@@ -16,16 +16,16 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �T�E���h�t�@�C�����J���āA�T�E���h���Đ��\�ȏ�Ԃɂ��܂��B
+            /// サウンドファイルを開いて、サウンドを再生可能な状態にします。
             /// </summary>
-            /// <param name="path">�T�E���h�t�@�C���̃p�X�B</param>
+            /// <param name="path">サウンドファイルのパス。</param>
             void Create(String^ path)
             {
                 Native->Create(SoundDevice::Instance->NativeRef, to_string(path).c_str());
             }
 
             /// <summary>
-            /// �T�E���h�f�[�^��j�����A�T�E���h�t�@�C������܂��B
+            /// サウンドデータを破棄し、サウンドファイルを閉じます。
             /// </summary>
             void Close()
             {
@@ -33,16 +33,16 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �b�P�ʂōĐ��ʒu��ύX���܂��B
+            /// 秒単位で再生位置を変更します。
             /// </summary>
-            /// <param name="time">�Đ��ʒu�B</param>
+            /// <param name="time">再生位置。</param>
             void Seek(int time)
             {
                 Native->Seek(time);
             }
 
             /// <summary>
-            /// �T�E���h��擪����Đ����܂��B
+            /// サウンドを先頭から再生します。
             /// </summary>
             void Play()
             {
@@ -50,7 +50,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �T�E���h��擪���烋�[�v�Đ����܂��B
+            /// サウンドを先頭からループ再生します。
             /// </summary>
             void LoopPlay()
             {
@@ -58,7 +58,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �T�E���h���~���A�Đ��ʒu��擪�ɖ߂��܂��B
+            /// サウンドを停止し、再生位置を先頭に戻します。
             /// </summary>
             void Stop()
             {
@@ -66,7 +66,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �T�E���h���ꎞ��~�������͍ĊJ���܂��B
+            /// サウンドを一時停止もしくは再開します。
             /// </summary>
             void Pause()
             {
@@ -74,7 +74,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �Đ��󋵂ɉ����āA�T�E���h���������ɓǂݍ��݂܂��B���̃��\�b�h�͖��t���[���Ăяo���K�v������܂��B
+            /// 再生状況に応じて、サウンドをメモリに読み込みます。このメソッドは毎フレーム呼び出す必要があります。
             /// </summary>
             void Update()
             {

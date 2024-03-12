@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
@@ -10,7 +10,7 @@ namespace ZephyrSharp
     namespace AI
     {
         /// <summary>
-        /// ó‘Ô‘JˆÚƒ}ƒVƒ“‚ğ•\‚µ‚Ü‚·B
+        /// çŠ¶æ…‹é·ç§»ãƒã‚·ãƒ³ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public ref class StateMachine
         {
@@ -24,7 +24,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ’è‹`‚³‚ê‚Ä‚¢‚éó‘Ô‚Ì”‚ğæ“¾‚µ‚Ü‚·B
+            /// å®šç¾©ã•ã‚Œã¦ã„ã‚‹çŠ¶æ…‹ã®æ•°ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int StateCount
             {
@@ -32,7 +32,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Œ»İ‚Ìó‘Ô‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+            /// ç¾åœ¨ã®çŠ¶æ…‹ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
             property String^ CurrentState
             {
@@ -45,12 +45,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// Œ»İ‚Ìó‘Ô‚É‚Æ‚Ç‚Ü‚Á‚Ä‚¢‚éŠÔ‚ğæ“¾‚µ‚Ü‚·B
+            /// ç¾åœ¨ã®çŠ¶æ…‹ã«ã¨ã©ã¾ã£ã¦ã„ã‚‹æ™‚é–“ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property int DwellTime { int get() { return m_dwell_time; } }
 
             /// <summary>
-            /// ’è‹`‚³‚ê‚Ä‚¢‚éó‘Ô‚Ì—ñ‹“q‚ğæ“¾‚µ‚Ü‚·B
+            /// å®šç¾©ã•ã‚Œã¦ã„ã‚‹çŠ¶æ…‹ã®åˆ—æŒ™å­ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             property System::Collections::IEnumerable^ States
             {
@@ -61,17 +61,17 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ó‘Ô‘JˆÚƒ}ƒVƒ“‚ªXV‚³‚ê‚é‘O‚É”­¶‚µ‚Ü‚·B
+            /// çŠ¶æ…‹é·ç§»ãƒã‚·ãƒ³ãŒæ›´æ–°ã•ã‚Œã‚‹å‰ã«ç™ºç”Ÿã—ã¾ã™ã€‚
             /// </summary>
             event Action^ BeforeUpdate;
 
             /// <summary>
-            /// ó‘Ô‘JˆÚƒ}ƒVƒ“‚ªXV‚³‚ê‚½Œã‚É”­¶‚µ‚Ü‚·B
+            /// çŠ¶æ…‹é·ç§»ãƒã‚·ãƒ³ãŒæ›´æ–°ã•ã‚ŒãŸå¾Œã«ç™ºç”Ÿã—ã¾ã™ã€‚
             /// </summary>
             event Action^ AfterUpdate;
 
             /// <summary>
-            /// ó‘Ô‚ª•Ï‰»‚µ‚½‚Æ‚«‚É”­¶‚µ‚Ü‚·B
+            /// çŠ¶æ…‹ãŒå¤‰åŒ–ã—ãŸã¨ãã«ç™ºç”Ÿã—ã¾ã™ã€‚
             /// </summary>
             event Action^ StateChanged;
 
@@ -89,9 +89,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ó‘Ô‚ğ’è‹`‚µ‚Ü‚·B
+            /// çŠ¶æ…‹ã‚’å®šç¾©ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="state">ó‘Ô–¼B</param> 
+            /// <param name="state">çŠ¶æ…‹åã€‚</param> 
             void DefineState(String^ state)
             {
                 runtime_assert(!m_indexMap->ContainsKey(state));
@@ -99,10 +99,10 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ó‘Ô‚Ì‘JˆÚŠm—¦‚ğæ“¾‚µ‚Ü‚·B
+            /// çŠ¶æ…‹ã®é·ç§»ç¢ºç‡ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="from">‘JˆÚ‘O‚Ìó‘Ô–¼B</param> 
-            /// <param name="to">‘JˆÚŒã‚Ìó‘Ô–¼B</param> 
+            /// <param name="from">é·ç§»å‰ã®çŠ¶æ…‹åã€‚</param> 
+            /// <param name="to">é·ç§»å¾Œã®çŠ¶æ…‹åã€‚</param> 
             float GetTransitionProbability(String^ from, String^ to)
             {
                 int _from = m_indexMap[from];
@@ -111,11 +111,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ó‘Ô‚Ì‘JˆÚŠm—¦‚ğİ’è‚µ‚Ü‚·B
+            /// çŠ¶æ…‹ã®é·ç§»ç¢ºç‡ã‚’è¨­å®šã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="from">‘JˆÚ‘O‚Ìó‘Ô–¼B</param> 
-            /// <param name="to">‘JˆÚŒã‚Ìó‘Ô–¼B</param> 
-            /// <param name="probaility">‘JˆÚŠm—¦B</param> 
+            /// <param name="from">é·ç§»å‰ã®çŠ¶æ…‹åã€‚</param> 
+            /// <param name="to">é·ç§»å¾Œã®çŠ¶æ…‹åã€‚</param> 
+            /// <param name="probaility">é·ç§»ç¢ºç‡ã€‚</param> 
             void SetTransitionProbability(String^ from, String^ to, float probaility)
             {
                 assign(from);
@@ -127,7 +127,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ó‘Ô‘JˆÚƒ}ƒVƒ“‚ğXV‚µAó‘Ô‘JˆÚ‚ğs‚¢‚Ü‚·B
+            /// çŠ¶æ…‹é·ç§»ãƒã‚·ãƒ³ã‚’æ›´æ–°ã—ã€çŠ¶æ…‹é·ç§»ã‚’è¡Œã„ã¾ã™ã€‚
             /// </summary>
             void Update()
             {

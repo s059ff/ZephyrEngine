@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 
 namespace zephyr
 {
     /// <summary>
-    /// ���̃N���X���p������N���X�́A�C���X�^���X���R�s�[�ł��Ȃ��Ȃ�܂��B
+    /// このクラスを継承するクラスは、インスタンスをコピーできなくなります。
     /// </summary>
     class uncopyable
     {

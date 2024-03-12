@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "SoundDevice.h"
@@ -11,17 +11,17 @@ namespace ZephyrSharp
     namespace Sound
     {
         /// <summary>
-        /// “¯‚É•¡”‚ÌÄ¶‚ğs‚¤ƒTƒEƒ“ƒh ƒŠƒ\[ƒX‚Å‚·B
+        /// åŒæ™‚ã«è¤‡æ•°ã®å†ç”Ÿã‚’è¡Œã†ã‚µã‚¦ãƒ³ãƒ‰ ãƒªã‚½ãƒ¼ã‚¹ã§ã™ã€‚
         /// </summary>
         public ref class OverlappedSoundBuffer
         {
         public:
 
             /// <summary>
-            /// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ğ“Ç‚İæ‚Á‚ÄV‚µ‚¢ƒTƒEƒ“ƒhƒoƒbƒtƒ@‚ğì¬‚µ‚Ü‚·B
+            /// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿å–ã£ã¦æ–°ã—ã„ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="path">ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ÌƒpƒXB</param>
-            /// <param name="capacity">“¯‚ÉÄ¶‚·‚éƒTƒEƒ“ƒh‚ÌÅ‘å”B</param>
+            /// <param name="path">ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã€‚</param>
+            /// <param name="capacity">åŒæ™‚ã«å†ç”Ÿã™ã‚‹ã‚µã‚¦ãƒ³ãƒ‰ã®æœ€å¤§æ•°ã€‚</param>
             void Create(String^ path, int capacity)
             {
                 original->Create(path);
@@ -36,7 +36,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒTƒEƒ“ƒhƒoƒbƒtƒ@‚ğ‰ğ•ú‚µ‚Ü‚·B
+            /// ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã‚’è§£æ”¾ã—ã¾ã™ã€‚
             /// </summary>
             void Release()
             {
@@ -48,7 +48,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ƒTƒEƒ“ƒh‚ğæ“ª‚©‚çÄ¶‚µ‚Ü‚·B
+            /// ã‚µã‚¦ãƒ³ãƒ‰ã‚’å…ˆé ­ã‹ã‚‰å†ç”Ÿã—ã¾ã™ã€‚
             /// </summary>
             void Play()
             {
@@ -60,7 +60,7 @@ namespace ZephyrSharp
                         return;
                     }
                 }
-                runtime_assert(false, "Ä¶‚Å‚«‚é“¯”‚ğ’´‚¦‚Ü‚µ‚½B");
+                runtime_assert(false, "å†ç”Ÿã§ãã‚‹åŒæ™‚æ•°ã‚’è¶…ãˆã¾ã—ãŸã€‚");
             }
 
         private:

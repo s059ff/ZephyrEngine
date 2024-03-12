@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ���_�o�b�t�@ ���\�[�X��\���܂��B
+        /// 頂点バッファ リソースを表します。
         /// </summary>
         generic <typename V> where V : value struct
             public ref class VertexBuffer
@@ -17,20 +17,20 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ��̒��_�o�b�t�@���쐬���܂��B
+            /// 空の頂点バッファを作成します。
             /// </summary>
-            /// <param name="count">���_���B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="count">頂点数。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(int count, Accessibility access)
             {
                 Native->Create(sizeof(V), count, (zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// �����l���w�肵�Ē��_�o�b�t�@���쐬���܂��B
+            /// 初期値を指定して頂点バッファを作成します。
             /// </summary>
-            /// <param name="source">���_�f�[�^�B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="source">頂点データ。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(array<V>^ source, Accessibility access)
             {
                 int count = source->Length;
@@ -40,11 +40,11 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �����l���w�肵�Ē��_�o�b�t�@���쐬���܂��B
+            /// 初期値を指定して頂点バッファを作成します。
             /// </summary>
-            /// <param name="source">���_�f�[�^�B</param>
-            /// <param name="count">���_�̐��B</param>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="source">頂点データ。</param>
+            /// <param name="count">頂点の数。</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Create(const void* source, int count, Accessibility access)
             {
                 int stride = sizeof(V);
@@ -52,9 +52,9 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ��̒��_�f�[�^��ǂݎ��܂��B���_�o�b�t�@�����b�N����Ă��Ȃ��ꍇ�A���̃��\�b�h�͎��s���܂��B
+            /// 一つの頂点データを読み取ります。頂点バッファがロックされていない場合、このメソッドは失敗します。
             /// </summary>
-            /// <param name="index">���_�̃C���f�b�N�X�B</param>
+            /// <param name="index">頂点のインデックス。</param>
             V Read(int index)
             {
                 V v;
@@ -63,26 +63,26 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ��̒��_�f�[�^���������݂܂��B���_�o�b�t�@�����b�N����Ă��Ȃ��ꍇ�A���̃��\�b�h�͎��s���܂��B
+            /// 一つの頂点データを書き込みます。頂点バッファがロックされていない場合、このメソッドは失敗します。
             /// </summary>
-            /// <param name="index">���_�̃C���f�b�N�X�B</param>
-            /// <param name="value">���_�f�[�^�B</param>
+            /// <param name="index">頂点のインデックス。</param>
+            /// <param name="value">頂点データ。</param>
             void Write(int index, V value)
             {
                 memcpy(Native->Access(index), &value, sizeof(V));
             }
 
             /// <summary>
-            /// ���\�[�X�����b�N���āA�ǂݏ������\�ȏ�Ԃɂ��܂��B
+            /// リソースをロックして、読み書きが可能な状態にします。
             /// </summary>
-            /// <param name="access">���\�[�X�̃A�N�Z�V�r���e�B�B</param>
+            /// <param name="access">リソースのアクセシビリティ。</param>
             void Lock(Accessibility access)
             {
                 Native->Lock((zephyr::graphics::dx11::Accessibility)access);
             }
 
             /// <summary>
-            /// ���\�[�X���A�����b�N���āA�`��\�ȏ�Ԃɂ��܂��B
+            /// リソースをアンロックして、描画可能な状態にします。
             /// </summary>
             void Unlock()
             {
@@ -92,12 +92,12 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �������̒��_�̃o�C�g�T�C�Y���擾���܂��B
+            /// 一つ当たりの頂点のバイトサイズを取得します。
             /// </summary>
             property int Stride { int get() { return Native->stride; } }
 
             /// <summary>
-            /// ���_�o�b�t�@�Ɋi�[����Ă��钸�_�̐����擾���܂��B
+            /// 頂点バッファに格納されている頂点の数を取得します。
             /// </summary>
             property int Count { int get() { return Native->count; } }
         };

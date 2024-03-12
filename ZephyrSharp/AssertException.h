@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 
 namespace ZephyrSharp
 {
     /// <summary>
-    /// ƒAƒT[ƒVƒ‡ƒ“‚É¸”s‚µ‚½‚Æ‚«‘—o‚³‚ê‚Ü‚·B
+    /// ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³ã«å¤±æ•—ã—ãŸã¨ãé€å‡ºã•ã‚Œã¾ã™ã€‚
     /// </summary>
     public ref class AssertException : public System::Exception
     {

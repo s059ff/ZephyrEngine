@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifdef _DEBUG
 #include <cstdio>  
@@ -7,7 +7,7 @@
 namespace ZephyrSharp
 {
     /// <summary>
-    /// ƒLƒƒƒbƒVƒ…‹@”\•t‚«‚Ì”z—ñ‚ğ•\‚µ‚Ü‚·B
+    /// ã‚­ãƒ£ãƒƒã‚·ãƒ¥æ©Ÿèƒ½ä»˜ãã®é…åˆ—ã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     generic <typename T> where T : ref class, gcnew() public ref class ArrayCache
     {
@@ -19,10 +19,10 @@ namespace ZephyrSharp
     public:
 
         /// <summary>
-        /// V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚µ‚Ü‚·B
+        /// æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="length">”z—ñ‚Ì’·‚³B</param> 
-        /// <param name="capacity">Å‹ßQÆ‚µ‚½ƒf[ƒ^‚Æ‚µ‚Ä•Û‚µ‚Ä‚¨‚­ƒf[ƒ^‚Ì”B</param> 
+        /// <param name="length">é…åˆ—ã®é•·ã•ã€‚</param> 
+        /// <param name="capacity">æœ€è¿‘å‚ç…§ã—ãŸãƒ‡ãƒ¼ã‚¿ã¨ã—ã¦ä¿æŒã—ã¦ãŠããƒ‡ãƒ¼ã‚¿ã®æ•°ã€‚</param> 
         ArrayCache(int length, int capacity)
             : m_capacity(capacity)
         {
@@ -45,9 +45,9 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ”z—ñ‚Ì—v‘f‚ğæ“¾‚µ‚Ü‚·B
+        /// é…åˆ—ã®è¦ç´ ã‚’å–å¾—ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="index">—v‘f‚ÌƒCƒ“ƒfƒbƒNƒXB</param> 
+        /// <param name="index">è¦ç´ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚</param> 
         T Get(int index)
         {
             auto% data_entry = m_data_array[index];
@@ -99,7 +99,7 @@ namespace ZephyrSharp
 #endif
 
         /// <summary>
-        /// ”z—ñ‚Ì—e—Ê‚ğæ“¾‚µ‚Ü‚·B
+        /// é…åˆ—ã®å®¹é‡ã‚’å–å¾—ã—ã¾ã™ã€‚
         /// </summary>
         property int Capacity
         {
@@ -107,7 +107,7 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ”z—ñ‚Ì’·‚³‚ğæ“¾‚µ‚Ü‚·B
+        /// é…åˆ—ã®é•·ã•ã‚’å–å¾—ã—ã¾ã™ã€‚
         /// </summary>
         property int Size
         {
@@ -115,7 +115,7 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ”z—ñ‚Ì—v‘f‚ğæ“¾‚µ‚Ü‚·B
+        /// é…åˆ—ã®è¦ç´ ã‚’å–å¾—ã—ã¾ã™ã€‚
         /// </summary>
         property T default[int]{ T get(int index) { return Get(index); } }
 

@@ -1,4 +1,4 @@
-#define DIRECTINPUT_VERSION 0x0800
+ï»¿#define DIRECTINPUT_VERSION 0x0800
 
 #define _USE_MATH_DEFINES
 
@@ -26,28 +26,28 @@ namespace zephyr
     {
         namespace
         {
-            // Ž²‚Ì”ÍˆÍ
+            // è»¸ã®ç¯„å›²
             enum { AxisRangle = 262144 };
 
-            // ŽOŠpŠÖ”‚Ìè‡’l(1 / ã2)
+            // ä¸‰è§’é–¢æ•°ã®é–¾å€¤(1 / âˆš2)
             const double AngleThreshold = 0.707107 - 0.1;
 
-            // DirectInput8ƒCƒ“ƒ^[ƒtƒFƒCƒX
+            // DirectInput8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹
             IDirectInput8A* g_pDInput;
 
-            // DirectInputDevice8‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
+            // DirectInputDevice8ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
             IDirectInputDevice8A* g_pDInputDevice;
 
             // 
             BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, void*)
             {
-                // ƒWƒ‡ƒCƒXƒeƒBƒbƒN‚Ö‚ÌƒCƒ“ƒ^[ƒtƒFƒCƒX‚ðŽæ“¾‚·‚é
+                // ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã¸ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã‚’å–å¾—ã™ã‚‹
                 if (FAILED(g_pDInput->CreateDevice(pdidInstance->guidInstance,&g_pDInputDevice, NULL)))
                 {
                     return DIENUM_CONTINUE;
                 }
 
-                // ƒWƒ‡ƒCƒXƒeƒBƒbƒN‚Ì”\—Í‚ð’²‚×‚é
+                // ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®èƒ½åŠ›ã‚’èª¿ã¹ã‚‹
                 DIDEVCAPS diDevCaps;
                 diDevCaps.dwSize = sizeof(DIDEVCAPS);
 
@@ -62,7 +62,7 @@ namespace zephyr
             //
             BOOL CALLBACK SetAxisModeCallback(LPCDIDEVICEOBJECTINSTANCE lpddoi, void*)
             {
-                // Ž²‚Ì’l‚Ì”ÍˆÍ‚ðÝ’è
+                // è»¸ã®å€¤ã®ç¯„å›²ã‚’è¨­å®š
                 DIPROPRANGE diprg;
                 ZeroMemory(&diprg, sizeof(diprg));
                 diprg.diph.dwSize = sizeof(diprg);
@@ -74,7 +74,7 @@ namespace zephyr
                 return FAILED(g_pDInputDevice->SetProperty(DIPROP_RANGE,&diprg.diph)) ? DIENUM_STOP : DIENUM_CONTINUE;
             }
 
-            // ƒfƒbƒhƒ][ƒ“‚ðl—¶‚µ‚½ƒAƒiƒƒOƒXƒeƒBƒbƒN‚Ì’l‚ðŽæ“¾‚·‚é
+            // ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã‚’è€ƒæ…®ã—ãŸã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å€¤ã‚’å–å¾—ã™ã‚‹
             double getFormatedAxisValue(unsigned long _value, double deadZone)
             {
                 double value = (double)(int)_value / (double)AxisRangle;
@@ -104,28 +104,28 @@ namespace zephyr
 
             g_pDInput = input.get();
 
-            // IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒFƒCƒX‚ÌŽæ“¾iƒWƒ‡ƒCƒXƒeƒBƒbƒNj
+            // IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å–å¾—ï¼ˆã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ï¼‰
             HRESULT result = g_pDInput->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY);
             if (FAILED(result) || g_pDInputDevice == nullptr)
-                throw runtime_error("IDirectInputDevice8ƒCƒ“ƒ^[ƒtƒFƒCƒX‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½B");
+                throw runtime_error("IDirectInputDevice8ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
             this.reset(g_pDInputDevice);
 
-            // ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚ÌÝ’èi’è‹`Ï‚Ý‚ÌƒWƒ‡ƒCƒXƒeƒBƒbƒN—pƒtƒH[ƒ}ƒbƒg‚ðŽg—pj
+            // ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®šï¼ˆå®šç¾©æ¸ˆã¿ã®ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ç”¨ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã‚’ä½¿ç”¨ï¼‰
             result = this->SetDataFormat(&c_dfDIJoystick2);
             if (FAILED(result))
-                throw runtime_error("ƒf[ƒ^ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è‚ÉŽ¸”s‚µ‚Ü‚µ‚½B");
+                throw runtime_error("ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
 
-            // ‹¦’²ƒ‚[ƒh‚ÌÝ’è
+            // å”èª¿ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®š
             result = this->SetCooperativeLevel(nullptr, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
             if (FAILED(result))
-                throw runtime_error("‹¦’²ƒ‚[ƒh‚ÌÝ’è‚ÉŽ¸”s‚µ‚Ü‚µ‚½B");
+                throw runtime_error("å”èª¿ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
 
-            // ŠeŽ²‚Ìƒ‚[ƒh‚ðÝ’è‚·‚é
+            // å„è»¸ã®ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹
             result = this->EnumObjects(SetAxisModeCallback, NULL, DIDFT_AXIS);
             if (FAILED(result))
-                throw runtime_error("Ž²ƒ‚[ƒh‚ÌÝ’è‚ÉŽ¸”s‚µ‚Ü‚µ‚½B");
+                throw runtime_error("è»¸ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
 
-            // (ƒOƒ[ƒoƒ‹•Ï”‚ðŽg—p•s‰Â‚É‚·‚é)
+            // (ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã‚’ä½¿ç”¨ä¸å¯ã«ã™ã‚‹)
             g_pDInput = nullptr;
             g_pDInputDevice = nullptr;
 
@@ -153,14 +153,14 @@ namespace zephyr
             {
                 if (this.available())
                 {
-                    // ‘O‰ñ‚Ìƒf[ƒ^‚ðã‘‚«‚·‚é
+                    // å‰å›žã®ãƒ‡ãƒ¼ã‚¿ã‚’ä¸Šæ›¸ãã™ã‚‹
                     this.prevButtonState = this.buttonState;
                     this.prevPovLeft = this.povLeft;
                     this.prevPovRight = this.povRight;
                     this.prevPovUp = this.povUp;
                     this.prevPovDown = this.povDown;
 
-                    // ƒf[ƒ^‚ðXV‚·‚é
+                    // ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
                     DIJOYSTATE2 state;
                     auto result = this->GetDeviceState(sizeof(DIJOYSTATE2),&state);
                     if (result == DIERR_NOTACQUIRED || result == DIERR_INPUTLOST)
@@ -175,7 +175,7 @@ namespace zephyr
 
 					for (int i = 0; i < ButtonCount; i++)
 					{
-						// ’·‰Ÿ‚µ‚µ‚Ä—£‚µ‚½ó‘Ô‚àŒŸ’m‚Å‚«‚é‚æ‚¤‚É‚·‚é (T < pressTime && NowReleased)
+						// é•·æŠ¼ã—ã—ã¦é›¢ã—ãŸçŠ¶æ…‹ã‚‚æ¤œçŸ¥ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ (T < pressTime && NowReleased)
 						if (0 < (this.prevButtonState[i] & 0x80))
 							this.pressTimeLength[i]++;
 						else

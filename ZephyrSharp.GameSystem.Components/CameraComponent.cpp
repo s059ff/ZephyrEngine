@@ -1,4 +1,4 @@
-#include "TransformComponent.h"
+﻿#include "TransformComponent.h"
 #include "CameraComponent.h"
 
 #define this (*this)

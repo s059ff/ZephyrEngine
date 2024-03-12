@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <random>
 
@@ -8,14 +8,14 @@
 namespace ZephyrSharp
 {
     /// <summary>
-    /// ³‹K•ª•z‚ğ•\‚µ‚Ü‚·B
+    /// æ­£è¦åˆ†å¸ƒã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     public ref class NormalDistribution : INativeWrapper<std::normal_distribution<float>>
     {
     public:
 
         /// <summary>
-        /// •W€³‹K•ª•z‚ğì¬‚µ‚Ü‚·B
+        /// æ¨™æº–æ­£è¦åˆ†å¸ƒã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
         NormalDistribution()
         {
@@ -23,17 +23,17 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ³‹K•ª•z‚ğì¬‚µ‚Ü‚·B
+        /// æ­£è¦åˆ†å¸ƒã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="mean">•ª•z‚Ì•½‹ÏB</param> 
-        /// <param name="variance">•ª•z‚Ì•ªUB</param> 
+        /// <param name="mean">åˆ†å¸ƒã®å¹³å‡ã€‚</param> 
+        /// <param name="variance">åˆ†å¸ƒã®åˆ†æ•£ã€‚</param> 
         NormalDistribution(float mean, float variance)
         {
             Native->param(std::normal_distribution<float>::param_type(mean, variance));
         }
 
         /// <summary>
-        /// •ª•z‚Ì•½‹Ï‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// åˆ†å¸ƒã®å¹³å‡ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         property float Mean
         {
@@ -42,7 +42,7 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// •ª•z‚Ì•ªU‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// åˆ†å¸ƒã®åˆ†æ•£ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         property float Variance
         {

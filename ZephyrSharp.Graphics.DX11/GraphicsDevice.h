@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "common.h"
 #include "VertexBuffer.h"
@@ -17,7 +17,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ƒOƒ‰ƒtƒBƒbƒNƒX ƒŠƒ\[ƒX‚Ìì¬‚ğs‚¢‚Ü‚·B
+        /// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ ãƒªã‚½ãƒ¼ã‚¹ã®ä½œæˆã‚’è¡Œã„ã¾ã™ã€‚
         /// </summary>
         public ref class GraphicsDevice
             : public INativeSingletonWrapper<zephyr::graphics::dx11::GraphicsDevice>
@@ -25,19 +25,19 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚ÅƒVƒXƒeƒ€‚ğ‰Šú‰»‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã§ã‚·ã‚¹ãƒ†ãƒ ã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="window">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ğs‚¤ƒƒCƒ“ ƒEƒBƒ“ƒhƒEB</param> 
+            /// <param name="window">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’è¡Œã†ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚</param> 
             void Create(Window^ window)
             {
                 Native->Create(*reinterpret_cast<zephyr::graphics::Window*>(window->NativePtr), false);
             }
 
             /// <summary>
-            /// ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚ÅƒVƒXƒeƒ€‚ğ‰Šú‰»‚µ‚Ü‚·B
+            /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã§ã‚·ã‚¹ãƒ†ãƒ ã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
             /// </summary>
-            /// <param name="window">ƒŒƒ“ƒ_ƒŠƒ“ƒO‚ğs‚¤ƒƒCƒ“ ƒEƒBƒ“ƒhƒEB</param> 
-            /// <param name="fullscreen">ƒtƒ‹ƒXƒNƒŠ[ƒ“‚É‚·‚éê‡‚Í true B</param> 
+            /// <param name="window">ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚’è¡Œã†ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€‚</param> 
+            /// <param name="fullscreen">ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹å ´åˆã¯ true ã€‚</param> 
             void Create(Window^ window, bool fullscreen)
             {
                 Native->Create(*reinterpret_cast<zephyr::graphics::Window*>(window->NativePtr), fullscreen);
@@ -46,7 +46,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ‚±‚ÌƒNƒ‰ƒX‚ÌƒVƒ“ƒOƒ‹ƒgƒ“ ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚µ‚Ü‚·B
+            /// ã“ã®ã‚¯ãƒ©ã‚¹ã®ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
             /// </summary>
             static GraphicsDevice^ Instance = gcnew GraphicsDevice();
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <random>
 
@@ -11,16 +11,16 @@
 namespace ZephyrSharp
 {
     /// <summary>
-    /// ”CˆÓ‚Ì—£UŠm—¦•ª•z‚ğ•\‚µ‚Ü‚·B
+    /// ä»»æ„ã®é›¢æ•£ç¢ºç‡åˆ†å¸ƒã‚’è¡¨ã—ã¾ã™ã€‚
     /// </summary>
     public ref class DiscreteDistribution : INativeWrapper<std::discrete_distribution<int>>
     {
     public:
 
         /// <summary>
-        /// Šm—¦•ª•z‚ğì¬‚µ‚Ü‚·B
+        /// ç¢ºç‡åˆ†å¸ƒã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="probabilities">0, 1, ... ‚Ì’l‚ªoŒ»‚·‚éŠm—¦‚ğ’è‹`‚·‚é”z—ñB‘˜a‚ª 1 ‚Å‚ ‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñB</param> 
+        /// <param name="probabilities">0, 1, ... ã®å€¤ãŒå‡ºç¾ã™ã‚‹ç¢ºç‡ã‚’å®šç¾©ã™ã‚‹é…åˆ—ã€‚ç·å’ŒãŒ 1 ã§ã‚ã‚‹å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚</param> 
         DiscreteDistribution(array<float>^ probabilities)
         {
             pin_ptr<float> _begin = &probabilities[0];
@@ -30,7 +30,7 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ‚±‚ÌŠm—¦•ª•z‚©‚ç¶¬‚³‚ê‚é—”‚ÌÅ¬’lB
+        /// ã“ã®ç¢ºç‡åˆ†å¸ƒã‹ã‚‰ç”Ÿæˆã•ã‚Œã‚‹ä¹±æ•°ã®æœ€å°å€¤ã€‚
         /// </summary>
         property int Min
         {
@@ -38,7 +38,7 @@ namespace ZephyrSharp
         }
 
         /// <summary>
-        /// ‚±‚ÌŠm—¦•ª•z‚©‚ç¶¬‚³‚ê‚é—”‚ÌÅ‘å’lB
+        /// ã“ã®ç¢ºç‡åˆ†å¸ƒã‹ã‚‰ç”Ÿæˆã•ã‚Œã‚‹ä¹±æ•°ã®æœ€å¤§å€¤ã€‚
         /// </summary>
         property int Max
         {

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 
@@ -9,19 +9,19 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// 3D ƒTƒEƒ“ƒh‚ÌŠÏ‘ªÒ‚ğ•\‚µ‚Ü‚·B
+            /// 3D ã‚µã‚¦ãƒ³ãƒ‰ã®è¦³æ¸¬è€…ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class SoundObserverComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ƒTƒEƒ“ƒh‚ÌŒø‰Ê”ÍˆÍ‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+                /// ã‚µã‚¦ãƒ³ãƒ‰ã®åŠ¹æœç¯„å›²ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property double EffectRange;
 
                 /// <summary>
-                /// ‰¹‘¬‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+                /// éŸ³é€Ÿã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
                 property double SonicSpeed;
 

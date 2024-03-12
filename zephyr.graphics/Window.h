@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\event.h"
 
@@ -7,99 +7,99 @@ namespace zephyr
     namespace graphics
     {
         /// <summary>
-        /// �E�B���h�E��\���܂��B
+        /// ウィンドウを表します。
         /// </summary>
         class Window
         {
         public:
 
             /// <summary>
-            /// �E�B���h�E���쐬���܂��B
+            /// ウィンドウを作成します。
             /// </summary>
-            /// <param name="name">�L���v�V�����̖��O�B</param>
-            /// <param name="width">�N���C�A���g�̈�̕��B</param>
-            /// <param name="height">�N���C�A���g�̈�̍����B</param>
+            /// <param name="name">キャプションの名前。</param>
+            /// <param name="width">クライアント領域の幅。</param>
+            /// <param name="height">クライアント領域の高さ。</param>
             void Create(const char* name, int width, int height);
 
             /// <summary>
-            /// �E�B���h�E���쐬���܂��B
+            /// ウィンドウを作成します。
             /// </summary>
-            /// <param name="name">�L���v�V�����̖��O�B</param>
-            /// <param name="width">�N���C�A���g�̈�̕��B</param>
-            /// <param name="height">�N���C�A���g�̈�̍����B</param>
-            /// <param name="showFrame">�t���[����\������ꍇ�� true, �\�����Ȃ��ꍇ�� false�B</param>
+            /// <param name="name">キャプションの名前。</param>
+            /// <param name="width">クライアント領域の幅。</param>
+            /// <param name="height">クライアント領域の高さ。</param>
+            /// <param name="showFrame">フレームを表示する場合は true, 表示しない場合は false。</param>
             void Create(const char* name, int width, int height, bool showFrame);
 
             /// <summary>
-            /// ���b�Z�[�W���[�v���J�n���܂��B�E�B���h�E��������܂ŁA���̊֐��͏I�����܂���B
+            /// メッセージループを開始します。ウィンドウが閉じられるまで、この関数は終了しません。
             /// </summary>
             void Start();
 
             /// <summary>
-            /// ���b�Z�[�W���[�v���I�����A�E�B���h�E����܂��B
+            /// メッセージループを終了し、ウィンドウを閉じます。
             /// </summary>
             void Close();
 
             /// <summary>
-            /// �E�B���h�E�̈ʒu��ύX���܂��B
+            /// ウィンドウの位置を変更します。
             /// </summary>
-            /// <param name="x">�E�B���h�E�̍���[�� X ���W�B</param>
-            /// <param name="y">�E�B���h�E�̍���[�� Y ���W�B</param>
+            /// <param name="x">ウィンドウの左上端の X 座標。</param>
+            /// <param name="y">ウィンドウの左上端の Y 座標。</param>
             void SetPosition(int x, int y);
 
             /// <summary>
-            /// �N���C�A���g�̈�̑傫����ύX���܂��B
+            /// クライアント領域の大きさを変更します。
             /// </summary>
-            /// <param name="sx">�N���C�A���g�̈�̕��B</param>
-            /// <param name="sy">�N���C�A���g�̈�̍����B</param>
+            /// <param name="sx">クライアント領域の幅。</param>
+            /// <param name="sy">クライアント領域の高さ。</param>
             void SetSize(int sx, int sy);
 
             /// <summary>
-            /// �E�B���h�E�̃A�C�R����ݒ肵�܂��B
+            /// ウィンドウのアイコンを設定します。
             /// </summary>
-            /// <param name="resourceID">�A�C�R���̃��\�[�X ID �B</param> 
+            /// <param name="resourceID">アイコンのリソース ID 。</param> 
             void SetIcon(int resourceID);
 
             /// <summary>
-            /// �E�B���h�E�̃A�C�R����ݒ肵�܂��B
+            /// ウィンドウのアイコンを設定します。
             /// </summary>
-            /// <param name="resourceID">�A�C�R���̃��\�[�X ID �B</param> 
+            /// <param name="resourceID">アイコンのリソース ID 。</param> 
             void SetSmallIcon(int resourceID);
 
             /// <summary>
-            /// �E�B���h�E�̃A�C�R����ݒ肵�܂��B
+            /// ウィンドウのアイコンを設定します。
             /// </summary>
-            /// <param name="resourceName">�A�C�R���̃��\�[�X���B</param> 
+            /// <param name="resourceName">アイコンのリソース名。</param> 
             void SetIcon(const char* resourceName);
 
             /// <summary>
-            /// �E�B���h�E�̃A�C�R����ݒ肵�܂��B
+            /// ウィンドウのアイコンを設定します。
             /// </summary>
-            /// <param name="resourceName">�A�C�R���̃��\�[�X���B</param> 
+            /// <param name="resourceName">アイコンのリソース名。</param> 
             void SetSmallIcon(const char* resourceName);
 
             /// <summary>
-            /// �t���[����\�����܂��B
+            /// フレームを表示します。
             /// </summary>
             void ShowFrame();
 
             /// <summary>
-            /// �t���[�����B���܂��B
+            /// フレームを隠します。
             /// </summary>
             void HideFrame();
 
             /// <summary>
-            /// �J�[�\����\�����܂��B
+            /// カーソルを表示します。
             /// </summary>
             void ShowCursor();
 
             /// <summary>
-            /// �J�[�\�����\���ɂ��܂��B
+            /// カーソルを非表示にします。
             /// </summary>
             void HideCursor();
 
             /// <summary>
-            /// �E�B���h�E���A�N�e�B�u�ɂ��܂��B
+            /// ウィンドウをアクティブにします。
             /// </summary>
             void Activate();
 
@@ -122,22 +122,22 @@ namespace zephyr
         public:
 
             /// <summary>
-            /// ���b�Z�[�W���[�v�̊J�n���Ɏ��s����܂��B
+            /// メッセージループの開始時に実行されます。
             /// </summary>
             event<> Started;
 
             /// <summary>
-            /// ���b�Z�[�W���[�v�̓x�Ɏ��s����܂��B
+            /// メッセージループの度に実行されます。
             /// </summary>
             event<> Updated;
 
             /// <summary>
-            /// ���b�Z�[�W���[�v�̏I�����Ɏ��s����܂��B
+            /// メッセージループの終了時に実行されます。
             /// </summary>
             event<> Closed;
 
             /// <summary>
-            /// �E�B���h�E�n���h�����������钼�O�Ɏ��s����܂��B
+            /// ウィンドウハンドルが失効する直前に実行されます。
             /// </summary>
             event<> Destroyed;
 

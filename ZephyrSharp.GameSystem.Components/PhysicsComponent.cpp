@@ -1,4 +1,4 @@
-#include <cmath>
+ï»¿#include <cmath>
 
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
@@ -23,31 +23,31 @@ namespace ZephyrSharp
             {
                 auto% Matrix = this.Owner->Get<TransformComponent^>()->Matrix;
 
-                // ‹ó‹C’ïR‚ğŒvZ‚·‚é
+                // ç©ºæ°—æŠµæŠ—ã‚’è¨ˆç®—ã™ã‚‹
                 this.Force += -this.Velocity * 0.5f * this.Velocity.Magnitude;
 
-                // ‰Á‘¬“x‚ğŒvZ‚·‚é
+                // åŠ é€Ÿåº¦ã‚’è¨ˆç®—ã™ã‚‹
                 this.Acceleration = this.Force / this.Mass;
 
-                // ‘¬“x‚ğXV‚·‚é
+                // é€Ÿåº¦ã‚’æ›´æ–°ã™ã‚‹
                 this.Velocity += this.Acceleration;
 
-                // À•W‚ğXV‚·‚é
+                // åº§æ¨™ã‚’æ›´æ–°ã™ã‚‹
                 Matrix.Position += this.Velocity;
 
-                // ƒIƒuƒWƒFƒNƒg‚É‚©‚©‚é—Í‚ğƒŠƒZƒbƒg‚·‚é
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‹ã‹ã‚‹åŠ›ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
                 this.Force = Vector3();
 
-                // ‹ó‹C’ïR‚ğŒvZ‚·‚é
+                // ç©ºæ°—æŠµæŠ—ã‚’è¨ˆç®—ã™ã‚‹
                 this.Torque += -this.AngularVelocity * 0.2f;
 
-                // ‰Á‘¬“x‚ğŒvZ‚·‚é
+                // åŠ é€Ÿåº¦ã‚’è¨ˆç®—ã™ã‚‹
                 this.AngularAcceleration = this.Torque / this.InertiaMoment;
 
-                // ‘¬“x‚ğXV‚·‚é
+                // é€Ÿåº¦ã‚’æ›´æ–°ã™ã‚‹
                 this.AngularVelocity += this.AngularAcceleration;
 
-                // Šp“x‚ğXV‚·‚é
+                // è§’åº¦ã‚’æ›´æ–°ã™ã‚‹
                 float squareMag = this.AngularVelocity.SquaredMagnitude;
                 if (squareMag > 0)
                 {
@@ -62,7 +62,7 @@ namespace ZephyrSharp
                     }
                 }
 
-                // ƒIƒuƒWƒFƒNƒg‚É‚©‚©‚é—Í‚ğƒŠƒZƒbƒg‚·‚é
+                // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‹ã‹ã‚‹åŠ›ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
                 this.Torque = Vector3();
             }
         }

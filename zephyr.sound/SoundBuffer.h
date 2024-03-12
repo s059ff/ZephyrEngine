@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\property.h"
 #include "zephyr\string.h"
@@ -11,7 +11,7 @@ namespace zephyr
     namespace sound
     {
         /// <summary>
-        /// �S�f�[�^���������Ɋi�[���čĐ����s���T�E���h ���\�[�X�ł��B
+        /// 全データをメモリに格納して再生を行うサウンド リソースです。
         /// </summary>
         class SoundBuffer : public AbstractSoundBuffer
         {
@@ -21,62 +21,62 @@ namespace zephyr
         public:
 
             /// <summary>
-            /// �T�E���h�o�b�t�@��������܂��B
+            /// サウンドバッファを解放します。
             /// </summary>
             ~SoundBuffer();
 
             /// <summary>
-            /// �T�E���h�t�@�C����ǂݎ���ĐV�����T�E���h�o�b�t�@���쐬���܂��B
+            /// サウンドファイルを読み取って新しいサウンドバッファを作成します。
             /// </summary>
-            /// <param name="device">�T�E���h�f�o�C�X�B</param>
-            /// <param name="path">�T�E���h�t�@�C���̃p�X�B</param>
+            /// <param name="device">サウンドデバイス。</param>
+            /// <param name="path">サウンドファイルのパス。</param>
             void Create(SoundDevice& device, const string& path);
 
             /// <summary>
-            /// �ق��̃T�E���h�o�b�t�@�̃f�[�^�����L����T�E���h�o�b�t�@���쐬���܂��B
+            /// ほかのサウンドバッファのデータを共有するサウンドバッファを作成します。
             /// </summary>
-            /// <param name="device">�T�E���h�f�o�C�X�B</param>
-            /// <param name="buffer">�f�[�^�̋��L��̃T�E���h�o�b�t�@�B</param>
+            /// <param name="device">サウンドデバイス。</param>
+            /// <param name="buffer">データの共有先のサウンドバッファ。</param>
             void Create(SoundDevice& device, SoundBuffer& buffer);
 
             /// <summary>
-            /// �T�E���h�o�b�t�@��������܂��B
+            /// サウンドバッファを解放します。
             /// </summary>
             void Release();
 
             /// <summary>
-            /// �T�E���h��擪����Đ����܂��B
+            /// サウンドを先頭から再生します。
             /// </summary>
             void Play();
 
             /// <summary>
-            /// �T�E���h��擪���烋�[�v�Đ����܂��B
+            /// サウンドを先頭からループ再生します。
             /// </summary>
             void LoopPlay();
 
             /// <summary>
-            /// �T�E���h���~���A�Đ��ʒu��擪�ɖ߂��܂��B
+            /// サウンドを停止し、再生位置を先頭に戻します。
             /// </summary>
             void Stop();
 
             /// <summary>
-            /// �T�E���h���ꎞ��~�������͍ĊJ���܂��B
+            /// サウンドを一時停止もしくは再開します。
             /// </summary>
             void Pause();
 
         public:
 
             /// <summary>
-            /// �T�E���h�̒�����b�P�ʂŎ擾���܂��B
+            /// サウンドの長さを秒単位で取得します。
             /// </summary>
             READWRITE_PROPERTY(int, Duration, { return this->duration; }, { this->duration = value; });
 
         private:
 
-            // ���[�v�Đ������ǂ���
+            // ループ再生中かどうか
             bool isLooping = false;
 
-            // �T�E���h�̒���
+            // サウンドの長さ
             int duration;
         };
     }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 
@@ -9,7 +9,7 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// 2D ‹óŠÔ‚É‚¨‚¯‚éƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğ•\‚µ‚Ü‚·B
+            /// 2D ç©ºé–“ã«ãŠã‘ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class Transform2DComponent : public EntityComponent
             {
@@ -21,24 +21,24 @@ namespace ZephyrSharp
                 }
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ìp¨s—ñ‚ğ•\‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®å§¿å‹¢è¡Œåˆ—ã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 Matrix3x2 Matrix;
 
             public:
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +X •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +X æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector2 Rightward { Vector2 get() { return Vector2(Matrix.M11, Matrix.M12); }};
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +Y •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +Y æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector2 Upward { Vector2 get() { return Vector2(Matrix.M21, Matrix.M22); }};
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğ•\‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector2 Position
                 {

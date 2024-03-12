@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 
 namespace ZephyrSharp
 {
     namespace Graphics
     {
         /// <summary>
-        /// ƒŠƒ\[ƒX‚Ì CPU ‚©‚ç‚ÌƒAƒNƒZƒX‰Â”\«‚ğ•\‚µ‚Ü‚·B
+        /// ãƒªã‚½ãƒ¼ã‚¹ã® CPU ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½æ€§ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class Accessibility
         {
-            None = 0,               // ƒAƒNƒZƒX•s‰Â
+            None = 0,               // ã‚¢ã‚¯ã‚»ã‚¹ä¸å¯
             ReadOnly = 1,           // D3D11_MAP_READ
             WriteOnly = 2,          // D3D11_MAP_WRITE
             ReadWrite = 3,          // D3D11_MAP_READ_WRITE
@@ -17,7 +17,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ’¸“_ƒoƒbƒtƒ@‚ÉŠi”[‚³‚ê‚Ä‚¢‚é’¸“_‚Ì‡”Ô‚Ì‹K‘¥«‚ğ•\‚µ‚Ü‚·B
+        /// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã«æ ¼ç´ã•ã‚Œã¦ã„ã‚‹é ‚ç‚¹ã®é †ç•ªã®è¦å‰‡æ€§ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class PrimitiveTopology
         {
@@ -30,7 +30,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒŠƒ\[ƒX‚ÌÚ×İ’è‚ğ•\‚µ‚Ü‚·B
+        /// ãƒªã‚½ãƒ¼ã‚¹ã®è©³ç´°è¨­å®šã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class BufferBindFlags
         {
@@ -47,7 +47,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒŠƒ\[ƒX‚Ìƒf[ƒ^Œ^‚ğ•\‚µ‚Ü‚·B
+        /// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ‡ãƒ¼ã‚¿å‹ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class Format
         {
@@ -88,7 +88,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒuƒŒƒ“ƒfƒBƒ“ƒO‚ÌÛ‚Ì“ü—Í‚É‘Î‚·‚éŒW”‚ğ•\‚µ‚Ü‚·B
+        /// ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã®éš›ã®å…¥åŠ›ã«å¯¾ã™ã‚‹ä¿‚æ•°ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class BlendFactor
         {
@@ -105,7 +105,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒuƒŒƒ“ƒfƒBƒ“ƒO‚Ì‰‰Z•û–@‚ğ•\‚µ‚Ü‚·B
+        /// ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã®æ¼”ç®—æ–¹æ³•ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class BlendOperation
         {
@@ -118,7 +118,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒ‰ƒXƒ^ƒ‰ƒCƒY‚Ì•`‰æ—Ìˆæ‚ğ•\‚µ‚Ü‚·B
+        /// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚ºã®æç”»é ˜åŸŸã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class FillMode
         {
@@ -127,7 +127,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒJƒŠƒ“ƒO‚Ìİ’è‚ğ•\‚µ‚Ü‚·B
+        /// ã‚«ãƒªãƒ³ã‚°ã®è¨­å®šã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class CullMode
         {
@@ -137,7 +137,7 @@ namespace ZephyrSharp
         };
 
         /// <summary>
-        /// ƒeƒNƒXƒ`ƒƒ‚ÌƒAƒhƒŒƒbƒVƒ“ƒOƒ‚[ƒh‚ğ•\‚µ‚Ü‚·B
+        /// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¢ãƒ‰ãƒ¬ãƒƒã‚·ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’è¡¨ã—ã¾ã™ã€‚
         /// </summary>
         public enum class TextureAddressMode
         {

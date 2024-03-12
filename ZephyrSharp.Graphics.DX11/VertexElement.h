@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "Enums.h"
@@ -8,7 +8,7 @@ namespace ZephyrSharp
     namespace Graphics
     {
         /// <summary>
-        /// ���_���\������v�f��\���܂��B
+        /// 頂点を構成する要素を表します。
         /// </summary>
         public ref class VertexElement
         {
@@ -23,15 +23,15 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// ���_�v�f���`���܂��B
+            /// 頂点要素を定義します。
             /// </summary>
-            /// <param name="semanticName">�V�F�[�_�ɂ�����Z�}���e�B�N�X���B</param> 
-            /// <param name="semanticIndex">�V�F�[�_�ɂ�����Z�}���e�B�N�X�ԍ��B</param> 
-            /// <param name="format">�f�[�^�^�B</param> 
-            /// <param name="inputSlot">�V�F�[�_�̃X���b�g�ԍ��B</param> 
-            /// <param name="alignedByteOffset">���̒��_�v�f�́A�X���b�g�ɐݒ肳���f�[�^�̐擪����̃I�t�Z�b�g�B</param> 
-            /// <param name="inputSlotClass">���_�f�[�^���A�C���X�^���X�f�[�^���B</param> 
-            /// <param name="instanceDataStepRate">�����̃C���X�^���X�ɑ΂��Ă��̗v�f��K�p���邩�B</param> 
+            /// <param name="semanticName">シェーダにおけるセマンティクス名。</param> 
+            /// <param name="semanticIndex">シェーダにおけるセマンティクス番号。</param> 
+            /// <param name="format">データ型。</param> 
+            /// <param name="inputSlot">シェーダのスロット番号。</param> 
+            /// <param name="alignedByteOffset">この頂点要素の、スロットに設定されるデータの先頭からのオフセット。</param> 
+            /// <param name="inputSlotClass">頂点データか、インスタンスデータか。</param> 
+            /// <param name="instanceDataStepRate">何個ずつのインスタンスに対してこの要素を適用するか。</param> 
             VertexElement(
                 String^ semanticName,
                 unsigned int semanticIndex,
@@ -51,13 +51,13 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ���_�f�[�^�Ƃ��āA���_�v�f���`���܂��BInputSlotClass = VertexData, InstanceDataStepRate = 0 ���K�p����܂��B
+            /// 頂点データとして、頂点要素を定義します。InputSlotClass = VertexData, InstanceDataStepRate = 0 が適用されます。
             /// </summary>
-            /// <param name="semanticName">�V�F�[�_�ɂ�����Z�}���e�B�N�X���B</param> 
-            /// <param name="semanticIndex">�V�F�[�_�ɂ�����Z�}���e�B�N�X�ԍ��B</param> 
-            /// <param name="format">�f�[�^�^�B</param> 
-            /// <param name="inputSlot">�V�F�[�_�̃X���b�g�ԍ��B</param> 
-            /// <param name="alignedByteOffset">���̒��_�v�f�́A�X���b�g�ɐݒ肳���f�[�^�̐擪����̃I�t�Z�b�g�B</param> 
+            /// <param name="semanticName">シェーダにおけるセマンティクス名。</param> 
+            /// <param name="semanticIndex">シェーダにおけるセマンティクス番号。</param> 
+            /// <param name="format">データ型。</param> 
+            /// <param name="inputSlot">シェーダのスロット番号。</param> 
+            /// <param name="alignedByteOffset">この頂点要素の、スロットに設定されるデータの先頭からのオフセット。</param> 
             VertexElement(
                 String^ semanticName,
                 unsigned int semanticIndex,

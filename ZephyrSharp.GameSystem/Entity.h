@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "EntityComponent.h"
@@ -12,100 +12,100 @@ namespace ZephyrSharp
         ref class EntityComponent;
 
         /// <summary>
-        /// �Q�[�� �G���e�B�e�B��\���܂��B
+        /// ゲーム エンティティを表します。
         /// </summary>
         public ref class Entity sealed
         {
         public:
 
             /// <summary>
-            /// �V�K�ɃG���e�B�e�B���쐬���܂��B
+            /// 新規にエンティティを作成します。
             /// </summary>
             static Entity^ Instantiate();
 
             /// <summary>
-            /// �w��̃G���e�B�e�B���폜���܂��B�G���e�B�e�B����������R���|�[�l���g���ꊇ���č폜����܂��B
+            /// 指定のエンティティを削除します。エンティティが所持するコンポーネントも一括して削除されます。
             /// </summary>
-            /// <param name="entity">�폜����G���e�B�e�B�B</param>
+            /// <param name="entity">削除するエンティティ。</param>
             static void Kill(Entity^ entity);
 
             /// <summary>
-            /// �w��̕����̃G���e�B�e�B���폜���܂��B�G���e�B�e�B����������R���|�[�l���g���ꊇ���č폜����܂��B
+            /// 指定の複数のエンティティを削除します。エンティティが所持するコンポーネントも一括して削除されます。
             /// </summary>
-            /// <param name="entities">�폜����G���e�B�e�B�B</param>
+            /// <param name="entities">削除するエンティティ。</param>
             static void KillRange(System::Collections::Generic::IEnumerable<Entity^>^ entities);
 
             /// <summary>
-            /// �i���� kill ��ԂɂȂ��Ă���G���e�B�e�B�����S�ɍ폜���܂��B���̃��\�b�h�̓t���[�����ɌĂяo���K�v������܂��B�j
+            /// （仮に kill 状態になっているエンティティを完全に削除します。このメソッドはフレーム毎に呼び出す必要があります。）
             /// </summary>
             static void Update();
 
             /// <summary>
-            /// ���ׂẴG���e�B�e�B���폜���܂��B
+            /// すべてのエンティティを削除します。
             /// </summary>
             static void Clear();
 
             /// <summary>
-            /// �G���e�B�e�B�ɖ��O�����܂��B
+            /// エンティティに名前をつけます。
             /// </summary>
-            /// <param name="entity">�����Ώۂ̃G���e�B�e�B�B</param>
-            /// <param name="name">�G���e�B�e�B�̖��O�B</param>
+            /// <param name="entity">命名対象のエンティティ。</param>
+            /// <param name="name">エンティティの名前。</param>
             static void Rename(Entity^ entity, String^ name);
 
             /// <summary>
-            /// �w��̖��O�����G���e�B�e�B���������܂��B
+            /// 指定の名前を持つエンティティを検索します。
             /// </summary>
-            /// <param name="name">�G���e�B�e�B�̖��O�B</param>
+            /// <param name="name">エンティティの名前。</param>
             static Entity^ Find(String^ name);
 
             /// <summary>
-            /// �����Ɉ�v����ŏ��̃G���e�B�e�B���擾���܂��B
+            /// 条件に一致する最初のエンティティを取得します。
             /// </summary>
-            /// <param name="pred">���������B</param>
+            /// <param name="pred">検索条件。</param>
             static Entity^ Find(System::Func<Entity^, bool>^ pred);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W���w��̃G���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージを指定のエンティティに対して発行します。
             /// </summary>
-            /// <param name="one">�G���e�B�e�B�B</param> 
-            /// <param name="message">���b�Z�[�W�B</param> 
-            /// <param name="argument">���b�Z�[�W�����B</param> 
+            /// <param name="one">エンティティ。</param> 
+            /// <param name="message">メッセージ。</param> 
+            /// <param name="argument">メッセージ引数。</param> 
             static void SendMessage(Entity^ one, System::Object^ message, System::Object^ argument);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W���w��̃G���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージを指定のエンティティに対して発行します。
             /// </summary>
-            /// <param name="one">�G���e�B�e�B�B</param> 
-            /// <param name="message">���b�Z�[�W�B</param> 
+            /// <param name="one">エンティティ。</param> 
+            /// <param name="message">メッセージ。</param> 
             static void SendMessage(Entity^ one, System::Object^ message)
             {
                 SendMessage(one, message, nullptr);
             }
 
             /// <summary>
-            /// �w��̃��b�Z�[�W�����ׂẴG���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージをすべてのエンティティに対して発行します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�B</param> 
-            /// <param name="argument">���b�Z�[�W�����B</param> 
+            /// <param name="message">メッセージ。</param> 
+            /// <param name="argument">メッセージ引数。</param> 
             static void BroadcastMessage(System::Object^ message, System::Object^ argument);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W�����ׂẴG���e�B�e�B�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージをすべてのエンティティに対して発行します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�B</param> 
+            /// <param name="message">メッセージ。</param> 
             static void BroadcastMessage(System::Object^ message)
             {
                 BroadcastMessage(message, nullptr);
             }
 
             /// <summary>
-            /// �S�ẴG���e�B�e�B�ɑ΂��ď������s���܂��B
+            /// 全てのエンティティに対して処理を行います。
             /// </summary>
-            /// <param name="callback">�R�[���o�b�N�֐��B</param> 
+            /// <param name="callback">コールバック関数。</param> 
             static void ForEach(System::Action<Entity^>^ callback);
 
             /// <summary>
-            /// �G���e�B�e�B�̑������擾���܂��B
+            /// エンティティの総数を取得します。
             /// </summary>
             static property int EntityCount
             {
@@ -115,15 +115,15 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
-            /// <param name="component">�R���|�[�l���g�B</param> 
+            /// <param name="component">コンポーネント。</param> 
             EntityComponent^ Attach(EntityComponent^ component);
 
             /// <summary>
-            /// �G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             EntityComponent^ Attach(System::Type^ type)
             {
                 EntityComponent^ component = dynamic_cast<EntityComponent^>(System::Activator::CreateInstance(type));
@@ -131,44 +131,44 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// エンティティから指定のコンポーネントを取り外します。
             /// </summary>
-            /// <param name="component">�R���|�[�l���g�B</param> 
+            /// <param name="component">コンポーネント。</param> 
             EntityComponent^ Detach(EntityComponent^ component);
 
             /// <summary>
-            /// �G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// エンティティから指定のコンポーネントを取り外します。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             EntityComponent^ Detach(System::Type^ type)
             {
                 return this->Detach(this->Get(type));
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���������Ă��邩���ׂ܂��B
+            /// 指定のコンポーネントを所持しているか調べます。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             bool Has(System::Type^ type)
             {
                 return Get(type) != nullptr;
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���擾���܂��B
+            /// 指定のコンポーネントを取得します。
             /// </summary>
-            /// <param name="type">�R���|�[�l���g�̃^�C�v�B</param> 
+            /// <param name="type">コンポーネントのタイプ。</param> 
             EntityComponent^ Get(System::Type^ type);
 
             /// <summary>
-            /// �w��̃��b�Z�[�W�����̃G���e�B�e�B�������ׂẴR���|�[�l���g�ɑ΂��Ĕ��s���܂��B
+            /// 指定のメッセージをこのエンティティが持つすべてのコンポーネントに対して発行します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�B</param> 
-            /// <param name="argument">���b�Z�[�W�����B</param> 
+            /// <param name="message">メッセージ。</param> 
+            /// <param name="argument">メッセージ引数。</param> 
             void ReceiveMessage(System::Object^ message, System::Object^ argument);
 
             /// <summary>
-            /// �G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            /// エンティティに指定のコンポーネントを取り付けます。
             /// </summary>
             generic <typename ComponentType> where ComponentType : gcnew() ComponentType Attach()
             {
@@ -176,7 +176,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            /// エンティティから指定のコンポーネントを取り外します。
             /// </summary>
             generic <typename ComponentType> ComponentType Detach()
             {
@@ -184,7 +184,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���������Ă��邩���ׂ܂��B
+            /// 指定のコンポーネントを所持しているか調べます。
             /// </summary>
             generic <typename ComponentType> bool Has()
             {
@@ -192,7 +192,7 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// �w��̃R���|�[�l���g���擾���܂��B
+            /// 指定のコンポーネントを取得します。
             /// </summary>
             generic <typename ComponentType> ComponentType Get()
             {
@@ -200,7 +200,7 @@ namespace ZephyrSharp
             }
 
             ///// <summary>
-            ///// �w��̃R���|�[�l���g�����łɎ��t�����Ă��Ȃ��ꍇ�A�G���e�B�e�B�Ɏw��̃R���|�[�l���g�����t���܂��B
+            ///// 指定のコンポーネントがすでに取り付けられていない場合、エンティティに指定のコンポーネントを取り付けます。
             ///// </summary>
             //generic <typename ComponentType> where ComponentType : gcnew() ComponentType TryAttach()
             //{
@@ -212,7 +212,7 @@ namespace ZephyrSharp
             //}
 
             ///// <summary>
-            ///// �w��̃R���|�[�l���g�����łɎ��t�����Ă���ꍇ�A�G���e�B�e�B����w��̃R���|�[�l���g�����O���܂��B
+            ///// 指定のコンポーネントがすでに取り付けられている場合、エンティティから指定のコンポーネントを取り外します。
             ///// </summary>
             //generic <typename ComponentType> where ComponentType : gcnew() ComponentType TryDetach()
             //{
@@ -224,7 +224,7 @@ namespace ZephyrSharp
             //}
 
             /// <summary>
-            /// �R���|�[�l���g�̈ꗗ���擾���܂��B
+            /// コンポーネントの一覧を取得します。
             /// </summary>
             property List<EntityComponent^>^ Components
             {
@@ -256,7 +256,7 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
-            /// �G���e�B�e�B�̖��O�B�����̏ꍇ�́Anull�B
+            /// エンティティの名前。無名の場合は、null。
             /// </summary>
             property String^ Name
             {
@@ -265,12 +265,12 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ���̃G���e�B�e�B�̎��ʔԍ����擾���܂��B
+            /// このエンティティの識別番号を取得します。
             /// </summary>
             property unsigned long long ID { unsigned long long get() { return id; } }
 
             /// <summary>
-            /// �G���e�B�e�B�� Kill ����Ă��Ȃ����擾���܂��B
+            /// エンティティが Kill されていないか取得します。
             /// </summary>
             property bool IsAlive { bool get() { return !killed; } }
 

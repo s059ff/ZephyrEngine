@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 
@@ -9,21 +9,21 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// ƒJƒƒ‰‚ğ•\‚µ‚Ü‚·B
+            /// ã‚«ãƒ¡ãƒ©ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class CameraComponent : public EntityComponent
             {
             public:
 
                 /// <summary>
-                /// ‚ ‚é’n“_‚©‚ç•Ê‚Ì‚ ‚é’n“_‚ğ’‹‚·‚é‚æ‚¤‚ÉƒJƒƒ‰‚ÌŒü‚«‚ğİ’è‚µ‚Ü‚·B
+                /// ã‚ã‚‹åœ°ç‚¹ã‹ã‚‰åˆ¥ã®ã‚ã‚‹åœ°ç‚¹ã‚’æ³¨è¦–ã™ã‚‹ã‚ˆã†ã«ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’è¨­å®šã—ã¾ã™ã€‚
                 /// </summary>
-                /// <param name="eye">ƒJƒƒ‰‚ÌÀ•WB</param> 
-                /// <param name="at">’‹æ‚ÌÀ•WB</param> 
+                /// <param name="eye">ã‚«ãƒ¡ãƒ©ã®åº§æ¨™ã€‚</param> 
+                /// <param name="at">æ³¨è¦–å…ˆã®åº§æ¨™ã€‚</param> 
                 void LookAt(Vector3 eye, Vector3 at);
 
                 /// <summary>
-                /// ƒrƒ…[ƒCƒ“ƒOs—ñ‚ğæ“¾‚µ‚Ü‚·B
+                /// ãƒ“ãƒ¥ãƒ¼ã‚¤ãƒ³ã‚°è¡Œåˆ—ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property Matrix4x3 ViewingMatrix { Matrix4x3 get(); }
             };

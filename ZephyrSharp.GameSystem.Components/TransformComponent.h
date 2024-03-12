@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace ZephyrSharp::Linalg;
 
@@ -9,7 +9,7 @@ namespace ZephyrSharp
         namespace Components
         {
             /// <summary>
-            /// 3D ‹óŠÔ‚É‚¨‚¯‚éƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğ•\‚µ‚Ü‚·B
+            /// 3D ç©ºé–“ã«ãŠã‘ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’è¡¨ã—ã¾ã™ã€‚
             /// </summary>
             public ref class TransformComponent : public EntityComponent
             {
@@ -21,29 +21,29 @@ namespace ZephyrSharp
                 }
                 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ìp¨s—ñ‚ğ•\‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®å§¿å‹¢è¡Œåˆ—ã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 Matrix4x3 Matrix;
 
             public:
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +X •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +X æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector3 Rightward { Vector3 get() { return Vector3(Matrix.M11, Matrix.M12, Matrix.M13); }};
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +Y •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +Y æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector3 Upward { Vector3 get() { return Vector3(Matrix.M21, Matrix.M22, Matrix.M23); }};
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚Ì +Z •ûŒü‚ÌƒxƒNƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã® +Z æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector3 Forward { Vector3 get() { return Vector3(Matrix.M31, Matrix.M32, Matrix.M33); }};
 
                 /// <summary>
-                /// ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğ•\‚µ‚Ü‚·B
+                /// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’è¡¨ã—ã¾ã™ã€‚
                 /// </summary>
                 property Vector3 Position
                 {

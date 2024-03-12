@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define READONLY_PROPERTY(Type, Name, Func) Type _get_##Name() Func __declspec(property(get = _get_##Name)) Type Name
 

@@ -1,4 +1,4 @@
-#include "Transform2DComponent.h"
+﻿#include "Transform2DComponent.h"
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "ProjectorComponent.h"

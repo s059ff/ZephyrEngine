@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "zephyr\assert.h"
 #include "zephyr\string.h"
@@ -209,14 +209,14 @@ namespace zephyr
 
             Matrix4x4& rotateX(float r)
             {
-                float cos—¶ = cos(r);
-                float sin—¶ = sin(r);
-                float m21 = this->m21 * cos—¶ + this->m31 * sin—¶;
-                float m22 = this->m22 * cos—¶ + this->m32 * sin—¶;
-                float m23 = this->m23 * cos—¶ + this->m33 * sin—¶;
-                float m31 = -this->m21 * sin—¶ + this->m31 * cos—¶;
-                float m32 = -this->m22 * sin—¶ + this->m32 * cos—¶;
-                float m33 = -this->m23 * sin—¶ + this->m33 * cos—¶;
+                float cosæ…® = cos(r);
+                float sinæ…® = sin(r);
+                float m21 = this->m21 * cosæ…® + this->m31 * sinæ…®;
+                float m22 = this->m22 * cosæ…® + this->m32 * sinæ…®;
+                float m23 = this->m23 * cosæ…® + this->m33 * sinæ…®;
+                float m31 = -this->m21 * sinæ…® + this->m31 * cosæ…®;
+                float m32 = -this->m22 * sinæ…® + this->m32 * cosæ…®;
+                float m33 = -this->m23 * sinæ…® + this->m33 * cosæ…®;
                 this->m21 = m21; this->m22 = m22; this->m23 = m23;
                 this->m31 = m31; this->m32 = m32; this->m33 = m33;
                 return *this;
@@ -224,14 +224,14 @@ namespace zephyr
 
             Matrix4x4& rotateY(float r)
             {
-                float cos—¶ = cos(r);
-                float sin—¶ = sin(r);
-                float m11 = this->m11 * cos—¶ - this->m31 * sin—¶;
-                float m12 = this->m12 * cos—¶ - this->m32 * sin—¶;
-                float m13 = this->m13 * cos—¶ - this->m33 * sin—¶;
-                float m31 = this->m11 * sin—¶ + this->m31 * cos—¶;
-                float m32 = this->m12 * sin—¶ + this->m32 * cos—¶;
-                float m33 = this->m13 * sin—¶ + this->m33 * cos—¶;
+                float cosæ…® = cos(r);
+                float sinæ…® = sin(r);
+                float m11 = this->m11 * cosæ…® - this->m31 * sinæ…®;
+                float m12 = this->m12 * cosæ…® - this->m32 * sinæ…®;
+                float m13 = this->m13 * cosæ…® - this->m33 * sinæ…®;
+                float m31 = this->m11 * sinæ…® + this->m31 * cosæ…®;
+                float m32 = this->m12 * sinæ…® + this->m32 * cosæ…®;
+                float m33 = this->m13 * sinæ…® + this->m33 * cosæ…®;
                 this->m11 = m11; this->m12 = m12; this->m13 = m13;
                 this->m31 = m31; this->m32 = m32; this->m33 = m33;
                 return *this;
@@ -239,14 +239,14 @@ namespace zephyr
 
             Matrix4x4& rotateZ(float r)
             {
-                float cos—¶ = cos(r);
-                float sin—¶ = sin(r);
-                float m11 = this->m11 * cos—¶ + this->m21 * sin—¶;
-                float m12 = this->m12 * cos—¶ + this->m22 * sin—¶;
-                float m13 = this->m13 * cos—¶ + this->m23 * sin—¶;
-                float m21 = -this->m11 * sin—¶ + this->m21 * cos—¶;
-                float m22 = -this->m12 * sin—¶ + this->m22 * cos—¶;
-                float m23 = -this->m13 * sin—¶ + this->m23 * cos—¶;
+                float cosæ…® = cos(r);
+                float sinæ…® = sin(r);
+                float m11 = this->m11 * cosæ…® + this->m21 * sinæ…®;
+                float m12 = this->m12 * cosæ…® + this->m22 * sinæ…®;
+                float m13 = this->m13 * cosæ…® + this->m23 * sinæ…®;
+                float m21 = -this->m11 * sinæ…® + this->m21 * cosæ…®;
+                float m22 = -this->m12 * sinæ…® + this->m22 * cosæ…®;
+                float m23 = -this->m13 * sinæ…® + this->m23 * cosæ…®;
                 this->m11 = m11; this->m12 = m12; this->m13 = m13;
                 this->m21 = m21; this->m22 = m22; this->m23 = m23;
                 return *this;

@@ -1,4 +1,4 @@
-#include <cmath>
+ï»¿#include <cmath>
 
 #include <dsound.h>
 
@@ -102,7 +102,7 @@ namespace zephyr
 
         void AbstractSoundBuffer::Create(SoundDevice& device, _DSBUFFERDESC desc)
         {
-            // ƒZƒJƒ“ƒ_ƒŠƒoƒbƒtƒ@ì¬
+            // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒãƒƒãƒ•ã‚¡ä½œæˆ
             com_ptr<IDirectSoundBuffer> ptmpBuf;
             auto result = device->CreateSoundBuffer(&desc, &ptmpBuf, nullptr);
             assert(SUCCEEDED(result));
@@ -123,7 +123,7 @@ namespace zephyr
         {
             this.Create(device, desc);
 
-            // ƒZƒJƒ“ƒ_ƒŠƒoƒbƒtƒ@‚ÉWaveƒf[ƒ^‚ğ‘‚«‚Ş
+            // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒãƒƒãƒ•ã‚¡ã«Waveãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
             void* buffer = nullptr;
             DWORD size = 0;
             auto result = this->Lock(0, 0, &buffer, &size, nullptr, nullptr, DSBLOCK_ENTIREBUFFER);

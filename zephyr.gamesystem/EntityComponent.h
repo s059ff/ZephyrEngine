@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "zephyr\property.h"
 #include "zephyr\typeinfo.h"
@@ -12,33 +12,33 @@ namespace zephyr
         class EntityComponent;
 
         /// <summary>
-        /// �Q�[�� �G���e�B�e�B�̍\���v�f�ł���G���e�B�e�B �R���|�[�l���g��\���܂��B
+        /// ゲーム エンティティの構成要素であるエンティティ コンポーネントを表します。
         /// </summary>
         class EntityComponent
         {
         public:
 
             /// <summary>
-            /// �R���|�[�l���g���G���e�B�e�B�Ɏ��t�����Ă��邩���ׂ܂��B
+            /// コンポーネントがエンティティに取り付けられているか調べます。
             /// </summary>
             READONLY_PROPERTY(bool, HasOwner, const{ return owner != nullptr; });
 
             /// <summary>
-            /// �R���|�[�l���g���������Ă���G���e�B�e�B�B
+            /// コンポーネントを所持しているエンティティ。
             /// </summary>
             READWRITE_PROPERTY(Entity*, Owner, const{ return owner; }, ;);
 
             /// <summary>
-            /// �O���R���|�[�l���g�Ƀ��b�Z�[�W�𑗐M���܂��B
+            /// 外部コンポーネントにメッセージを送信します。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�f�[�^�B</param> 
+            /// <param name="message">メッセージデータ。</param> 
             void SendMessage(EntityComponent* one, const string& message, void* params[])
             {
                 one->ReceiveMessage(message, params);
             }
 
             /// <summary>
-            /// ���̃C���X�^���X��type_info��Ԃ��܂��B
+            /// このインスタンスのtype_infoを返します。
             /// </summary>
             const type_info& GetType() const 
             {
@@ -48,24 +48,24 @@ namespace zephyr
         public:
 
             /// <summary>
-            /// �R���|�[�l���g���G���e�B�e�B�ɃA�^�b�`���ꂽ�Ƃ��ɌĂяo����܂��B
+            /// コンポーネントがエンティティにアタッチされたときに呼び出されます。
             /// </summary>
             virtual void OnAttach() {}
 
             /// <summary>
-            /// �R���|�[�l���g���G���e�B�e�B����f�^�b�`���ꂽ�Ƃ��ɌĂяo����܂��B
+            /// コンポーネントがエンティティからデタッチされたときに呼び出されます。
             /// </summary>
             virtual void OnDetach() {}
 
             /// <summary>
-            /// ���̃R���|�[�l���g���������Ă���G���e�B�e�B���j�������Ƃ��ɌĂяo����܂��B���\�[�X�̉���������s���܂��B���̃��\�b�h���Őe�G���e�B�e�B�ɃA�N�Z�X���邱�Ƃ͂ł��܂���B
+            /// このコンポーネントを所持しているエンティティが破棄されるときに呼び出されます。リソースの解放処理を行います。このメソッド内で親エンティティにアクセスすることはできません。
             /// </summary>
             virtual void OnDestroy() {}
 
             /// <summary>
-            /// �O���R���|�[�l���g����̃��b�Z�[�W����M���ď������s���܂��B
+            /// 外部コンポーネントからのメッセージを受信して処理を行います。
             /// </summary>
-            /// <param name="message">���b�Z�[�W�f�[�^�B</param> 
+            /// <param name="message">メッセージデータ。</param> 
             virtual void ReceiveMessage(const string& message, void* params[]) {}
 
         private:
