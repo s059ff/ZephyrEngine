@@ -73,190 +73,61 @@ public static class GameScript
     #endregion
 
     #region Controller scripts.
-    public static int mouseX, mouseY;
-    public static int mouseDX, mouseDY, mouseDZ;
-    static Keyboard _keyboard = new Keyboard();
-    static Mouse _mouse = new Mouse();
-    static GamePad _gamepad = new DualShock4();
+    private static GamePad gamePad = new GamePad();
 
-    public enum GamePadButton
+    public static bool nowpressed(GamePad.LogicalButton button)
     {
-        A,
-        B,
-        X,
-        Y,
-        LB,
-        RB,
-        LT,
-        RT,
-        LSB,
-        RSB,
-        Back,
-        Start,
-        Guide,
+        return gamePad.GetButtonState(button) == 1;
     }
 
-    public abstract class GamePad : JoyStick
+    public static bool pressed(GamePad.LogicalButton button)
     {
-        public ButtonState GetButtonState(GamePadButton button)
-        {
-            return base.GetButtonState(this.getButtonID(button));
-        }
-
-        public int GetPressTimeLength(GamePadButton button)
-        {
-            return base.GetPressTimeLength(this.getButtonID(button));
-        }
-
-        protected abstract int getButtonID(GamePadButton button);
+        return 0 < gamePad.GetButtonState(button);
     }
 
-    public class DualShock4 : GamePad
+    public static bool released(GamePad.LogicalButton button)
     {
-        protected override int getButtonID(GamePadButton button)
-        {
-            switch (button)
-            {
-                case GamePadButton.A:
-                    return 1;
-                case GamePadButton.B:
-                    return 2;
-                case GamePadButton.X:
-                    return 0;
-                case GamePadButton.Y:
-                    return 3;
-                case GamePadButton.LB:
-                    return 4;
-                case GamePadButton.RB:
-                    return 5;
-                case GamePadButton.LT:
-                    return 6;
-                case GamePadButton.RT:
-                    return 7;
-                case GamePadButton.LSB:
-                    return 10;
-                case GamePadButton.RSB:
-                    return 11;
-                case GamePadButton.Back:
-                    return 8;
-                case GamePadButton.Start:
-                    return 9;
-                case GamePadButton.Guide:
-                    return 12;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+        return gamePad.GetButtonState(button) <= 0;
     }
 
-    public static ButtonState getkey(KeyCode code)
+    public static bool nowreleased(GamePad.LogicalButton button)
     {
-        return _keyboard.GetKeyState(code);
+        return gamePad.GetButtonState(button) == -1;
     }
 
-    public static bool nowpressed(KeyCode code)
+    public static bool nowpressed(Keyboard.KeyCode code)
     {
-        return _keyboard.GetKeyState(code) == ButtonState.NowPressed;
+        return gamePad.GetKeyState(code) == 1;
     }
 
-    public static bool pressed(KeyCode code)
+    public static bool pressed(Keyboard.KeyCode code)
     {
-        return _keyboard.GetKeyState(code) == ButtonState.Pressed;
+        return 0 < gamePad.GetKeyState(code);
     }
 
-    public static bool released(KeyCode code)
+    public static bool released(Keyboard.KeyCode code)
     {
-        return _keyboard.GetKeyState(code) == ButtonState.Released;
+        return gamePad.GetKeyState(code) <= 0;
     }
 
-    public static bool nowreleased(KeyCode code)
+    public static bool nowreleased(Keyboard.KeyCode code)
     {
-        return _keyboard.GetKeyState(code) == ButtonState.NowReleased;
+        return gamePad.GetKeyState(code) == -1;
     }
 
-    public static bool nowpressed(GamePadButton button)
+    public static int getPressTimeLength(GamePad.LogicalButton button)
     {
-        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.NowPressed : false;
+        return max(gamePad.GetButtonState(button), 0);
     }
 
-    public static bool pressed(GamePadButton button)
+    public static Tuple<double, double> getAnalogStickAxis1()
     {
-        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.Pressed : false;
+        return gamePad.Axis1;
     }
 
-    public static bool released(GamePadButton button)
+    public static Tuple<double, double> getAnalogStickAxis2()
     {
-        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.Released : false;
-    }
-
-    public static bool nowreleased(GamePadButton button)
-    {
-        return _gamepad.IsConnected ? _gamepad.GetButtonState(button) == ButtonState.NowReleased : false;
-    }
-
-    public static int getPressTimeLength(KeyCode code)
-    {
-        return _keyboard.GetPressTimeLength(code);
-    }
-
-    public static int getPressTimeLength(GamePadButton button)
-    {
-        return _gamepad.IsConnected ? _gamepad.GetPressTimeLength(button) : 0;
-    }
-
-    public static Tuple<double, double> getAnalogStickAxis()
-    {
-        return _gamepad.IsConnected ? Tuple.Create(_gamepad.AxisX, _gamepad.AxisY) : Tuple.Create<double, double>(0, 0);
-    }
-
-    public static Tuple<double, double> getAnalogStickSubAxis()
-    {
-        return _gamepad.IsConnected ? Tuple.Create(_gamepad.SubAxisX, _gamepad.SubAxisY) : Tuple.Create<double, double>(0, 0);
-    }
-
-    public static bool isConnectedGamePad()
-    {
-        return _gamepad.IsConnected;
-    }
-
-    public static bool click()
-    {
-        return _mouse.Left == ButtonState.Pressed;
-    }
-
-    public static bool clickL()
-    {
-        return _mouse.Left == ButtonState.Pressed;
-    }
-
-    public static bool clickR()
-    {
-        return _mouse.Right == ButtonState.Pressed;
-    }
-
-    public static bool clickC()
-    {
-        return _mouse.Center == ButtonState.Pressed;
-    }
-
-    public static bool nowClick()
-    {
-        return _mouse.Left == ButtonState.NowPressed;
-    }
-
-    public static bool nowClickL()
-    {
-        return _mouse.Left == ButtonState.NowPressed;
-    }
-
-    public static bool nowClickR()
-    {
-        return _mouse.Right == ButtonState.NowPressed;
-    }
-
-    public static bool nowClickC()
-    {
-        return _mouse.Center == ButtonState.NowPressed;
+        return gamePad.Axis2;
     }
     #endregion
 
@@ -408,15 +279,7 @@ public static class GameScript
 
     public static void update()
     {
-        _keyboard.Update();
-        _mouse.Update();
-        _gamepad.Update();
-
-        mouseX = _mouse.X;
-        mouseY = _mouse.Y;
-        mouseDX = _mouse.MovementX;
-        mouseDY = _mouse.MovementY;
-        mouseDZ = _mouse.MovementZ;
+        gamePad.Update();
     }
 
     public static void finalize()

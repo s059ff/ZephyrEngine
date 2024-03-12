@@ -62,6 +62,11 @@ public class GamePad
         throw new InvalidOperationException();
     }
 
+    public int GetKeyState(Keyboard.KeyCode code)
+    {
+        return this.keyboard.GetKeyState(code);
+    }
+
     public Tuple<double, double> Axis1
     {
         get

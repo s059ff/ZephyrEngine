@@ -12,32 +12,23 @@ class PlayerPilotComponent : AbstractPilotComponent
         var aircraft = this.Owner.Get<AircraftComponent>();
         var avionics = this.Owner.Get<AircraftAvionicsComponent>();
 
-        aircraft.YawInput += pressed(KeyCode.Q) || pressed(GamePadButton.LB) ? -1.0f : 0.0f;
-        aircraft.YawInput += pressed(KeyCode.E) || pressed(GamePadButton.RB) ? +1.0f : 0.0f;
+        aircraft.YawInput += pressed(GamePad.LogicalButton.LB) ? -1.0f : 0.0f;
+        aircraft.YawInput += pressed(GamePad.LogicalButton.RB) ? +1.0f : 0.0f;
+        aircraft.RollInput += (float)getAnalogStickAxis1().Item1;
+        aircraft.PitchInput += (float)getAnalogStickAxis1().Item2;
+        aircraft.ThrottleInput += pressed(GamePad.LogicalButton.RT) ? +1.0f : 0.0f;
+        aircraft.ThrottleInput += pressed(GamePad.LogicalButton.LT) ? -1.0f : 0.0f;
+        aircraft.MissileLaunchInput = nowpressed(GamePad.LogicalButton.B);
+        aircraft.GunFireInput = pressed(GamePad.LogicalButton.A);
 
-        aircraft.RollInput += pressed(KeyCode.Left) ? -1.0f : 0.0f;
-        aircraft.RollInput += pressed(KeyCode.Right) ? +1.0f : 0.0f;
-        aircraft.RollInput += (float)getAnalogStickAxis().Item1;
-
-        aircraft.PitchInput += pressed(KeyCode.Up) ? +1.0f : 0.0f;
-        aircraft.PitchInput += pressed(KeyCode.Down) ? -1.0f : 0.0f;
-        aircraft.PitchInput += (float)getAnalogStickAxis().Item2;
-
-        aircraft.ThrottleInput += pressed(KeyCode.Z) || pressed(GamePadButton.RT) ? +1.0f : 0.0f;
-        aircraft.ThrottleInput += pressed(KeyCode.X) || pressed(GamePadButton.LT) ? -1.0f : 0.0f;
-
-        aircraft.MissileLaunchInput = nowpressed(KeyCode.C) || nowpressed(GamePadButton.B);
-        aircraft.GunFireInput = pressed(KeyCode.V) || pressed(GamePadButton.A);
-
-        if (pressed(KeyCode.Left) && pressed(KeyCode.Right) && avionics.HasTarget())
+        if (pressed(GamePad.LogicalButton.LB) && pressed(GamePad.LogicalButton.RB) && avionics.HasTarget())
         {
             aircraft.AutoPilot(GunBulletComponent.ComputeOptimalAimPosition(this.Owner, avionics.TargetEntity));
         }
 
         {
             bool changeRadarRangeInput = false;
-            changeRadarRangeInput |= nowpressed(KeyCode.A);
-            changeRadarRangeInput |= nowpressed(GamePadButton.X);
+            changeRadarRangeInput |= nowpressed(GamePad.LogicalButton.X);
 
             if (changeRadarRangeInput)
             {
@@ -47,8 +38,7 @@ class PlayerPilotComponent : AbstractPilotComponent
 
         {
             bool changeTargetInput = false;
-            changeTargetInput |= (nowreleased(KeyCode.S) && getPressTimeLength(KeyCode.S) < 15);
-            changeTargetInput |= (nowreleased(GamePadButton.Y) && getPressTimeLength(GamePadButton.Y) < 15);
+            changeTargetInput |= (nowreleased(GamePad.LogicalButton.Y) && getPressTimeLength(GamePad.LogicalButton.Y) < 15);
 
             if (changeTargetInput)
             {
@@ -60,9 +50,9 @@ class PlayerPilotComponent : AbstractPilotComponent
             Entity entity = Entity.Find("camera");
             AbstractCameraComponent activeCameraComponent = null;
 
-            if (nowpressed(KeyCode.F1))
+            if (nowpressed(Keyboard.KeyCode.F1))
                 activeCameraComponent = entity.Get<TrackingCameraComponent>();
-            if (nowpressed(KeyCode.F2))
+            if (nowpressed(Keyboard.KeyCode.F2))
                 activeCameraComponent = entity.Get<FixedPointCameraComponent>();
             if (aircraft.Armor == 0)
                 activeCameraComponent = entity.Get<FixedPointCameraComponent>();

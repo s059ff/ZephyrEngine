@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
-using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
 using static EngineScript;
 using static GameScript;
@@ -32,27 +31,13 @@ class TrackingCameraComponent : AbstractCameraComponent
         this.angleOffset.X = 0.9f * this.angleOffset.X;
         this.angleOffset.Y = 0.9f * this.angleOffset.Y;
 
-        if (!isConnectedGamePad())
-        {
-            if (pressed(KeyCode.J))
-                this.angleOffset.Y += 0.1f * -PI;
-            if (pressed(KeyCode.L))
-                this.angleOffset.Y += 0.1f * +PI;
-            if (pressed(KeyCode.I))
-                this.angleOffset.X += 0.1f * -PIOver2;
-            if (pressed(KeyCode.K))
-                this.angleOffset.X += 0.1f * +PIOver2;
-        }
-        else
-        {
-            this.angleOffset.Y += 0.1f * (float)getAnalogStickSubAxis().Item1 * PI;
-            this.angleOffset.X += 0.1f * (float)getAnalogStickSubAxis().Item2 * -PIOver2;
-        }
+        this.angleOffset.Y += 0.1f * (float)getAnalogStickAxis2().Item1 * PI;
+        this.angleOffset.X += 0.1f * (float)getAnalogStickAxis2().Item2 * -PIOver2;
 
         this.angleOffset2.X = 0.9f * this.angleOffset2.X;
         this.angleOffset2.Y = 0.9f * this.angleOffset2.Y;
 
-        if (max(getPressTimeLength(KeyCode.S), getPressTimeLength(GamePadButton.Y)) > 15 && avionics.TargetEntity != null)
+        if (getPressTimeLength(GamePad.LogicalButton.Y) > 15 && avionics.TargetEntity != null)
         {
             Vector3 from = transform.Position;
             Vector3 at = avionics.TargetEntity.Get<TransformComponent>().Position;
@@ -66,7 +51,7 @@ class TrackingCameraComponent : AbstractCameraComponent
             this.angleOffset2.Y += 0.1f * dy;
         }
 
-        if ((!pressed(KeyCode.LeftCtrl) && nowpressed(KeyCode.D)) || nowpressed(GamePadButton.RSB))
+        if (nowpressed(GamePad.LogicalButton.RSB))
         {
             switch (this.cameraView)
             {

@@ -104,10 +104,10 @@
     <Compile Include="components\PlayerPilotComponent.cs" />
     <Compile Include="components\GameScoreCalculatorComponent.cs" />
     <Compile Include="components\TrackingCameraComponent.cs" />
+    <Compile Include="GamePad.cs" />
     <Compile Include="GameScript.cs" />
     <Compile Include="components\SquadronComponent.cs" />
     <Compile Include="components\TimerComponent.cs" />
-    <Compile Include="components\TransformControlComponent.cs" />
     <Compile Include="components\CloudComponent.cs" />
     <Compile Include="components\JetComponent.cs" />
     <Compile Include="components\MissileComponent.cs" />
