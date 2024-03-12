@@ -173,6 +173,7 @@
     <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonCode.h" />
     <ClInclude Include="ButtonState.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="JoyStick.h" />

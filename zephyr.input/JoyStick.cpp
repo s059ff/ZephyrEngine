@@ -215,16 +215,18 @@ namespace zephyr
             }
         }
 
-        ButtonState JoyStick::GetButtonState(int id) const
+        ButtonState JoyStick::GetButtonState(ButtonCode code) const
         {
+            int id = static_cast<int>(code);
             bool now = (this.buttonState[id]& 0x80) > 0;
             bool pre = (this.prevButtonState[id]& 0x80) > 0;
             return getButtonState(now, pre);
         }
 
-		int JoyStick::GetPressTimeLength(int id) const
+		int JoyStick::GetPressTimeLength(ButtonCode code) const
 		{
-			return this.pressTimeLength[id];
+            int id = static_cast<int>(code);
+            return this.pressTimeLength[id];
 		}
 
         bool JoyStick::isConnected() const

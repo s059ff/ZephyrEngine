@@ -4,6 +4,7 @@
 #include "zephyr\property.h"
 
 #include "Interface.h"
+#include "ButtonCode.h"
 #include "ButtonState.h"
 
 struct IDirectInputDevice8A;
@@ -39,22 +40,22 @@ namespace zephyr
             /// <summary>
             /// ボタンの状態を取得します。
             /// </summary>
-            /// <param name="id">ボタンの ID 。</param>
-            ButtonState GetButtonState(int id) const;
+            /// <param name="code">ボタンコード。</param>
+            ButtonState GetButtonState(ButtonCode code) const;
 
 			/// <summary>
 			/// ボタンの長押し時間を取得します。
 			/// </summary>
-			/// <param name="id">ボタンの ID 。</param>
+			/// <param name="code">ボタンコード。</param>
 			/// <returns>ボタンが押されて続けているフレーム数。</returns>
-			int GetPressTimeLength(int id) const;
+			int GetPressTimeLength(ButtonCode code) const;
 
             /// <summary>
             /// ボタンの状態を取得します。
             /// </summary>
-            ButtonState operator [](int id) const
+            ButtonState operator [](ButtonCode code) const
             {
-                return this->GetButtonState(id);
+                return this->GetButtonState(code);
             }
 
         public:

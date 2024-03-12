@@ -1,6 +1,7 @@
 #include "zephyr\print.h"
 #include "zephyr\string.h"
 
+#include "zephyr.input\ButtonCode.h"
 #include "zephyr.input\ButtonState.h"
 #include "zephyr.input\JoyStick.h"
 
@@ -40,7 +41,7 @@ void test_joystick()
         for (int i = 0; i < 18; i++)
         {
             auto name = std::to_string(i);
-            auto state = joystick.GetButtonState(i);
+            auto state = joystick.GetButtonState((ButtonCode)i);
 
             println(std::cout, "{0} = {1}", name, to_string(state));
         }
