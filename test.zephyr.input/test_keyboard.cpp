@@ -1,8 +1,6 @@
 #include "zephyr\print.h"
 #include "zephyr\string.h"
 
-#include "zephyr.input\ButtonState.h"
-#include "zephyr.input\KeyCode.h"
 #include "zephyr.input\Keyboard.h"
 
 using namespace zephyr;
@@ -10,57 +8,57 @@ using namespace zephyr::input;
 
 void test_keyboard()
 {
-    std::pair<string, KeyCode> keyCodes[] = {
-        {"A", KeyCode::A},
-        {"B", KeyCode::B},
-        {"C", KeyCode::C},
-        {"D", KeyCode::D},
-        {"E", KeyCode::E},
-        {"F", KeyCode::F},
-        {"G", KeyCode::G},
-        {"H", KeyCode::H},
-        {"I", KeyCode::I},
-        {"J", KeyCode::J},
-        {"K", KeyCode::K},
-        {"L", KeyCode::L},
-        {"M", KeyCode::M},
-        {"N", KeyCode::N},
-        {"O", KeyCode::O},
-        {"P", KeyCode::P},
-        {"Q", KeyCode::Q},
-        {"R", KeyCode::R},
-        {"S", KeyCode::S},
-        {"T", KeyCode::T},
-        {"U", KeyCode::U},
-        {"V", KeyCode::V},
-        {"W", KeyCode::W},
-        {"X", KeyCode::X},
-        {"Y", KeyCode::Y},
-        {"Z", KeyCode::Z},
-        {"F1", KeyCode::F1},
-        {"F2", KeyCode::F2},
-        {"F3", KeyCode::F3},
-        {"F4", KeyCode::F4},
-        {"F5", KeyCode::F5},
-        {"F6", KeyCode::F6},
-        {"F7", KeyCode::F7},
-        {"F8", KeyCode::F8},
-        {"F9", KeyCode::F9},
-        {"Left", KeyCode::Left},
-        {"Right", KeyCode::Right},
-        {"Up", KeyCode::Up},
-        {"Down", KeyCode::Down},
-        {"Escape", KeyCode::Escape},
-        {"Tab", KeyCode::Tab},
-        {"LeftShift", KeyCode::LeftShift},
-        {"RightShift", KeyCode::RightShift},
-        {"LeftCtrl", KeyCode::LeftCtrl},
-        {"RightCtrl", KeyCode::RightCtrl},
-        {"LeftAlt", KeyCode::LeftAlt},
-        {"RightAlt", KeyCode::RightAlt},
-        {"Space", KeyCode::Space},
-        {"Enter", KeyCode::Enter},
-        {"BackSpace", KeyCode::BackSpace},
+    std::pair<string, Keyboard::KeyCode> keyCodes[] = {
+        {"A", Keyboard::KeyCode::A},
+        {"B", Keyboard::KeyCode::B},
+        {"C", Keyboard::KeyCode::C},
+        {"D", Keyboard::KeyCode::D},
+        {"E", Keyboard::KeyCode::E},
+        {"F", Keyboard::KeyCode::F},
+        {"G", Keyboard::KeyCode::G},
+        {"H", Keyboard::KeyCode::H},
+        {"I", Keyboard::KeyCode::I},
+        {"J", Keyboard::KeyCode::J},
+        {"K", Keyboard::KeyCode::K},
+        {"L", Keyboard::KeyCode::L},
+        {"M", Keyboard::KeyCode::M},
+        {"N", Keyboard::KeyCode::N},
+        {"O", Keyboard::KeyCode::O},
+        {"P", Keyboard::KeyCode::P},
+        {"Q", Keyboard::KeyCode::Q},
+        {"R", Keyboard::KeyCode::R},
+        {"S", Keyboard::KeyCode::S},
+        {"T", Keyboard::KeyCode::T},
+        {"U", Keyboard::KeyCode::U},
+        {"V", Keyboard::KeyCode::V},
+        {"W", Keyboard::KeyCode::W},
+        {"X", Keyboard::KeyCode::X},
+        {"Y", Keyboard::KeyCode::Y},
+        {"Z", Keyboard::KeyCode::Z},
+        {"F1", Keyboard::KeyCode::F1},
+        {"F2", Keyboard::KeyCode::F2},
+        {"F3", Keyboard::KeyCode::F3},
+        {"F4", Keyboard::KeyCode::F4},
+        {"F5", Keyboard::KeyCode::F5},
+        {"F6", Keyboard::KeyCode::F6},
+        {"F7", Keyboard::KeyCode::F7},
+        {"F8", Keyboard::KeyCode::F8},
+        {"F9", Keyboard::KeyCode::F9},
+        {"Left", Keyboard::KeyCode::Left},
+        {"Right", Keyboard::KeyCode::Right},
+        {"Up", Keyboard::KeyCode::Up},
+        {"Down", Keyboard::KeyCode::Down},
+        {"Escape", Keyboard::KeyCode::Escape},
+        {"Tab", Keyboard::KeyCode::Tab},
+        {"LeftShift", Keyboard::KeyCode::LeftShift},
+        {"RightShift", Keyboard::KeyCode::RightShift},
+        {"LeftCtrl", Keyboard::KeyCode::LeftCtrl},
+        {"RightCtrl", Keyboard::KeyCode::RightCtrl},
+        {"LeftAlt", Keyboard::KeyCode::LeftAlt},
+        {"RightAlt", Keyboard::KeyCode::RightAlt},
+        {"Space", Keyboard::KeyCode::Space},
+        {"Enter", Keyboard::KeyCode::Enter},
+        {"BackSpace", Keyboard::KeyCode::BackSpace},
     };
 
     Keyboard keyboard;
@@ -69,22 +67,6 @@ void test_keyboard()
     {
         keyboard.Update();
 
-        auto to_string = [](ButtonState state) {
-            switch (state)
-            {
-            case ButtonState::Released:
-                return "Released";
-            case ButtonState::Pressed:
-                return "Pressed";
-            case ButtonState::NowReleased:
-                return "NowReleased";
-            case ButtonState::NowPressed:
-                return "NowPressed";
-            default:
-                return "?";
-            }
-        };
-
         system("cls");
 
         println(std::cout, "To end this test, please push 'Q'.");
@@ -92,8 +74,7 @@ void test_keyboard()
         {
             auto name = keyCode.first;
             auto state = keyboard.GetKeyState(keyCode.second);
-			auto time = keyboard.GetPressTimeLength(keyCode.second);
-            println(std::cout, "{0} = {1} ({2})", name, to_string(state), time);
+            println(std::cout, "{0} = {1}", name, state);
         }
 
         Sleep(1000);

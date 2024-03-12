@@ -1,11 +1,8 @@
 ﻿#pragma once
 
 #include "zephyr\array.h"
-#include "zephyr\property.h"
 
 #include "Interface.h"
-#include "ButtonCode.h"
-#include "ButtonState.h"
 
 struct IDirectInputDevice8A;
 
@@ -13,13 +10,63 @@ namespace zephyr
 {
     namespace input
     {
-        enum class ButtonState;
-
         /// <summary>
         /// ジョイスティックコントローラを表します。
         /// </summary>
         class JoyStick : public Interface<IDirectInputDevice8A>
         {
+        public:
+
+            /// <summary>
+            /// ジョイスティックのボタンを表します。
+            /// </summary>
+            enum class ButtonCode
+            {
+                Button1,
+                Button2,
+                Button3,
+                Button4,
+                Button5,
+                Button6,
+                Button7,
+                Button8,
+                Button9,
+                Button10,
+                Button11,
+                Button12,
+                Button13,
+                Button14,
+                Button15,
+                Button16,
+                Button17,
+                Button18,
+                Button19,
+                Button20,
+                Button21,
+                Button22,
+                Button23,
+                Button24,
+                Button25,
+                Button26,
+                Button27,
+                Button28,
+                Button29,
+                Button30,
+                Button31,
+                Button32,
+            };
+
+            /// <summary>
+            /// ジョイスティックのハットスイッチを表します。
+            /// </summary>
+            enum class HatSwitchCode
+            {
+                Left,
+                Right,
+                Up,
+                Down
+            };
+
         public:
 
             /// <summary>
@@ -41,94 +88,50 @@ namespace zephyr
             /// ボタンの状態を取得します。
             /// </summary>
             /// <param name="code">ボタンコード。</param>
-            ButtonState GetButtonState(ButtonCode code) const;
-
-			/// <summary>
-			/// ボタンの長押し時間を取得します。
-			/// </summary>
-			/// <param name="code">ボタンコード。</param>
-			/// <returns>ボタンが押されて続けているフレーム数。</returns>
-			int GetPressTimeLength(ButtonCode code) const;
+            int GetButtonState(ButtonCode code) const;
 
             /// <summary>
-            /// ボタンの状態を取得します。
+            /// ハットスイッチの状態を取得します。
             /// </summary>
-            ButtonState operator [](ButtonCode code) const
-            {
-                return this->GetButtonState(code);
-            }
+            /// <param name="code">ハットスイッチコード。</param>
+            int GetHatSwitchState(HatSwitchCode code) const;
 
         public:
 
             /// <summary>
-            /// アナログスティック第 1 軸の X 軸の値を取得します。
+            /// アナログスティック第 1 軸の値を取得します。
             /// </summary>
-            const double& AxisX = this->axisX;
+            const array<double, 2>& Axis1 = this->axis1;
 
             /// <summary>
-            /// アナログスティック第 1 軸の Y 軸の値を取得します。
+            /// アナログスティック第 2 軸の値を取得します。
             /// </summary>
-            const double& AxisY = this->axisY;
+            const array<double, 2>& Axis2 = this->axis2;
 
             /// <summary>
-            /// アナログスティック第 2 軸の X 軸の値を取得します。
+            /// アナログスティック第 1 軸のX値を取得します。
             /// </summary>
-            const double& SubAxisX = this->subAxisX;
+            const double& Axis1X = this->axis1[0];
 
             /// <summary>
-            /// アナログスティック第 2 軸の Y 軸の値を取得します。
+            /// アナログスティック第 1 軸のY値を取得します。
             /// </summary>
-            const double& SubAxisY = this->subAxisY;
+            const double& Axis1Y = this->axis1[1];
 
             /// <summary>
-            /// POV スイッチの左方向のボタンの状態を取得します。
+            /// アナログスティック第 2 軸のX値を取得します。
             /// </summary>
-            READONLY_PROPERTY(ButtonState, Left, { return getButtonState(this->povLeft, this->prevPovLeft); });
+            const double& Axis2X = this->axis2[0];
 
             /// <summary>
-            /// POV スイッチの右方向のボタンの状態を取得します。
+            /// アナログスティック第 2 軸のY値を取得します。
             /// </summary>
-            READONLY_PROPERTY(ButtonState, Right, { return getButtonState(this->povRight, this->prevPovRight); });
+            const double& Axis2Y = this->axis2[1];
 
             /// <summary>
-            /// POV スイッチの上方向のボタンの状態を取得します。
+            /// デバイスが接続されているか調べます。
             /// </summary>
-            READONLY_PROPERTY(ButtonState, Up, { return getButtonState(this->povUp, this->prevPovUp); });
-
-            /// <summary>
-            /// POV スイッチの下方向のボタンの状態を取得します。
-            /// </summary>
-            READONLY_PROPERTY(ButtonState, Down, { return getButtonState(this->povDown, this->prevPovDown); });
-
-            /// <summary>
-            /// POV スイッチの左方向のボタンを押し続けている時間を取得します。
-            /// </summary>
-            READONLY_PROPERTY(int, LeftPressTimeLength, { return this->povLeftPressTimeLength; });
-
-            /// <summary>
-            /// POV スイッチの右方向のボタンを押し続けている時間を取得します。
-            /// </summary>
-            READONLY_PROPERTY(int, RightPressTimeLength, { return this->povRightPressTimeLength; });
-
-            /// <summary>
-            /// POV スイッチの上方向のボタンを押し続けている時間を取得します。
-            /// </summary>
-            READONLY_PROPERTY(int, UpPressTimeLength, { return this->povUpPressTimeLength; });
-
-            /// <summary>
-            /// POV スイッチの下方向のボタンを押し続けている時間を取得します。
-            /// </summary>
-            READONLY_PROPERTY(int, DownPressTimeLength, { return this->povDownPressTimeLength; });
-
-            /// <summary>
-            /// コントローラが接続されているか調べます。
-            /// </summary>
-            __declspec(property(get = isConnected)) bool IsConnected;
-
-            /// <summary>
-            /// コントローラが接続されているか調べます。
-            /// </summary>
-            bool isConnected() const;
+            bool IsConnected() const;
 
             /// <summary>
             /// アナログスティックのデッドゾーンの大きさを 0 から 1 の範囲で指定します。
@@ -148,32 +151,26 @@ namespace zephyr
             // ボタン数
             enum { ButtonCount = 32 };
 
-            // 現在のボタンの状態
-            array<byte, ButtonCount> buttonState;
+            // ハットスイッチ数
+            enum { HatSwitchCount = 4 };
 
-            // 直前のボタンの状態
-            array<byte, ButtonCount> prevButtonState;
+            // ボタンの状態 (未加工)
+            array<byte, ButtonCount> raw_button_state, raw_button_state_prev;
 
-			// ボタンが押されている合計時間
-			array<int, ButtonCount> pressTimeLength;
+            // ボタンの状態 (加工済み)
+            array<int, ButtonCount> button_state;
 
-            // 現在のPOVスイッチの状態
-            bool povLeft, povRight, povUp, povDown;
+            // ハットスイッチの状態 (未加工)
+            array<bool, HatSwitchCount> raw_hatswitch_state, raw_hatswitch_state_prev;
 
-            // 直前のPOVスイッチの状態
-            bool prevPovLeft, prevPovRight, prevPovUp, prevPovDown;
+            // ハットスイッチの状態 (加工済み)
+            array<int, HatSwitchCount> hatswitch_state;
 
-            // POVスイッチが押されている合計時間
-            int povLeftPressTimeLength;
-            int povRightPressTimeLength;
-            int povUpPressTimeLength;
-            int povDownPressTimeLength;
+            // アナログスティック (1軸)
+            array<double, 2> axis1;
 
-            // アナログスティック
-            double axisX, axisY;
-
-            // サブアナログスティック
-            double subAxisX, subAxisY;
+            // アナログスティック (2軸)
+            array<double, 2> axis2;
         };
     }
 }

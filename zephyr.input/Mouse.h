@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "zephyr\array.h"
 #include "zephyr\property.h"
 
 #include "Interface.h"
@@ -10,13 +11,23 @@ namespace zephyr
 {
     namespace input
     {
-        enum class ButtonState;
-
         /// <summary>
         /// マウスデバイスを表します。
         /// </summary>
         class Mouse : public Interface<IDirectInputDevice8A>
         {
+        public:
+
+            /// <summary>
+            /// マウスのボタンを表します。
+            /// </summary>
+            enum class ButtonCode
+            {
+                Left = 0,
+                Right = 1,
+                Center = 2
+            };
+
         public:
 
             /// <summary>
@@ -64,27 +75,22 @@ namespace zephyr
             /// <summary>
             /// マウスの左ボタンの状態を取得します。
             /// </summary>
-            READONLY_PROPERTY(ButtonState, Left, ;);
+            READONLY_PROPERTY(int, Left, { return this->button_state[(int)ButtonCode::Left]; });
 
             /// <summary>
             /// マウスの右ボタンの状態を取得します。
             /// </summary>
-            READONLY_PROPERTY(ButtonState, Right, ;);
+            READONLY_PROPERTY(int, Right, { return this->button_state[(int)ButtonCode::Right]; });
 
             /// <summary>
             /// マウスの中央ボタンの状態を取得します。
             /// </summary>
-            READONLY_PROPERTY(ButtonState, Center, ;);
+            READONLY_PROPERTY(int, Center, { return this->button_state[(int)ButtonCode::Center]; });
 
             /// <summary>
-            /// コントローラが接続されているか調べます。
+            /// デバイスが接続されているか調べます。
             /// </summary>
-            __declspec(property(get = isConnected)) bool IsConnected;
-
-            /// <summary>
-            /// マウスが接続されているか調べます。
-            /// </summary>
-            bool isConnected() const;
+            bool IsConnected() const;
 
         private:
 
@@ -96,17 +102,20 @@ namespace zephyr
 
         private:
 
+            // ボタン数
+            enum { ButtonCount = 3 };
+
             // マウスの位置
             long mouseX, mouseY;
 
             // マウスの移動量
             long moveX, moveY, moveZ;
 
-            // ボタンの状態
-            bool left, right, center;
+            // ボタンの状態 (未加工)
+            array<byte, ButtonCount> raw_button_state, raw_button_state_prev;
 
-            // 前フレームのボタンの状態
-            bool prevLeft, prevRight, prevCenter;
+            // ボタンの状態 (加工済み)
+            array<int, ButtonCount> button_state;
         };
     }
 }

@@ -2,11 +2,11 @@
 
 #include <dinput.h>
 
+#include <stdexcept>
+
 #include "zephyr\com_assert.h"
 #include "zephyr\runtime_assert.h"
 
-#include "ButtonState.h"
-#include "KeyCode.h"
 #include "Keyboard.h"
 
 #define this (*this)
@@ -55,30 +55,37 @@ namespace zephyr
 				base::reset(ptr);
 			}
 
-			this.keyState.fill(0);
-			this.prevKeyState.fill(0);
-			this.pressTimeLength.fill(0);
+			this.raw_key_state.fill(0);
+			this.raw_key_state_prev.fill(0);
 		}
 
 		void Keyboard::Update()
 		{
-			if (this.IsConnected)
+			if (this.IsConnected())
 			{
 				if (this.available())
 				{
-					this.prevKeyState = this.keyState;
-					auto result = this->GetDeviceState(KeyCount, this.keyState.data());
+					this.raw_key_state_prev = this.raw_key_state;
+					auto result = this->GetDeviceState(KeyCount, this.raw_key_state.data());
 					if (result == DIERR_NOTACQUIRED || result == DIERR_INPUTLOST)
 					{
 						this->Acquire();
 					}
 					for (int i = 0; i < KeyCount; i++)
 					{
-						// 長押しして離した状態も検知できるようにする (T < pressTime && NowReleased)
-						if (0 < (this.prevKeyState[i] & 0x80))
-							this.pressTimeLength[i]++;
-						else
-							this.pressTimeLength[i] = 0;
+                        bool now = (this.raw_key_state[i] & 0x80) > 0;
+                        bool pre = (this.raw_key_state_prev[i] & 0x80) > 0;
+                        this.key_state[i] = [=]()
+                        {
+                            if (now)
+                            {
+                                return pre ? this.key_state[i] + 1 : 1;
+                            }
+                            else
+                            {
+                                return pre ? -1 : 0;
+                            }
+                        }();
 					}
 				}
 				else
@@ -92,18 +99,14 @@ namespace zephyr
 			}
 		}
 
-		ButtonState Keyboard::GetKeyState(KeyCode key) const
+		int Keyboard::GetKeyState(KeyCode code) const
 		{
-			int id = (int)key;
-			bool now = (this.keyState[id] & 0x80) > 0;
-			bool pre = (this.prevKeyState[id] & 0x80) > 0;
-			return getButtonState(now, pre);
+            return this.key_state[static_cast<size_t>(code)];
 		}
 
-		int Keyboard::GetPressTimeLength(KeyCode key) const
-		{
-			int id = (int)key;
-			return this.pressTimeLength[id];
-		}
+        bool Keyboard::IsConnected() const
+        {
+            return true;
+        }
 	}
 }

@@ -1,13 +1,12 @@
 ﻿#define DIRECTINPUT_VERSION 0x0800
 
-#include <stdexcept>
-
 #include <dinput.h>
+
+#include <stdexcept>
 
 #include "zephyr\com_assert.h"
 #include "zephyr\runtime_assert.h"
 
-#include "ButtonState.h"
 #include "Mouse.h"
 
 #define this (*this)
@@ -67,12 +66,13 @@ namespace zephyr
 
             this.mouseX = this.mouseY = 0;
             this.moveX = this.moveY = this.moveZ = 0;
-            this.left = this.right = this.center = this.prevLeft = this.prevRight = this.prevCenter = false;
+            this.raw_button_state.fill(0);
+            this.raw_button_state_prev.fill(0);
         }
 
         void Mouse::Update()
         {
-            if (this.IsConnected)
+            if (this.IsConnected())
             {
                 if (this.available())
                 {
@@ -97,12 +97,24 @@ namespace zephyr
                     this.moveY = dims.lY;
                     this.moveZ = dims.lZ;
 
-                    this.prevLeft = this.left;
-                    this.prevRight = this.right;
-                    this.prevCenter = this.center;
-                    this.left = (dims.rgbButtons[0] & 0x80) > 0;
-                    this.right = (dims.rgbButtons[1] & 0x80) > 0;
-                    this.center = (dims.rgbButtons[2] & 0x80) > 0;
+                    this.raw_button_state_prev = this.raw_button_state;
+                    memcpy(this.raw_button_state.data(), dims.rgbButtons, sizeof(this.raw_button_state));
+
+                    for (int i = 0; i < ButtonCount; i++)
+                    {
+                        bool now = (this.raw_button_state[i] & 0x80) > 0;
+                        bool pre = (this.raw_button_state_prev[i] & 0x80) > 0;
+                        this.button_state[i] = [=]() {
+                            if (now)
+                            {
+                                return pre ? this.button_state[i] + 1 : 1;
+                            }
+                            else
+                            {
+                                return pre ? -1 : 0;
+                            }
+                        }();
+                    }
                 }
                 else
                 {
@@ -115,22 +127,7 @@ namespace zephyr
             }
         }
 
-        ButtonState Mouse::_get_Left()
-        {
-            return getButtonState(this.left, this.prevLeft);
-        }
-
-        ButtonState Mouse::_get_Right()
-        {
-            return getButtonState(this.right, this.prevRight);
-        }
-
-        ButtonState Mouse::_get_Center()
-        {
-            return getButtonState(this.center, this.prevCenter);
-        }
-
-        bool Mouse::isConnected() const
+        bool Mouse::IsConnected() const
         {
             return GetSystemMetrics(SM_MOUSEPRESENT) != 0;
         }

@@ -1,20 +1,18 @@
 ﻿#define DIRECTINPUT_VERSION 0x0800
 
-#define _USE_MATH_DEFINES
-
-#include <cmath>
-
 #include <dinput.h>
+
+#include <stdexcept>
 
 #include "zephyr\com_assert.h"
 #include "zephyr\runtime_assert.h"
 
-#include "ButtonState.h"
 #include "JoyStick.h"
 
 #define this (*this)
 
-#define DEGREE2RADIAN(deg) (deg) / 180.0 * M_PI
+#define PI 3.141592653589793238462643
+#define DEGREE2RADIAN(deg) (deg) / 180.0 * PI
 
 using namespace std;
 
@@ -140,25 +138,25 @@ namespace zephyr
                 base::reset(ptr);
             }
 
-            this.axisX = this.axisY = this.subAxisX = this.subAxisY = 0;
-            this.povDown = this.povLeft = this.povRight = this.povUp = false;
-            this.prevPovDown = this.prevPovLeft = this.prevPovRight = this.prevPovUp = false;
-            this.buttonState.fill(0);
-            this.prevButtonState.fill(0);
+            this.axis1 = { 0, 0 };
+            this.axis2 = { 0, 0 };
+            this.raw_button_state.fill(0);
+            this.raw_button_state_prev.fill(0);
+            this.button_state.fill(0);
+            this.raw_hatswitch_state.fill(false);
+            this.raw_hatswitch_state_prev.fill(false);
+            this.hatswitch_state.fill(0);
         }
 
         void JoyStick::Update()
         {
-            if (this.IsConnected)
+            if (this.IsConnected())
             {
                 if (this.available())
                 {
                     // 前回のデータを上書きする
-                    this.prevButtonState = this.buttonState;
-                    this.prevPovLeft = this.povLeft;
-                    this.prevPovRight = this.povRight;
-                    this.prevPovUp = this.povUp;
-                    this.prevPovDown = this.povDown;
+                    this.raw_button_state_prev = this.raw_button_state;
+                    this.raw_hatswitch_state_prev = this.raw_hatswitch_state;
 
                     // データを更新する
                     DIJOYSTATE2 state;
@@ -168,47 +166,62 @@ namespace zephyr
                         this->Acquire();
                         return;
                     }
+                    memcpy(this.raw_button_state.data(), state.rgbButtons, sizeof(this.raw_button_state));
+
                     for (int i = 0; i < ButtonCount; i++)
                     {
-                        this.buttonState[i] = state.rgbButtons[i];
+                        bool now = (this.raw_button_state[i] & 0x80) > 0;
+                        bool pre = (this.raw_button_state_prev[i] & 0x80) > 0;
+                        this.button_state[i] = [=]() {
+                            if (now)
+                            {
+                                return pre ? this.button_state[i] + 1 : 1;
+                            }
+                            else
+                            {
+                                return pre ? -1 : 0;
+                            }
+                        }();
                     }
 
-					for (int i = 0; i < ButtonCount; i++)
-					{
-						// 長押しして離した瞬間を検知できるようにする (T < pressTime && NowReleased)
-						if (0 < (this.prevButtonState[i] & 0x80))
-							this.pressTimeLength[i]++;
-						else
-							this.pressTimeLength[i] = 0;
-					}
+                    this.axis1 = {
+                        getFormatedAxisValue(state.lX, this.DeadZone),
+                        getFormatedAxisValue(-state.lY, this.DeadZone)
+                    };
 
-                    this.axisX = getFormatedAxisValue(state.lX, this.DeadZone);
-                    this.axisY = getFormatedAxisValue(-state.lY, this.DeadZone);
-
-                    this.subAxisX = getFormatedAxisValue(state.lZ, this.DeadZone);
-                    this.subAxisY = getFormatedAxisValue(-state.lRz, this.DeadZone);
+                    this.axis2 = {
+                        getFormatedAxisValue(state.lZ, this.DeadZone),
+                        getFormatedAxisValue(-state.lRz, this.DeadZone)
+                    };
 
                     if (state.rgdwPOV[0] != -1)
                     {
                         double povAngle = DEGREE2RADIAN((double)(state.rgdwPOV[0] / 100));
-                        this.povLeft = (sin(povAngle) <= -AngleThreshold);
-                        this.povRight = (sin(povAngle) >= AngleThreshold);
-                        this.povUp = (cos(povAngle) >= AngleThreshold);
-                        this.povDown = (cos(povAngle) <= -AngleThreshold);
+                        this.raw_hatswitch_state[(int)HatSwitchCode::Left] = (sin(povAngle) <= -AngleThreshold);
+                        this.raw_hatswitch_state[(int)HatSwitchCode::Right] = (sin(povAngle) >= AngleThreshold);
+                        this.raw_hatswitch_state[(int)HatSwitchCode::Up] = (cos(povAngle) >= AngleThreshold);
+                        this.raw_hatswitch_state[(int)HatSwitchCode::Down] = (cos(povAngle) <= -AngleThreshold);
                     }
                     else
                     {
-                        this.povLeft = false;
-                        this.povRight = false;
-                        this.povUp = false;
-                        this.povDown = false;
+                        this.raw_hatswitch_state.fill(false);
                     }
 
-                    // 長押しして離した瞬間を検知できるようにする (T < pressTime && NowReleased)
-                    this.povLeftPressTimeLength = this.prevPovLeft ? this.povLeftPressTimeLength + 1 : 0;
-                    this.povRightPressTimeLength = this.prevPovRight ? this.povRightPressTimeLength + 1 : 0;
-                    this.povUpPressTimeLength = this.prevPovUp ? this.povUpPressTimeLength + 1 : 0;
-                    this.povDownPressTimeLength = this.prevPovDown ? this.povDownPressTimeLength + 1 : 0;
+                    for (int i = 0; i < HatSwitchCount; i++)
+                    {
+                        bool now = this.raw_hatswitch_state[i];
+                        bool pre = this.raw_hatswitch_state_prev[i];
+                        this.hatswitch_state[i] = [=]() {
+                            if (now)
+                            {
+                                return pre ? this.hatswitch_state[i] + 1 : 1;
+                            }
+                            else
+                            {
+                                return pre ? -1 : 0;
+                            }
+                        }();
+                    }
                 }
                 else
                 {
@@ -221,21 +234,17 @@ namespace zephyr
             }
         }
 
-        ButtonState JoyStick::GetButtonState(ButtonCode code) const
+        int JoyStick::GetButtonState(ButtonCode code) const
         {
-            int id = static_cast<int>(code);
-            bool now = (this.buttonState[id]& 0x80) > 0;
-            bool pre = (this.prevButtonState[id]& 0x80) > 0;
-            return getButtonState(now, pre);
+            return this.button_state[static_cast<size_t>(code)];
         }
 
-		int JoyStick::GetPressTimeLength(ButtonCode code) const
-		{
-            int id = static_cast<int>(code);
-            return this.pressTimeLength[id];
-		}
+        int JoyStick::GetHatSwitchState(HatSwitchCode code) const
+        {
+            return this.hatswitch_state[static_cast<size_t>(code)];
+        }
 
-        bool JoyStick::isConnected() const
+        bool JoyStick::IsConnected() const
         {
             JOYINFO info;
             return joyGetPos(0,&info) == JOYERR_NOERROR;

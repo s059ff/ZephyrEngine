@@ -1,7 +1,6 @@
 #include "zephyr\print.h"
 #include "zephyr\string.h"
 
-#include "zephyr.input\ButtonState.h"
 #include "zephyr.input\Mouse.h"
 
 using namespace zephyr;
@@ -16,28 +15,12 @@ void test_mouse()
     {
         mouse.Update();
 
-        auto to_string = [](ButtonState state) {
-            switch (state)
-            {
-            case ButtonState::Released:
-                return "Released";
-            case ButtonState::Pressed:
-                return "Pressed";
-            case ButtonState::NowReleased:
-                return "NowReleased";
-            case ButtonState::NowPressed:
-                return "NowPressed";
-            default:
-                return "?";
-            }
-        };
-
         system("cls");
 
         println(std::cout, "To end this test, please push 'Q'.");
-        println(std::cout, "Left = {0}", to_string(mouse.Left));
-        println(std::cout, "Center = {0}", to_string(mouse.Center));
-        println(std::cout, "Right = {0}", to_string(mouse.Right));
+        println(std::cout, "Left = {0}", mouse.Left);
+        println(std::cout, "Center = {0}", mouse.Center);
+        println(std::cout, "Right = {0}", mouse.Right);
         println(std::cout, "X = {0}", mouse.X);
         println(std::cout, "Y = {0}", mouse.Y);
         println(std::cout, "Movement-X = {0}", mouse.MovementX);
