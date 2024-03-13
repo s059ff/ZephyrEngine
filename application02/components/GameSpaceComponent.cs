@@ -1,4 +1,4 @@
-using ZephyrSharp.GameSystem;
+﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using static GameScript;
 
