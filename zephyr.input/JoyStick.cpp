@@ -54,11 +54,12 @@ namespace zephyr
                     g_pDInputDevice->Release();
                     return DIENUM_CONTINUE;
                 }
+
                 return DIENUM_STOP;
             }
 
             //
-            BOOL CALLBACK SetAxisModeCallback(LPCDIDEVICEOBJECTINSTANCE lpddoi, void*)
+            BOOL CALLBACK SetAxisModeCallback(const DIDEVICEOBJECTINSTANCE* lpddoi, void*)
             {
                 // 軸の値の範囲を設定
                 DIPROPRANGE diprg;
@@ -122,6 +123,14 @@ namespace zephyr
             result = this->EnumObjects(SetAxisModeCallback, NULL, DIDFT_AXIS);
             if (FAILED(result))
                 throw runtime_error("軸モードの設定に失敗しました。");
+
+            // デバイスのプロダクト名を取得する
+            DIDEVICEINSTANCE device_instance;
+            device_instance.dwSize = sizeof(DIDEVICEINSTANCE);
+            result = this->GetDeviceInfo(&device_instance);
+            if (FAILED(result))
+                throw runtime_error("デバイスの詳細情報の取得に失敗しました。");
+            this.product_name = device_instance.tszProductName;
 
             // (グローバル変数を使用不可にする)
             g_pDInput = nullptr;

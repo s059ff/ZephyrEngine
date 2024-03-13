@@ -20,6 +20,9 @@ void test_joystick()
         system("cls");
 
         println(std::cout, "To end this test, please push 'Q'.");
+
+        println(std::cout, "Product Name = {0}", joystick.ProductName);
+
         for (int i = 0; i < 18; i++)
         {
             auto name = std::to_string(i);

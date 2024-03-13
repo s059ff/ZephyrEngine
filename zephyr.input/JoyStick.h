@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "zephyr\array.h"
+#include "zephyr\string.h"
 
 #include "Interface.h"
 
@@ -138,6 +139,11 @@ namespace zephyr
             /// </summary>
             double DeadZone;
 
+            /// <summary>
+            /// プロダクト名を取得します。
+            /// </summary>
+            const string& ProductName = this->product_name;
+
         private:
 
             // 作成する
@@ -171,6 +177,9 @@ namespace zephyr
 
             // アナログスティック (2軸)
             array<double, 2> axis2;
+
+            // プロダクト名
+            string product_name;
         };
     }
 }
