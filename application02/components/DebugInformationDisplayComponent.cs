@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
@@ -46,6 +46,7 @@ class DebugInformationDisplayComponent : CustomEntityComponent
         this.DebugMessages["enemy_count"] = enemeyCount.ToString();
 
         int frameCount = Entity.Find("system").Get<SystemComponent>().FrameCount;
+        this.DebugMessages["frame_count"] = frameCount.ToString();
         if (frameCount % 60 == 0)
         {
             this.stopwatch.Stop();
