@@ -29,6 +29,13 @@ public class AircraftComponent : CustomEntityComponent
         public Vector3 WingEdgePos;
         public Vector3 CockpitPos;
         public Vector3 GunPos;
+        public Texture2D Texture;
+        public Texture2D NormalMapTexture;
+        public GraphicsModel Body;
+        public GraphicsModel LeftCanard;
+        public GraphicsModel RightCanard;
+        public GraphicsModel LeftElevator;
+        public GraphicsModel RightElevator;
     }
 
     class WeaponSystem
@@ -50,13 +57,6 @@ public class AircraftComponent : CustomEntityComponent
     private const float EnginePowerThreshold = 0.9f;
 
     public readonly AircraftParameter Parameter;
-    private readonly GraphicsModel Body = new GraphicsModel();
-    private readonly GraphicsModel LeftCanard = null;
-    private readonly GraphicsModel RightCanard = null;
-    private readonly GraphicsModel LeftElevator = null;
-    private readonly GraphicsModel RightElevator = null;
-    private readonly Texture2D Texture = new Texture2D();
-    private readonly Texture2D NormalMapTexture = new Texture2D();
     private readonly Entity LeftSmokeGeneratorEntity;
     private readonly Entity RightSmokeGeneratorEntity;
     private readonly WeaponSystem[] Weapons = new WeaponSystem[WeaponCount];
@@ -110,25 +110,61 @@ public class AircraftComponent : CustomEntityComponent
 
             string[] headers = stream.ReadLine().Split(separator);
             FieldInfo[] fields = typeof(AircraftParameter).GetFields();
-            assert(headers.SequenceEqual(fields.Select(f => f.Name)));
+            assert(headers.All(header => fields.Select(f => f.Name).Contains(header)));
 
             while (!stream.EndOfStream)
             {
                 AircraftParameter param = new AircraftParameter();
                 {
                     string[] values = stream.ReadLine().Split(separator);
-                    foreach (var tuple in fields.Zip(values, Tuple.Create))
+                    assert(headers.Count() == values.Count());
+
+                    foreach (var tuple in headers.Zip(values, Tuple.Create))
                     {
-                        FieldInfo field = tuple.Item1;
-                        string value = tuple.Item2;
-                        object obj = null;
-                        obj = (field.FieldType == typeof(string)) ? value : obj;
-                        obj = (field.FieldType == typeof(float)) ? float.Parse(value) : obj;
-                        obj = (field.FieldType == typeof(Vector3)) ? Vector3.Parse(value) : obj;
-                        assert(obj != null, "unhandleable parameter");
-                        field.SetValue(param, obj);
+                        var header = tuple.Item1;
+                        var value = tuple.Item2;
+
+                        var field = fields.Where(f => f.Name == header).First();
+                        if (field != null)
+                        {
+                            object obj = null;
+                            obj = (field.FieldType == typeof(string)) ? value : obj;
+                            obj = (field.FieldType == typeof(float)) ? float.Parse(value) : obj;
+                            obj = (field.FieldType == typeof(Vector3)) ? Vector3.Parse(value) : obj;
+                            field.SetValue(param, obj);
+                        }
                     }
                 }
+
+                param.Texture = new Texture2D();
+                param.Texture.Create(string.Format("res/mesh/aircraft/{0}/{0}_P01.png", param.Name), Accessibility.None);
+
+                param.NormalMapTexture = new Texture2D();
+                param.NormalMapTexture.Create(string.Format("res/mesh/aircraft/{0}/{0}_N.png", param.Name), Accessibility.None);
+
+                param.Body = new GraphicsModel();
+                param.Body.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_Body.cx", param.Name));
+                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", param.Name)))
+                {
+                    param.LeftCanard = new GraphicsModel();
+                    param.LeftCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", param.Name));
+                }
+                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", param.Name)))
+                {
+                    param.RightCanard = new GraphicsModel();
+                    param.RightCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", param.Name));
+                }
+                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", param.Name)))
+                {
+                    param.LeftElevator = new GraphicsModel();
+                    param.LeftElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", param.Name));
+                }
+                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", param.Name)))
+                {
+                    param.RightElevator = new GraphicsModel();
+                    param.RightElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", param.Name));
+                }
+
                 AircraftParameters.Add(param);
             }
         }
@@ -168,32 +204,7 @@ public class AircraftComponent : CustomEntityComponent
                     break;
             }
         }
-
-        this.Body.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_Body.cx", this.Parameter.Name));
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Parameter.Name)))
-        {
-            this.LeftCanard = new GraphicsModel();
-            this.LeftCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", this.Parameter.Name));
-        }
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", this.Parameter.Name)))
-        {
-            this.RightCanard = new GraphicsModel();
-            this.RightCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", this.Parameter.Name));
-        }
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", this.Parameter.Name)))
-        {
-            this.LeftElevator = new GraphicsModel();
-            this.LeftElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", this.Parameter.Name));
-        }
-        if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", this.Parameter.Name)))
-        {
-            this.RightElevator = new GraphicsModel();
-            this.RightElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", this.Parameter.Name));
-        }
-
-        this.Texture.Create(string.Format("res/mesh/aircraft/{0}/{0}_P01.png", this.Parameter.Name), Accessibility.None);
-        this.NormalMapTexture.Create(string.Format("res/mesh/aircraft/{0}/{0}_N.png", this.Parameter.Name), Accessibility.None);
-
+                
         this.LeftSmokeGeneratorEntity = Entity.Instantiate();
         this.LeftSmokeGeneratorEntity.Attach(new TransformComponent());
         this.LeftSmokeGeneratorEntity.Attach(new StringySmokeComponent());
@@ -250,18 +261,6 @@ public class AircraftComponent : CustomEntityComponent
     protected override void OnDestroy()
     {
         base.OnDestroy();
-
-        this.Body.Dispose();
-        if (this.LeftCanard != null)
-            this.LeftCanard.Dispose();
-        if (this.RightCanard != null)
-            this.RightCanard.Dispose();
-        if (this.LeftElevator != null)
-            this.LeftElevator.Dispose();
-        if (this.RightElevator != null)
-            this.RightElevator.Dispose();
-        this.Texture.Dispose();
-        this.NormalMapTexture.Dispose();
     }
 
     public void AutoPilot(Vector3 destination)
@@ -693,8 +692,8 @@ public class AircraftComponent : CustomEntityComponent
         device.SetPixelShader(PixelShader);
 
         PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(this.Texture, 0);
-        PixelShader.SetTexture(this.NormalMapTexture, 1);
+        PixelShader.SetTexture(this.Parameter.Texture, 0);
+        PixelShader.SetTexture(this.Parameter.NormalMapTexture, 1);
 
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("camera").Get<TransformComponent>().Position, 1), 2);
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 3);
@@ -705,18 +704,18 @@ public class AircraftComponent : CustomEntityComponent
             PixelShader.SetConstantBuffer(this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer(this.WorldMatrix.Inverse, 1);
 
-            device.SetVertexBuffer(this.Body.VertexPositions, 0);
-            device.SetVertexBuffer(this.Body.VertexNormals, 1);
-            device.SetVertexBuffer(this.Body.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.Body.VertexTangents, 3);
-            device.SetVertexBuffer(this.Body.VertexBinormals, 4);
-            device.SetIndexBuffer(this.Body.VertexIndices);
-            device.DrawIndexed(this.Body.VertexIndices.Count);
+            device.SetVertexBuffer(this.Parameter.Body.VertexPositions, 0);
+            device.SetVertexBuffer(this.Parameter.Body.VertexNormals, 1);
+            device.SetVertexBuffer(this.Parameter.Body.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.Parameter.Body.VertexTangents, 3);
+            device.SetVertexBuffer(this.Parameter.Body.VertexBinormals, 4);
+            device.SetIndexBuffer(this.Parameter.Body.VertexIndices);
+            device.DrawIndexed(this.Parameter.Body.VertexIndices.Count);
         }
 
         var angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
 
-        if (this.LeftCanard != null)
+        if (this.Parameter.LeftCanard != null)
         {
             Matrix4x4 move = new Matrix4x4().Identity().Translate(this.Parameter.CanardPos);
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
@@ -726,16 +725,16 @@ public class AircraftComponent : CustomEntityComponent
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.LeftCanard.VertexPositions, 0);
-            device.SetVertexBuffer(this.LeftCanard.VertexNormals, 1);
-            device.SetVertexBuffer(this.LeftCanard.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.LeftCanard.VertexTangents, 3);
-            device.SetVertexBuffer(this.LeftCanard.VertexBinormals, 4);
-            device.SetIndexBuffer(this.LeftCanard.VertexIndices);
-            device.DrawIndexed(this.LeftCanard.VertexIndices.Count);
+            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexPositions, 0);
+            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexNormals, 1);
+            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexTangents, 3);
+            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexBinormals, 4);
+            device.SetIndexBuffer(this.Parameter.LeftCanard.VertexIndices);
+            device.DrawIndexed(this.Parameter.LeftCanard.VertexIndices.Count);
         }
 
-        if (this.RightCanard != null)
+        if (this.Parameter.RightCanard != null)
         {
             Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.Parameter.CanardPos));
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
@@ -745,16 +744,16 @@ public class AircraftComponent : CustomEntityComponent
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.RightCanard.VertexPositions, 0);
-            device.SetVertexBuffer(this.RightCanard.VertexNormals, 1);
-            device.SetVertexBuffer(this.RightCanard.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.RightCanard.VertexTangents, 3);
-            device.SetVertexBuffer(this.RightCanard.VertexBinormals, 4);
-            device.SetIndexBuffer(this.RightCanard.VertexIndices);
-            device.DrawIndexed(this.RightCanard.VertexIndices.Count);
+            device.SetVertexBuffer(this.Parameter.RightCanard.VertexPositions, 0);
+            device.SetVertexBuffer(this.Parameter.RightCanard.VertexNormals, 1);
+            device.SetVertexBuffer(this.Parameter.RightCanard.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.Parameter.RightCanard.VertexTangents, 3);
+            device.SetVertexBuffer(this.Parameter.RightCanard.VertexBinormals, 4);
+            device.SetIndexBuffer(this.Parameter.RightCanard.VertexIndices);
+            device.DrawIndexed(this.Parameter.RightCanard.VertexIndices.Count);
         }
 
-        if (this.LeftElevator != null)
+        if (this.Parameter.LeftElevator != null)
         {
             Matrix4x4 move = new Matrix4x4().Identity().Translate(this.Parameter.ElevatorPos);
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 + angular.Z * 0.5f) * 10, -0.3f, 0.3f));
@@ -764,16 +763,16 @@ public class AircraftComponent : CustomEntityComponent
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.LeftElevator.VertexPositions, 0);
-            device.SetVertexBuffer(this.LeftElevator.VertexNormals, 1);
-            device.SetVertexBuffer(this.LeftElevator.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.LeftElevator.VertexTangents, 3);
-            device.SetVertexBuffer(this.LeftElevator.VertexBinormals, 4);
-            device.SetIndexBuffer(this.LeftElevator.VertexIndices);
-            device.DrawIndexed(this.LeftElevator.VertexIndices.Count);
+            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexPositions, 0);
+            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexNormals, 1);
+            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexTangents, 3);
+            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexBinormals, 4);
+            device.SetIndexBuffer(this.Parameter.LeftElevator.VertexIndices);
+            device.DrawIndexed(this.Parameter.LeftElevator.VertexIndices.Count);
         }
 
-        if (this.RightElevator != null)
+        if (this.Parameter.RightElevator != null)
         {
             Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.Parameter.ElevatorPos));
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 - angular.Z * 0.5f) * 10, -0.3f, 0.3f));
@@ -783,13 +782,13 @@ public class AircraftComponent : CustomEntityComponent
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.RightElevator.VertexPositions, 0);
-            device.SetVertexBuffer(this.RightElevator.VertexNormals, 1);
-            device.SetVertexBuffer(this.RightElevator.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.RightElevator.VertexTangents, 3);
-            device.SetVertexBuffer(this.RightElevator.VertexBinormals, 4);
-            device.SetIndexBuffer(this.RightElevator.VertexIndices);
-            device.DrawIndexed(this.RightElevator.VertexIndices.Count);
+            device.SetVertexBuffer(this.Parameter.RightElevator.VertexPositions, 0);
+            device.SetVertexBuffer(this.Parameter.RightElevator.VertexNormals, 1);
+            device.SetVertexBuffer(this.Parameter.RightElevator.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.Parameter.RightElevator.VertexTangents, 3);
+            device.SetVertexBuffer(this.Parameter.RightElevator.VertexBinormals, 4);
+            device.SetIndexBuffer(this.Parameter.RightElevator.VertexIndices);
+            device.DrawIndexed(this.Parameter.RightElevator.VertexIndices.Count);
         }
 
         #region ミサイル更新
