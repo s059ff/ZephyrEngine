@@ -108,8 +108,12 @@ namespace zephyr
                 }
                 else
                 {
-                    GetWindowPlacement((HWND)m_hWindow,&wndpl);
-                    if ((wndpl.showCmd != SW_HIDE)&& (wndpl.showCmd != SW_MINIMIZE)&& (wndpl.showCmd != SW_SHOWMINIMIZED)&& (wndpl.showCmd != SW_SHOWMINNOACTIVE)&& (GetActiveWindow() == m_hWindow))
+                    GetWindowPlacement((HWND)m_hWindow, &wndpl);
+
+                    bool running = false;
+                    running |= m_bEnableBackgroundRunning;
+                    running |= (wndpl.showCmd != SW_HIDE) && (wndpl.showCmd != SW_MINIMIZE) && (wndpl.showCmd != SW_SHOWMINIMIZED) && (wndpl.showCmd != SW_SHOWMINNOACTIVE) && (GetActiveWindow() == m_hWindow);
+                    if (running)
                     {
                         for_each(this.Updated.begin(), this.Updated.end(), [](action& action) { action(); });
                     }

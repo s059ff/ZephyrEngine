@@ -167,6 +167,21 @@ namespace ZephyrSharp
                 }
             }
 
+            /// <summary>
+            /// ウィンドウがアクティブでない時もイベントループを実行するかどうかを取得または設定します。
+            /// </summary>
+            property bool EnableBackgroundRunning
+            {
+                bool get()
+                {
+                    return Native->enable_background_running;
+                }
+                void set(bool b)
+                {
+                    Native->enable_background_running = b;
+                }
+            }
+
         public:
 
             /// <summary>

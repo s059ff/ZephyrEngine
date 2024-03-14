@@ -111,6 +111,13 @@ namespace zephyr
 
             __declspec(property(get = get_height)) int height;
 
+            __declspec(
+                property(
+                    get = get_enable_background_running,
+                    put = set_enable_background_running
+                )
+            ) bool enable_background_running;
+
             void* get_instnace_handle() const { return m_hInstance; }
 
             void* get_window_handle() const { return m_hWindow; }
@@ -118,6 +125,10 @@ namespace zephyr
             int get_width() const { return m_width; }
 
             int get_height() const { return m_height; }
+
+            bool get_enable_background_running() const { return m_bEnableBackgroundRunning; }
+
+            void set_enable_background_running(bool b) { m_bEnableBackgroundRunning = b; }
 
         public:
 
@@ -150,6 +161,8 @@ namespace zephyr
             int m_width, m_height;
 
             void *m_hIcon, *m_hIconSmall;
+
+            bool m_bEnableBackgroundRunning;
         };
     }
 }
