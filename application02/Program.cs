@@ -1,6 +1,10 @@
-﻿using ZephyrSharp.GameSystem;
+//#define DebugMode
+#define TrainingMode
+
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
+using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
 using ZephyrSharp.Sound;
 using ZephyrTools.CommandRunner;
@@ -10,15 +14,22 @@ using static GameScript;
 
 class Program
 {
+    public static bool ResetSceneSignal = false;
+
     static void Main(string[] args)
     {
         Window window = new Window();
-        window.Create("application02", (int)DisplayWidth, (int)DisplayHeight);
+        window.Create("application02", DisplayWidth, DisplayHeight);
+#if TrainingMode
+        window.EnableBackgroundRunning = true;
+#else
+        window.EnableBackgroundRunning = false;
+#endif
 
         GraphicsDevice.Instance.Create(window, FullScreen);
         SoundDevice.Instance.Create(window.Handle);
 
-#if DEBUG
+#if DebugMode
         var runner = CommandRunner.Execute();
         var monitor = GameSystemMonitor.Execute();
 #endif
@@ -32,20 +43,41 @@ class Program
 
         window.Updated += () =>
         {
-            if (sceneResetCondition())
+#if TrainingMode
+            if (ResetSceneSignal)
+            {
+                ResetScene();
+                ResetSceneSignal = false;
+            }
+#else
+            bool flag = false;
+            flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("player"))) == null;
+            //flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy"))) == null;
+            if (flag)
             {
                 ResetScene();
             }
+#endif
 
+#if TrainingMode
+            bool rendering = pressed(Keyboard.KeyCode.F11) | pressed(Keyboard.KeyCode.F12);
+            bool vsync = pressed(Keyboard.KeyCode.F11);
+#else
+            bool rendering = true;
+            bool vsync = true;
+#endif
             EngineScript.update();
             GameScript.update();
-
-            GraphicsDeviceContext.Instance.Clear(ColorCode.Black);
             Entity.BroadcastMessage(UpdateMessage);
-            Entity.BroadcastMessage(RenderMessage);
-            Entity.BroadcastMessage(TranslucentRenderMessage);
-            Entity.BroadcastMessage(DrawMessage);
-            GraphicsDeviceContext.Instance.Present();
+
+            if (rendering)
+            {
+                GraphicsDeviceContext.Instance.Clear(ColorCode.Black);
+                Entity.BroadcastMessage(RenderMessage);
+                Entity.BroadcastMessage(TranslucentRenderMessage);
+                Entity.BroadcastMessage(DrawMessage);
+                GraphicsDeviceContext.Instance.Present(vsync ? 1 : 0);
+            }
 
             Entity.Update();
         };
@@ -61,7 +93,7 @@ class Program
         }
         finally
         {
-#if DEBUG
+#if DebugMode
             GameSystemMonitor.Shutdown(monitor);
             CommandRunner.Shutdown(runner);
 #endif
@@ -160,7 +192,12 @@ class Program
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(Friend));
             entity.Attach(new SquadronComponent("Gargoyle"));
+#if TrainingMode
+            entity.Attach(new LearnablePilotComponent());
+#else
             entity.Attach(new PlayerPilotComponent());
+#endif
+            entity.Attach(new EnvironmentObservationComponent());
             entity.Attach(new WindComponent());
             entity.Attach(new AircraftHUDComponent());
 
