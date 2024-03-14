@@ -115,13 +115,12 @@ class GunBulletComponent : CustomEntityComponent
             {
                 if (this.FromPlayer)
                 {
-                    if (aircraft.Armor > 0)
-                        Entity.SendMessage(player, "notice", "Hit");
-                    else
-                        Entity.SendMessage(player, "notice", "Destroyed");
+                    Entity.SendMessage(player, "notice", (aircraft.Armor > 0) ? "Hit" : "Destroyed");
                 }
                 if (other.Name == "player")
-                    Entity.SendMessage(Entity.Find("player"), "notice", "Damaged");
+                {
+                    Entity.SendMessage(player, "notice", "Damaged");
+                }
             }
         }
         else if (other.Has<GroundComponent>())
