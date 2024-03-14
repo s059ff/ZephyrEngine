@@ -11,6 +11,8 @@ class DebugInformationDisplayComponent : CustomEntityComponent
 
     private Stopwatch stopwatch = new Stopwatch();
 
+    private int frameCount = 0;
+
     protected override void ReceiveMessage(object message, object argument)
     {
         base.ReceiveMessage(message, argument);
@@ -44,21 +46,25 @@ class DebugInformationDisplayComponent : CustomEntityComponent
         });
         this.DebugMessages["friend_count"] = friendCount.ToString();
         this.DebugMessages["enemy_count"] = enemeyCount.ToString();
+        this.DebugMessages["frame_count"] = this.frameCount.ToString();
 
-        int frameCount = Entity.Find("system").Get<SystemComponent>().FrameCount;
-        this.DebugMessages["frame_count"] = frameCount.ToString();
-        if (frameCount % 60 == 0)
+        if (this.frameCount == 0)
+        {
+            this.DebugMessages["frame_rate"] = "N/A";
+        }
+        else if (this.frameCount % 60 == 0)
         {
             this.stopwatch.Stop();
 
             var milliseconds = this.stopwatch.ElapsedMilliseconds;
-            var frameRate = 60.0 * 1000.0 / (double)milliseconds;
+            var frameRate = 60.0 * 1000.0 / milliseconds;
 
-            this.DebugMessages["frames_per_sec"] = frameRate.ToString();
+            this.DebugMessages["frame_rate"] = frameRate.ToString();
 
             this.stopwatch.Reset();
             this.stopwatch.Start();
         }
+        this.frameCount++;
     }
 
     private void draw()
