@@ -319,6 +319,13 @@ public static class EngineScript
             return value + ((desiredValue > value) ? delta : -delta);
     }
 
+    public static float[] linspace(float startval, float endval, int steps)
+    {
+        float interval = (endval / abs(endval)) * abs(endval - startval) / (steps - 1);
+        return (from val in Enumerable.Range(0, steps)
+                select startval + (val * interval)).ToArray();
+    }
+
     public static float ToMeterPerSecond(float velocity)
     {
         return velocity * 60;
