@@ -91,6 +91,7 @@
     <Compile Include="components\AircraftSmokeComponent.cs" />
     <Compile Include="components\CustomEntityComponent.cs" />
     <Compile Include="components\DebugInformationDisplayComponent.cs" />
+    <Compile Include="components\EnvironmentObservationComponent.cs" />
     <Compile Include="components\ExplosionComponent.cs" />
     <Compile Include="components\FixedPointCameraComponent.cs" />
     <Compile Include="components\GameSpaceComponent.cs" />

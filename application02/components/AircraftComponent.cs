@@ -393,6 +393,20 @@ public class AircraftComponent : CustomEntityComponent
         this.RollInput = clamp(this.RollInput, -1.0f, 1.0f);
         this.YawInput = clamp(this.YawInput, -1.0f, 1.0f);
 
+        #region アナログスティック入力を正規化
+        {
+            // ジョイスティックにおける axis.magnitude <= 1 の制約を, 他の入力方式 (キーボード, リモートコントロール) にも課す
+            float x = this.RollInput;
+            float y = this.PitchInput;
+            float magnitude = (float)Math.Sqrt(x * x + y * y);
+            if (1.0f < magnitude)
+            {
+                this.RollInput /= magnitude;
+                this.PitchInput /= magnitude;
+            }
+        }
+        #endregion
+
         #region エンジン推力による前進
         {
             this.EnginePower = clamp(this.EnginePower + 0.004f * this.ThrottleInput, 0.25f, 1.0f);
@@ -649,6 +663,33 @@ public class AircraftComponent : CustomEntityComponent
             }
         }
         #endregion
+
+        {
+            var observer = this.Owner.Get<EnvironmentObservationComponent>();
+            if (observer != null)
+            {
+                var ground = Entity.Find("ground");
+                var target = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
+                var threat = Entity.Find(e =>
+                {
+                    var missile = e.Get<MissileComponent>();
+                    return (missile != null && missile.TargetEntity == this.Owner && missile.Locking);
+                });
+                var gamespace = Entity.Find("gamespace");
+
+                const float cp = 1e-4f;
+                const float cv = 1e-1f;
+
+                Matrix3x3 inv3x3 = this.Transform.Matrix._Matrix3x3.Inverse;
+
+                float altitude = (ground.Get<CollisionComponent>().Object as CurvedSurfaceCollisionObject).ComputeHeight(this.Transform.Position);
+                observer.Player.Altitude = altitude * cp;
+                observer.Player.EnginePower = this.EnginePower;
+                observer.Player.Position = this.Transform.Position * cp;
+                observer.Player.EulerAngles = MatrixDecomposeYawPitchRoll(this.Transform.Matrix._Matrix3x3) / PI;
+                observer.Player.Velocity = this.Physics.Velocity * inv3x3 * cv;
+            }
+        }
     }
 
     public void TakeDamage(float damage)
@@ -677,6 +718,12 @@ public class AircraftComponent : CustomEntityComponent
                 var camera = Entity.Find("camera");
                 camera.Get<FixedPointCameraComponent>()?.Activate();
             }
+        }
+
+        if (this.Owner.Has<EnvironmentObservationComponent>())
+        {
+            var observer = this.Owner.Get<EnvironmentObservationComponent>();
+            observer.Player.TakenDamage += damage;
         }
     }
 
@@ -855,5 +902,22 @@ public class AircraftComponent : CustomEntityComponent
     static Vector3 reverseX(Vector3 v)
     {
         return new Vector3(-v.X, v.Y, v.Z);
+    }
+
+    private static Vector3 MatrixDecomposeYawPitchRoll(Matrix3x3 mat)
+    {
+        Vector3 euler = new Vector3();
+        euler.X = asin(-mat.M32);                  // Pitch
+        if (cos(euler.X) > 0.0001)                 // Not at poles
+        {
+            euler.Y = atan2(mat.M31, mat.M33);     // Yaw
+            euler.Z = atan2(mat.M12, mat.M22);     // Roll
+        }
+        else
+        {
+            euler.Y = 0.0f;                         // Yaw
+            euler.Z = atan2(-mat.M21, mat.M11);    // Roll
+        }
+        return euler;
     }
 }
