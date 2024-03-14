@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
 using static EngineScript;
@@ -83,8 +84,24 @@ class DebugInformationDisplayComponent : CustomEntityComponent
 
             foreach (var message in this.DebugMessages)
             {
-                write($"{message.Key}: {message.Value}");
-                translate(0.0f, -1.0f, 0.0f);
+                string key = message.Key.Replace("\r", string.Empty);
+                string[] values = message.Value.Replace("\r", string.Empty).Split('\n').Where(s => s != string.Empty).ToArray();
+                if(values.Length == 1)
+                {
+                    write($"{key}: {values.First()}");
+                    translate(0.0f, -1.0f, 0.0f);
+                }
+                else if (values.Length > 1)
+                {
+                    write($"{key}:");
+                    translate(0.0f, -1.0f, 0.0f);
+
+                    foreach (var value in values)
+                    {
+                        write($"{value}");
+                        translate(0.0f, -1.0f, 0.0f);
+                    }
+                }
             }
         }
         popMatrix();
