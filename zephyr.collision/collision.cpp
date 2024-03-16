@@ -1,4 +1,4 @@
-#include "zephyr\algorithm.h"
+﻿#include "zephyr\algorithm.h"
 #include "zephyr.linalg\Vector3.h"
 #include "zephyr.linalg\Vector4.h"
 #include "zephyr.linalg\Matrix4x3.h"
@@ -470,6 +470,19 @@ static float Height_Point_CurvedSurface(
     const matrix<float>& surface_heights,
     Matrix4x3 surface_matrix)
 {
+    // v1 ----- v2
+    // |        |
+    // |  v0    |
+    // | /      |
+    // v3 ----- v4
+
+    //    ^ +y
+    //    |
+    //    |
+    //    o-----> +x
+    //   /
+    //  * -z
+
     auto map = [](float x, float x0, float x1, float y0, float y1)
     {
         float a = (y1 - y0) / (x1 - x0);
