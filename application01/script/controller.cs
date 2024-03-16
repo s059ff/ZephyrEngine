@@ -9,44 +9,44 @@ partial void update()
     mouseY = _mouse.Y;
 }
 
-ButtonState getkey(KeyCode code)
+int getkey(Keyboard.KeyCode code)
 {
     return _keyboard.GetKeyState(code);
 }
 
-bool nowpressed(KeyCode code)
+bool nowpressed(Keyboard.KeyCode code)
 {
-    return _keyboard.GetKeyState(code) == NOWPRESSED;
+    return _keyboard.GetKeyState(code) == 1;
 }
 
-bool pressed(KeyCode code)
+bool pressed(Keyboard.KeyCode code)
 {
-    return _keyboard.GetKeyState(code) == PRESSED;
+    return _keyboard.GetKeyState(code) > 0;
 }
 
-bool released(KeyCode code)
+bool released(Keyboard.KeyCode code)
 {
-    return _keyboard.GetKeyState(code) == RELEASED;
+    return _keyboard.GetKeyState(code) <= 0;
 }
 
-bool nowreleased(KeyCode code)
+bool nowreleased(Keyboard.KeyCode code)
 {
-    return _keyboard.GetKeyState(code) == NOWRELEASED;
+    return _keyboard.GetKeyState(code) == -1;
 }
 
 bool click()
 {
-    return _mouse.Left == ButtonState.Pressed;
+    return _mouse.Left > 0;
 }
 
 bool clickL()
 {
-    return _mouse.Left == ButtonState.Pressed;
+    return _mouse.Left > 0;
 }
 
 bool clickR()
 {
-    return _mouse.Right == ButtonState.Pressed;
+    return _mouse.Right > 0;
 }
 
 int mouseX, mouseY;

@@ -62,6 +62,13 @@ public class BallComponent : EntityComponent
         Instances.AddLast(this);
     }
 
+    protected override void OnDetach()
+    {
+        base.OnDetach();
+
+        Instances.Remove(this);
+    }
+
     protected override void ReceiveMessage(object message, object argument)
     {
         base.ReceiveMessage(message, argument);

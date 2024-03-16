@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
@@ -41,7 +41,7 @@ class Program
             Entity.BroadcastMessage(TranslucentRenderMessage);
             context.Present();
 
-            if (pressed(KeyCode.Escape))
+            if (pressed(Keyboard.KeyCode.Escape))
                 window.Close();
 
             Entity.Update();

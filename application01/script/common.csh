@@ -179,14 +179,9 @@
 #define LEFT TextAlignment.Left
 #define RIGHT TextAlignment.Right
 
-#define RELEASED ButtonState.Released
-#define PRESSED ButtonState.Pressed
-#define NOWRELEASED ButtonState.NowReleased
-#define NOWPRESSED ButtonState.NowPressed
-
-#define ENTER KeyCode.Enter
-#define SPACE KeyCode.Space
-#define ESC KeyCode.Escape
+#define ENTER Keyboard.KeyCode.Enter
+#define SPACE Keyboard.KeyCode.Space
+#define ESC Keyboard.KeyCode.Escape
 
 // ---------- Using Default Namespace ----------
 using System;
