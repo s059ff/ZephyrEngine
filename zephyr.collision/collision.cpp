@@ -470,10 +470,6 @@ static float Height_Point_CurvedSurface(
     const matrix<float>& surface_heights,
     Matrix4x3 surface_matrix)
 {
-    const int N = surface_heights.rows;
-
-    Matrix4x3 local = surface_matrix.inverse;
-
     auto map = [](float x, float x0, float x1, float y0, float y1)
     {
         float a = (y1 - y0) / (x1 - x0);
@@ -481,44 +477,70 @@ static float Height_Point_CurvedSurface(
         return y;
     };
 
-    Vector3 local_point = point * local;
-    int i = map(local_point.y, 0.5f, -0.5f, 0, N - 1);
-    int j = map(local_point.x, -0.5f, 0.5f, 0, N - 1);
+    Vector3 local_point = point * surface_matrix.inverse;
+    float x0 = local_point.x;
+    float y0 = local_point.y;
 
-    float x1 = map(j, 0, N - 1, -0.5f, 0.5f);
-    float y1 = map(i, 0, N - 1, 0.5f, -0.5f);
+    const int N = surface_heights.rows;
+
+    int i = map(y0, 0.5f, -0.5f, 0, N - 1);
+    int j = map(x0, -0.5f, 0.5f, 0, N - 1);
+
+    float xmin = map(j, 0, N - 1, -0.5f, 0.5f);
+    float xmax = map(j + 1, 0, N - 1, -0.5f, 0.5f);
+
+    float ymin = map(i + 1, 0, N - 1, 0.5f, -0.5f);
+    float ymax = map(i, 0, N - 1, 0.5f, -0.5f);
+
+    float x1 = xmin;
+    float y1 = ymax;
     float z1 = -surface_heights(i, j);
 
-    float x2 = map(j + 1, 0, N - 1, -0.5f, 0.5f);
-    float y2 = map(i, 0, N - 1, 0.5f, -0.5f);
+    float x2 = xmax;
+    float y2 = ymax;
     float z2 = -surface_heights(i, j + 1);
 
-    float x3 = map(j, 0, N - 1, -0.5f, 0.5f);
-    float y3 = map(i + 1, 0, N - 1, 0.5f, -0.5f);
+    float x3 = xmin;
+    float y3 = ymin;
     float z3 = -surface_heights(i + 1, j);
 
-    float x4 = map(j + 1, 0, N - 1, -0.5f, 0.5f);
-    float y4 = map(i + 1, 0, N - 1, 0.5f, -0.5f);
+    float x4 = xmax;
+    float y4 = ymin;
     float z4 = -surface_heights(i + 1, j + 1);
 
-    Vector3 v1 = Vector3(x1, y1, z1) * surface_matrix;
-    Vector3 v2 = Vector3(x2, y2, z2) * surface_matrix;
-    Vector3 v3 = Vector3(x3, y3, z3) * surface_matrix;
-    Vector3 v4 = Vector3(x4, y4, z4) * surface_matrix;
+    assert(xmin <= x0 && x0 <= xmax);
+    assert(ymin <= y0 && y0 <= ymax);
 
-    // 左上か右下か調べる
-    if ((x1 - point.x) + (z1 - point.z) < 1)
+    Vector2 u0 = Vector2(x0, y0);
+    Vector2 u1 = Vector2(x1, y1);
+    Vector2 u2 = Vector2(x2, y2);
+    Vector2 u3 = Vector2(x3, y3);
+    Vector2 u4 = Vector2(x4, y4);
+
+    Vector3 v1 = Vector3(x1, y1, z1);
+    Vector3 v2 = Vector3(x2, y2, z2);
+    Vector3 v3 = Vector3(x3, y3, z3);
+    Vector3 v4 = Vector3(x4, y4, z4);
+
+    float cross_product = outer(u2 - u3, u0 - u3);
+
+    Vector3 plane_point;
+    Vector3 plane_normal;
+    if (0 <= cross_product)
     {
-        // 左上
-        Vector3 n = outer(v1 - v3, v2 - v3);
-        return Height_Point_PlaneSurface(point, v1, n);
+        plane_point = v1;
+        plane_normal = outer(v1 - v3, v2 - v3);
     }
     else
     {
-        // 右下
-        Vector3 n = outer(v2 - v3, v4 - v3);
-        return Height_Point_PlaneSurface(point, v1, n);
+        plane_point = v4;
+        plane_normal = outer(v2 - v3, v4 - v3);
     }
+
+    plane_point = plane_point * surface_matrix;
+    plane_normal = plane_normal * surface_matrix.get_matrix3x3();
+
+    return Height_Point_PlaneSurface(point, plane_point, plane_normal);
 }
 
 static auto CollisionPoint_SweepingPoint_Plane = CollisionPoint_LineSegment_PlaneSurface;
