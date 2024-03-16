@@ -439,17 +439,30 @@ static float Height_Point_PlaneSurface(
     Vector3 plane_point,
     Vector3 plane_normal)
 {
-    auto nx = plane_normal.x;
-    auto ny = plane_normal.y;
-    auto nz = plane_normal.z;
-    auto d = -inner(plane_normal, plane_point);
+    float x0 = plane_point.x;
+    float y0 = plane_point.y;
+    float z0 = plane_point.z;
 
-    auto x0 = point.x;
-    auto y0 = point.y;
-    auto z0 = point.z;
+    float a = plane_normal.x;
+    float b = plane_normal.y;
+    float c = plane_normal.z;
 
-    auto y1 = -(nx * x0 + nz * z0 + d) / ny;
-    return y0 - y1;
+    // a(x-x0) + b(y-y0) + c(z-z0) = 0
+    // ax + by + cz -ax0 -by0 -cz0 = 0
+    // ax + by + cz + d = 0
+    // d = -(ax0 + by0 + cz0)
+
+    float d = -(a * x0 + b * y0 + c * z0);
+
+    float x1 = point.x;
+    float y1 = point.y;
+    float z1 = point.z;
+
+    // ax1 + by* + cz1 + d = 0
+    // y* = -(ax1 + cz1 + d) / b
+
+    float y = -(a * x1 + c * z1 + d) / b;
+    return y1 - y;
 }
 
 static float Height_Point_CurvedSurface(
