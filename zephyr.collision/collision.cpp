@@ -1,4 +1,4 @@
-﻿#include "zephyr\algorithm.h"
+#include "zephyr\algorithm.h"
 #include "zephyr.linalg\Vector3.h"
 #include "zephyr.linalg\Vector4.h"
 #include "zephyr.linalg\Matrix4x3.h"
@@ -448,7 +448,7 @@ static float Height_Point_PlaneSurface(
     auto y0 = point.y;
     auto z0 = point.z;
 
-    auto y1 = -(nx * x0 + nz + z0 + d) / ny;
+    auto y1 = -(nx * x0 + nz * z0 + d) / ny;
     return y0 - y1;
 }
 
