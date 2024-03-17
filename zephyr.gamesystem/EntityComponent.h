@@ -17,6 +17,7 @@ namespace zephyr
         class EntityComponent
         {
         public:
+            virtual ~EntityComponent() {}
 
             /// <summary>
             /// コンポーネントがエンティティに取り付けられているか調べます。
