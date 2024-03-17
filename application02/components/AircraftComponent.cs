@@ -172,6 +172,8 @@ public class AircraftComponent : CustomEntityComponent
 
     public AircraftComponent(string aircraftName)
     {
+        Func<Vector3, Vector3> flip = (v) => new Vector3(-v.X, v.Y, v.Z);
+
         this.Parameter = AircraftParameters.Where((parameter) => parameter.Name == aircraftName).First();
         for (int i = 0; i < WeaponCount; i++)
         {
@@ -182,29 +184,29 @@ public class AircraftComponent : CustomEntityComponent
                     this.Weapons[0].WeaponPos = this.Parameter.WeaponPos0;
                     break;
                 case 1:
-                    this.Weapons[1].WeaponPos = reverseX(this.Parameter.WeaponPos0);
+                    this.Weapons[1].WeaponPos = flip(this.Parameter.WeaponPos0);
                     break;
                 case 2:
                     this.Weapons[2].WeaponPos = this.Parameter.WeaponPos1;
                     break;
                 case 3:
-                    this.Weapons[3].WeaponPos = reverseX(this.Parameter.WeaponPos1);
+                    this.Weapons[3].WeaponPos = flip(this.Parameter.WeaponPos1);
                     break;
                 case 4:
                     this.Weapons[4].WeaponPos = this.Parameter.WeaponPos2;
                     break;
                 case 5:
-                    this.Weapons[5].WeaponPos = reverseX(this.Parameter.WeaponPos2);
+                    this.Weapons[5].WeaponPos = flip(this.Parameter.WeaponPos2);
                     break;
                 case 6:
                     this.Weapons[6].WeaponPos = this.Parameter.WeaponPos3;
                     break;
                 case 7:
-                    this.Weapons[7].WeaponPos = reverseX(this.Parameter.WeaponPos3);
+                    this.Weapons[7].WeaponPos = flip(this.Parameter.WeaponPos3);
                     break;
             }
         }
-                
+
         this.LeftSmokeGeneratorEntity = Entity.Instantiate();
         this.LeftSmokeGeneratorEntity.Attach(new TransformComponent());
         this.LeftSmokeGeneratorEntity.Attach(new StringySmokeComponent());
@@ -481,12 +483,14 @@ public class AircraftComponent : CustomEntityComponent
         #region 主翼端の風切りエフェクト更新
         if (this.Armor > 0)
         {
+            Func<Vector3, Vector3> flip = (v) => new Vector3(-v.X, v.Y, v.Z);
+
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.Parameter.WingEdgePos);
             this.LeftSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
 
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
-            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(reverseX(this.Parameter.WingEdgePos));
+            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(flip(this.Parameter.WingEdgePos));
             this.RightSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
         }
         #endregion
@@ -729,6 +733,8 @@ public class AircraftComponent : CustomEntityComponent
 
     void Render()
     {
+        Func<Vector3, Vector3> flip = (v) => new Vector3(-v.X, v.Y, v.Z);
+
         GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
         device.SetBlendState(this.Visibility == 1.0f ? NoBlend : AlphaBlend);
         device.SetRasterizerState(CullingOn);
@@ -783,7 +789,7 @@ public class AircraftComponent : CustomEntityComponent
 
         if (this.Parameter.RightCanard != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.Parameter.CanardPos));
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(flip(this.Parameter.CanardPos));
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
@@ -821,7 +827,7 @@ public class AircraftComponent : CustomEntityComponent
 
         if (this.Parameter.RightElevator != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(reverseX(this.Parameter.ElevatorPos));
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(flip(this.Parameter.ElevatorPos));
             Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 - angular.Z * 0.5f) * 10, -0.3f, 0.3f));
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
@@ -897,27 +903,5 @@ public class AircraftComponent : CustomEntityComponent
 
         Entity.BroadcastMessage(KillMessage, this.Owner);
         Entity.Kill(this.Owner);
-    }
-
-    static Vector3 reverseX(Vector3 v)
-    {
-        return new Vector3(-v.X, v.Y, v.Z);
-    }
-
-    private static Vector3 MatrixDecomposeYawPitchRoll(Matrix3x3 mat)
-    {
-        Vector3 euler = new Vector3();
-        euler.X = asin(-mat.M32);                  // Pitch
-        if (cos(euler.X) > 0.0001)                 // Not at poles
-        {
-            euler.Y = atan2(mat.M31, mat.M33);     // Yaw
-            euler.Z = atan2(mat.M12, mat.M22);     // Roll
-        }
-        else
-        {
-            euler.Y = 0.0f;                         // Yaw
-            euler.Z = atan2(-mat.M21, mat.M11);    // Roll
-        }
-        return euler;
     }
 }
