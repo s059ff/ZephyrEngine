@@ -78,7 +78,7 @@ public class AircraftComponent : CustomEntityComponent
 
     public float Armor { get; private set; } = 1.0f;
     public float Visibility { private get; set; } = 1.0f;
-    private float EnginePower = 0.5f;
+    public float EnginePower { get; private set; } = 0.5f;
     private float GunReloadTime = 0;
     private List<Entity> GunFlushs = new List<Entity>();
     private int NextUseWeapon = 0;
@@ -667,33 +667,6 @@ public class AircraftComponent : CustomEntityComponent
             }
         }
         #endregion
-
-        {
-            var observer = this.Owner.Get<EnvironmentObservationComponent>();
-            if (observer != null)
-            {
-                var ground = Entity.Find("ground");
-                var target = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
-                var threat = Entity.Find(e =>
-                {
-                    var missile = e.Get<MissileComponent>();
-                    return (missile != null && missile.TargetEntity == this.Owner && missile.Locking);
-                });
-                var gamespace = Entity.Find("gamespace");
-
-                const float cp = 1e-4f;
-                const float cv = 1e-1f;
-
-                Matrix3x3 inv3x3 = this.Transform.Matrix._Matrix3x3.Inverse;
-
-                float altitude = (ground.Get<CollisionComponent>().Object as CurvedSurfaceCollisionObject).ComputeHeight(this.Transform.Position);
-                observer.Player.Altitude = altitude * cp;
-                observer.Player.EnginePower = this.EnginePower;
-                observer.Player.Position = this.Transform.Position * cp;
-                observer.Player.EulerAngles = MatrixDecomposeYawPitchRoll(this.Transform.Matrix._Matrix3x3) / PI;
-                observer.Player.Velocity = this.Physics.Velocity * inv3x3 * cv;
-            }
-        }
     }
 
     public void TakeDamage(float damage)
