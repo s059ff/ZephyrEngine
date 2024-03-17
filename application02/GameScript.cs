@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -58,10 +58,10 @@ public static class GameScript
     public const int CollisionGroupGround = 8;
 
     public const float SearchOperationRange = 4000;
-    public const float DisplayWidth = 1280;
-    public const float DisplayHeight = 720;
+    public const int DisplayWidth = 1280;
+    public const int DisplayHeight = 720;
     public const bool FullScreen = false;
-    public const float DisplayAspect = DisplayWidth / DisplayHeight;
+    public const float DisplayAspect = 16.0f / 9.0f;
     #endregion
 
     #region Sound script.
