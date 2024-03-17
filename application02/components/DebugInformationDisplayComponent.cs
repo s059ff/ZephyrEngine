@@ -33,6 +33,8 @@ class DebugInformationDisplayComponent : CustomEntityComponent
 
     private void update()
     {
+        this.DebugMessages["entity_count"] = Entity.EntityCount.ToString();
+
         int friendCount = 0, enemeyCount = 0;
         Entity.ForEach((e) =>
         {
