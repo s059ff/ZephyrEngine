@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
@@ -80,6 +80,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "application01", "application01\application01.csproj", "{8FE1540F-47F9-4B90-86B9-6F14D5D9E101}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "application02", "application02\application02.csproj", "{29FC8FFB-A796-4EFA-9A67-54C0ECFAD0D4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test.zephyr.sound", "test.zephyr.sound\test.zephyr.sound.vcxproj", "{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
