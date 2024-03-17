@@ -1,4 +1,6 @@
-﻿#include "GraphicsDevice.h"
+﻿#include <dxgidebug.h>
+
+#include "GraphicsDevice.h"
 #include "GraphicsDeviceContext.h"
 
 #define this (*this)
@@ -78,12 +80,13 @@ namespace zephyr
 #ifdef _DEBUG
                 if (this.available())
                 {
-                    com_ptr<ID3D11Debug> pD3dDebug;
+                    HMODULE hDll = GetModuleHandleA("dxgidebug.dll");
+                    auto DXGIGetDebugInterface = (HRESULT(*)(const IID&, void**))GetProcAddress(hDll, "DXGIGetDebugInterface");
+                    runtime_assert(DXGIGetDebugInterface != nullptr);
 
-                    HRESULT hr = this->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&pD3dDebug));
-                    runtime_assert(SUCCEEDED(hr));
-
-                    pD3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+                    com_ptr<IDXGIDebug> pDxgiDebug;
+                    runtime_assert(SUCCEEDED(DXGIGetDebugInterface(__uuidof(IDXGIDebug), reinterpret_cast<void**>(&pDxgiDebug))));
+                    runtime_assert(SUCCEEDED(pDxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL)));
                 }
 #endif
             }
