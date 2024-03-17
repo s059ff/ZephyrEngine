@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="test_serializing_gamesystem.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
