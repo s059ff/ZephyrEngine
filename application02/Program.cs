@@ -1,4 +1,4 @@
-//#define DebugMode
+﻿//#define DebugMode
 
 using System;
 using System.Runtime.CompilerServices;
@@ -22,7 +22,7 @@ class Program
         assert(args.Mode == null || args.Mode == "training" || args.Mode == "evaluation");
 
         Window window = new Window();
-        window.Create("application02", DisplayWidth, DisplayHeight);
+        window.Create(DisplayWidth, DisplayHeight);
 
         if (args.Mode == "training" || args.Mode == "evaluation")
             window.EnableBackgroundRunning = true;
@@ -90,6 +90,8 @@ class Program
             EngineScript.initialize();
             GameScript.initialize();
 
+            RuntimeHelpers.RunClassConstructor(typeof(MissileComponent).TypeHandle);
+
             Scene.ResetScene(args.Mode);
 
             window.Start();
@@ -106,6 +108,7 @@ class Program
             EngineScript.finalize();
             GameScript.finalize();
 
+            GraphicsDeviceContext.Instance.UnbindAllResources();
             GraphicsDeviceContext.Instance.Dispose();
             GraphicsDevice.Instance.Dispose();
             SoundDevice.Instance.Dispose();

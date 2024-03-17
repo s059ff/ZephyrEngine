@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
@@ -14,7 +14,7 @@ class Program
     static void Main(string[] args)
     {
         var window = new Window();
-        window.Create("Graphics + Collision Test", 1024, 768);
+        window.Create(1024, 768);
 
         var device = GraphicsDevice.Instance;
         device.Create(window);
