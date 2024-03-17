@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -10,28 +11,25 @@ using static GameScript;
 
 class LearnablePilotComponent : AbstractPilotComponent
 {
-    public LearnablePilotComponent()
+    static LearnablePilotComponent()
     {
-        const string address = "127.0.0.1";
-        const int port = 12345;
-        IPAddress host = IPAddress.Parse(address);
-        this.server = new TcpListener(host, port);
+        var process = Process.GetCurrentProcess();
+        var address = "127.0.0.1";
+        var port = 12345 + process.Id;
+        var host = IPAddress.Parse(address);
+
+        server = new TcpListener(host, port);
+        server.Start();
+        client = server.AcceptTcpClient();
+        stream = client.GetStream();
     }
 
     protected override void OnAttach()
     {
         base.OnAttach();
 
-        this.server.Start();
-    }
-
-    protected override void OnDetach()
-    {
-        base.OnDetach();
-
-        this.server.Stop();
-        this.client?.Dispose();
-        this.client = null;
+        this.SendObservationData();
+        this.ReceiveResponseOkData();
     }
 
     protected override void ReceiveMessage(object message, object argument)
@@ -50,40 +48,22 @@ class LearnablePilotComponent : AbstractPilotComponent
     {
         base.Update();
 
-        if (this.client == null || !this.client.Connected)
-        {
-            this.client = this.server.AcceptTcpClient();
-            this.stream = this.client.GetStream();
-            try
-            {
-                this.SendObservationData();
-                this.ReceiveResponseOkData();
-            }
-            catch (IOException) { }
-            catch (JsonReaderException) { }
-        }
-
         {
             TimeSpan timeout = new TimeSpan(hours: 0, minutes: 0, seconds: 30);
-            const int FPS = 60;
+            const int frameRate = 60;
 
             bool flag = false;
-            flag |= (Entity.Find("system").Get<SystemComponent>().FrameCount > timeout.TotalSeconds * FPS);
+            flag |= (Entity.Find("system").Get<SystemComponent>().FrameCount > timeout.TotalSeconds * frameRate);
             flag |= (this.Owner.Get<AircraftComponent>().Armor == 0.0f);
             //flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy")) && (e.Has<AircraftComponent>()) && (0 < e.Get<AircraftComponent>().Armor)) == null;
 
             var obs = this.Owner.Get<EnvironmentObservationComponent>();
             obs.EpisodeDone = flag;
             Program.ResetSceneSignal = flag;
-        }
 
-        try
-        {
             this.SendObservationData();
             this.ReceiveActionData();
         }
-        catch (IOException) { }
-        catch (JsonReaderException) { }
     }
 
     private void SendObservationData()
@@ -92,14 +72,14 @@ class LearnablePilotComponent : AbstractPilotComponent
         {
             string text = obs.ToJsonString();
             byte[] buffer = Encoding.UTF8.GetBytes(text);
-            this.stream.Write(buffer, 0, buffer.Length);
+            stream.Write(buffer, 0, buffer.Length);
         }
     }
 
     private void ReceiveResponseOkData()
     {
         byte[] buffer = new byte[8192];
-        int length = this.stream.Read(buffer, 0, buffer.Length);
+        int length = stream.Read(buffer, 0, buffer.Length);
         Array.Resize(ref buffer, length);
 
         string text = Encoding.UTF8.GetString(buffer);
@@ -111,7 +91,7 @@ class LearnablePilotComponent : AbstractPilotComponent
     private void ReceiveActionData()
     {
         byte[] buffer = new byte[8192];
-        int length = this.stream.Read(buffer, 0, buffer.Length);
+        int length = stream.Read(buffer, 0, buffer.Length);
         Array.Resize(ref buffer, length);
 
         string text = Encoding.UTF8.GetString(buffer);
@@ -127,7 +107,7 @@ class LearnablePilotComponent : AbstractPilotComponent
         display.DebugMessages["action"] = input.ToString(Formatting.Indented);
     }
 
-    private TcpListener server;
-    private TcpClient client;
-    private NetworkStream stream;
+    private static TcpListener server;
+    private static TcpClient client;
+    private static NetworkStream stream;
 }
