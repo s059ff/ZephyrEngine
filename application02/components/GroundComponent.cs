@@ -11,12 +11,11 @@ public class GroundComponent : CustomEntityComponent
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
-
-    GraphicsModel GraphicsModel = new GraphicsModel();
-    Texture2D Texture = new Texture2D();
-    Texture2D Texture2 = new Texture2D();
-    Texture2D MixingRateTexture = new Texture2D();
-    float[,] Heights;
+    static GraphicsModel GraphicsModel = new GraphicsModel();
+    static Texture2D Texture = new Texture2D();
+    static Texture2D Texture2 = new Texture2D();
+    static Texture2D MixingRateTexture = new Texture2D();
+    static float[,] Heights;
 
     static GroundComponent()
     {
@@ -29,17 +28,14 @@ public class GroundComponent : CustomEntityComponent
                 new VertexElement("NORMAL", 0, Format.Float3, 1, 0, VertexElement.Classification.VertexData, 0),
                 new VertexElement("TEXCOORD", 0, Format.Float2, 2, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
-    }
 
-    public GroundComponent()
-    {
         int Split = 512;
 
-        this.Texture.Create("res/texture/ground.png", Accessibility.None);
-        this.Texture2.Create("res/texture/sand.png", Accessibility.None);
-        this.MixingRateTexture.Create("res/texture/mixing_rate.png", Accessibility.None);
-        this.Heights = heightmap("res/texture/heightmap.png", Split, Split, 0, 0.025f);
-        this.GraphicsModel.CreateMeshMap(this.Heights);
+        Texture.Create("res/texture/ground.png", Accessibility.None);
+        Texture2.Create("res/texture/sand.png", Accessibility.None);
+        MixingRateTexture.Create("res/texture/mixing_rate.png", Accessibility.None);
+        Heights = heightmap("res/texture/heightmap.png", Split, Split, 0, 0.025f);
+        GraphicsModel.CreateMeshMap(Heights);
     }
 
     protected override void OnAttach()
@@ -53,14 +49,6 @@ public class GroundComponent : CustomEntityComponent
         this.Owner.Get<CollisionComponent>().Object = new CurvedSurfaceCollisionObject(new CurvedSurface() { Heights = Heights });
         this.Owner.Get<CollisionComponent>().Group = CollisionGroupGround;
         this.Owner.Get<CollisionComponent>().OtherGroups = CollisionGroupNone;
-    }
-
-    protected override void OnDestroy()
-    {
-        this.GraphicsModel.Dispose();
-        this.Texture.Dispose();
-        this.Texture2.Dispose();
-        this.MixingRateTexture.Dispose();
     }
 
     protected override void ReceiveMessage(object message, object argument)
@@ -85,23 +73,23 @@ public class GroundComponent : CustomEntityComponent
         device.SetRasterizerState(CullingOn);
         device.SetDepthStencilState(ZTestOn);
         device.SetVertexLayout(VertexLayout);
-        device.SetPrimitiveTopology(this.GraphicsModel.Topology);
+        device.SetPrimitiveTopology(GraphicsModel.Topology);
         device.SetVertexShader(VertexShader);
         device.SetPixelShader(PixelShader);
 
-        device.SetVertexBuffer(this.GraphicsModel.VertexPositions, 0);
-        device.SetVertexBuffer(this.GraphicsModel.VertexNormals, 1);
-        device.SetVertexBuffer(this.GraphicsModel.VertexTextureCoords, 2);
-        device.SetIndexBuffer(this.GraphicsModel.VertexIndices);
+        device.SetVertexBuffer(GraphicsModel.VertexPositions, 0);
+        device.SetVertexBuffer(GraphicsModel.VertexNormals, 1);
+        device.SetVertexBuffer(GraphicsModel.VertexTextureCoords, 2);
+        device.SetIndexBuffer(GraphicsModel.VertexIndices);
 
         PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(this.Texture, 0);
-        PixelShader.SetTexture(this.Texture2, 1);
-        PixelShader.SetTexture(this.MixingRateTexture, 2);
-        VertexShader.SetConstantBuffer(this.WVPMatrix, 0);
-        PixelShader.SetConstantBuffer(this.WorldMatrix, 0);
+        PixelShader.SetTexture(Texture, 0);
+        PixelShader.SetTexture(Texture2, 1);
+        PixelShader.SetTexture(MixingRateTexture, 2);
+        VertexShader.SetConstantBuffer(WVPMatrix, 0);
+        PixelShader.SetConstantBuffer(WorldMatrix, 0);
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 1);
 
-        device.DrawIndexed(this.GraphicsModel.VertexIndices.Count);
+        device.DrawIndexed(GraphicsModel.VertexIndices.Count);
     }
 }
