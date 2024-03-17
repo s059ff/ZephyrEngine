@@ -23,14 +23,13 @@ namespace ZephyrSharp
             }
 
             /// <summary>
-            /// ウィンドウを作成します。
+            /// ウィンドウを作成します。ウィンドウキャプションは実行ファイルのファイル名が設定されます。
             /// </summary>
-            /// <param name="name">キャプションの名前。</param>
             /// <param name="width">クライアント領域の幅。</param>
             /// <param name="height">クライアント領域の高さ。</param>
-            void Create(String^ name, int width, int height)
+            void Create(int width, int height)
             {
-                Native->Create(to_string(name).c_str(), width, height);
+                Native->Create(width, height);
             }
 
             /// <summary>
@@ -39,10 +38,9 @@ namespace ZephyrSharp
             /// <param name="name">キャプションの名前。</param>
             /// <param name="width">クライアント領域の幅。</param>
             /// <param name="height">クライアント領域の高さ。</param>
-            /// <param name="showFrame">フレームを表示する場合は true, 表示しない場合は false。</param>
-            void Create(String^ name, int width, int height, bool showFrame)
+            void Create(String^ name, int width, int height)
             {
-                Native->Create(to_string(name).c_str(), width, height, showFrame);
+                Native->Create(to_string(name).c_str(), width, height);
             }
 
             /// <summary>

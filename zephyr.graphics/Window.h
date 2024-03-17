@@ -22,13 +22,14 @@ namespace zephyr
             void Create(const char* name, int width, int height);
 
             /// <summary>
-            /// ウィンドウを作成します。
+            /// ウィンドウを作成します。ウィンドウキャプションは実行ファイルのファイル名が設定されます。
             /// </summary>
-            /// <param name="name">キャプションの名前。</param>
             /// <param name="width">クライアント領域の幅。</param>
             /// <param name="height">クライアント領域の高さ。</param>
-            /// <param name="showFrame">フレームを表示する場合は true, 表示しない場合は false。</param>
-            void Create(const char* name, int width, int height, bool showFrame);
+            void Create(int width, int height)
+            {
+                this->Create(nullptr, width, height);
+            }
 
             /// <summary>
             /// メッセージループを開始します。ウィンドウが閉じられるまで、この関数は終了しません。

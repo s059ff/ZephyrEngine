@@ -53,6 +53,13 @@ namespace zephyr
                 exit(EXIT_FAILURE);
 
             // ウィンドウの作成
+            char buffer[MAX_PATH] = {};
+            if (name == nullptr)
+            {
+                GetModuleFileName(NULL, buffer, MAX_PATH);
+                name = buffer + string(buffer).find_last_of('\\') + 1;
+            }
+
             m_hWindow = CreateWindow(className.c_str(), name, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, (HINSTANCE)m_hInstance, NULL);
 
             // WM_PAINTが呼ばれないようにする
@@ -72,15 +79,6 @@ namespace zephyr
 
             // 
             s_window = &this;
-        }
-
-        void Window::Create(const char* name, int width, int height, bool showFrame)
-        {
-            this.Create(name, width, height);
-            if (!showFrame)
-            {
-                this.HideFrame();
-            }
         }
 
         void Window::Start()
