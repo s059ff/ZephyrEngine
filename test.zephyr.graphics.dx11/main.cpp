@@ -34,7 +34,7 @@ float deg2rad(float degrees) { return degrees * 4.0f * atan(1.0f) / 180.0f; }
 void main()
 {
     Window window;
-    window.Create("DirectX11 �e�X�g", 800, 600);
+    window.Create(800, 600);
 
     GraphicsDevice& device = GraphicsDevice::Instance;
     GraphicsDeviceContext& context = GraphicsDeviceContext::Instance;
@@ -120,7 +120,8 @@ void main()
     ConstantBuffer constant_buffer2;
     constant_buffer2.Create(sizeof(constant_data2));
 
-    window.Updated += [&]() {
+    window.Updated += [&]()
+    {
         constant_data1.world.identity();
         constant_data1.viewing.lookAt({ -1, 1, -1 }, { 0, 0, 0 });
         constant_data1.viewing.invert();
@@ -137,7 +138,8 @@ void main()
         context.Present();
     };
 
-    window.Destroyed += [&]() {
+    window.Destroyed += [&]()
+    {
         device.Release();
     };
 

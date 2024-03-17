@@ -34,7 +34,7 @@ float deg2rad(float degrees) { return degrees * 4.0f * atan(1.0f) / 180.0f; }
 void main()
 {
     Window window;
-    window.Create("DirectX11 インスタンシング テスト", 800, 600);
+    window.Create(800, 600);
 
 	GraphicsDevice& device = GraphicsDevice::Instance;
 	GraphicsDeviceContext& context = GraphicsDeviceContext::Instance;

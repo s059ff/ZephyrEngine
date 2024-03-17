@@ -40,7 +40,7 @@ static Matrix4x3 world2 = Matrix4x3().identity().rotateX(3.14159f / 2);
 void main()
 {
     Window window;
-    window.Create("C# Collision ƒeƒXƒg", 800, 600);
+    window.Create(800, 600);
 
 	auto& device = GraphicsDevice::Instance;
 	auto& context = GraphicsDeviceContext::Instance;
