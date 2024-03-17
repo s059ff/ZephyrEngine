@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -255,7 +255,7 @@ public class AircraftComponent : CustomEntityComponent
     {
         if (other.Has<GroundComponent>())
         {
-            this.Armor = 0;
+            this.TakeDamage(1.0f);
             this.Destroy();
         }
     }
