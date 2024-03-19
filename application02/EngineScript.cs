@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZephyrSharp;
@@ -168,21 +168,21 @@ public static class EngineScript
     #endregion
 
     #region Matrix transformation functions.
-    public static void identity() { world.Identity(); }
+    public static void identity() { world = new Matrix4x3().Identity(); }
 
-    public static void translate(float x, float y, float z) { world.Translate(x, y, z); }
+    public static void translate(float x, float y, float z) { world = world.Translate(x, y, z); }
 
-    public static void translate(float x, float y) { world.Translate(x, y); }
+    public static void translate(float x, float y) { world = world.Translate(x, y); }
 
-    public static void translate(Vector3 v) { world.Translate(v.X, v.Y, v.Z); }
+    public static void translate(Vector3 v) { world = world.Translate(v.X, v.Y, v.Z); }
 
-    public static void translate(Vector2 v) { world.Translate(v.X, v.Y, 0); }
+    public static void translate(Vector2 v) { world = world.Translate(v.X, v.Y, 0); }
 
-    public static void rotate(float r) { world.RotateZ(r); }
+    public static void rotate(float r) { world = world.RotateZ(r); }
 
-    public static void scale(float sx, float sy) { world.Scale(sx, sy, 1.0f); }
+    public static void scale(float sx, float sy) { world = world.Scale(sx, sy, 1.0f); }
 
-    public static void scale(float s) { world.Scale(s); }
+    public static void scale(float s) { world = world.Scale(s); }
 
     public static void pushMatrix() { matrix_stack.Push(world); }
 
