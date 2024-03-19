@@ -132,7 +132,7 @@ class GunBulletComponent : CustomEntityComponent
             {
                 if (this.FromPlayer)
                 {
-                    Entity.SendMessage(player, "notice", (aircraft.Armor > 0) ? "Hit" : "Destroyed");
+                    Entity.SendMessage(player, NoticeMessage, (aircraft.Armor > 0) ? "Hit" : "Destroyed");
 
                     if (player.Has<EnvironmentObservationComponent>())
                     {
@@ -142,7 +142,7 @@ class GunBulletComponent : CustomEntityComponent
                 }
                 if (other.Name == "player")
                 {
-                    Entity.SendMessage(player, "notice", "Damaged");
+                    Entity.SendMessage(player, NoticeMessage, "Damaged");
                 }
             }
 

@@ -171,7 +171,7 @@ public class MissileComponent : CustomEntityComponent
                                 var player = Entity.Find("player");
                                 if (player != null)
                                 {
-                                    Entity.SendMessage(player, "notice", "Miss");
+                                    Entity.SendMessage(player, NoticeMessage, "Miss");
                                 }
                             }
                             this.Locking = false;
@@ -334,7 +334,7 @@ public class MissileComponent : CustomEntityComponent
             {
                 if (this.FromPlayer)
                 {
-                    Entity.SendMessage(player, "notice", (aircraft.Armor > 0) ? "Hit" : "Destroyed");
+                    Entity.SendMessage(player, NoticeMessage, (aircraft.Armor > 0) ? "Hit" : "Destroyed");
 
                     if (player.Has<EnvironmentObservationComponent>())
                     {
@@ -344,7 +344,7 @@ public class MissileComponent : CustomEntityComponent
                 }
                 if (other.Name == "player")
                 {
-                    Entity.SendMessage(player, "notice", "Damaged");
+                    Entity.SendMessage(player, NoticeMessage, "Damaged");
                 }
             }
         }

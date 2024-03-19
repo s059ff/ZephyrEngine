@@ -46,6 +46,7 @@ public static class GameScript
     public const string TranslucentRenderMessage = "translucent render";
     public const string DrawMessage = "draw";
     public const string KillMessage = "kill";
+    public const string NoticeMessage = "notice";
 
     public const int Friend = 0;
     public const int Enemy = 1;

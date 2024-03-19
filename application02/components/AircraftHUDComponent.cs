@@ -23,7 +23,7 @@ public class AircraftHUDComponent : CustomEntityComponent
     float RadarRange = 1000;
 
     float NoticeDisplayTime = 0;
-    string NoticeMessage = string.Empty;
+    string Message = string.Empty;
 
     static AircraftHUDComponent()
     {
@@ -51,9 +51,9 @@ public class AircraftHUDComponent : CustomEntityComponent
                 this.Draw();
                 break;
 
-            case "notice":
+            case NoticeMessage:
                 this.NoticeDisplayTime = 1;
-                this.NoticeMessage = argument as string;
+                this.Message = argument as string;
                 break;
 
             default:
@@ -687,7 +687,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         scale(0.07f);
                         translate(0, 1);
-                        write(this.NoticeMessage, TextAlignment.Center, TextAlignment.Center);
+                        write(this.Message, TextAlignment.Center, TextAlignment.Center);
                     }
                     popMatrix();
 
