@@ -104,7 +104,6 @@
     <Compile Include="components\LoggerComponent.cs" />
     <Compile Include="components\NonPlayerPilotComponent.cs" />
     <Compile Include="components\PlayerPilotComponent.cs" />
-    <Compile Include="components\GameScoreCalculatorComponent.cs" />
     <Compile Include="components\TrackingCameraComponent.cs" />
     <Compile Include="GamePad.cs" />
     <Compile Include="GameScript.cs" />
