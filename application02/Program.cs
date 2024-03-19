@@ -1,41 +1,69 @@
-﻿//#define DebugMode
-
+﻿using CommandLine;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Input;
 using ZephyrSharp.Sound;
-using static EngineScript;
-using static GameScript;
+using ZephyrTools.CommandRunner;
+using ZephyrTools.GameSystemMonitor;
 
 class Program
 {
     public static bool ResetSceneSignal = false;
 
+    public class Arguments
+    {
+        [Option('m', "mode", Default = "play")]
+        public string Mode { get; set; }
+
+        [Option('w', "width", Default = 1920)]
+        public int WindowWidth { get; set; }
+
+        [Option('h', "height", Default = 1080)]
+        public int WindowHeight { get; set; }
+
+        [Option('f', "fullscreen")]
+        public bool FullScreen { get; set; }
+
+        [Option("enemy_count", Default = 0)]
+        public int EnemyCount { get; set; }
+
+        [Option("friend_count", Default = 0)]
+        public int FriendCount { get; set; }
+    }
+
+    private static Arguments ParseArgs()
+    {
+        Arguments args = Parser.Default.ParseArguments<Arguments>(Environment.GetCommandLineArgs()).Value;
+        Debug.Assert(new string[] { "play", "debug", "training", "evaluation" }.Contains(args.Mode));
+        return args;
+    }
+
     static void Main()
     {
-        var args = new
-        {
-            Mode = Environment.GetCommandLineArgs().Length > 1 ? Environment.GetCommandLineArgs()[1].ToLower() : null,
-        };
-        assert(args.Mode == null || args.Mode == "training" || args.Mode == "evaluation");
+        var args = ParseArgs();
 
         Window window = new Window();
-        window.Create(DisplayWidth, DisplayHeight);
+        window.Create(args.WindowWidth, args.WindowHeight);
 
         if (args.Mode == "training" || args.Mode == "evaluation")
             window.EnableBackgroundRunning = true;
         else
             window.EnableBackgroundRunning = false;
 
-        GraphicsDevice.Instance.Create(window, FullScreen);
+        GraphicsDevice.Instance.Create(window, args.FullScreen);
         SoundDevice.Instance.Create(window.Handle);
 
-#if DebugMode
-        var runner = CommandRunner.Execute();
-        var monitor = GameSystemMonitor.Execute();
-#endif
+        CommandRunner runner = null;
+        GameSystemMonitor monitor = null;
+        if (args.Mode == "debug")
+        {
+            runner = CommandRunner.Execute();
+            monitor = GameSystemMonitor.Execute();
+        }
 
         window.Updated += () =>
         {
@@ -43,7 +71,7 @@ class Program
             {
                 if (ResetSceneSignal)
                 {
-                    Scene.ResetScene(args.Mode);
+                    Scene.ResetScene(args);
                     ResetSceneSignal = false;
                 }
             }
@@ -54,31 +82,30 @@ class Program
                 //flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy"))) == null;
                 if (flag)
                 {
-                    Scene.ResetScene(args.Mode);
+                    Scene.ResetScene(args);
                 }
             }
 
             bool rendering, vsync;
             if (args.Mode == "training")
             {
-                rendering = pressed(Keyboard.KeyCode.F11) | pressed(Keyboard.KeyCode.F12);
-                vsync = pressed(Keyboard.KeyCode.F11);
+                rendering = GameScript.pressed(Keyboard.KeyCode.F11) | GameScript.pressed(Keyboard.KeyCode.F12);
+                vsync = GameScript.pressed(Keyboard.KeyCode.F11);
             }
             else
             {
                 rendering = true;
                 vsync = true;
             }
-            EngineScript.update();
-            GameScript.update();
-            Entity.BroadcastMessage(UpdateMessage);
+            GameScript.Update();
+            Entity.BroadcastMessage(GameScript.UpdateMessage);
 
             if (rendering)
             {
                 GraphicsDeviceContext.Instance.Clear(ColorCode.Black);
-                Entity.BroadcastMessage(RenderMessage);
-                Entity.BroadcastMessage(TranslucentRenderMessage);
-                Entity.BroadcastMessage(DrawMessage);
+                Entity.BroadcastMessage(GameScript.RenderMessage);
+                Entity.BroadcastMessage(GameScript.TranslucentRenderMessage);
+                Entity.BroadcastMessage(GameScript.DrawMessage);
                 GraphicsDeviceContext.Instance.Present(vsync ? 1 : 0);
             }
 
@@ -87,28 +114,27 @@ class Program
 
         try
         {
-            EngineScript.initialize();
-            GameScript.initialize();
+            GameScript.Create();
 
             RuntimeHelpers.RunClassConstructor(typeof(MissileComponent).TypeHandle);
 
-            Scene.ResetScene(args.Mode);
+            Scene.ResetScene(args);
 
             window.Start();
         }
         finally
         {
-#if DebugMode
-            GameSystemMonitor.Shutdown(monitor);
-            CommandRunner.Shutdown(runner);
-#endif
+            if (args.Mode == "debug")
+            {
+                GameSystemMonitor.Shutdown(monitor);
+                CommandRunner.Shutdown(runner);
+            }
 
             Entity.Clear();
+            GC.Collect();
 
-            EngineScript.finalize();
-            GameScript.finalize();
+            GameScript.Release();
 
-            GraphicsDeviceContext.Instance.UnbindAllResources();
             GraphicsDeviceContext.Instance.Dispose();
             GraphicsDevice.Instance.Dispose();
             SoundDevice.Instance.Dispose();

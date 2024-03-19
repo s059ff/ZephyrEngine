@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
+using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
 
 using static EngineScript;
@@ -8,13 +9,12 @@ using static GameScript;
 
 class Scene
 {
-    const int FriendCount = 0;
-    const int EnemyCount = 0;
-
-    public static void ResetScene(string mode)
+    public static void ResetScene(Program.Arguments args)
     {
         Entity.Clear();
         GC.Collect();
+
+        float aspectRatio = GraphicsDeviceContext.Instance.BackBufferAspectRatio;
 
         Entity system = Entity.Instantiate();
         system.Name = "system";
@@ -34,7 +34,7 @@ class Scene
         camera.Attach(new TransformComponent());
         camera.Attach(new TrackingCameraComponent());
         camera.Attach(new FixedPointCameraComponent());
-        camera.Attach(new SoundObserverComponent() { EffectRange = 10000, SonicSpeed = SonicSpeed * 2 });
+        camera.Attach(new SoundObserverComponent() { EffectRange = 10000, SonicSpeed = 340.0 / 60.0 * 2 });
         camera.Get<TrackingCameraComponent>().Activate();
 
         Entity camera2d = Entity.Instantiate();
@@ -45,12 +45,12 @@ class Scene
         Entity projector = Entity.Instantiate();
         projector.Name = "projector";
         projector.Attach(new ProjectorComponent());
-        projector.Get<ProjectorComponent>().SetPerspectiveMode(PI / 3, DisplayAspect, 1.0f, 4096.0f);
+        projector.Get<ProjectorComponent>().SetPerspectiveMode(PI / 3, aspectRatio, 1.0f, 4096.0f);
 
         Entity projector2d = Entity.Instantiate();
         projector2d.Name = "projector2d";
         projector2d.Attach(new ProjectorComponent());
-        projector2d.Get<ProjectorComponent>().SetOrthogonalMode(DisplayAspect * 2.0f, 2.0f, 0, 1);
+        projector2d.Get<ProjectorComponent>().SetOrthogonalMode(aspectRatio * 2.0f, 2.0f, 0, 1);
 
         Entity light = Entity.Instantiate();
         light.Name = "light";
@@ -81,23 +81,27 @@ class Scene
             entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new EnvironmentObservationComponent());
-            if (mode == "training" || mode == "evaluation")
+            if (args.Mode == "training" || args.Mode == "evaluation")
                 entity.Attach(new LearnablePilotComponent());
             else
                 entity.Attach(new PlayerPilotComponent());
-            // entity.Attach(new WindComponent());
+            //entity.Attach(new WindComponent());
             entity.Attach(new AircraftHUDComponent());
 
-            //Quaternion q = new Quaternion(new Vector3(1.0f, -1.0f, 1.0f).Normalize(), deg2rad(135));
-            Quaternion q = new Quaternion(new Vector3(1.0f, 0.0f, 0.0f), deg2rad(45));
-            entity.Get<TransformComponent>().Matrix._Matrix3x3 = new Matrix3x3(q);
-            entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, 0);
-
+            if (args.Mode == "play")
+            {
+                entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
+            }
+            else if (args.Mode == "training" || args.Mode == "evaluation")
+            {
+                entity.Get<TransformComponent>().Matrix._Matrix3x3 = new Matrix3x3().Identity().RotateY(uniform(0.0f, PI2)).RotateX(deg2rad(60)).RotateZ(uniform(0.0f, PI2));
+                entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, 0);
+            }
 
             entity.Get<SoundComponent>().LoopPlay();
         }
 
-        for (int i = 0; i < FriendCount; i++)
+        for (int i = 0; i < args.FriendCount; i++)
         {
             Entity entity = Entity.Instantiate();
             entity.Name = string.Format("friend{0}", i + 1);
@@ -115,9 +119,8 @@ class Scene
             entity.Get<SoundComponent>().LoopPlay();
         }
 
-        //var x = linspace(-8000, +8000, EnemyCount);
-        var x = new float[] { 0 };
-        for (int i = 0; i < EnemyCount; i++)
+        var x = linspace(-1000, +1000, args.EnemyCount);
+        for (int i = 0; i < args.EnemyCount; i++)
         {
             Entity entity = Entity.Instantiate();
             entity.Name = string.Format("enemy{0}", i + 1);
@@ -134,7 +137,7 @@ class Scene
             entity.Get<TransformComponent>().Matrix.RotateX(uniform(-PI, PI));
             entity.Get<TransformComponent>().Matrix.RotateY(uniform(-PI, PI));
             entity.Get<TransformComponent>().Matrix.RotateZ(uniform(-PI, PI));
-            entity.Get<TransformComponent>().Position = new Vector3(x[i], 2000, 1000);
+            entity.Get<TransformComponent>().Position = new Vector3(x[i], 2000, 2000);
             entity.Get<SoundComponent>().LoopPlay();
         }
     }
