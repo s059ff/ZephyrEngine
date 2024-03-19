@@ -293,9 +293,9 @@ public class MissileComponent : CustomEntityComponent
     {
         {
             Entity e = Entity.Instantiate();
-            e.Attach<TransformComponent>().Position = point;
-            e.Attach<ExplosionComponent>();
-            // MissileSmokeComponent にて一定時間後に自動消滅
+            e.Attach(new TransformComponent() { Position = point });
+            e.Attach(new ExplosionComponent());
+            e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.5f * 1.0f / 64 });
         }
 
         {

@@ -18,7 +18,6 @@ public class ExplosionComponent : CustomEntityComponent
     static VertexBuffer<Vector2> VertexTextureCoords = new VertexBuffer<Vector2>();
 
     const int TextureCount = 64;
-    const float CountSpeed = 0.5f * 1.0f / TextureCount;
     const int InstanceCount = 64;
 
     class Instance
@@ -27,7 +26,6 @@ public class ExplosionComponent : CustomEntityComponent
         public float Scale;
     }
 
-    float Time = 0;
     Instance[] Instances = new Instance[InstanceCount];
 
     static ExplosionComponent()
@@ -80,26 +78,12 @@ public class ExplosionComponent : CustomEntityComponent
 
         switch (message as string)
         {
-            case UpdateMessage:
-                this.Update();
-                break;
-
             case TranslucentRenderMessage:
                 this.TransparentRender();
                 break;
 
             default:
                 break;
-        }
-    }
-
-    void Update()
-    {
-        this.Time += CountSpeed;
-
-        if (1.0f <= this.Time)
-        {
-            Entity.Kill(this.Owner);
         }
     }
 
@@ -118,6 +102,7 @@ public class ExplosionComponent : CustomEntityComponent
         var viewing = this.ViewingMatrix;
         var projection = this.ProjectionMatrix;
 
+        float time = this.Owner.Get<LimitedLifeTimeComponent>().CountTime;
         for (int i = 0; i < InstanceCount; i++)
         {
             var instance = this.Instances[i];
@@ -127,8 +112,8 @@ public class ExplosionComponent : CustomEntityComponent
             world.Scale(instance.Scale);
 
             InstanceWVPs[i] = world * projection;
-            InstanceAlphas[i] = new Vector4((1.0f - this.Time) * 0.05f, 0, 0, 0);
-            InstanceTexIndices[i] = new Vector4(this.Time * TextureCount, 0, 0, 0);
+            InstanceAlphas[i] = new Vector4((1.0f - time) * 0.05f, 0, 0, 0);
+            InstanceTexIndices[i] = new Vector4(time * TextureCount, 0, 0, 0);
         }
 
         device.SetVertexBuffer(VertexPositions, 0);
