@@ -15,21 +15,30 @@ class TimerComponent : CustomEntityComponent
     {
         base.ReceiveMessage(message, argument);
 
-        if (message as string == UpdateMessage)
+        switch (message as string)
         {
-            if (this.Enable)
-            {
-                this.CountTime += this.CountSpeed;
-                if (1.0f <= this.CountTime)
-                {
-                    this.Ticked();
-                    this.Enable = false;
+            case UpdateMessage:
+                this.Update();
+                break;
+            default:
+                break;
+        }
+    }
 
-                    if (this.Repeat)
-                    {
-                        this.CountTime = 0;
-                        this.Enable = true;
-                    }
+    private void Update()
+    {
+        if (this.Enable)
+        {
+            this.CountTime += this.CountSpeed;
+            if (1.0f <= this.CountTime)
+            {
+                this.Ticked();
+                this.Enable = false;
+
+                if (this.Repeat)
+                {
+                    this.CountTime = 0;
+                    this.Enable = true;
                 }
             }
         }
