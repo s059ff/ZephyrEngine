@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -18,6 +18,9 @@ public class GroundComponent : CustomEntityComponent
     static Texture2D MixingRateTexture = new Texture2D();
     static float[,] Heights;
 
+    const int NumVerticesH = 512;
+    const int NumVerticesV = 512;
+
     static GroundComponent()
     {
         VertexShader.CreateFromFile("res/shader/GroundVertexShader.hlsl");
@@ -29,8 +32,6 @@ public class GroundComponent : CustomEntityComponent
                 new VertexElement("NORMAL", 0, Format.Float3, 1, 0, VertexElement.Classification.VertexData, 0),
                 new VertexElement("TEXCOORD", 0, Format.Float2, 2, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
-
-        int Split = 512;
 
         Texture.Create("res/texture/ground.png", Accessibility.None);
         Texture2.Create("res/texture/sand.png", Accessibility.None);
