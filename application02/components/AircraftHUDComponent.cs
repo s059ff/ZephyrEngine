@@ -109,8 +109,6 @@ public class AircraftHUDComponent : CustomEntityComponent
             Color Green = new Color(0, 0.8f, 0, 0.8f);
             Color DarkGray = new Color(0.1f, 0.1f, 0.1f, 0.8f);
 
-            float aspectRatio = GraphicsDeviceContext.Instance.BackBufferAspectRatio;
-
             identity();
 
             blend(HalfAddition);
@@ -336,7 +334,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                             {
                                 var x = v.X / v.W;
                                 var y = v.Y / v.W;
-                                translate(x * aspectRatio, y);
+                                translate(x * WindowAspectRatio, y);
                                 scale(0.06f);
 
                                 var organization = e.Get<AircraftAvionicsComponent>().Organization;
@@ -406,7 +404,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                         Vector2 u1 = new Vector2(v1.X / v1.W, v1.Y / v1.W);
                         Vector2 u2 = new Vector2(v2.X / v2.W, v2.Y / v2.W);
                         Vector2 u3 = u1 + (u1 - u2);
-                        translate(u3.X * aspectRatio, u3.Y);
+                        translate(u3.X * WindowAspectRatio, u3.Y);
                         scale(0.1f);
 
                         color(((p2 - p1).SquaredMagnitude < square(AircraftComponent.Radius)) ? Red : Green);
@@ -437,7 +435,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                             {
                                 var x = p.X / p.W;
                                 var y = p.Y / p.W;
-                                translate(x * aspectRatio, y);
+                                translate(x * WindowAspectRatio, y);
                                 rotate(deg2rad(45.0f));
                                 scale(0.06f / sqrt(2));
                                 draw(TargetTexture);
@@ -457,7 +455,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                         {
                             var x = p.X / p.W;
                             var y = p.Y / p.W;
-                            translate(x * aspectRatio, y);
+                            translate(x * WindowAspectRatio, y);
                             rotate(deg2rad(45.0f));
                             scale(0.06f / sqrt(2));
                             draw(TargetTexture);

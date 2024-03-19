@@ -55,6 +55,8 @@ public static class GameScript
 
     public const float SearchOperationRange = 4000;
 
+    public static float WindowAspectRatio { get { return GraphicsDeviceContext.Instance.BackBufferAspectRatio; } }
+
     #region Controller scripts.
     private static GamePad gamePad = new GamePad();
 

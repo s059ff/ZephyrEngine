@@ -14,8 +14,6 @@ class Scene
         Entity.Clear();
         GC.Collect();
 
-        float aspectRatio = GraphicsDeviceContext.Instance.BackBufferAspectRatio;
-
         Entity system = Entity.Instantiate();
         system.Name = "system";
         system.Attach(new SystemComponent());
@@ -45,12 +43,12 @@ class Scene
         Entity projector = Entity.Instantiate();
         projector.Name = "projector";
         projector.Attach(new ProjectorComponent());
-        projector.Get<ProjectorComponent>().SetPerspectiveMode(PI / 3, aspectRatio, 1.0f, 4096.0f);
+        projector.Get<ProjectorComponent>().SetPerspectiveMode(PI / 3, WindowAspectRatio, 1.0f, 4096.0f);
 
         Entity projector2d = Entity.Instantiate();
         projector2d.Name = "projector2d";
         projector2d.Attach(new ProjectorComponent());
-        projector2d.Get<ProjectorComponent>().SetOrthogonalMode(aspectRatio * 2.0f, 2.0f, 0, 1);
+        projector2d.Get<ProjectorComponent>().SetOrthogonalMode(WindowAspectRatio * 2.0f, 2.0f, 0, 1);
 
         Entity light = Entity.Instantiate();
         light.Name = "light";
