@@ -149,18 +149,22 @@ public class WindComponent : CustomEntityComponent
         PixelShader.SetTexture(Texture, 0);
 
         InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
-        InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
         for (int i = 0; i < InstanceCount; i++)
         {
             var instance = this.Instances[i];
             InstanceWVPs.Write(i, instance.Matrix * this.ViewingMatrix * this.ProjectionMatrix);
+        }
+        InstanceWVPs.Unlock();
 
+        InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
+        for (int i = 0; i < InstanceCount; i++)
+        {
             // 速度に応じて濃度を濃くする
+            var instance = this.Instances[i];
             float alpha = 0.15f * instance.Time * max(this.Physics.Velocity.Magnitude - 3.0f, 0.0f);
             InstanceAlphas.Write(i, alpha);
         }
         InstanceAlphas.Unlock();
-        InstanceWVPs.Unlock();
 
         device.SetInstanceBuffer(InstanceAlphas, 2);
         device.SetInstanceBuffer(InstanceWVPs, 3);

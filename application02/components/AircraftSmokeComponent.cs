@@ -18,7 +18,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
     static PixelShader PixelShader = new PixelShader();
     static Texture2D Texture = new Texture2D();
 
-    const int InstanceCount = 64;
+    const int MaxInstanceCount = 64;
     float CountSpeed = 0.05f;
 
     class Instance
@@ -27,7 +27,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
         public float Time;
     }
 
-    LinkedList<Instance> Instances = new LinkedList<Instance>();
+    List<Instance> Instances = new List<Instance>();
 
     static AircraftSmokeComponent()
     {
@@ -47,8 +47,8 @@ public class AircraftSmokeComponent : CustomEntityComponent
             new Vector2(1, 1),
         }, Accessibility.None);
 
-        InstanceAlphas.Create(InstanceCount, Accessibility.DynamicWriteOnly);
-        InstanceWVPs.Create(InstanceCount, Accessibility.DynamicWriteOnly);
+        InstanceAlphas.Create(MaxInstanceCount, Accessibility.DynamicWriteOnly);
+        InstanceWVPs.Create(MaxInstanceCount, Accessibility.DynamicWriteOnly);
 
         VertexShader.CreateFromFile("res/shader/AircraftSmokeVertexShader.hlsl");
         PixelShader.CreateFromFile("res/shader/AircraftSmokePixelShader.hlsl");
@@ -73,7 +73,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
 
         if (this.Owner.Has<TransformComponent>())
         {
-            this.Instances.AddFirst(new Instance()
+            this.Instances.Add(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position,
                 Time = 0
@@ -104,17 +104,14 @@ public class AircraftSmokeComponent : CustomEntityComponent
     {
         if (this.HasOwner && this.Owner.Has<TransformComponent>())
         {
-            this.Instances.AddFirst(new Instance()
+            this.Instances.Add(new Instance()
             {
                 Position = this.Owner.Get<TransformComponent>().Position + new Vector3(normal(0, 2), normal(0, 2), normal(0, 2)),
                 Time = 0
             });
         }
 
-        foreach (var instance in this.Instances.Where(instance => 1.0f <= instance.Time).ToArray())
-        {
-            this.Instances.Remove(instance);
-        }
+        this.Instances = this.Instances.Where(instance => (instance.Time < 1.0f)).ToList();
 
         if (this.Instances.Count == 0)
         {
@@ -126,7 +123,7 @@ public class AircraftSmokeComponent : CustomEntityComponent
             node.Time += this.CountSpeed;
         }
 
-        assert(this.Instances.Count < InstanceCount);
+        assert(this.Instances.Count < MaxInstanceCount);
     }
 
     private void TranslucentRender()
@@ -147,14 +144,10 @@ public class AircraftSmokeComponent : CustomEntityComponent
         PixelShader.SetTexture(Texture, 0);
 
         InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
-        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
-
-        int k = 0;
-        foreach (var instance in this.Instances)
+        for (int i = 0; i < this.Instances.Count; i++)
         {
-            Vector3 position = instance.Position;
+            var instance = this.Instances[i];
             float x = instance.Time;
-            float scale = clamp(-3 * sin(x) * log(x), 0, 1) * 15 + 10;
             float alpha = clamp(sin(square(1.2f - x)), 0, 1) * 0.2f;
 
             if (this.Owner.Has<LimitedLifeTimeComponent>())
@@ -163,17 +156,24 @@ public class AircraftSmokeComponent : CustomEntityComponent
                 alpha *= 1.0f - t;
             }
 
-            var world = new Matrix4x3().Identity();
+            InstanceAlphas.Write(i, alpha);
+        }
+        InstanceAlphas.Unlock();
+
+        InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
+        for (int i = 0; i < this.Instances.Count; i++)
+        {
+            var instance = this.Instances[i];
+            float x = instance.Time;
+            float scale = clamp(-3 * sin(x) * log(x), 0, 1) * 15 + 10;
+
+            Vector3 position = instance.Position;
+            Matrix4x3 world = new Matrix4x3().Identity();
             world.Translate(position * this.ViewingMatrix);
             world.Scale(scale);
 
-            InstanceWVPs.Write(k, world * this.ProjectionMatrix);
-            InstanceAlphas.Write(k, alpha);
-
-            k++;
+            InstanceWVPs.Write(i, world * this.ProjectionMatrix);
         }
-
-        InstanceAlphas.Unlock();
         InstanceWVPs.Unlock();
 
         device.SetInstanceBuffer(InstanceAlphas, 2);
