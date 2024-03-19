@@ -10,7 +10,8 @@ class GunBulletComponent : CustomEntityComponent
     static VertexLayout VertexLayout = new VertexLayout();
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
-    static VertexBuffer<uint> VertexPositions = new VertexBuffer<uint>();
+    static VertexBuffer<Vector3> VertexPositions = new VertexBuffer<Vector3>();
+    static VertexBuffer<Vector4> VertexColors = new VertexBuffer<Vector4>();
 
     public const float BulletSpeed = 40.0f;
     const float DestructivePower = 0.05f;
@@ -23,10 +24,26 @@ class GunBulletComponent : CustomEntityComponent
 
         VertexLayout.Create(new VertexElement[]
         {
-            new VertexElement("INDEX", 0, Format.SInt1, 0, 0, VertexElement.Classification.VertexData, 0),
+            new VertexElement("POSITION", 0, Format.Float3, 0, 0, VertexElement.Classification.VertexData, 0),
+            new VertexElement("COLOR", 0, Format.Float4, 1, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
 
-        VertexPositions.Create(new uint[2] { 0, 1 }, Accessibility.None);
+        VertexPositions.Create(
+            new Vector3[]
+            {
+                new Vector3(0.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 0.0f, -BulletSpeed),
+            },
+            Accessibility.None
+        );
+        VertexColors.Create(
+            new Vector4[]
+            {
+                new Vector4(1.0f, 1.0f, 0.0f, 1.0f),
+                new Vector4(0.0f, 0.0f, 0.0f, 0.0f),
+            },
+            Accessibility.None
+        );
     }
 
     public static Vector3 ComputeOptimalAimPosition(Entity myself, Entity target)
@@ -145,8 +162,7 @@ class GunBulletComponent : CustomEntityComponent
 
     private void Render()
     {
-        VertexShader.SetConstantBuffer(this.ViewingMatrix * this.ProjectionMatrix, 0);
-        VertexShader.SetConstantBuffer(new Vector4[] { new Vector4(this.Transform.Position, 1), new Vector4(this.Transform.Position - this.Transform.Forward * BulletSpeed, 1) }, 1);
+        VertexShader.SetConstantBuffer(this.Transform.Matrix * this.ViewingMatrix * this.ProjectionMatrix, 0);
 
         GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
         device.SetBlendState(Addition);
@@ -157,6 +173,7 @@ class GunBulletComponent : CustomEntityComponent
         device.SetVertexShader(VertexShader);
         device.SetPixelShader(PixelShader);
         device.SetVertexBuffer(VertexPositions, 0);
+        device.SetVertexBuffer(VertexColors, 1);
         device.Draw(2);
     }
 }
