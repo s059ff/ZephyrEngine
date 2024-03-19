@@ -6,13 +6,9 @@ using ZephyrSharp.Graphics;
 using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
 using ZephyrSharp.Sound;
-using static EngineScript;
-using Color = ZephyrSharp.Graphics.Color;
-using Font = ZephyrSharp.Graphics.Font;
 
 public static class GameScript
 {
-    #region Constant values.
     public static BlendState NoBlend = new BlendState();
     public static BlendState Addition = new BlendState();
     public static BlendState HalfAddition = new BlendState();
@@ -21,7 +17,7 @@ public static class GameScript
     public static BlendState Reverse = new BlendState();
     public static BlendState AlphaBlend = new BlendState();
 
-    public static Font Consolas = new Font();
+    public static Font DefaultFont = new Font();
 
     public static SamplerState Wrap = new SamplerState();
     public static SamplerState Mirror = new SamplerState();
@@ -58,27 +54,6 @@ public static class GameScript
     public const int CollisionGroupGround = 8;
 
     public const float SearchOperationRange = 4000;
-    public const int DisplayWidth = 1280;
-    public const int DisplayHeight = 720;
-    public const bool FullScreen = false;
-    public const float DisplayAspect = 16.0f / 9.0f;
-    #endregion
-
-    #region Sound script.
-    public const double AffectionSoundRange = 500;
-    public const double SonicSpeed = 340.0 / 60.0;
-
-    public static double volume(double distance)
-    {
-        return (distance > 0) ? clamp(AffectionSoundRange / distance, 0, 1) : 1;
-    }
-
-    public static double frequency(double vo, double vs, uint f0)
-    {
-        double k = (SonicSpeed - vo) / (SonicSpeed - vs);
-        return (uint)(k * f0);
-    }
-    #endregion
 
     #region Controller scripts.
     private static GamePad gamePad = new GamePad();
@@ -125,7 +100,7 @@ public static class GameScript
 
     public static int getPressTimeLength(GamePad.LogicalButton button)
     {
-        return max(gamePad.GetButtonState(button), 0);
+        return Math.Max(gamePad.GetButtonState(button), 0);
     }
 
     public static Tuple<double, double> getAnalogStickAxis1()
@@ -150,7 +125,7 @@ public static class GameScript
         GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
         GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetTexture(tex);
-        Graphics2D.Instance.SetMatrix(world * viewing * projection);
+        Graphics2D.Instance.SetMatrix(EngineScript.world * viewing * projection);
         Graphics2D.Instance.DrawTexture();
     }
 
@@ -159,7 +134,7 @@ public static class GameScript
         GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
         GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetTexture(tex);
-        Graphics2D.Instance.SetMatrix(world * viewing * projection);
+        Graphics2D.Instance.SetMatrix(EngineScript.world * viewing * projection);
         Graphics2D.Instance.SetVertexPositions(-0.5f, 0.5f, 0.5f, -0.5f);
         Graphics2D.Instance.SetTextureCoords(u0, v0, u1, v1);
         Graphics2D.Instance.DrawTextureWithDynamical();
@@ -170,7 +145,7 @@ public static class GameScript
         GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
         GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
         Graphics2D.Instance.SetTexture(tex);
-        Graphics2D.Instance.SetMatrix(world * viewing * projection);
+        Graphics2D.Instance.SetMatrix(EngineScript.world * viewing * projection);
         Graphics2D.Instance.SetColorThreshold(0, 0, 0, 0, 1, 1, 1, 1);
         Graphics2D.Instance.SetTextureThreshold(u0, v0, u1, v1);
         Graphics2D.Instance.DrawTextureWithThreshold();
@@ -180,7 +155,7 @@ public static class GameScript
     {
         GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
         GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
-        Graphics2D.Instance.SetMatrix(world * viewing * projection);
+        Graphics2D.Instance.SetMatrix(EngineScript.world * viewing * projection);
         Graphics2D.Instance.DrawRectangle();
     }
 
@@ -218,7 +193,7 @@ public static class GameScript
     {
         GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
         GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
-        Graphics2D.Instance.SetMatrix(world * viewing * projection);
+        Graphics2D.Instance.SetMatrix(EngineScript.world * viewing * projection);
         Graphics2D.Instance.DrawText(text, horizontal, vertical);
     }
 
@@ -233,9 +208,9 @@ public static class GameScript
     }
     #endregion
 
-    public static void initialize()
+    public static void Create()
     {
-        Consolas.Create("Consolas", 64);
+        DefaultFont.Create("Consolas", 64);
 
         NoBlend.Create(BlendOperation.None);
         Addition.Create(BlendOperation.Add, BlendFactor.One, BlendFactor.One);
@@ -255,7 +230,7 @@ public static class GameScript
         ZTestOnWriteOff.Create(true, false, false);
         ZTestOff.Create(false, false, false);
 
-        font(Consolas);
+        font(DefaultFont);
 
         ExplosionSound.Create("res/sound/explosion1.wav");
         LargeExplosionSound.Create("res/sound/explosion2.wav");
@@ -275,12 +250,12 @@ public static class GameScript
         depthStencilState.Create(false, false, false);
     }
 
-    public static void update()
+    public static void Update()
     {
         gamePad.Update();
     }
 
-    public static void finalize()
+    public static void Release()
     {
         var type = typeof(GameScript);
         var fields = type.GetFields(BindingFlags.Static);

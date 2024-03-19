@@ -1,4 +1,5 @@
-﻿using ZephyrSharp.Collision;
+using System.Drawing;
+using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
@@ -34,7 +35,7 @@ public class GroundComponent : CustomEntityComponent
         Texture.Create("res/texture/ground.png", Accessibility.None);
         Texture2.Create("res/texture/sand.png", Accessibility.None);
         MixingRateTexture.Create("res/texture/mixing_rate.png", Accessibility.None);
-        Heights = heightmap("res/texture/heightmap.png", Split, Split, 0, 0.025f);
+        Heights = ComputeHeightMapFromImage("res/texture/heightmap.png");
         GraphicsModel.CreateMeshMap(Heights);
     }
 
@@ -91,5 +92,26 @@ public class GroundComponent : CustomEntityComponent
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 1);
 
         device.DrawIndexed(GraphicsModel.VertexIndices.Count);
+    }
+
+    private static float[,] ComputeHeightMapFromImage(string path)
+    {
+        const float max = 0.025f;
+        const float min = 0.0f;
+
+        float[,] heights = new float[NumVerticesV, NumVerticesH];
+        using (Bitmap origin = new Bitmap(path))
+        using (Bitmap bitmap = new Bitmap(origin, NumVerticesH, NumVerticesV))
+        {
+            for (int i = 0; i < NumVerticesV; i++)
+            {
+                for (int j = 0; j < NumVerticesH; j++)
+                {
+                    var pixel = bitmap.GetPixel(j, i);
+                    heights[i, j] = pixel.R / 255.0f * (max - min) + min;
+                }
+            }
+        }
+        return heights;
     }
 }
