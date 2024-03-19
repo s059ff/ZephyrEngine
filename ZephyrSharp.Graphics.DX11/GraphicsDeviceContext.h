@@ -341,6 +341,23 @@ namespace ZephyrSharp
         public:
 
             /// <summary>
+            /// バックバッファの水平方向の解像度を取得します。
+            /// </summary>
+            property int BackBufferWidth { int get() { return Native->BackBufferWidth; } }
+
+            /// <summary>
+            /// バックバッファの垂直方向の解像度を取得します。
+            /// </summary>
+            property int BackBufferHeight { int get() { return Native->BackBufferHeight; } }
+
+            /// <summary>
+            /// バックバッファのアスペクト比 (幅 / 高さ) を取得します。
+            /// </summary>
+            property float BackBufferAspectRatio { float get() { return Native->BackBufferAspectRatio; } }
+
+        public:
+
+            /// <summary>
             /// このクラスのシングルトン インスタンスを取得します。
             /// </summary>
             static GraphicsDeviceContext^ Instance = gcnew GraphicsDeviceContext();

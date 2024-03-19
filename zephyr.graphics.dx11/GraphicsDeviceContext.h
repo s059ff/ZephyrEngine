@@ -83,6 +83,14 @@ namespace zephyr
 
             public:
 
+                READONLY_PROPERTY(int, BackBufferWidth, ;);
+
+                READONLY_PROPERTY(int, BackBufferHeight, ;);
+
+                READONLY_PROPERTY(float, BackBufferAspectRatio, ;);
+
+            public:
+
                 static GraphicsDeviceContext Instance;
 
             private:

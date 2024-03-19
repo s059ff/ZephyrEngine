@@ -245,6 +245,31 @@ namespace zephyr
             {
                 m_swapChain->Present(syncInterval, 0);
             }
+
+            int GraphicsDeviceContext::_get_BackBufferWidth() const
+            {
+                DXGI_SWAP_CHAIN_DESC desc;
+                runtime_assert(SUCCEEDED(m_swapChain->GetDesc(&desc)));
+                return desc.BufferDesc.Width;
+            }
+
+            int GraphicsDeviceContext::_get_BackBufferHeight() const
+            {
+                DXGI_SWAP_CHAIN_DESC desc;
+                runtime_assert(SUCCEEDED(m_swapChain->GetDesc(&desc)));
+                return desc.BufferDesc.Height;
+            }
+
+            float GraphicsDeviceContext::_get_BackBufferAspectRatio() const
+            {
+                DXGI_SWAP_CHAIN_DESC desc;
+                runtime_assert(SUCCEEDED(m_swapChain->GetDesc(&desc)));
+
+                int width = desc.BufferDesc.Width;
+                int height = desc.BufferDesc.Height;
+
+                return static_cast<float>(width) / static_cast<float>(height);
+            }
         }
     }
 }
