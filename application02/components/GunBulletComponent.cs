@@ -145,6 +145,9 @@ class GunBulletComponent : CustomEntityComponent
                     Entity.SendMessage(player, "notice", "Damaged");
                 }
             }
+
+            // 火花エフェクト
+            e.Attach(new GunBulletSparkComponent());
         }
         else if (other.Has<GroundComponent>())
         {
