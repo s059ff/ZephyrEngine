@@ -33,22 +33,22 @@ namespace zephyr
                 /// <summary>
                 /// エンティティの +X 方向のベクトルを取得します。
                 /// </summary>
-                READONLY_PROPERTY(linalg::Vector3, Rightward, const{ return linalg::Vector3(Matrix.m11, Matrix.m12, Matrix.m13); });
+                READONLY_PROPERTY(linalg::Vector3, Rightward, { return linalg::Vector3(Matrix.m11, Matrix.m12, Matrix.m13); });
 
                 /// <summary>
                 /// エンティティの +Y 方向のベクトルを取得します。
                 /// </summary>
-                READONLY_PROPERTY(linalg::Vector3, Upward, const{ return linalg::Vector3(Matrix.m21, Matrix.m22, Matrix.m23); });
+                READONLY_PROPERTY(linalg::Vector3, Upward, { return linalg::Vector3(Matrix.m21, Matrix.m22, Matrix.m23); });
 
                 /// <summary>
                 /// エンティティの +Z 方向のベクトルを取得します。
                 /// </summary>
-                READONLY_PROPERTY(linalg::Vector3, Forward, const{ return linalg::Vector3(Matrix.m31, Matrix.m32, Matrix.m33); });
+                READONLY_PROPERTY(linalg::Vector3, Forward, { return linalg::Vector3(Matrix.m31, Matrix.m32, Matrix.m33); });
 
                 /// <summary>
                 /// エンティティの位置を表します。
                 /// </summary>
-                READWRITE_PROPERTY(linalg::Vector3, Position, const{ return Matrix.position; }, { Matrix.position = value; });
+                READWRITE_PROPERTY(linalg::Vector3, Position, { return Matrix.position; }, { Matrix.position = value; });
             };
         }
     }

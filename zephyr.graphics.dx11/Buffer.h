@@ -42,11 +42,11 @@ namespace zephyr
 
             public:
 
-                READONLY_PROPERTY(int, size, const{ return m_size; });
+                READONLY_PROPERTY(int, size, { return m_size; });
 
                 READONLY_PROPERTY(void*, locked_ptr, { return m_locked_ptr; });
 
-                READONLY_PROPERTY(const void*, const_locked_ptr, const{ return m_locked_ptr; });
+                READONLY_PROPERTY(const void*, const_locked_ptr, { return m_locked_ptr; });
 
             private:
 

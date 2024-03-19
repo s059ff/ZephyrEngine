@@ -69,17 +69,17 @@ namespace zephyr
                 /// <summary>
                 /// 周波数を取得します。
                 /// </summary>
-                READONLY_PROPERTY(unsigned long, Frequency, const{ return Sound.Frequency; });
+                READONLY_PROPERTY(unsigned long, Frequency, { return Sound.Frequency; });
 
                     /// <summary>
                     /// 音量を取得します。
                     /// </summary>
-                READONLY_PROPERTY(double, Volume, const{ return Sound.Volume; });
+                READONLY_PROPERTY(double, Volume, { return Sound.Volume; });
 
                 /// <summary>
                 /// パンを取得します。
                 /// </summary>
-                READONLY_PROPERTY(double, Pan, const{ return Sound.Pan; });
+                READONLY_PROPERTY(double, Pan, { return Sound.Pan; });
 
             public:
 

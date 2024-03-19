@@ -259,17 +259,17 @@ namespace zephyr
             /// <summary>
             /// エンティティの名前。無名の場合は、null。
             /// </summary>
-            READWRITE_PROPERTY(string, Name, const{ return name; }, { Rename(this, value); });
+            READWRITE_PROPERTY(string, Name, { return name; }, { Rename(this, value); });
 
             /// <summary>
             /// このエンティティの識別番号を取得します。
             /// </summary>
-            READONLY_PROPERTY(unsigned long long, ID, const{ return id; });
+            READONLY_PROPERTY(unsigned long long, ID, { return id; });
 
             /// <summary>
             /// エンティティが Kill されていないか取得します。
             /// </summary>
-            READONLY_PROPERTY(bool, IsAlive, const{ return !killed; });
+            READONLY_PROPERTY(bool, IsAlive, { return !killed; });
 
         private:
 

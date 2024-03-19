@@ -132,7 +132,7 @@ namespace zephyr
             /// <summary>
             /// 開始位置から終端位置への相対ベクトルを取得します。
             /// </summary>
-            READONLY_PROPERTY(Vector3, direction, const{ return end - begin; });
+            READONLY_PROPERTY(Vector3, direction, { return end - begin; });
         };
 
         /// <summary>

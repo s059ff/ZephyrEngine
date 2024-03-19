@@ -80,15 +80,15 @@ namespace zephyr
 
             public:
 
-                READONLY_PROPERTY(int, width, const{ return m_width; });
+                READONLY_PROPERTY(int, width, { return m_width; });
 
-                READONLY_PROPERTY(int, height, const{ return m_height; });
+                READONLY_PROPERTY(int, height, { return m_height; });
 
-                READONLY_PROPERTY(int, length, const{ return m_length; });
+                READONLY_PROPERTY(int, length, { return m_length; });
 
-                READONLY_PROPERTY(int, stride, const{ return m_stride; });
+                READONLY_PROPERTY(int, stride, { return m_stride; });
 
-                READONLY_PROPERTY(void*, locked_ptr, const{ return m_locked_ptr; });
+                READONLY_PROPERTY(void*, locked_ptr, { return m_locked_ptr; });
 
             private:
 

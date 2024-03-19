@@ -30,9 +30,9 @@ namespace zephyr
                 return *this;
             }
 
-            READONLY_PROPERTY(float, magnitude, const{ return sqrt(x*x + y*y + z*z); });
+            READONLY_PROPERTY(float, magnitude, { return sqrt(x*x + y*y + z*z); });
 
-            READONLY_PROPERTY(float, squared_magnitude, const{ return x*x + y*y + z*z; });
+            READONLY_PROPERTY(float, squared_magnitude, { return x*x + y*y + z*z; });
 
             Vector3& operator +=(const Vector3& v)
             {

@@ -22,9 +22,9 @@ namespace zephyr
                 return *this;
             }
 
-            READONLY_PROPERTY(float, magnitude, const{ return sqrt(x*x + y*y); });
+            READONLY_PROPERTY(float, magnitude, { return sqrt(x*x + y*y); });
 
-            READONLY_PROPERTY(float, squared_magnitude, const{ return x*x + y*y; });
+            READONLY_PROPERTY(float, squared_magnitude, { return x*x + y*y; });
 
             Vector2& operator +=(const Vector2& v)
             {

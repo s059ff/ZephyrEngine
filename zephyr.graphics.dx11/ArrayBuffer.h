@@ -52,9 +52,9 @@ namespace zephyr
 
             public:
 
-                READONLY_PROPERTY(int, stride, const{ return m_stride; });
+                READONLY_PROPERTY(int, stride, { return m_stride; });
 
-                READONLY_PROPERTY(int, count, const{ return m_count; });
+                READONLY_PROPERTY(int, count, { return m_count; });
 
             private:
 

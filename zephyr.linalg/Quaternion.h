@@ -58,14 +58,14 @@ namespace zephyr
                 return *this;
             }
 
-            READONLY_PROPERTY(Vector3, axis, const
+            READONLY_PROPERTY(Vector3, axis, 
             {
                 float alpha = acos(w);
                 float sin = ::sin(alpha);
                 return Vector3(x / sin, y / sin, z / sin).normalize();
             });
 
-            READONLY_PROPERTY(float, theta, const{ return acos(w) * 2; });
+            READONLY_PROPERTY(float, theta, { return acos(w) * 2; });
 
             float x, y, z, w;
         };

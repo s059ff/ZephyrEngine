@@ -43,13 +43,13 @@ namespace zephyr
 
     public:
 
-        READONLY_PROPERTY(bool, available, const{ return m_pPool != nullptr; });
+        READONLY_PROPERTY(bool, available, { return m_pPool != nullptr; });
 
-        READONLY_PROPERTY(size_t, object_max_size, const{ return m_objectSize; });
+        READONLY_PROPERTY(size_t, object_max_size, { return m_objectSize; });
 
-        READONLY_PROPERTY(size_t, block_count, const{ return m_blockCount; });
+        READONLY_PROPERTY(size_t, block_count, { return m_blockCount; });
 
-        READONLY_PROPERTY(size_t, heap_size, const{ return m_heapSize; });
+        READONLY_PROPERTY(size_t, heap_size, { return m_heapSize; });
 
     private:
 
