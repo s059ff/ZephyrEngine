@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -21,8 +21,7 @@ public static class GameScript
     public static BlendState Reverse = new BlendState();
     public static BlendState AlphaBlend = new BlendState();
 
-    public static Font MeiryoUI = new Font();
-    public static Font MSMincho = new Font();
+    public static Font Consolas = new Font();
 
     public static SamplerState Wrap = new SamplerState();
     public static SamplerState Mirror = new SamplerState();
@@ -235,8 +234,7 @@ public static class GameScript
 
     public static void initialize()
     {
-        MeiryoUI.Create("Meiryo UI", 64);
-        MSMincho.Create("ＭＳ 明朝", 64);
+        Consolas.Create("Consolas", 64);
 
         NoBlend.Create(BlendOperation.None);
         Addition.Create(BlendOperation.Add, BlendFactor.One, BlendFactor.One);
@@ -256,7 +254,7 @@ public static class GameScript
         ZTestOnWriteOff.Create(true, false, false);
         ZTestOff.Create(false, false, false);
 
-        font(MeiryoUI);
+        font(Consolas);
 
         ExplosionSound.Create("res/sound/explosion1.wav");
         LargeExplosionSound.Create("res/sound/explosion2.wav");
