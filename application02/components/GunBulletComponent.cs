@@ -49,7 +49,7 @@ class GunBulletComponent : CustomEntityComponent
     public static Vector3 ComputeOptimalAimPosition(Entity myself, Entity target)
     {
         var vt = target.Get<PhysicsComponent>().Velocity;
-        var vb = GunBulletComponent.BulletSpeed;
+        var vb = BulletSpeed;
         var pt = target.Get<TransformComponent>().Position - myself.Get<TransformComponent>().Position;
         var a = (vt.X * vt.X + vt.Y * vt.Y + vt.Z * vt.Z - vb * vb);
 
@@ -65,7 +65,7 @@ class GunBulletComponent : CustomEntityComponent
     public static float ComputeHitTime(Entity myself, Entity target)
     {
         var vt = target.Get<PhysicsComponent>().Velocity;
-        var vb = GunBulletComponent.BulletSpeed;
+        var vb = BulletSpeed;
         var pt = target.Get<TransformComponent>().Position - myself.Get<TransformComponent>().Position;
         var a = (vt.X * vt.X + vt.Y * vt.Y + vt.Z * vt.Z - vb * vb);
 

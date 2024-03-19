@@ -338,7 +338,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                                 scale(0.06f);
 
                                 var organization = e.Get<AircraftAvionicsComponent>().Organization;
-                                if (organization == Enemy)
+                                if (organization == OrganizationEnemy)
                                 {
                                     if ((missile != null) && (missile.TargetEntity == e) && (missile.Locking))
                                     {
@@ -362,7 +362,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                                     draw(TargetTexture);
                                 }
 
-                                color(organization == Friend ? Blue : Green);
+                                color(organization == OrganizationFriend ? Blue : Green);
 
                                 translate(0.5f, 0);
                                 scale(0.75f);
@@ -505,7 +505,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                 {
                     if (e.Has<AircraftAvionicsComponent>() && (e != this.Owner))
                     {
-                        color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? Blue : Red);
+                        color((e.Get<AircraftAvionicsComponent>().Organization == OrganizationFriend) ? Blue : Red);
 
                         if (!((e == target) && (frameCount % 60 < 30)))
                         {
@@ -617,7 +617,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         if (!((target == e) && (frameCount % 60 < 30)))
                         {
-                            color((e.Get<AircraftAvionicsComponent>().Organization == Friend) ? (e != this.Owner) ? Green : Blue : Red);
+                            color((e.Get<AircraftAvionicsComponent>().Organization == OrganizationFriend) ? (e != this.Owner) ? Green : Blue : Red);
 
                             var transform2 = e.Get<TransformComponent>();
                             Matrix4x3 matrix = transform2.Matrix;

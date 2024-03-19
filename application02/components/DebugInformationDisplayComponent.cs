@@ -41,9 +41,9 @@ class DebugInformationDisplayComponent : CustomEntityComponent
             if (e.Has<AircraftComponent>() && e.Has<AircraftAvionicsComponent>())
             {
                 var avionics = e.Get<AircraftAvionicsComponent>();
-                if (avionics.Organization == Friend)
+                if (avionics.Organization == OrganizationFriend)
                     friendCount++;
-                if (avionics.Organization == Enemy)
+                if (avionics.Organization == OrganizationEnemy)
                     enemeyCount++;
             }
         });

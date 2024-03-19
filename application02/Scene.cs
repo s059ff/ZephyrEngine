@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
@@ -78,7 +78,7 @@ class Scene
             entity.Attach(new AircraftComponent("FA-22_Raptor"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
-            entity.Attach(new AircraftAvionicsComponent(Friend));
+            entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new EnvironmentObservationComponent());
             if (mode == "training" || mode == "evaluation")
@@ -107,7 +107,7 @@ class Scene
             entity.Attach(new AircraftComponent("FA-22_Raptor"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
-            entity.Attach(new AircraftAvionicsComponent(Friend));
+            entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new NonPlayerPilotComponent());
 
@@ -127,7 +127,7 @@ class Scene
             entity.Attach(new AircraftComponent("Su-37_Terminator"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
-            entity.Attach(new AircraftAvionicsComponent(Enemy));
+            entity.Attach(new AircraftAvionicsComponent(OrganizationEnemy));
             entity.Attach(new SquadronComponent("Cyclops"));
             entity.Attach(new NonPlayerPilotComponent());
 

@@ -31,8 +31,8 @@ class LoggerComponent : CustomEntityComponent
                     var avionics = e.Get<AircraftAvionicsComponent>();
                     if (aircraft.Armor > 0)
                     {
-                        friendCount += (avionics.Organization == Friend) ? 1 : 0;
-                        enemyCount += (avionics.Organization == Enemy) ? 1 : 0;
+                        friendCount += (avionics.Organization == OrganizationFriend) ? 1 : 0;
+                        enemyCount += (avionics.Organization == OrganizationEnemy) ? 1 : 0;
                     }
                 }
             });
