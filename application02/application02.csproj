@@ -97,6 +97,7 @@
     <Compile Include="components\GameSpaceComponent.cs" />
     <Compile Include="components\GravityObjectComponent.cs" />
     <Compile Include="components\GunBulletComponent.cs" />
+    <Compile Include="components\GunBulletSparkComponent.cs" />
     <Compile Include="components\GunFlushComponent.cs" />
     <Compile Include="components\LearnablePilotComponent.cs" />
     <Compile Include="components\LimitedLifeTimeComponent.cs" />
