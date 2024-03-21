@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
@@ -473,6 +473,16 @@ Global
 		{29FC8FFB-A796-4EFA-9A67-54C0ECFAD0D4}.Release|x64.Build.0 = Release|x64
 		{29FC8FFB-A796-4EFA-9A67-54C0ECFAD0D4}.Release|x86.ActiveCfg = Release|x86
 		{29FC8FFB-A796-4EFA-9A67-54C0ECFAD0D4}.Release|x86.Build.0 = Release|x86
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Debug|x64.ActiveCfg = Debug|x64
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Debug|x64.Build.0 = Debug|x64
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Debug|x86.Build.0 = Debug|Win32
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Release|Any CPU.ActiveCfg = Release|Win32
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Release|x64.ActiveCfg = Release|x64
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Release|x64.Build.0 = Release|x64
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Release|x86.ActiveCfg = Release|Win32
+		{F8F2BC19-F6F8-4B62-A809-295FF5F35E95}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
