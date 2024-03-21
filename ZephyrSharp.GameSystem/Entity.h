@@ -1,9 +1,7 @@
-﻿#pragma once
+#pragma once
 
 #include "common.h"
 #include "EntityComponent.h"
-
-#define Map System::Collections::Generic::Dictionary
 
 namespace ZephyrSharp
 {
@@ -226,13 +224,13 @@ namespace ZephyrSharp
             /// <summary>
             /// コンポーネントの一覧を取得します。
             /// </summary>
-            property List<EntityComponent^>^ Components
+            property System::Collections::Generic::List<EntityComponent^>^ Components
             {
-                List<EntityComponent^>^ get()
+                System::Collections::Generic::List<EntityComponent^>^ get()
                 {
                     if (component_count > 0)
                     {
-                        List<EntityComponent^>^ out = gcnew List<EntityComponent^>(component_count);
+                        auto out = gcnew System::Collections::Generic::List<EntityComponent^>(component_count);
 
                         auto begin = this->components->next;
                         auto end = this->components;
@@ -298,13 +296,13 @@ namespace ZephyrSharp
 
             static Entity^ s_root = gcnew Entity();
 
-            static Map<String^, Entity^>^ s_name_entity_map = gcnew Map<String^, Entity^>();
+            static System::Collections::Generic::Dictionary<String^, Entity^>^ s_name_entity_map = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();
 
             static int s_entity_count = 0;
 
             static unsigned long long s_next_id = 0;
 
-            static List<EntityComponent^>^ empty_components = gcnew List<EntityComponent^>();
+            static System::Collections::Generic::List<EntityComponent^>^ empty_components = gcnew System::Collections::Generic::List<EntityComponent^>();
         };
     }
 }
