@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
-using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
 
 using static EngineScript;
@@ -79,21 +78,25 @@ class Scene
             entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new EnvironmentObservationComponent());
-            if (args.Mode == "training" || args.Mode == "evaluation")
-                entity.Attach(new LearnablePilotComponent());
-            else
-                entity.Attach(new PlayerPilotComponent());
-            //entity.Attach(new WindComponent());
             entity.Attach(new AircraftHUDComponent());
-
-            if (args.Mode == "play")
+            switch (args.Mode)
             {
-                entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
-            }
-            else if (args.Mode == "training" || args.Mode == "evaluation")
-            {
-                entity.Get<TransformComponent>().Matrix._Matrix3x3 = new Matrix3x3().Identity().RotateY(uniform(0.0f, PI2)).RotateX(deg2rad(60)).RotateZ(uniform(0.0f, PI2));
-                entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, 0);
+                case "play":
+                    entity.Attach(new PlayerPilotComponent());
+                    entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
+                    break;
+                case "demo":
+                    entity.Attach(new NonPlayerPilotComponent());
+                    entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
+                    break;
+                case "training":
+                case "evaluation":
+                    entity.Attach(new LearnablePilotComponent());
+                    entity.Get<TransformComponent>().Matrix._Matrix3x3 = new Matrix3x3().Identity().RotateY(uniform(0.0f, PI2)).RotateX(deg2rad(60)).RotateZ(uniform(0.0f, PI2));
+                    entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, 0);
+                    break;
+                default:
+                    break;
             }
 
             entity.Get<SoundComponent>().LoopPlay();

@@ -33,12 +33,15 @@ class Program
 
         [Option("friend_count", Default = 0)]
         public int FriendCount { get; set; }
+
+        [Option("debug")]
+        public bool Debug { get; set; }
     }
 
     private static Arguments ParseArgs()
     {
         Arguments args = Parser.Default.ParseArguments<Arguments>(Environment.GetCommandLineArgs()).Value;
-        Debug.Assert(new string[] { "play", "debug", "training", "evaluation" }.Contains(args.Mode));
+        Debug.Assert(new string[] { "play", "demo", "training", "evaluation" }.Contains(args.Mode));
         return args;
     }
 
@@ -59,7 +62,7 @@ class Program
 
         CommandRunner runner = null;
         GameSystemMonitor monitor = null;
-        if (args.Mode == "debug")
+        if (args.Debug)
         {
             runner = CommandRunner.Execute();
             monitor = GameSystemMonitor.Execute();
@@ -78,8 +81,8 @@ class Program
             else
             {
                 bool flag = false;
-                flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("player"))) == null;
-                //flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy"))) == null;
+                flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("player"))) is null;
+                flag |= (0 < args.EnemyCount) && (Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy"))) is null);
                 if (flag)
                 {
                     Scene.ResetScene(args);
@@ -124,7 +127,7 @@ class Program
         }
         finally
         {
-            if (args.Mode == "debug")
+            if (args.Debug)
             {
                 GameSystemMonitor.Shutdown(monitor);
                 CommandRunner.Shutdown(runner);
