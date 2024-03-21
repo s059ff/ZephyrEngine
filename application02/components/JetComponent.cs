@@ -210,7 +210,7 @@ public class JetComponent : CustomEntityComponent
 
                 Matrix4x3 adjustment = new Matrix4x3();
                 adjustment.Identity();
-                adjustment.Translate(offsetPosition + new Vector3(0, 0, 0.5f));
+                adjustment.Translate(offsetPosition);
                 adjustment.RotateX(clamp((-angular.X * 2 - angular.Z * 0.5f) * 5, -0.2f, 0.2f));
                 adjustment.Scale(normal(1.7f, 0.1f), normal(1.7f, 0.1f), normal(3.8f, 0.1f) * (this.Power - PowerLowerLimit) / 0.1f);
 
