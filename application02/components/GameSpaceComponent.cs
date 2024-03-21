@@ -1,5 +1,6 @@
 ﻿using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
+using static EngineScript;
 using static GameScript;
 
 public class GameSpaceComponent : CustomEntityComponent
@@ -22,13 +23,10 @@ public class GameSpaceComponent : CustomEntityComponent
                     if (e.Has<AircraftComponent>())
                     {
                         var transform = e.Get<TransformComponent>();
-                        bool flag = false;
-                        flag |= (transform.Position.X < -this.SpaceLength / 2);
-                        flag |= (transform.Position.X > +this.SpaceLength / 2);
-                        flag |= (transform.Position.Y < -this.SpaceLength / 2);
-                        flag |= (transform.Position.Y > +this.SpaceLength / 2);
-                        flag |= (transform.Position.Z < -this.SpaceLength / 2);
-                        flag |= (transform.Position.Z > +this.SpaceLength / 2);
+                        bool flag = false
+                            || (abs(transform.Position.X) > this.SpaceLength / 2)
+                            || (abs(transform.Position.Y) > this.SpaceLength / 2)
+                            || (abs(transform.Position.Z) > this.SpaceLength / 2);
                         if (flag)
                         {
                             e.Get<AircraftComponent>().TakeDamage(1.0f);
