@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -18,8 +18,7 @@ public class GroundComponent : CustomEntityComponent
     static Texture2D MixingRateTexture = new Texture2D();
     static float[,] Heights;
 
-    const int NumVerticesH = 512;
-    const int NumVerticesV = 512;
+    const int NumVertices = 512 + 1;
 
     static GroundComponent()
     {
@@ -100,13 +99,13 @@ public class GroundComponent : CustomEntityComponent
         const float max = 0.025f;
         const float min = 0.0f;
 
-        float[,] heights = new float[NumVerticesV, NumVerticesH];
+        float[,] heights = new float[NumVertices, NumVertices];
         using (Bitmap origin = new Bitmap(path))
-        using (Bitmap bitmap = new Bitmap(origin, NumVerticesH, NumVerticesV))
+        using (Bitmap bitmap = new Bitmap(origin, NumVertices, NumVertices))
         {
-            for (int i = 0; i < NumVerticesV; i++)
+            for (int i = 0; i < NumVertices; i++)
             {
-                for (int j = 0; j < NumVerticesH; j++)
+                for (int j = 0; j < NumVertices; j++)
                 {
                     var pixel = bitmap.GetPixel(j, i);
                     heights[i, j] = pixel.R / 255.0f * (max - min) + min;
