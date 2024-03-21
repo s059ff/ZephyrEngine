@@ -36,6 +36,9 @@ class Program
 
         [Option("debug")]
         public bool Debug { get; set; }
+
+        [Option("random_seed", Default = 12345UL)]
+        public ulong RandomSeed { get; set; }
     }
 
     private static Arguments ParseArgs()
@@ -117,6 +120,7 @@ class Program
 
         try
         {
+            EngineScript.srand(args.RandomSeed);
             GameScript.Create();
 
             RuntimeHelpers.RunClassConstructor(typeof(MissileComponent).TypeHandle);

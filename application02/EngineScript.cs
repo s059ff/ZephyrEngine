@@ -94,7 +94,7 @@ public static class EngineScript
 
     public static float rad2deg(float rad) { return rad / PI * 180.0f; }
 
-    public static void seed(ulong seed) { randomizer = new RandomEngine(seed); }
+    public static void srand(ulong seed) { randomizer = new RandomEngine(seed); }
 
     public static float uniform(float min = 0, float max = 1) { return randomizer.Random(new UniformDistribution(min, max)); }
 

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
@@ -70,8 +70,8 @@ class AircraftAvionicsComponent : CustomEntityComponent
 
         if (entities.Count > 0)
         {
-            var random = new Random();
-            this.targetEntity = entities[random.Next(entities.Count)];
+            var i = random(Enumerable.Repeat(1.0f, entities.Count).ToArray());
+            this.targetEntity = entities[i];
         }
     }
 

@@ -22,6 +22,11 @@ namespace ZephyrSharp
             NativeRef.seed(std::random_device()());
         }
 
+        RandomEngine(unsigned long long seed)
+        {
+            NativeRef.seed(seed);
+        }
+
         /// <summary>
         /// 一様乱数を生成します。
         /// </summary>
