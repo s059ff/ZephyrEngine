@@ -1,4 +1,5 @@
 ﻿#include "zephyr\algorithm.h"
+#include "zephyr\tuple.h"
 #include "zephyr.linalg\Vector3.h"
 #include "zephyr.linalg\Vector4.h"
 #include "zephyr.linalg\Matrix4x3.h"
@@ -363,57 +364,47 @@ static Vector3 CollisionPoint_LineSegment_CurvedSurface(
     const matrix<float>& surface_heights,
     Matrix4x3 surface_matrix)
 {
-    const int N = surface_heights.rows;
+    const int N = static_cast<int>(surface_heights.rows);
 
-    Matrix4x3 local = surface_matrix.inverse;
-    Vector3 local_start = segment_start * local;
-    Vector3 local_terminal = (segment_start + segment_direction) * local;
+    Vector3 local_start = segment_start * surface_matrix.inverse;
+    Vector3 local_terminal = (segment_start + segment_direction) * surface_matrix.inverse;
 
-    auto map = [](float x, float x0, float x1, float y0, float y1)
-    {
-        float a = (y1 - y0) / (x1 - x0);
-        float y = a * (x - x0) + y0;
-        return y;
-    };
+    int j0 = (int)((local_start.x + 0.5f) * (float)(N - 1));
+    int i0 = (int)((-local_start.y + 0.5f) * (float)(N - 1));
+    int j1 = (int)((local_terminal.x + 0.5f) * (float)(N - 1));
+    int i1 = (int)((-local_terminal.y + 0.5f) * (float)(N - 1));
 
-    int i0 = map(local_start.y, 0.5f, -0.5f, 0, N - 1);
-    int j0 = map(local_start.x, -0.5f, 0.5f, 0, N - 1);
-    int i1 = map(local_terminal.y, 0.5f, -0.5f, 0, N - 1);
-    int j1 = map(local_terminal.x, -0.5f, 0.5f, 0, N - 1);
+    zephyr::tie(i0, i1) = zephyr::minmax({ i0, i1 });
+    zephyr::tie(j0, j1) = zephyr::minmax({ j0, j1 });
 
-    if (i1 < i0)
-        swap(i0, i1);
-    if (j1 < j0)
-        swap(j0, j1);
-
-    auto max = zephyr::max<int>;
-    auto min = zephyr::min<int>;
-
-    i0 = max(i0, 0);
-    j0 = max(j0, 0);
-    i1 = min(i1, N - 1);
-    j1 = min(j1, N - 1);
+    i0 = zephyr::max(i0, 0);
+    i1 = zephyr::min(i1, N - 1);
+    j0 = zephyr::max(j0, 0);
+    j1 = zephyr::min(j1, N - 1);
 
     for (int i = i0; i <= i1; i++)
-        //for (int i = 0; i < N - 1; i++)
     {
         for (int j = j0; j <= j1; j++)
-            //for (int j = 0; j < N - 1; j++)
         {
-            float x1 = map(j, 0, N - 1, -0.5f, 0.5f);
-            float y1 = map(i, 0, N - 1, 0.5f, -0.5f);
+            float xmin = -0.5f + (float)(j) / (float)(N - 1);
+            float xmax = -0.5f + (float)(j + 1) / (float)(N - 1);
+            float ymin = 0.5f - (float)(i + 1) / (float)(N - 1);
+            float ymax = 0.5f - (float)(i) / (float)(N - 1);
+
+            float x1 = xmin;
+            float y1 = ymax;
             float z1 = -surface_heights(i, j);
 
-            float x2 = map(j + 1, 0, N - 1, -0.5f, 0.5f);
-            float y2 = map(i, 0, N - 1, 0.5f, -0.5f);
+            float x2 = xmax;
+            float y2 = ymax;
             float z2 = -surface_heights(i, j + 1);
 
-            float x3 = map(j, 0, N - 1, -0.5f, 0.5f);
-            float y3 = map(i + 1, 0, N - 1, 0.5f, -0.5f);
+            float x3 = xmin;
+            float y3 = ymin;
             float z3 = -surface_heights(i + 1, j);
 
-            float x4 = map(j + 1, 0, N - 1, -0.5f, 0.5f);
-            float y4 = map(i + 1, 0, N - 1, 0.5f, -0.5f);
+            float x4 = xmax;
+            float y4 = ymin;
             float z4 = -surface_heights(i + 1, j + 1);
 
             Vector3 v1 = Vector3(x1, y1, z1) * surface_matrix;
@@ -483,27 +474,30 @@ static float Height_Point_CurvedSurface(
     //   /
     //  * -z
 
-    auto map = [](float x, float x0, float x1, float y0, float y1)
-    {
-        float a = (y1 - y0) / (x1 - x0);
-        float y = a * (x - x0) + y0;
-        return y;
-    };
+    const int N = static_cast<int>(surface_heights.rows);
 
     Vector3 local_point = point * surface_matrix.inverse;
     float x0 = local_point.x;
     float y0 = local_point.y;
 
-    const int N = surface_heights.rows;
+    if (fabsf(x0) > 0.5f || fabsf(y0) > 0.5f)
+        return NAN;
 
-    int i = map(y0, 0.5f, -0.5f, 0, N - 1);
-    int j = map(x0, -0.5f, 0.5f, 0, N - 1);
+    int j = (int)((x0 + 0.5f) * (float)(N - 1));
+    int i = (int)((-y0 + 0.5f) * (float)(N - 1));
 
-    float xmin = map(j, 0, N - 1, -0.5f, 0.5f);
-    float xmax = map(j + 1, 0, N - 1, -0.5f, 0.5f);
+    float xmin = -0.5f + (float)(j) / (float)(N - 1);
+    float xmax = -0.5f + (float)(j + 1) / (float)(N - 1);
+    float ymin = 0.5f - (float)(i + 1) / (float)(N - 1);
+    float ymax = 0.5f - (float)(i) / (float)(N - 1);
 
-    float ymin = map(i + 1, 0, N - 1, 0.5f, -0.5f);
-    float ymax = map(i, 0, N - 1, 0.5f, -0.5f);
+    constexpr float eps = 1e-6f;
+    assert(0 <= i && i < N - 1);
+    assert(0 <= j && j < N - 1);
+    assert(xmin < xmax);
+    assert(ymin < ymax);
+    assert(xmin - eps <= x0 && x0 <= xmax + eps);
+    assert(ymin - eps <= y0 && y0 <= ymax + eps);
 
     float x1 = xmin;
     float y1 = ymax;
@@ -520,9 +514,6 @@ static float Height_Point_CurvedSurface(
     float x4 = xmax;
     float y4 = ymin;
     float z4 = -surface_heights(i + 1, j + 1);
-
-    assert(xmin <= x0 && x0 <= xmax);
-    assert(ymin <= y0 && y0 <= ymax);
 
     Vector2 u0 = Vector2(x0, y0);
     Vector2 u1 = Vector2(x1, y1);
