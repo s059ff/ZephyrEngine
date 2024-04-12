@@ -25,12 +25,9 @@ namespace zephyr
         {
             static std::wstring widen(const std::string& src)
             {
-                std::wstring dest;
-                wchar_t* wcs = new wchar_t[src.length() + 1];
-                mbstowcs(wcs, src.c_str(), src.length() + 1);
-                dest = wcs;
-                delete[] wcs;
-                return dest;
+                std::unique_ptr<wchar_t[]> wcs(new wchar_t[src.length() + 1]);
+                mbstowcs(wcs.get(), src.c_str(), src.length() + 1);
+                return std::wstring(wcs.get());
             }
 
             void Texture2D::Create(int width, int height, Format format, Accessibility access, BufferBindFlags flags)

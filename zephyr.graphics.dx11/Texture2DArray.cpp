@@ -21,12 +21,9 @@ namespace zephyr
         {
             static std::wstring widen(const std::string& src)
             {
-                std::wstring dest;
-                wchar_t* wcs = new wchar_t[src.length() + 1];
-                mbstowcs(wcs, src.c_str(), src.length() + 1);
-                dest = wcs;
-                delete[] wcs;
-                return dest;
+                std::unique_ptr<wchar_t[]> wcs(new wchar_t[src.length() + 1]);
+                mbstowcs(wcs.get(), src.c_str(), src.length() + 1);
+                return std::wstring(wcs.get());
             }
 
             void Texture2DArray::Create(int width, int height, int count, Format format, Accessibility access, BufferBindFlags flags)
@@ -83,7 +80,7 @@ namespace zephyr
                 int stride = (int)_sizeof((DXGI_FORMAT)format);
                 if (source != nullptr)
                 {
-                    D3D11_SUBRESOURCE_DATA* init = new D3D11_SUBRESOURCE_DATA[count];
+                    std::unique_ptr<D3D11_SUBRESOURCE_DATA[]> init(new D3D11_SUBRESOURCE_DATA[count]);
 
                     for (int i = 0; i < count; i++)
                     {
@@ -94,10 +91,8 @@ namespace zephyr
                             _init.SysMemPitch = stride * width;
                         }
                     }
-                    HRESULT hr = device->CreateTexture2D(&desc, init, &this);
+                    HRESULT hr = device->CreateTexture2D(&desc, init.get(), &this);
                     runtime_assert(SUCCEEDED(hr));
-
-                    delete[] init;
                 }
                 else
                 {
