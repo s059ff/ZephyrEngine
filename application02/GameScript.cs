@@ -161,6 +161,15 @@ public static class GameScript
         Graphics2D.Instance.DrawRectangle();
     }
 
+    public static void rectangle(float x0, float y0, float x1, float y1)
+    {
+        GraphicsDeviceContext.Instance.SetRasterizerState(rasterizerState);
+        GraphicsDeviceContext.Instance.SetDepthStencilState(depthStencilState);
+        Graphics2D.Instance.SetMatrix(EngineScript.world * viewing * projection);
+        Graphics2D.Instance.SetVertexPositions(x0, y0, x1, y1);
+        Graphics2D.Instance.DrawRectangleWithDynamical();
+    }
+
     public static void font(Font _font)
     {
         Graphics2D.Instance.SetFont(_font);

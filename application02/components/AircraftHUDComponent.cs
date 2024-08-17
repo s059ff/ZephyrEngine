@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
@@ -139,6 +139,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                 {
                     var velocity = ToKmPerHour(physics.Velocity.Magnitude);
 
+                    var thrust = aircraft.EnginePower;
+
                     translate(-0.55f, 0.0f, 0.0f);
 
                     pushMatrix();
@@ -146,6 +148,24 @@ public class AircraftHUDComponent : CustomEntityComponent
                         translate(-0.15f, 0.0f, 0.0f);
                         scale(0.06f);
                         write(floor(velocity).ToString().PadLeft(4), TextAlignment.Center, TextAlignment.Center);
+                    }
+                    popMatrix();
+
+                    pushMatrix();
+                    {
+                        translate(0.05f, -0.2f, 0.0f);
+                        scale(0.01f, 0.4f * thrust);
+                        rectangle(0.0f, 1.0f, 1.0f, 0.0f);
+                    }
+                    popMatrix();
+
+                    pushMatrix();
+                    {
+                        translate(0.05f, -0.2f, 0.0f);
+                        scale(0.06f);
+                        scale(0.75f);
+                        translate(0.5f, 0.0f, 0.0f);
+                        write(floor(100.0f * thrust).ToString() + "%", TextAlignment.Left, TextAlignment.Bottom);
                     }
                     popMatrix();
 
