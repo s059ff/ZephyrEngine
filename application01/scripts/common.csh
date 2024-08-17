@@ -1,16 +1,16 @@
 // ---------- For Basic C# library ----------
-#using "System.dll"
+// #using "System.dll"
 
 // ---------- For Xepher Game Engine library ----------
-#using "ZephyrSharp.dll"
-#using "ZephyrSharp.Graphics.dll"
-#using "ZephyrSharp.Graphics.DX11.dll"
-#using "ZephyrSharp.Input.dll"
-#using "ZephyrSharp.GameSystem.dll"
-#using "ZephyrSharp.GameSystem.Components.dll"
-#using "ZephyrSharp.Linalg.dll"
-#using "ZephyrSharp.Scripting.dll"
-#using "ZephyrSharp.Sound.dll"
+// #using "ZephyrSharp.dll"
+// #using "ZephyrSharp.Graphics.dll"
+// #using "ZephyrSharp.Graphics.DX11.dll"
+// #using "ZephyrSharp.Input.dll"
+// #using "ZephyrSharp.GameSystem.dll"
+// #using "ZephyrSharp.GameSystem.Components.dll"
+// #using "ZephyrSharp.Linalg.dll"
+// #using "ZephyrSharp.Scripting.dll"
+// #using "ZephyrSharp.Sound.dll"
 
 // ---------- Graphics Macros ----------
 #define WHITE ColorCode.White

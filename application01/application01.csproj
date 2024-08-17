@@ -14,27 +14,6 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
@@ -89,27 +68,18 @@
     <Compile Include="components\WallComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="script\#console.cs" />
-    <Compile Include="script\#constants.cs" />
-    <Compile Include="script\#controller.cs" />
-    <Compile Include="script\#debug.cs" />
-    <Compile Include="script\#directory.cs" />
-    <Compile Include="script\#entity.cs" />
-    <Compile Include="script\#math.cs" />
-    <Compile Include="script\#settings.cs" />
-    <Compile Include="script\#time.cs" />
-    <Compile Include="script\#transform.cs" />
+    <Compile Include="Scripts.cs" />
     <None Include="app.config" />
-    <None Include="script\settings.cs" />
-    <None Include="script\constants.cs" />
-    <None Include="script\transform.cs" />
-    <None Include="script\console.cs" />
-    <None Include="script\controller.cs" />
-    <None Include="script\debug.cs" />
-    <None Include="script\directory.cs" />
-    <None Include="script\entity.cs" />
-    <None Include="script\math.cs" />
-    <None Include="script\time.cs" />
+    <None Include="scripts\settings.cs" />
+    <None Include="scripts\constants.cs" />
+    <None Include="scripts\transform.cs" />
+    <None Include="scripts\console.cs" />
+    <None Include="scripts\controller.cs" />
+    <None Include="scripts\debug.cs" />
+    <None Include="scripts\directory.cs" />
+    <None Include="scripts\entity.cs" />
+    <None Include="scripts\math.cs" />
+    <None Include="scripts\time.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -158,12 +128,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="script\common.csh" />
+    <Content Include="scripts\common.csh" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>cd "$(ProjectDir)"
-"$(SolutionDir)cssc\bin\$(PlatformName)\$(ConfigurationName)\cssc" /nocsc /target:library</PreBuildEvent>
+    <PreBuildEvent>set PATH=$(SolutionDir)cssc\bin\$(PlatformName)\$(ConfigurationName);%25PATH%25
+cssc /format /output:$(ProjectDir)/Scripts.cs $(ProjectDir)/scripts/*.cs</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

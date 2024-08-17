@@ -1,6 +1,5 @@
 ﻿#include "common.csh"
 
-
 Dictionary<string, string> loadSettings(string path)
 {
     Dictionary<string, string> settings = new Dictionary<string, string>();
