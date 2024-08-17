@@ -689,6 +689,8 @@ public class AircraftComponent : CustomEntityComponent
                 this.Owner.Detach<PlayerPilotComponent>();
             if (this.Owner.Has<NonPlayerPilotComponent>())
                 this.Owner.Detach<NonPlayerPilotComponent>();
+            if (this.Owner.Has<WindComponent>())
+                this.Owner.Detach<WindComponent>();
 
             if (this.Owner.Name == "player")
             {

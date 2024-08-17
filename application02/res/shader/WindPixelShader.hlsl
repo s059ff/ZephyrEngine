@@ -9,7 +9,10 @@ struct PSInput
     float alpha : ALPHA;
 };
 
+static const float M_PI = 3.141592653589793;
+
 float4 main(PSInput input) : SV_TARGET
 {
-    return g_texture.Sample(g_sampler, input.tex) * input.alpha;
+    float alpha = cos(M_PI * (input.tex.y - 0.5f));
+    return g_texture.Sample(g_sampler, input.tex) * input.alpha * alpha;
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
@@ -80,6 +80,7 @@ class Scene
             entity.Attach(new SquadronComponent("Gargoyle"));
             entity.Attach(new EnvironmentObservationComponent());
             entity.Attach(new AircraftHUDComponent());
+            entity.Attach(new WindComponent());
             switch (args.Mode)
             {
                 case "play":

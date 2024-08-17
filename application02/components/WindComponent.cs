@@ -1,4 +1,6 @@
-﻿using ZephyrSharp.Graphics;
+﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem.Components;
+using ZephyrSharp.Graphics;
 using ZephyrSharp.Linalg;
 using static EngineScript;
 using static GameScript;
@@ -68,7 +70,7 @@ public class WindComponent : CustomEntityComponent
         for (int i = 0; i < InstanceCount; i++)
         {
             this.Instances[i] = new Instance();
-            this.Instances[i].CountSpeed = uniform(0.05f, 0.1f);
+            this.Instances[i].CountSpeed = 0.0025f;
             this.Instances[i].Time = 1;
         }
     }
@@ -117,11 +119,11 @@ public class WindComponent : CustomEntityComponent
                 instance.Time = 0;
                 instance.CountSpeed = uniform(0.05f, 0.1f);
 
-                float r = normal(15, 5) + 15;
+                float r = normal(15, 10) + 15;
                 float t = uniform(0, PI2);
-                float z = normal(70, 20);
-                float dx = normal(0.5f, 0.2f);
-                float dz = normal(20, 5);
+                float z = 100.0f;
+                float dx = 1.0f;
+                float dz = 40.0f;
 
                 Matrix4x3 adjustment = new Matrix4x3().Identity();
                 adjustment.RotateZ(t);
@@ -159,10 +161,12 @@ public class WindComponent : CustomEntityComponent
         InstanceAlphas.Lock(Accessibility.DynamicWriteOnly);
         for (int i = 0; i < InstanceCount; i++)
         {
-            // 速度に応じて濃度を濃くする
             var instance = this.Instances[i];
-            float alpha = 0.15f * instance.Time * max(this.Physics.Velocity.Magnitude - 3.0f, 0.0f);
-            InstanceAlphas.Write(i, alpha);
+            Vector3 eye = Entity.Find("camera").Get<TransformComponent>().Position;
+            Vector3 pos = instance.Matrix.Position;
+            float alpha1 = 0.05f * clamp(this.Physics.Velocity.Magnitude - 3.0f, 0.0f, 1.0f);
+            float alpha2 = cos(0.01f * (eye - pos).Magnitude);
+            InstanceAlphas.Write(i, alpha1 * alpha2);
         }
         InstanceAlphas.Unlock();
 
