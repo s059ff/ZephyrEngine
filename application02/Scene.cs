@@ -31,6 +31,7 @@ class Scene
         camera.Attach(new TransformComponent());
         camera.Attach(new TrackingCameraComponent());
         camera.Attach(new FixedPointCameraComponent());
+        camera.Attach(new GunCameraComponent());
         camera.Attach(new SoundObserverComponent() { EffectRange = 10000, SonicSpeed = 340.0 / 60.0 * 2 });
         camera.Get<TrackingCameraComponent>().Activate();
 

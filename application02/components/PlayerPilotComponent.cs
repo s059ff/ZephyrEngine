@@ -1,4 +1,4 @@
-﻿using ZephyrSharp.GameSystem;
+using ZephyrSharp.GameSystem;
 using ZephyrSharp.Input;
 using static GameScript;
 
@@ -54,6 +54,8 @@ class PlayerPilotComponent : AbstractPilotComponent
                 activeCameraComponent = entity.Get<TrackingCameraComponent>();
             if (nowpressed(Keyboard.KeyCode.F2))
                 activeCameraComponent = entity.Get<FixedPointCameraComponent>();
+            if (nowpressed(Keyboard.KeyCode.F3))
+                activeCameraComponent = entity.Get<GunCameraComponent>();
             if (aircraft.Armor == 0)
                 activeCameraComponent = entity.Get<FixedPointCameraComponent>();
 
