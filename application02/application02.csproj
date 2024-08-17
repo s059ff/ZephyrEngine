@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -77,6 +77,7 @@
     <Compile Include="components\GravityObjectComponent.cs" />
     <Compile Include="components\GunBulletComponent.cs" />
     <Compile Include="components\GunBulletSparkComponent.cs" />
+    <Compile Include="components\GunCameraComponent.cs" />
     <Compile Include="components\GunFlushComponent.cs" />
     <Compile Include="components\LearnablePilotComponent.cs" />
     <Compile Include="components\LimitedLifeTimeComponent.cs" />
@@ -118,10 +119,6 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZephyrSharp.AI\ZephyrSharp.AI.vcxproj">
-      <Project>{30d6e278-d6e8-449d-a88e-5dcb34e7b63d}</Project>
-      <Name>ZephyrSharp.AI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZephyrSharp.Collision\ZephyrSharp.Collision.vcxproj">
       <Project>{3f4b0cd1-50cb-4724-8f29-d08c6dcc936b}</Project>
       <Name>ZephyrSharp.Collision</Name>
@@ -150,10 +147,6 @@
       <Project>{f9bc3a40-9b61-49a3-a1f2-1ed0600616a9}</Project>
       <Name>ZephyrSharp.Math</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZephyrSharp.Scripting\ZephyrSharp.Scripting.csproj">
-      <Project>{a7abc948-34ad-4b47-9751-342231835d47}</Project>
-      <Name>ZephyrSharp.Scripting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZephyrSharp.Sound\ZephyrSharp.Sound.vcxproj">
       <Project>{0672d936-1e69-4650-aa92-393e59b803b0}</Project>
       <Name>ZephyrSharp.Sound</Name>
@@ -161,10 +154,6 @@
     <ProjectReference Include="..\ZephyrSharp\ZephyrSharp.vcxproj">
       <Project>{e750c230-c7a1-44ad-ac58-ffccaa5ffebf}</Project>
       <Name>ZephyrSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZephyrTools.CommandRunner\ZephyrTools.CommandRunner.csproj">
-      <Project>{62184a5b-f46b-4cfb-a52d-e36116968877}</Project>
-      <Name>ZephyrTools.CommandRunner</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZephyrTools.GameSystemMonitor\ZephyrTools.GameSystemMonitor.csproj">
       <Project>{011010dd-53e9-4c4a-924f-ff83390c9499}</Project>
