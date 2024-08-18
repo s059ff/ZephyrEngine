@@ -161,6 +161,51 @@ namespace ZephyrSharp
             }
         }
 
+        ref class ParallelReceiveMessageHandler
+        {
+        public:
+            void Execute(int i)
+            {
+                Entity^ e = this->entities[i];
+                if (e->IsAlive)
+                {
+                    e->ReceiveMessage(this->message, this->argument);
+                }
+            }
+
+        public:
+            array<Entity^>^ entities;
+            System::Object^ message;
+            System::Object^ argument;
+        };
+
+        void Entity::BroadcastMessageParallel(System::Object^ message, System::Object^ argument)
+        {
+            array<Entity^>^ entities = gcnew array<Entity^>(4096);
+
+            auto it = s_root->next;
+            auto end = s_root;
+
+            size_t n = 0;
+            while (it != end)
+            {
+                auto next = it->next;
+                entities[n++] = it;
+                it = next;
+            }
+
+            ParallelReceiveMessageHandler^ handler = gcnew ParallelReceiveMessageHandler();
+            handler->entities = entities;
+            handler->message = message;
+            handler->argument = argument;
+
+            System::Threading::Tasks::Parallel::For(
+                0,
+                n,
+                gcnew System::Action<int>(handler, &ParallelReceiveMessageHandler::Execute)
+            );
+        }
+
         void Entity::ForEach(System::Action<Entity^>^ callback)
         {
             auto it = s_root->next;

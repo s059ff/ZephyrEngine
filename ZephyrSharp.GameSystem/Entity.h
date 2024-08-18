@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "EntityComponent.h"
@@ -94,6 +94,13 @@ namespace ZephyrSharp
             static void BroadcastMessage(System::Object^ message)
             {
                 BroadcastMessage(message, nullptr);
+            }
+
+            static void BroadcastMessageParallel(System::Object^ message, System::Object^ argument);
+
+            static void BroadcastMessageParallel(System::Object^ message)
+            {
+                BroadcastMessageParallel(message, nullptr);
             }
 
             /// <summary>
