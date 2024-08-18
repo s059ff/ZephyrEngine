@@ -20,7 +20,8 @@ public class MissileComponent : CustomEntityComponent
     const float Thrust = 30.0f;
     const float CountSpeed = 0.001f;
     const float TimeToIgnition = 0.0f;
-    const float TurningPerformance = 0.025f; // 0.004f;
+    const float TurningPerformance = 0.004f;
+    //const float TurningPerformance = 0.025f;
     const float SeekerAngleRange = 30.0f;
     const float SeekerDistanceRange = 1500.0f;
     const float SeekerSpeed = 0.0075f;

@@ -99,7 +99,7 @@ class TrackingCameraComponent : AbstractCameraComponent
         this.Owner.Get<TransformComponent>().Position = position;
     }
 
-    const float TrackingLatency = 12;
+    const float TrackingLatency = 2;
 
     enum CameraView
     {

@@ -434,7 +434,7 @@ public class AircraftComponent : CustomEntityComponent
             if (power > 0) power = 0.5f * power;
             float x = this.Physics.Velocity.Magnitude;
             float k = sin(1.05f * x - 2.75f) * 0.5f + 0.5f;
-            this.Physics.Torque += this.Transform.Rightward * 0.003f * power * k;
+            this.Physics.Torque += this.Transform.Rightward * 0.002f * power * k;
         }
         #endregion
 
