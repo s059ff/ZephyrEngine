@@ -12,12 +12,12 @@ class PlayerPilotComponent : AbstractPilotComponent
         var aircraft = this.Owner.Get<AircraftComponent>();
         var avionics = this.Owner.Get<AircraftAvionicsComponent>();
 
-        aircraft.YawInput += pressed(GamePad.LogicalButton.LB) ? -1.0f : 0.0f;
-        aircraft.YawInput += pressed(GamePad.LogicalButton.RB) ? +1.0f : 0.0f;
+        aircraft.YawInput += pressed(GamePad.LogicalButton.LT) ? -1.0f : 0.0f;
+        aircraft.YawInput += pressed(GamePad.LogicalButton.RT) ? +1.0f : 0.0f;
         aircraft.RollInput += (float)getAnalogStickAxis1().Item1;
         aircraft.PitchInput += (float)getAnalogStickAxis1().Item2;
-        aircraft.ThrottleInput += pressed(GamePad.LogicalButton.RT) ? +1.0f : 0.0f;
-        aircraft.ThrottleInput += pressed(GamePad.LogicalButton.LT) ? -1.0f : 0.0f;
+        aircraft.ThrottleInput += pressed(GamePad.LogicalButton.RB) ? +1.0f : 0.0f;
+        aircraft.ThrottleInput += pressed(GamePad.LogicalButton.LB) ? -1.0f : 0.0f;
         aircraft.MissileLaunchInput = nowpressed(GamePad.LogicalButton.B);
         aircraft.GunFireInput = pressed(GamePad.LogicalButton.A);
 
