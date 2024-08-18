@@ -14,7 +14,7 @@ class GunBulletSparkComponent : CustomEntityComponent
     static InstanceBuffer<Matrix4x4> InstanceWVPs = new InstanceBuffer<Matrix4x4>();
     static InstanceBuffer<float> InstanceAlphas = new InstanceBuffer<float>();
 
-    const int InstanceCount = 8;
+    const int InstanceCount = 16;
 
     struct InstanceData
     {
@@ -68,7 +68,7 @@ class GunBulletSparkComponent : CustomEntityComponent
             Vector3 axis = new Vector3(normal(0, 1), normal(0, 1), normal(0, 1)).Normalize();
             float theta = uniform(0, PI2);
             this.instances[i].rotation = new Quaternion(axis, theta);
-            this.instances[i].scale = normal(1, 0.5f);
+            this.instances[i].scale = normal(1.0f, 0.5f);
         }
     }
 
@@ -109,7 +109,7 @@ class GunBulletSparkComponent : CustomEntityComponent
 
         InstanceWVPs.Lock(Accessibility.DynamicWriteOnly);
         {
-            const float c = 20.0f;
+            const float c = 100.0f;
             float time = this.Owner.Get<LimitedLifeTimeComponent>().CountTime;
             foreach (var i in Enumerable.Range(0, InstanceCount))
             {

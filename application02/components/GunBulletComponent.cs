@@ -113,7 +113,7 @@ class GunBulletComponent : CustomEntityComponent
         // エフェクトを発生させる
         Entity e = Entity.Instantiate();
         e.Attach(new TransformComponent() { Position = point });
-        e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.04f });
+        e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.02f });
         e.Attach(new SoundComponent(BulletHitSound) { VolumeFactor = 0.5f });
         e.Get<SoundComponent>().Play();
 
