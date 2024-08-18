@@ -270,10 +270,6 @@ public class MissileComponent : CustomEntityComponent
             }
         }
         #endregion
-
-        #region MyRegion
-
-        #endregion
     }
 
     public void Launch()
