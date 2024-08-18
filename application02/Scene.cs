@@ -16,6 +16,7 @@ class Scene
         Entity system = Entity.Instantiate();
         system.Name = "system";
         system.Attach(new SystemComponent());
+        system.Attach(new CheatComponent());
 
         Entity debugger = Entity.Instantiate();
         debugger.Name = "debugger";

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -76,7 +76,7 @@ public class AircraftComponent : CustomEntityComponent
         }
     }
 
-    public float Armor { get; private set; } = 1.0f;
+    public float Armor { get; set; } = 1.0f;
     public float Visibility { private get; set; } = 1.0f;
     public float EnginePower { get; private set; } = 0.5f;
     private float GunReloadTime = 0;

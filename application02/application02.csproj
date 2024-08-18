@@ -68,6 +68,7 @@
     <Compile Include="components\AircraftComponent.cs" />
     <Compile Include="components\AircraftFlameComponent.cs" />
     <Compile Include="components\AircraftSmokeComponent.cs" />
+    <Compile Include="components\CheatComponent.cs" />
     <Compile Include="components\CustomEntityComponent.cs" />
     <Compile Include="components\DebugInformationDisplayComponent.cs" />
     <Compile Include="components\EnvironmentObservationComponent.cs" />
