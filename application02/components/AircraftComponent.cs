@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -647,7 +647,7 @@ public class AircraftComponent : CustomEntityComponent
                     e.Get<SoundComponent>().Play();
                     e.Attach(new LimitedLifeTimeComponent()
                     {
-                        CountSpeed = 0.01f
+                        CountSpeed = 0.02f
                     });
                 }
 
@@ -677,7 +677,7 @@ public class AircraftComponent : CustomEntityComponent
         {
             if (!this.Owner.Has<TimerComponent>())
             {
-                this.Owner.Attach(new TimerComponent() { CountSpeed = 0.001f });
+                this.Owner.Attach(new TimerComponent() { CountSpeed = 0.005f });
                 this.Owner.Get<TimerComponent>().Ticked += this.Destroy;
             }
 
