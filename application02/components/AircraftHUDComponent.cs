@@ -19,8 +19,12 @@ public class AircraftHUDComponent : CustomEntityComponent
     static Texture2D ReloadTimeTexture = new Texture2D();
     static Texture2D ReloadTimeFrameTexture = new Texture2D();
     static Texture2D GunReticleTexture = new Texture2D();
+    static Texture2D MeterFrameTexture = new Texture2D();
 
-    float RadarRange = 1000;
+    readonly float RadarRange1 = NauticalMileToMeter(2.5f);
+    readonly float RadarRange2 = NauticalMileToMeter(5.0f);
+    readonly float RadarRange3 = NauticalMileToMeter(10.0f);
+    float RadarRange = NauticalMileToMeter(2.5f);
 
     float NoticeDisplayTime = 0;
     string Message = string.Empty;
@@ -39,6 +43,7 @@ public class AircraftHUDComponent : CustomEntityComponent
         ReloadTimeTexture.Create("res/texture/reload.dds", Accessibility.None);
         ReloadTimeFrameTexture.Create("res/texture/reload_frame.dds", Accessibility.None);
         GunReticleTexture.Create("res/texture/reticle.dds", Accessibility.None);
+        MeterFrameTexture.Create("res/texture/meter_frame.png", Accessibility.None);
     }
 
     protected override void ReceiveMessage(object message, object argument)
@@ -137,7 +142,7 @@ public class AircraftHUDComponent : CustomEntityComponent
             {
                 pushMatrix();
                 {
-                    var velocity = ToKmPerHour(physics.Velocity.Magnitude);
+                    var velocity = ToKnot(physics.Velocity.Magnitude);
 
                     var thrust = aircraft.EnginePower;
 
@@ -147,7 +152,10 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         translate(-0.15f, 0.0f, 0.0f);
                         scale(0.06f);
-                        write(floor(velocity).ToString().PadLeft(4), TextAlignment.Center, TextAlignment.Center);
+                        write(floor(velocity).ToString("0000"), TextAlignment.Center, TextAlignment.Center);
+
+                        scale(3.0f, 1.0f);
+                        draw(MeterFrameTexture);
                     }
                     popMatrix();
 
@@ -181,7 +189,7 @@ public class AircraftHUDComponent : CustomEntityComponent
 
                 pushMatrix();
                 {
-                    var altitude = transform.Position.Y;
+                    var altitude = ToFeet(transform.Position.Y);
 
                     translate(0.55f, 0.0f, 0.0f);
 
@@ -189,14 +197,17 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         translate(0.15f, 0.0f, 0.0f);
                         scale(0.06f);
-                        write(floor(altitude).ToString().PadLeft(4), TextAlignment.Center, TextAlignment.Center);
+                        write(floor(altitude).ToString("0000"), TextAlignment.Center, TextAlignment.Center);
+
+                        scale(3.0f, 1.0f);
+                        draw(MeterFrameTexture);
                     }
                     popMatrix();
 
                     pushMatrix();
                     {
                         scale(0.1f, 0.4f);
-                        float v = -altitude / 100;
+                        float v = -altitude / 1000;
                         draw(SpeedMeterTexture, 0, v, 1, v + 1);
                     }
                     popMatrix();
@@ -279,16 +290,17 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         translate(x, y);
                         rotate(theta);
-                        scale(0.15f, 0.075f);
+                        scale(0.1f, 0.05f);
                         draw(TargetDirectionTexture);
                     }
                     popMatrix();
 
                     pushMatrix();
                     {
-                        translate(x * 0.7f, y * 0.7f);
+                        translate(x * 0.8f, y * 0.8f);
                         scale(0.06f);
-                        write(((int)(transform2.Position - transform.Position).Magnitude).ToString(), TextAlignment.Center, TextAlignment.Center);
+                        scale(0.75f);
+                        write(ToFeet(relative.Magnitude).ToString("F"), TextAlignment.Center, TextAlignment.Center);
                     }
                     popMatrix();
                 }
@@ -319,16 +331,17 @@ public class AircraftHUDComponent : CustomEntityComponent
                         {
                             translate(x, y);
                             rotate(theta);
-                            scale(0.15f, 0.075f);
+                            scale(0.1f, 0.05f);
                             draw(TargetDirectionTexture);
                         }
                         popMatrix();
 
                         pushMatrix();
                         {
-                            translate(x * 0.7f, y * 0.7f);
+                            translate(x * 0.8f, y * 0.8f);
                             scale(0.06f);
-                            write(((int)relative.Magnitude).ToString(), TextAlignment.Center, TextAlignment.Center);
+                            scale(0.75f);
+                            write(ToFeet(relative.Magnitude).ToString("F"), TextAlignment.Center, TextAlignment.Center);
                         }
                         popMatrix();
                     }
@@ -393,8 +406,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                                     );
                                 write(text, TextAlignment.Left, TextAlignment.Bottom);
 
-                                float distance = (transform.Position - e.Get<TransformComponent>().Position).Magnitude;
-                                string text2 = string.Format("{0}", (int)distance);
+                                float distance = ToNauticalMile((transform.Position - e.Get<TransformComponent>().Position).Magnitude);
+                                string text2 = distance.ToString("F");
                                 write(text2, TextAlignment.Left, TextAlignment.Top);
                             }
                             popMatrix();
@@ -506,7 +519,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                     scale(0.5f, 0.5f);
                     translate(0.5f / sqrt(2), -0.5f / sqrt(2), 0);
                     scale(0.1f);
-                    write(this.RadarRange.ToString());
+                    write(ToNauticalMile(this.RadarRange).ToString());
                 }
                 popMatrix();
 
@@ -525,15 +538,16 @@ public class AircraftHUDComponent : CustomEntityComponent
                 {
                     if (e.Has<AircraftAvionicsComponent>() && (e != this.Owner))
                     {
-                        color((e.Get<AircraftAvionicsComponent>().Organization == OrganizationFriend) ? Blue : Red);
+                        var avionics = e.Get<AircraftAvionicsComponent>();
+                        color((avionics.Organization == OrganizationFriend) ? Blue : Red);
 
                         if (!((e == target) && (frameCount % 60 < 30)))
                         {
                             var transform2 = e.Get<TransformComponent>();
                             Matrix4x3 matrix = transform2.Matrix * local;
-                            if (matrix.Position.Magnitude < SearchOperationRange)
+                            Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
+                            if (point.Magnitude < SearchOperationRange)
                             {
-                                Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
                                 point /= max(this.RadarRange, point.Magnitude);
 
                                 Vector2 point2D;
@@ -554,30 +568,34 @@ public class AircraftHUDComponent : CustomEntityComponent
                             }
                         }
                     }
-                    else if (e.Has<MissileComponent>() && e.Get<MissileComponent>().Launched)
+                    else if (e.Has<MissileComponent>())
                     {
-                        color(Red);
-
-                        var transform2 = e.Get<TransformComponent>();
-                        Matrix4x3 matrix = transform2.Matrix * local;
-                        Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
-                        if (point.Magnitude < SearchOperationRange)
+                        var missile = e.Get<MissileComponent>();
+                        if (missile.Launched && missile.TargetEntity == this.Owner)
                         {
-                            point /= max(this.RadarRange, point.Magnitude);
+                            color(Red);
 
-                            Vector2 point2D;
-                            point2D.X = point.X * 0.5f / 2;
-                            point2D.Y = point.Z * 0.5f / 2;
-                            point2D += new Vector2(-1.25f, -0.7f);
-
-                            pushMatrix();
+                            var transform2 = e.Get<TransformComponent>();
+                            Matrix4x3 matrix = transform2.Matrix * local;
+                            Vector3 point = new Vector3(matrix.M41, 0, matrix.M43);
+                            if (point.Magnitude < SearchOperationRange)
                             {
-                                translate(point2D);
-                                scale(0.05f);
+                                point /= max(this.RadarRange, point.Magnitude);
 
-                                draw(MissileMarkerTexture);
+                                Vector2 point2D;
+                                point2D.X = point.X * 0.5f / 2;
+                                point2D.Y = point.Z * 0.5f / 2;
+                                point2D += new Vector2(-1.25f, -0.7f);
+
+                                pushMatrix();
+                                {
+                                    translate(point2D);
+                                    scale(0.05f);
+
+                                    draw(MissileMarkerTexture);
+                                }
+                                popMatrix();
                             }
-                            popMatrix();
                         }
                     }
                 });
@@ -720,11 +738,11 @@ public class AircraftHUDComponent : CustomEntityComponent
 
     public void ChangeRadarRange()
     {
-        if (this.RadarRange == 1000)
-            this.RadarRange = 2000;
-        else if (this.RadarRange == 2000)
-            this.RadarRange = 4000;
-        else if (this.RadarRange == 4000)
-            this.RadarRange = 1000;
+        if (this.RadarRange == RadarRange1)
+            this.RadarRange = RadarRange2;
+        else if (this.RadarRange == RadarRange2)
+            this.RadarRange = RadarRange3;
+        else
+            this.RadarRange = RadarRange1;
     }
 }
