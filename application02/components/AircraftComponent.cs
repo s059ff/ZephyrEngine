@@ -847,7 +847,7 @@ public class AircraftComponent : CustomEntityComponent
             {
                 Mass = this.Physics.Mass,
                 InertiaMoment = this.Physics.InertiaMoment,
-                Force = new Vector3(normal(0, 1), normal(0, 1), normal(0, 1)).Normalize() * 100
+                Force = new Vector3(normal(0, 1), normal(0, 1), normal(0, 1)).Normalize() * 400.0f
             });
             e.Attach(new CollisionComponent()
             {
@@ -859,7 +859,7 @@ public class AircraftComponent : CustomEntityComponent
             e.Attach<GravityObjectComponent>();
             e.Attach<AircraftSmokeComponent>();
             e.Attach<AircraftFlameComponent>();
-            e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.01f });
+            e.Attach(new LimitedLifeTimeComponent() { CountSpeed = 0.005f });
         }
 
         {
