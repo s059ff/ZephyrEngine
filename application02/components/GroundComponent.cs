@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -36,6 +36,7 @@ public class GroundComponent : CustomEntityComponent
         Texture2.Create("res/texture/sand.png", Accessibility.None);
         MixingRateTexture.Create("res/texture/mixing_rate.png", Accessibility.None);
         Heights = ComputeHeightMapFromImage("res/texture/heightmap.png");
+        // Heights = CreateHeightMapRandomly();
         GraphicsModel.CreateMeshMap(Heights);
     }
 
@@ -110,6 +111,22 @@ public class GroundComponent : CustomEntityComponent
                     var pixel = bitmap.GetPixel(j, i);
                     heights[i, j] = pixel.R / 255.0f * (max - min) + min;
                 }
+            }
+        }
+        return heights;
+    }
+
+    private static float[,] CreateHeightMapRandomly()
+    {
+        const float max = 0.025f;
+        const float min = 0.0f;
+
+        float[,] heights = new float[NumVertices, NumVertices];
+        for (int i = 0; i < NumVertices; i++)
+        {
+            for (int j = 0; j < NumVertices; j++)
+            {
+                heights[i, j] = uniform(min, max);
             }
         }
         return heights;
