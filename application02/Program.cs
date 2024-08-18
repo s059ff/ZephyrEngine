@@ -7,7 +7,6 @@ using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Input;
 using ZephyrSharp.Sound;
-using ZephyrTools.CommandRunner;
 using ZephyrTools.GameSystemMonitor;
 
 class Program
@@ -55,7 +54,7 @@ class Program
         Window window = new Window();
         window.Create(args.WindowWidth, args.WindowHeight);
 
-        if (args.Mode == "training" || args.Mode == "evaluation")
+        if (true)
             window.EnableBackgroundRunning = true;
         else
             window.EnableBackgroundRunning = false;
@@ -63,11 +62,9 @@ class Program
         GraphicsDevice.Instance.Create(window, args.FullScreen);
         SoundDevice.Instance.Create(window.Handle);
 
-        CommandRunner runner = null;
         GameSystemMonitor monitor = null;
         if (args.Debug)
         {
-            runner = CommandRunner.Execute();
             monitor = GameSystemMonitor.Execute();
         }
 
@@ -134,7 +131,6 @@ class Program
             if (args.Debug)
             {
                 GameSystemMonitor.Shutdown(monitor);
-                CommandRunner.Shutdown(runner);
             }
 
             Entity.Clear();
