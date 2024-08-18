@@ -153,7 +153,7 @@ public static class EngineScript
 
     public static float ToNauticalMile(float meter)
     {
-        return 1.852f * meter;
+        return meter / 1852.0f;
     }
 
     public static float ToFeet(float meter)
@@ -163,7 +163,7 @@ public static class EngineScript
 
     public static float NauticalMileToMeter(float nm)
     {
-        return nm / 1.852f;
+        return nm * 1852.0f;
     }
     #endregion
 
