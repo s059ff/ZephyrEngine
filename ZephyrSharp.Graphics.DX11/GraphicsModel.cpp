@@ -238,7 +238,7 @@ namespace ZephyrSharp
         void GraphicsModel::CreateFromCX(String^ path)
         {
             path = System::IO::Path::GetFullPath(path);
-            auto stream = gcnew System::IO::FileStream(path, System::IO::FileMode::Open);
+            auto stream = gcnew System::IO::FileStream(path, System::IO::FileMode::Open, System::IO::FileAccess::Read);
             auto dir = System::Environment::CurrentDirectory;
             System::Environment::CurrentDirectory = System::IO::Path::GetDirectoryName(path);
             this->CreateFromCX(stream);
