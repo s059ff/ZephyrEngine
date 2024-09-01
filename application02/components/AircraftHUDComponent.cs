@@ -223,7 +223,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                 {
                     Vector3 front = transform.Forward;
                     float angle = atan2(front.X, front.Z);
-                    float u = angle / PI;
+                    float u = angle / PI * 0.5f;
 
                     translate(0, 0.75f);
                     scale(0.8f, 0.2f);
