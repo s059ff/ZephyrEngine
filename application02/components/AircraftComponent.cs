@@ -77,6 +77,8 @@ public class AircraftComponent : CustomEntityComponent
     }
 
     public float Armor { get; set; } = 1.0f;
+
+    public float UnclampedArmor { get; private set; } = 1.0f;
     public float Visibility { private get; set; } = 1.0f;
     public float EnginePower { get; private set; } = 0.5f;
     private float GunReloadTime = 0;
@@ -672,6 +674,7 @@ public class AircraftComponent : CustomEntityComponent
     public void TakeDamage(float damage)
     {
         this.Armor = clamp(this.Armor - damage, 0.0f, 1.0f);
+        this.UnclampedArmor = this.UnclampedArmor - damage;
 
         if (this.Armor == 0)
         {
