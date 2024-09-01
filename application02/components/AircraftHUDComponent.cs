@@ -551,8 +551,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                                 point /= max(this.RadarRange, point.Magnitude);
 
                                 Vector2 point2D;
-                                point2D.X = point.X * 0.5f / 2;
-                                point2D.Y = point.Z * 0.5f / 2;
+                                point2D.X = point.X * 0.5f / 2 * 0.8f;
+                                point2D.Y = point.Z * 0.5f / 2 * 0.8f;
                                 point2D += new Vector2(-1.25f, -0.7f);
                                 float theta = atan2(matrix.M31, matrix.M33);
 
@@ -583,8 +583,8 @@ public class AircraftHUDComponent : CustomEntityComponent
                                 point /= max(this.RadarRange, point.Magnitude);
 
                                 Vector2 point2D;
-                                point2D.X = point.X * 0.5f / 2;
-                                point2D.Y = point.Z * 0.5f / 2;
+                                point2D.X = point.X * 0.5f / 2 * 0.8f;
+                                point2D.Y = point.Z * 0.5f / 2 * 0.8f;
                                 point2D += new Vector2(-1.25f, -0.7f);
 
                                 pushMatrix();
