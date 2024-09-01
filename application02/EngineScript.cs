@@ -119,10 +119,18 @@ public static class EngineScript
         }
     }
 
-    public static float[] linspace(float startval, float endval, int steps)
+    public static float[] linspace(float a, float b, int n)
     {
-        float interval = (endval / abs(endval)) * abs(endval - startval) / (steps - 1);
-        return (from val in Enumerable.Range(0, steps) select startval + (val * interval)).ToArray();
+        assert(0 < n);
+        if (n == 1)
+        {
+            return new float[] { (a + b) / 2 };
+        }
+        else
+        {
+            float delta = (b - a) / (n - 1);
+            return Enumerable.Range(0, n).Select(i => delta * i / n).Select(v => v + a).ToArray();
+        }
     }
 
     private static RandomEngine randomizer = new RandomEngine();
