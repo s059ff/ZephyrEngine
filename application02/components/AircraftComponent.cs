@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -697,12 +697,6 @@ public class AircraftComponent : CustomEntityComponent
                 var camera = Entity.Find("camera");
                 camera.Get<FixedPointCameraComponent>()?.Activate();
             }
-        }
-
-        if (this.Owner.Has<EnvironmentObservationComponent>())
-        {
-            var observer = this.Owner.Get<EnvironmentObservationComponent>();
-            observer.Player.TakenDamage += damage;
         }
     }
 
