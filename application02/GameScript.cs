@@ -6,6 +6,7 @@ using ZephyrSharp.Graphics;
 using ZephyrSharp.Input;
 using ZephyrSharp.Linalg;
 using ZephyrSharp.Sound;
+using static EngineScript;
 
 public static class GameScript
 {
@@ -55,7 +56,7 @@ public static class GameScript
     public const int CollisionGroupGunBullet = 4;
     public const int CollisionGroupGround = 8;
 
-    public const float SearchOperationRange = 4000;
+    public static readonly float SearchOperationRange = NauticalMileToMeter(10.0f);
 
     public static float WindowAspectRatio { get { return GraphicsDeviceContext.Instance.BackBufferAspectRatio; } }
 
