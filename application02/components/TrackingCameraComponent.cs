@@ -7,17 +7,6 @@ using static GameScript;
 
 class TrackingCameraComponent : AbstractCameraComponent
 {
-    public TrackingCameraComponent()
-    {
-        for (int i = 0; i < TrackingLatency; i++)
-        {
-            this.targetRotationHistory.AddFirst(new Matrix3x3().Identity());
-            this.targetPositionHistroy.AddFirst(new Vector3());
-        }
-        assert(this.targetRotationHistory.Count == TrackingLatency);
-        assert(this.targetPositionHistroy.Count == TrackingLatency);
-    }
-
     protected override void Update()
     {
         var player = Entity.Find("player");
@@ -41,7 +30,7 @@ class TrackingCameraComponent : AbstractCameraComponent
         {
             Vector3 from = transform.Position;
             Vector3 at = avionics.TargetEntity.Get<TransformComponent>().Position;
-            Matrix3x3 rotation = this.targetRotationHistory.Last.Value;
+            Matrix3x3 rotation = transform.Matrix._Matrix3x3;
             Vector3 dir = (at - from) * rotation.Inverse;
 
             float dx = -atan2(dir.Y, abs(dir.Z));
@@ -80,26 +69,20 @@ class TrackingCameraComponent : AbstractCameraComponent
             var distance = (this.trackingOffset - aircraft.Parameter.CockpitPos).Magnitude;
             aircraft.Visibility = clamp(distance / 15.0f, 0.0f, 1.0f);
         }
-
-        this.targetRotationHistory.RemoveLast();
-        this.targetRotationHistory.AddFirst(transform.Matrix._Matrix3x3);
-
-        this.targetPositionHistroy.RemoveLast();
-        this.targetPositionHistroy.AddFirst(transform.Position);
     }
 
     protected override void ApplyCameraTransform()
     {
+        var player = Entity.Find("player");
+        var transform = player?.Get<TransformComponent>();
         var angleOffset = new Matrix3x3().Identity()
             .RotateY(this.angleOffset.Y + this.angleOffset2.Y)
             .RotateX(this.angleOffset.X + this.angleOffset2.X);
-        var rotation = angleOffset * this.targetRotationHistory.Last.Value;
-        var position = this.trackingOffset * rotation + this.targetPositionHistroy.First.Value;
+        var rotation = angleOffset * transform.Matrix._Matrix3x3;
+        var position = this.trackingOffset * rotation + transform.Position;
         this.Owner.Get<TransformComponent>().Matrix = new Matrix4x3(rotation);
         this.Owner.Get<TransformComponent>().Position = position;
     }
-
-    const float TrackingLatency = 2;
 
     enum CameraView
     {
@@ -110,9 +93,6 @@ class TrackingCameraComponent : AbstractCameraComponent
 
     Vector2 angleOffset = new Vector2();
     Vector2 angleOffset2 = new Vector2();
-
-    LinkedList<Matrix3x3> targetRotationHistory = new LinkedList<Matrix3x3>();
-    LinkedList<Vector3> targetPositionHistroy = new LinkedList<Vector3>();
 
     Vector3 trackingOffset = new Vector3();
 }
