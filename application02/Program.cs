@@ -86,8 +86,8 @@ class Program
             else
             {
                 bool flag = false;
-                flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("player"))) is null;
-                flag |= (0 < args.EnemyCount) && (Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy"))) is null);
+                flag |= Entity.Find(e => ((e.Name ?? "").StartsWith("player"))) is null;
+                flag |= (0 < args.EnemyCount) && (Entity.Find(e => (e.Name ?? "").StartsWith("enemy")) is null);
                 if (flag)
                 {
                     Scene.ResetScene(args);
