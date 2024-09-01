@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -258,7 +258,8 @@ public class AircraftComponent : CustomEntityComponent
         if (other.Has<GroundComponent>())
         {
             this.TakeDamage(1.0f);
-            this.Destroy();
+            this.Owner.Get<TimerComponent>().CountSpeed = 1.0f;     // 次のフレームで削除する
+            //this.Destroy();
         }
     }
 
