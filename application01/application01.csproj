@@ -7,8 +7,8 @@
     <ProjectGuid>{8FE1540F-47F9-4B90-86B9-6F14D5D9E101}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>application01</RootNamespace>
-    <AssemblyName>application01</AssemblyName>
+    <RootNamespace>app</RootNamespace>
+    <AssemblyName>app</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
