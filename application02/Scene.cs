@@ -1,4 +1,5 @@
 ﻿using System;
+using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
@@ -86,22 +87,21 @@ class Scene
             {
                 case "play":
                     entity.Attach(new PlayerPilotComponent());
-                    entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
                     break;
                 case "demo":
                     entity.Attach(new NonPlayerPilotComponent());
-                    entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
                     break;
                 case "training":
+                    entity.Attach(new LearnablePilotComponent());
+                    break;
                 case "evaluation":
                     entity.Attach(new LearnablePilotComponent());
-                    entity.Get<TransformComponent>().Matrix._Matrix3x3 = new Matrix3x3().Identity().RotateY(uniform(0.0f, PI2)).RotateX(deg2rad(60)).RotateZ(uniform(0.0f, PI2));
-                    entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, 0);
                     break;
                 default:
-                    break;
+                    throw new RuntimeException();
             }
 
+            entity.Get<TransformComponent>().Matrix.Position = new Vector3(0, 2000, -2000);
             entity.Get<SoundComponent>().LoopPlay();
         }
 
