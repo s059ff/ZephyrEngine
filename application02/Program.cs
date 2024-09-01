@@ -1,4 +1,4 @@
-using CommandLine;
+﻿using CommandLine;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -20,19 +20,19 @@ class Program
         [Option('m', "mode", Default = "play")]
         public string Mode { get; set; }
 
-        [Option('w', "width", Default = 1920)]
+        [Option('w', "width", Default = 1280)]
         public int WindowWidth { get; set; }
 
-        [Option('h', "height", Default = 1080)]
+        [Option('h', "height", Default = 720)]
         public int WindowHeight { get; set; }
 
         [Option('f', "fullscreen")]
         public bool FullScreen { get; set; }
 
-        [Option("enemy_count", Default = 0)]
+        [Option("enemy_count", Default = 8)]
         public int EnemyCount { get; set; }
 
-        [Option("friend_count", Default = 0)]
+        [Option("friend_count", Default = 4)]
         public int FriendCount { get; set; }
 
         [Option("debug")]
