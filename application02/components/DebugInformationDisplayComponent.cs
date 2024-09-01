@@ -82,7 +82,7 @@ class DebugInformationDisplayComponent : CustomEntityComponent
         pushMatrix();
         {
             translate(-1.6f, 1.0f, 0.0f);
-            scale(0.05f);
+            scale(0.025f);
 
             foreach (var message in this.DebugMessages)
             {
