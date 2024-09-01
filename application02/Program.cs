@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -101,7 +101,9 @@ class Program
                 vsync = true;
             }
             GameScript.Update();
+            Entity.BroadcastMessage(GameScript.PreUpdateMessage);
             Entity.BroadcastMessage(GameScript.UpdateMessage);
+            Entity.BroadcastMessage(GameScript.PostUpdateMessage);
 
             if (rendering)
             {

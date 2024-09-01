@@ -17,9 +17,8 @@ class AbstractPilotComponent : CustomEntityComponent
         }
     }
 
-    protected virtual void Update()
+    private void Update()
     {
-        // 機体操作をリセットする
         var aircraft = this.Owner.Get<AircraftComponent>();
         aircraft.YawInput = 0.0f;
         aircraft.RollInput = 0.0f;

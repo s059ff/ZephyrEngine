@@ -6,7 +6,9 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using ZephyrSharp;
 using ZephyrSharp.GameSystem;
+using static EngineScript;
 using static GameScript;
 
 class LearnablePilotComponent : AbstractPilotComponent
@@ -18,9 +20,9 @@ class LearnablePilotComponent : AbstractPilotComponent
         var port = 12345 + process.Id;
         var host = IPAddress.Parse(address);
 
-        server = new TcpListener(host, port);
-        server.Start();
-        client = server.AcceptTcpClient();
+        listener = new TcpListener(host, port);
+        listener.Start();
+        client = listener.AcceptTcpClient();
         stream = client.GetStream();
     }
 
@@ -28,86 +30,110 @@ class LearnablePilotComponent : AbstractPilotComponent
     {
         base.OnAttach();
 
-        this.SendObservationData();
-        this.ReceiveResponseOkData();
+        //var process = Process.GetCurrentProcess();
+        //var address = "127.0.0.1";
+        //var port = 12345 + process.Id;
+        //var host = IPAddress.Parse(address);
+
+        //this.listener = new TcpListener(host, port);
+        //this.listener.Start();
+        //this.client = listener.AcceptTcpClient();
+        //this.stream = client.GetStream();
     }
 
+    protected override void OnDetach()
+    {
+        base.OnDetach();
+
+        //this.stream.Dispose();
+        //this.client.Dispose();
+        //this.listener.Stop();
+    }
     protected override void ReceiveMessage(object message, object argument)
     {
         base.ReceiveMessage(message, argument);
 
         switch (message as string)
         {
-            case KillMessage:
+            case UpdateMessage:
                 this.Update();
+                break;
+
+            case PostUpdateMessage:
+                this.PostUpdate();
+                break;
+
+            default:
                 break;
         }
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
-
+        if (this.initialState)
         {
-            TimeSpan timeout = new TimeSpan(hours: 0, minutes: 0, seconds: 30);
-            const int frameRate = 60;
-
-            bool flag = false;
-            flag |= (Entity.Find("system").Get<SystemComponent>().FrameCount > timeout.TotalSeconds * frameRate);
-            flag |= (this.Owner.Get<AircraftComponent>().Armor == 0.0f);
-            //flag |= Entity.Find(e => (e.Name != null) && (e.Name.StartsWith("enemy")) && (e.Has<AircraftComponent>()) && (0 < e.Get<AircraftComponent>().Armor)) == null;
-
-            var obs = this.Owner.Get<EnvironmentObservationComponent>();
-            obs.EpisodeDone = flag;
-            Program.ResetSceneSignal = flag;
-
             this.SendObservationData();
-            this.ReceiveActionData();
+            this.initialState = false;
         }
+        this.ReceiveActionData();
+    }
+
+    private void PostUpdate()
+    {
+        this.SendObservationData();
     }
 
     private void SendObservationData()
     {
-        var obs = this.Owner.Get<EnvironmentObservationComponent>();
+        var observer = this.Owner.Get<EnvironmentObservationComponent>();
+        var observation = observer.Observe();
+        string message = JObject.FromObject(observation).ToString(Formatting.None);
+        byte[] payload = Encoding.UTF8.GetBytes(message);
+        stream.Write(payload, 0, payload.Length);
+        stream.WriteByte(0);
+
+        if ((bool)observation["episode_done"])
         {
-            string text = obs.ToJsonString();
-            byte[] buffer = Encoding.UTF8.GetBytes(text);
-            stream.Write(buffer, 0, buffer.Length);
+            Program.ResetSceneSignal = true;
         }
-    }
-
-    private void ReceiveResponseOkData()
-    {
-        byte[] buffer = new byte[8192];
-        int length = stream.Read(buffer, 0, buffer.Length);
-        Array.Resize(ref buffer, length);
-
-        string text = Encoding.UTF8.GetString(buffer);
-        JObject input = JObject.Parse(text);
-        if ((string)input["response"] != "ok")
-            throw new IOException();
     }
 
     private void ReceiveActionData()
     {
-        byte[] buffer = new byte[8192];
-        int length = stream.Read(buffer, 0, buffer.Length);
-        Array.Resize(ref buffer, length);
+        using (var buffer = new MemoryStream())
+        {
+            while (true)
+            {
+                byte[] chunk = new byte[4096];
+                int count = stream.Read(chunk, 0, chunk.Length);
+                if (count == 0)
+                    throw new RuntimeException("socket connection broken");
+                buffer.Write(chunk, 0, count);
+                if (chunk[count - 1] == 0)
+                    break;
+            }
+            byte[] payload = buffer.ToArray();
+            assert(0 < payload.Length);
+            assert(payload[payload.Length - 1] == 0);
 
-        string text = Encoding.UTF8.GetString(buffer);
-        JObject input = JObject.Parse(text);
+            string message = Encoding.UTF8.GetString(payload, 0, payload.Length - 1);
+            JObject response = JObject.Parse(message);
 
-        var aircraft = this.Owner.Get<AircraftComponent>();
-        aircraft.RollInput = (float)input["roll_input"];
-        aircraft.PitchInput = (float)input["pitch_input"];
-        aircraft.YawInput = (float)input["yaw_input"];
-        aircraft.ThrottleInput = (float)input["throttle_input"];
+            var aircraft = this.Owner.Get<AircraftComponent>();
+            aircraft.RollInput = (float)response["roll_input"];
+            aircraft.PitchInput = (float)response["pitch_input"];
+            aircraft.YawInput = (float)response["yaw_input"];
+            aircraft.ThrottleInput = (float)response["throttle_input"];
+            aircraft.MissileLaunchInput = (uniform(0.0f, 1.0f) <= (float)response["missile_launch_input"]);
+            aircraft.GunFireInput = (uniform(0.0f, 1.0f) <= (float)response["gun_fire_input"]);
 
-        var display = Entity.Find("debugger").Get<DebugInformationDisplayComponent>();
-        display.DebugMessages["action"] = input.ToString(Formatting.Indented);
+            var display = Entity.Find("debugger").Get<DebugInformationDisplayComponent>();
+            display.DebugMessages["action"] = response.ToString(Formatting.Indented);
+        }
     }
 
-    private static TcpListener server;
+    private bool initialState = true;
+    private static TcpListener listener;
     private static TcpClient client;
     private static NetworkStream stream;
 }

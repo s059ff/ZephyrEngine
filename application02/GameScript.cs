@@ -37,7 +37,9 @@ public static class GameScript
     public static SoundBuffer BulletSound = new SoundBuffer();
     public static SoundBuffer BulletHitSound = new SoundBuffer();
 
+    public const string PreUpdateMessage = "preupdate";
     public const string UpdateMessage = "update";
+    public const string PostUpdateMessage = "postupdate";
     public const string RenderMessage = "render";
     public const string TranslucentRenderMessage = "translucent render";
     public const string DrawMessage = "draw";
