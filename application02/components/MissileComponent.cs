@@ -332,12 +332,6 @@ public class MissileComponent : CustomEntityComponent
                 if (this.FromPlayer)
                 {
                     Entity.SendMessage(player, NoticeMessage, (aircraft.Armor > 0) ? "Hit" : "Destroyed");
-
-                    if (player.Has<EnvironmentObservationComponent>())
-                    {
-                        var observer = player.Get<EnvironmentObservationComponent>();
-                        observer.Player.InflictedDamage += DestructivePower;
-                    }
                 }
                 if (other.Name == "player")
                 {
