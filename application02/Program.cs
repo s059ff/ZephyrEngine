@@ -1,8 +1,10 @@
 using CommandLine;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.Graphics;
 using ZephyrSharp.Input;
@@ -49,6 +51,9 @@ class Program
 
     static void Main()
     {
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
         var args = ParseArgs();
 
         Window window = new Window();
@@ -127,6 +132,10 @@ class Program
             Scene.ResetScene(args);
 
             window.Start();
+        }
+        catch (Exception e)
+        {
+            Console.Error.WriteLine(e);
         }
         finally
         {
