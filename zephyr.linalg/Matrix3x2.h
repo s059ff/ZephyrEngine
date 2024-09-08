@@ -124,12 +124,12 @@ namespace zephyr
 
             Matrix3x2& rotate(float r)
             {
-                float cos慮 = cos(r);
-                float sin慮 = sin(r);
-                float m11 = this->m11 * cos慮 + this->m21 * sin慮;
-                float m12 = this->m12 * cos慮 + this->m22 * sin慮;
-                float m21 = -this->m11 * sin慮 + this->m21 * cos慮;
-                float m22 = -this->m12 * sin慮 + this->m22 * cos慮;
+                float cosθ = cos(r);
+                float sinθ = sin(r);
+                float m11 = this->m11 * cosθ + this->m21 * sinθ;
+                float m12 = this->m12 * cosθ + this->m22 * sinθ;
+                float m21 = -this->m11 * sinθ + this->m21 * cosθ;
+                float m22 = -this->m12 * sinθ + this->m22 * cosθ;
                 this->m11 = m11; this->m12 = m12;
                 this->m21 = m21; this->m22 = m22;
                 return *this;
