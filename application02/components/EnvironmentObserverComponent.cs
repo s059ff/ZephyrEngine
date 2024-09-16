@@ -9,7 +9,7 @@ using ZephyrSharp.Linalg;
 using static EngineScript;
 using static GameScript;
 
-class EnvironmentObservationComponent : CustomEntityComponent
+class EnvironmentObserverComponent : CustomEntityComponent
 {
     private bool EpisodeDone
     {
@@ -24,9 +24,7 @@ class EnvironmentObservationComponent : CustomEntityComponent
         }
     }
 
-    private float PlayerArmorCurt { get { return this.Owner.Get<AircraftComponent>().UnclampedArmor; } }
-
-    private float PlayerArmorPrev = 1.0f;
+    private float PlayerArmor { get { return this.Owner.Get<AircraftComponent>().Armor; } }
 
     private float PlayerAltitude
     {
@@ -60,49 +58,92 @@ class EnvironmentObservationComponent : CustomEntityComponent
 
     private Vector3 PlayerPosition { get { return this.Transform.Position; } }
 
-    private Quaternion PlayerRotation { get { return new Quaternion(this.Transform.Matrix._Matrix3x3); } }
+    private Matrix3x3 PlayerRotation { get { return this.Transform.Matrix._Matrix3x3; } }
 
     private Vector3 PlayerVelocity { get { return this.Physics.Velocity; } }
 
-    private float TargetArmorCurt
+    private bool PlayerMissileLock { get { return this.Owner?.Get<AircraftComponent>()?.ActiveMissile?.Locking ?? false; } }
+
+    private float OpponentArmor
     {
         get
         {
-            //Entity entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
-            Entity entity = Entity.Find("enemy1");
-            return entity?.Get<AircraftComponent>()?.UnclampedArmor ?? 0.0f;
+            //var entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
+            var entity = Entity.Find("enemy1");
+            return entity?.Get<AircraftComponent>()?.Armor ?? 1.0f;
         }
     }
 
-    private float TargetArmorPrev = 1.0f;
-
-    private Vector3 TargetPosition
+    private float OpponentAltitude
     {
         get
         {
-            //Entity entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
-            Entity entity = Entity.Find("enemy1");
+            float response = 0.0f;
+
+            var enemy = Entity.Find("enemy1");
+            var pos = enemy?.Get<TransformComponent>().Position ?? Vector3.Zero;
+
+            var ground = Entity.Find("ground");
+            if (ground != null)
+            {
+                var collision = ground.Get<CollisionComponent>();
+                if (collision != null)
+                {
+                    response = (collision.Object as CurvedSurfaceCollisionObject).ComputeHeight(pos);
+                }
+            }
+            response = (float.IsNaN(response)) ? 0.0f : response;
+            return response;
+        }
+    }
+
+    private float OpponentEnginePower
+    {
+        get
+        {
+            var entity = Entity.Find("enemy1");
+            var aircraft = entity?.Get<AircraftComponent>();
+            return aircraft?.EnginePower ?? 0.0f;
+        }
+    }
+
+    private Vector3 OpponentPosition
+    {
+        get
+        {
+            //var entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
+            var entity = Entity.Find("enemy1");
             return entity?.Get<TransformComponent>()?.Position ?? Vector3.Zero;
         }
     }
 
-    private Quaternion TargetRotation
+    private Matrix3x3 OpponentRotation
     {
         get
         {
-            //Entity entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
-            Entity entity = Entity.Find("enemy1");
-            return new Quaternion(entity?.Get<TransformComponent>()?.Matrix._Matrix3x3 ?? new Matrix3x3().Identity());
+            //var entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
+            var entity = Entity.Find("enemy1");
+            return entity?.Get<TransformComponent>()?.Matrix._Matrix3x3 ?? new Matrix3x3().Identity();
         }
     }
 
-    private Vector3 TargetVelocity
+    private Vector3 OpponentVelocity
     {
         get
         {
-            //Entity entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
-            Entity entity = Entity.Find("enemy1");
+            //var entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
+            var entity = Entity.Find("enemy1");
             return entity?.Get<PhysicsComponent>()?.Velocity ?? Vector3.Zero;
+        }
+    }
+
+    private bool OpponentMissileLock
+    {
+        get
+        {
+            //var entity = this.Owner.Get<AircraftAvionicsComponent>()?.TargetEntity;
+            var entity = Entity.Find("enemy1");
+            return entity?.Get<AircraftComponent>()?.ActiveMissile?.Locking ?? false;
         }
     }
 
@@ -123,7 +164,7 @@ class EnvironmentObservationComponent : CustomEntityComponent
         }
     }
 
-    private Quaternion ThreatMissileRotation
+    private Matrix3x3 ThreatMissileRotation
     {
         get
         {
@@ -136,7 +177,7 @@ class EnvironmentObservationComponent : CustomEntityComponent
                     && missile.Locking
                     && missile.Launched;
             });
-            return new Quaternion(entity?.Get<TransformComponent>()?.Matrix._Matrix3x3 ?? new Matrix3x3().Identity());
+            return entity?.Get<TransformComponent>()?.Matrix._Matrix3x3 ?? new Matrix3x3().Identity();
         }
     }
 
@@ -160,47 +201,56 @@ class EnvironmentObservationComponent : CustomEntityComponent
     public Dictionary<string, object> Observe()
     {
         Func<Vector3, float[]> vec2array = (v) => new float[] { v.X, v.Y, v.Z };
-        Func<Quaternion, float[]> quat2array = (q) =>
-        {
-            float mag = sqrt(square(q.X) + square(q.Y) + square(q.Z) + square(q.W));
-            if (1e-6f < mag)
-                return new float[] { q.X / mag, q.Y / mag, q.Z / mag, q.W / mag };
-            else
-                return new float[] { q.X, q.Y, q.Z, q.W };
-        };
+        //Func<Matrix3x3, float[]> mat2array = (m) => new float[] { m.M11, m.M12, m.M13, m.M21, m.M22, m.M23, m.M31, m.M32, m.M33 };
+        Func<Matrix3x3, float[]> mat2array = (m) => new float[] { m.M11, m.M12, m.M13, m.M21, m.M22, m.M23 };
 
         float c1 = 1.0f / (0.5f * Entity.Find("gamespace").Get<GameSpaceComponent>().SpaceLength);
         float c3 = 1.0f / 6.0f;
 
+        Matrix4x3 inv = this.Transform.Matrix.Inverse;
+
+        var enemy = Entity.Find("enemy1");
+        var forward = this.Transform.Forward;
+        var relative = enemy.Get<TransformComponent>().Position - this.PlayerPosition;
+        var dot = Vector3.Inner(forward.Normalize(), relative.Normalize());
+
+        float reward = 0.0f;
+        reward += dot;
+
         return new Dictionary<string, object>
         {
             { "episode_done", this.EpisodeDone },
-            {
+            { "reward", reward },
+            { 
                 "player", new Dictionary<string, object>
                 {
-                    { "armor_delta", this.PlayerArmorCurt - this.PlayerArmorPrev },
+                    { "armor", this.PlayerArmor },
                     { "altitude", c1 * this.PlayerAltitude },
                     { "engine_power", this.PlayerEnginePower },
                     { "position", vec2array(c1 * this.PlayerPosition) },
-                    { "rotation", quat2array(this.PlayerRotation) },
+                    { "rotation", mat2array(this.PlayerRotation) },
                     { "velocity", vec2array(c3 * this.PlayerVelocity) },
+                    { "missile_lock", this.PlayerMissileLock },
                 }
             },
             {
-                "target", new Dictionary<string, object>
+                "opponent", new Dictionary<string, object>
                 {
-                    { "armor_delta", this.TargetArmorCurt - this.TargetArmorPrev },
-                    { "position", vec2array(c1 * this.TargetPosition) },
-                    { "rotation", quat2array(this.TargetRotation) },
-                    { "velocity", vec2array(c3 * this.TargetVelocity) },
+                    { "armor", this.OpponentArmor },
+                    { "altitude", c1 * this.OpponentAltitude },
+                    { "engine_power", this.OpponentEnginePower },
+                    { "position", vec2array(c1 * (this.OpponentPosition * inv)) },
+                    { "rotation", mat2array(this.OpponentRotation * inv._Matrix3x3) },
+                    { "velocity", vec2array(c3 * (this.OpponentVelocity * inv._Matrix3x3)) },
+                    { "missile_lock", this.OpponentMissileLock },
                 }
             },
             {
                 "threat_missile", new Dictionary<string, object>
                 {
-                    { "position", vec2array(c1 * this.ThreatMissilePosition) },
-                    { "rotation", quat2array(this.ThreatMissileRotation) },
-                    { "velocity", vec2array(c3 * this.ThreatMissileVelocity) },
+                    { "position", vec2array(c1 * (this.ThreatMissilePosition * inv)) },
+                    { "rotation", mat2array(this.ThreatMissileRotation * inv._Matrix3x3) },
+                    { "velocity", vec2array(c3 * (this.ThreatMissileVelocity * inv._Matrix3x3)) },
                 }
             }
         };
@@ -212,10 +262,6 @@ class EnvironmentObservationComponent : CustomEntityComponent
 
         switch (message as string)
         {
-            case PreUpdateMessage:
-                this.PreUpdate();
-                break;
-
             case PostUpdateMessage:
                 this.PostUpdate();
                 break;
@@ -223,12 +269,6 @@ class EnvironmentObservationComponent : CustomEntityComponent
             default:
                 break;
         }
-    }
-
-    private void PreUpdate()
-    {
-        this.PlayerArmorPrev = this.PlayerArmorCurt;
-        this.TargetArmorPrev = this.TargetArmorCurt;
     }
 
     private void PostUpdate()
