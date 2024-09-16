@@ -1,0 +1,221 @@
+{
+  "body": {
+    "mesh_path": "F-99_Dummy.cx"
+  },
+  "cockpit": {
+    "pos": {
+      "x": 999,
+      "y": 999,
+      "z": 999
+    }
+  },
+  "engine_nozzle": {
+    "left": {
+      "pos": {
+        "x": 999,
+        "y": 999,
+        "z": 999
+      }
+    },
+    "right": {
+      "pos": {
+        "x": 999,
+        "y": 999,
+        "z": 999
+      }
+    }
+  },
+  "main_wing": {
+    "left": {
+      "edge_pos": {
+        "x": 999,
+        "y": 999,
+        "z": 999
+      }
+    },
+    "right": {
+      "edge_pos": {
+        "x": 999,
+        "y": 999,
+        "z": 999
+      }
+    }
+  },
+  "material": {
+    "main": {
+      "texture_path": "F-99_Dummy_P01.png"
+    },
+    "nmap": {
+      "texture_path": "F-99_Dummy_N.png"
+    }
+  },
+  "name": "F-99_Dummy",
+  "spec": {
+    "engine_thrust": 8.0,
+    "inertia_moment": 4.0,
+    "weight": 50.0
+  },
+  "sub_wing": {
+    "aileron": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-AileronL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-AileronR.cx"
+      }
+    },
+    "canard": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-CanardL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-CanardR.cx"
+      }
+    },
+    "elevator": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-ElevatorL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-ElevatorR.cx"
+      }
+    },
+    "rudder": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-RudderL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          },
+          {
+            "x": 999,
+            "y": 999,
+            "z": 999
+          }
+        ],
+        "mesh_path": "F-99_Dummy-RudderR.cx"
+      }
+    }
+  },
+  "weapon": {
+    "gun": {
+      "pos": {
+        "x": 999,
+        "y": 999,
+        "z": 999
+      }
+    },
+    "missile": {
+      "pos": [
+        {
+          "x": 999,
+          "y": 999,
+          "z": 999
+        },
+        {
+          "x": 999,
+          "y": 999,
+          "z": 999
+        },
+        {
+          "x": 999,
+          "y": 999,
+          "z": 999
+        },
+        {
+          "x": 999,
+          "y": 999,
+          "z": 999
+        }
+      ]
+    }
+  }
+}
