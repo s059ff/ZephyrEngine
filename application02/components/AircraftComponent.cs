@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using ZephyrSharp.Collision;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -13,29 +13,284 @@ using static GameScript;
 
 public class AircraftComponent : CustomEntityComponent
 {
-    public class AircraftParameter
+    public class AircraftModel
     {
+        public class SpecType
+        {
+            public float Weight;
+            public float InertiaMoment;
+            public float EngineThrust;
+
+            public static SpecType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new SpecType()
+                    {
+                        Weight = (float)token["weight"],
+                        InertiaMoment = (float)token["inertia_moment"],
+                        EngineThrust = (float)token["engine_thrust"]
+                    };
+                }
+            }
+        }
+
+        public class BodyType
+        {
+            public GraphicsModel Mesh;
+            public static BodyType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var mesh = new GraphicsModel();
+                    mesh.CreateFromCX((string)token["mesh_path"]);
+                    return new BodyType() { Mesh = mesh };
+                }
+            }
+        }
+
+        public class CockpitType
+        {
+            public Vector3 Pos;
+
+            public static CockpitType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new CockpitType()
+                    {
+                        Pos = new Vector3(
+                            (float)token["pos"]["x"],
+                            (float)token["pos"]["y"],
+                            (float)token["pos"]["z"]
+                        )
+                    };
+                }
+            }
+        }
+
+        public class EngineNozzleType
+        {
+            public Vector3 Pos;
+
+            public static EngineNozzleType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new EngineNozzleType()
+                    {
+                        Pos = new Vector3(
+                            (float)token["pos"]["x"],
+                            (float)token["pos"]["y"],
+                            (float)token["pos"]["z"]
+                        )
+                    };
+                }
+            }
+        }
+
+        public class MainWingType
+        {
+            public Vector3 EdgePos;
+
+            public static MainWingType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new MainWingType()
+                    {
+                        EdgePos = new Vector3(
+                            (float)token["edge_pos"]["x"],
+                            (float)token["edge_pos"]["y"],
+                            (float)token["edge_pos"]["z"]
+                        )
+                    };
+                }
+            }
+        }
+
+        public class SubWingType
+        {
+            public Vector3 EdgePos1;
+            public Vector3 EdgePos2;
+            public GraphicsModel Mesh;
+
+            public static SubWingType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var mesh = new GraphicsModel();
+                    mesh.CreateFromCX((string)token["mesh_path"]);
+
+                    return new SubWingType()
+                    {
+                        EdgePos1 = new Vector3(
+                            (float)token["edge_pos"][0]["x"],
+                            (float)token["edge_pos"][0]["y"],
+                            (float)token["edge_pos"][0]["z"]
+                        ),
+                        EdgePos2 = new Vector3(
+                            (float)token["edge_pos"][1]["x"],
+                            (float)token["edge_pos"][1]["y"],
+                            (float)token["edge_pos"][1]["z"]
+                        ),
+                        Mesh = mesh
+                    };
+                }
+            }
+        }
+
+        public class MaterialType
+        {
+            public Texture2D Texture;
+
+            public static MaterialType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var texture = new Texture2D();
+                    texture.Create((string)token["texture_path"], Accessibility.None);
+
+                    return new MaterialType()
+                    {
+                        Texture = texture
+                    };
+                }
+            }
+        }
+
+        public class WeaponType
+        {
+            public Vector3 GunPos;
+            public Vector3 MissilePos0;
+            public Vector3 MissilePos1;
+            public Vector3 MissilePos2;
+            public Vector3 MissilePos3;
+
+            public static WeaponType FromJToken(JToken token)
+            {
+                if (token == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new WeaponType()
+                    {
+                        GunPos = new Vector3(
+                            (float)token["gun"]["pos"]["x"],
+                            (float)token["gun"]["pos"]["y"],
+                            (float)token["gun"]["pos"]["z"]
+                        ),
+                        MissilePos0 = new Vector3(
+                            (float)token["missile"]["pos"][0]["x"],
+                            (float)token["missile"]["pos"][0]["y"],
+                            (float)token["missile"]["pos"][0]["z"]
+                        ),
+                        MissilePos1 = new Vector3(
+                            (float)token["missile"]["pos"][1]["x"],
+                            (float)token["missile"]["pos"][1]["y"],
+                            (float)token["missile"]["pos"][1]["z"]
+                        ),
+                        MissilePos2 = new Vector3(
+                            (float)token["missile"]["pos"][2]["x"],
+                            (float)token["missile"]["pos"][2]["y"],
+                            (float)token["missile"]["pos"][2]["z"]
+                        ),
+                        MissilePos3 = new Vector3(
+                            (float)token["missile"]["pos"][3]["x"],
+                            (float)token["missile"]["pos"][3]["y"],
+                            (float)token["missile"]["pos"][3]["z"]
+                        )
+                    };
+                }
+            }
+        }
+
         public string Name;
-        public float Weight;
-        public float InertiaMoment;
-        public float Thrust;
-        public Vector3 EngineNozzlePos;
-        public Vector3 CanardPos;
-        public Vector3 ElevatorPos;
-        public Vector3 WeaponPos0;
-        public Vector3 WeaponPos1;
-        public Vector3 WeaponPos2;
-        public Vector3 WeaponPos3;
-        public Vector3 WingEdgePos;
-        public Vector3 CockpitPos;
-        public Vector3 GunPos;
-        public Texture2D Texture;
-        public Texture2D NormalMapTexture;
-        public GraphicsModel Body;
-        public GraphicsModel LeftCanard;
-        public GraphicsModel RightCanard;
-        public GraphicsModel LeftElevator;
-        public GraphicsModel RightElevator;
+        public SpecType Spec;
+
+        public BodyType Body;
+
+        public CockpitType Cockpit;
+
+        public EngineNozzleType EngineNozzleC;
+        public EngineNozzleType EngineNozzleL;
+        public EngineNozzleType EngineNozzleR;
+
+        public MainWingType MainWingL;
+        public MainWingType MainWingR;
+
+        public SubWingType SubWingAileronL;
+        public SubWingType SubWingAileronR;
+        public SubWingType SubWingCanardL;
+        public SubWingType SubWingCanardR;
+        public SubWingType SubWingElevatorL;
+        public SubWingType SubWingElevatorR;
+        public SubWingType SubWingRudderC;
+        public SubWingType SubWingRudderL;
+        public SubWingType SubWingRudderR;
+
+        public MaterialType MaterialMain;
+        public MaterialType MaterialNMap;
+
+        public WeaponType Weapon;
+
+        public static AircraftModel FromJToken(JToken token)
+        {
+            return new AircraftModel()
+            {
+                Name = (string)token["name"],
+                Spec = SpecType.FromJToken(token["spec"]),
+                Body = BodyType.FromJToken(token["body"]),
+                Cockpit = CockpitType.FromJToken(token["cockpit"]),
+                EngineNozzleC = EngineNozzleType.FromJToken(token["engine_nozzle"]["center"]),
+                EngineNozzleL = EngineNozzleType.FromJToken(token["engine_nozzle"]["left"]),
+                EngineNozzleR = EngineNozzleType.FromJToken(token["engine_nozzle"]["right"]),
+                MainWingL = MainWingType.FromJToken(token["main_wing"]["left"]),
+                MainWingR = MainWingType.FromJToken(token["main_wing"]["right"]),
+                SubWingAileronL = SubWingType.FromJToken(token["sub_wing"]["aileron"]?["left"]),
+                SubWingAileronR = SubWingType.FromJToken(token["sub_wing"]["aileron"]?["right"]),
+                SubWingCanardL = SubWingType.FromJToken(token["sub_wing"]["canard"]?["left"]),
+                SubWingCanardR = SubWingType.FromJToken(token["sub_wing"]["canard"]?["right"]),
+                SubWingElevatorL = SubWingType.FromJToken(token["sub_wing"]["elevator"]?["left"]),
+                SubWingElevatorR = SubWingType.FromJToken(token["sub_wing"]["elevator"]?["right"]),
+                SubWingRudderC = SubWingType.FromJToken(token["sub_wing"]["rudder"]?["center"]),
+                SubWingRudderL = SubWingType.FromJToken(token["sub_wing"]["rudder"]?["left"]),
+                SubWingRudderR = SubWingType.FromJToken(token["sub_wing"]["rudder"]?["right"]),
+                MaterialMain = MaterialType.FromJToken(token["material"]["main"]),
+                MaterialNMap = MaterialType.FromJToken(token["material"]["nmap"]),
+                Weapon = WeaponType.FromJToken(token["weapon"])
+            };
+        }
     }
 
     class WeaponSystem
@@ -48,7 +303,7 @@ public class AircraftComponent : CustomEntityComponent
     static VertexShader VertexShader = new VertexShader();
     static PixelShader PixelShader = new PixelShader();
     static VertexLayout VertexLayout = new VertexLayout();
-    static List<AircraftParameter> AircraftParameters = new List<AircraftParameter>();
+    static List<AircraftModel> AircraftModels = new List<AircraftModel>();
 
     public const float Radius = 5.0f;
     public const int WeaponCount = 4;
@@ -56,7 +311,7 @@ public class AircraftComponent : CustomEntityComponent
     private const float GunReloadSpeed = 0.25f;
     private const float EnginePowerThreshold = 0.9f;
 
-    public readonly AircraftParameter Parameter;
+    public readonly AircraftModel ModelRef;
     private readonly Entity LeftSmokeGeneratorEntity;
     private readonly Entity RightSmokeGeneratorEntity;
     private readonly WeaponSystem[] Weapons = new WeaponSystem[WeaponCount];
@@ -78,7 +333,7 @@ public class AircraftComponent : CustomEntityComponent
 
     public float Armor { get; set; } = 1.0f;
 
-    public float UnclampedArmor { get; private set; } = 1.0f;
+    public float UnclampedArmor { get; set; } = 1.0f;
     public float Visibility { private get; set; } = 1.0f;
     public float EnginePower { get; private set; } = 0.5f;
     private float GunReloadTime = 0;
@@ -106,105 +361,40 @@ public class AircraftComponent : CustomEntityComponent
             new VertexElement("BINORMAL", 0, Format.Float3, 4, 0, VertexElement.Classification.VertexData, 0),
         }, VertexShader);
 
-        using (var stream = new StreamReader("res/data/aircrafts.csv"))
+        string[] aircrafts = JArray.Parse(File.ReadAllText("res/data/aircrafts.json")).Values<string>().ToArray();
+        foreach (var name in aircrafts)
         {
-            const char separator = '\t';
+            JObject item = JObject.Parse(File.ReadAllText($"res/mesh/aircrafts/{name}/{name}.json"));
 
-            string[] headers = stream.ReadLine().Split(separator);
-            FieldInfo[] fields = typeof(AircraftParameter).GetFields();
-            assert(headers.All(header => fields.Select(f => f.Name).Contains(header)));
+            string pwd = Directory.GetCurrentDirectory();
+            Directory.SetCurrentDirectory($"res/mesh/aircrafts/{name}");
 
-            while (!stream.EndOfStream)
-            {
-                AircraftParameter param = new AircraftParameter();
-                {
-                    string[] values = stream.ReadLine().Split(separator);
-                    assert(headers.Count() == values.Count());
+            AircraftModel model = AircraftModel.FromJToken(item);
+            AircraftModels.Add(model);
 
-                    foreach (var tuple in headers.Zip(values, Tuple.Create))
-                    {
-                        var header = tuple.Item1;
-                        var value = tuple.Item2;
-
-                        var field = fields.Where(f => f.Name == header).First();
-                        if (field != null)
-                        {
-                            object obj = null;
-                            obj = (field.FieldType == typeof(string)) ? value : obj;
-                            obj = (field.FieldType == typeof(float)) ? float.Parse(value) : obj;
-                            obj = (field.FieldType == typeof(Vector3)) ? Vector3.Parse(value) : obj;
-                            field.SetValue(param, obj);
-                        }
-                    }
-                }
-
-                param.Texture = new Texture2D();
-                param.Texture.Create(string.Format("res/mesh/aircraft/{0}/{0}_P01.png", param.Name), Accessibility.None);
-
-                param.NormalMapTexture = new Texture2D();
-                param.NormalMapTexture.Create(string.Format("res/mesh/aircraft/{0}/{0}_N.png", param.Name), Accessibility.None);
-
-                param.Body = new GraphicsModel();
-                param.Body.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_Body.cx", param.Name));
-                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", param.Name)))
-                {
-                    param.LeftCanard = new GraphicsModel();
-                    param.LeftCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftCanard.cx", param.Name));
-                }
-                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", param.Name)))
-                {
-                    param.RightCanard = new GraphicsModel();
-                    param.RightCanard.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightCanard.cx", param.Name));
-                }
-                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", param.Name)))
-                {
-                    param.LeftElevator = new GraphicsModel();
-                    param.LeftElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_LeftElevator.cx", param.Name));
-                }
-                if (File.Exists(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", param.Name)))
-                {
-                    param.RightElevator = new GraphicsModel();
-                    param.RightElevator.CreateFromCX(string.Format("res/mesh/aircraft/{0}/{0}_RightElevator.cx", param.Name));
-                }
-
-                AircraftParameters.Add(param);
-            }
+            Directory.SetCurrentDirectory(pwd);
         }
     }
 
     public AircraftComponent(string aircraftName)
     {
-        Func<Vector3, Vector3> flip = (v) => new Vector3(-v.X, v.Y, v.Z);
-
-        this.Parameter = AircraftParameters.Where((parameter) => parameter.Name == aircraftName).First();
+        this.ModelRef = AircraftModels.Where((model) => model.Name == aircraftName).First();
         for (int i = 0; i < WeaponCount; i++)
         {
             this.Weapons[i] = new WeaponSystem();
             switch (i)
             {
                 case 0:
-                    this.Weapons[0].WeaponPos = this.Parameter.WeaponPos0;
+                    this.Weapons[0].WeaponPos = this.ModelRef.Weapon.MissilePos0;
                     break;
                 case 1:
-                    this.Weapons[1].WeaponPos = flip(this.Parameter.WeaponPos0);
+                    this.Weapons[1].WeaponPos = this.ModelRef.Weapon.MissilePos1;
                     break;
                 case 2:
-                    this.Weapons[2].WeaponPos = this.Parameter.WeaponPos1;
+                    this.Weapons[2].WeaponPos = this.ModelRef.Weapon.MissilePos2;
                     break;
                 case 3:
-                    this.Weapons[3].WeaponPos = flip(this.Parameter.WeaponPos1);
-                    break;
-                case 4:
-                    this.Weapons[4].WeaponPos = this.Parameter.WeaponPos2;
-                    break;
-                case 5:
-                    this.Weapons[5].WeaponPos = flip(this.Parameter.WeaponPos2);
-                    break;
-                case 6:
-                    this.Weapons[6].WeaponPos = this.Parameter.WeaponPos3;
-                    break;
-                case 7:
-                    this.Weapons[7].WeaponPos = flip(this.Parameter.WeaponPos3);
+                    this.Weapons[3].WeaponPos = this.ModelRef.Weapon.MissilePos3;
                     break;
             }
         }
@@ -296,6 +486,20 @@ public class AircraftComponent : CustomEntityComponent
                 this.PitchInput = (p.Y > 0) ? -0.25f : 0.25f;
             }
         }
+
+        // ターゲットに近い場合は減速する
+        float distance = ToFeet((destination - this.Transform.Position).Magnitude);
+        if (distance < 1000)
+            this.ThrottleInput += clamp(0.5f - this.EnginePower, -1.0f, 1.0f);
+        else if (5000 < distance)
+            this.ThrottleInput += clamp(1.0f - this.EnginePower, -1.0f, 1.0f);
+        else
+            this.ThrottleInput += clamp(0.7f - this.EnginePower, -1.0f, 1.0f);
+
+        // 機動力を意図的に落とす
+        this.RollInput *= 0.5f;
+        this.YawInput *= 0.5f;
+        this.PitchInput *= 0.5f;
     }
 
     public void AutoPilot()
@@ -415,9 +619,9 @@ public class AircraftComponent : CustomEntityComponent
         #region エンジン推力による前進
         {
             this.EnginePower = clamp(this.EnginePower + 0.004f * this.ThrottleInput, 0.25f, 1.0f);
-            this.Physics.Mass = this.Parameter.Weight;
-            this.Physics.InertiaMoment = this.Parameter.InertiaMoment;
-            this.Physics.Force += this.Transform.Forward * (this.Parameter.Thrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
+            this.Physics.Mass = this.ModelRef.Spec.Weight;
+            this.Physics.InertiaMoment = this.ModelRef.Spec.InertiaMoment;
+            this.Physics.Force += this.Transform.Forward * (this.ModelRef.Spec.EngineThrust * this.EnginePower * max(1.0f, (this.EnginePower - EnginePowerThreshold) * 10.0f * 1.5f));
         }
         #endregion
 
@@ -486,14 +690,12 @@ public class AircraftComponent : CustomEntityComponent
         #region 主翼端の風切りエフェクト更新
         if (this.Armor > 0)
         {
-            Func<Vector3, Vector3> flip = (v) => new Vector3(-v.X, v.Y, v.Z);
-
             this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
-            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.Parameter.WingEdgePos);
+            this.LeftSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.ModelRef.MainWingL.EdgePos);
             this.LeftSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
 
             this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix = this.Transform.Matrix;
-            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(flip(this.Parameter.WingEdgePos));
+            this.RightSmokeGeneratorEntity.Get<TransformComponent>().Matrix.Translate(this.ModelRef.MainWingR.EdgePos);
             this.RightSmokeGeneratorEntity.Get<StringySmokeComponent>().Intensity = this.Physics.AngularVelocity.Magnitude * 60;
         }
         #endregion
@@ -605,7 +807,7 @@ public class AircraftComponent : CustomEntityComponent
             }
             foreach (var e in this.GunFlushs)
             {
-                e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
+                e.Get<TransformComponent>().Position = this.Transform.Position + this.ModelRef.Weapon.GunPos * this.Transform.Matrix._Matrix3x3;
             }
         }
         #endregion
@@ -635,7 +837,7 @@ public class AircraftComponent : CustomEntityComponent
                 {
                     Entity e = Entity.Instantiate();
                     e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
-                    e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
+                    e.Get<TransformComponent>().Position = this.Transform.Position + this.ModelRef.Weapon.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Get<TransformComponent>().Matrix.RotateAroundAxis(new Vector3(uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f), uniform(-1.0f, 1.0f)).Normalize(), normal(0, 0.005f));
                     e.Attach(new CollisionComponent()
                     {
@@ -658,7 +860,7 @@ public class AircraftComponent : CustomEntityComponent
                 {
                     Entity e = Entity.Instantiate();
                     e.Attach(new TransformComponent() { Matrix = this.Transform.Matrix });
-                    e.Get<TransformComponent>().Position = this.Transform.Position + this.Parameter.GunPos * this.Transform.Matrix._Matrix3x3;
+                    e.Get<TransformComponent>().Position = this.Transform.Position + this.ModelRef.Weapon.GunPos * this.Transform.Matrix._Matrix3x3;
                     e.Attach<GunFlushComponent>();
                     e.Attach(new LimitedLifeTimeComponent()
                     {
@@ -706,8 +908,6 @@ public class AircraftComponent : CustomEntityComponent
 
     void Render()
     {
-        Func<Vector3, Vector3> flip = (v) => new Vector3(-v.X, v.Y, v.Z);
-
         GraphicsDeviceContext device = GraphicsDeviceContext.Instance;
         device.SetBlendState(this.Visibility == 1.0f ? NoBlend : AlphaBlend);
         device.SetRasterizerState(CullingOn);
@@ -718,103 +918,212 @@ public class AircraftComponent : CustomEntityComponent
         device.SetPixelShader(PixelShader);
 
         PixelShader.SetSamplerState(Wrap, 0);
-        PixelShader.SetTexture(this.Parameter.Texture, 0);
-        PixelShader.SetTexture(this.Parameter.NormalMapTexture, 1);
+        PixelShader.SetTexture(this.ModelRef.MaterialMain.Texture, 0);
+        PixelShader.SetTexture(this.ModelRef.MaterialNMap.Texture, 1);
 
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("camera").Get<TransformComponent>().Position, 1), 2);
         PixelShader.SetConstantBuffer(new Vector4(Entity.Find("light").Get<TransformComponent>().Forward, 0), 3);
         PixelShader.SetConstantBuffer(new Color(1, 1, 1, this.Visibility), 4);
 
+        if (true)
         {
             VertexShader.SetConstantBuffer(this.WVPMatrix, 0);
             PixelShader.SetConstantBuffer(this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer(this.WorldMatrix.Inverse, 1);
 
-            device.SetVertexBuffer(this.Parameter.Body.VertexPositions, 0);
-            device.SetVertexBuffer(this.Parameter.Body.VertexNormals, 1);
-            device.SetVertexBuffer(this.Parameter.Body.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.Parameter.Body.VertexTangents, 3);
-            device.SetVertexBuffer(this.Parameter.Body.VertexBinormals, 4);
-            device.SetIndexBuffer(this.Parameter.Body.VertexIndices);
-            device.DrawIndexed(this.Parameter.Body.VertexIndices.Count);
+            device.SetVertexBuffer(this.ModelRef.Body.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.Body.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.Body.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.Body.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.Body.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.Body.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.Body.Mesh.VertexIndices.Count);
         }
 
-        var angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+        // ---
 
-        if (this.Parameter.LeftCanard != null)
+        if (this.ModelRef.SubWingElevatorL != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(this.Parameter.CanardPos);
-            Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (this.ModelRef.SubWingElevatorL.EdgePos1 + this.ModelRef.SubWingElevatorL.EdgePos2);
+            Vector3 axis = Vector3.Normalize(this.ModelRef.SubWingElevatorL.EdgePos2 - this.ModelRef.SubWingElevatorL.EdgePos1);
+            float theta = clamp((+angular.X * 2 + angular.Z * 0.5f) * 10, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
             VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexPositions, 0);
-            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexNormals, 1);
-            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexTangents, 3);
-            device.SetVertexBuffer(this.Parameter.LeftCanard.VertexBinormals, 4);
-            device.SetIndexBuffer(this.Parameter.LeftCanard.VertexIndices);
-            device.DrawIndexed(this.Parameter.LeftCanard.VertexIndices.Count);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorL.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorL.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorL.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorL.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorL.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.SubWingElevatorL.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.SubWingElevatorL.Mesh.VertexIndices.Count);
         }
 
-        if (this.Parameter.RightCanard != null)
+        if (this.ModelRef.SubWingElevatorR != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(flip(this.Parameter.CanardPos));
-            Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp(angular.X * 10, -0.3f, 0.3f));
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (this.ModelRef.SubWingElevatorR.EdgePos1 + this.ModelRef.SubWingElevatorR.EdgePos2);
+            Vector3 axis = Vector3.Normalize(this.ModelRef.SubWingElevatorR.EdgePos2 - this.ModelRef.SubWingElevatorR.EdgePos1);
+            float theta = clamp((-angular.X * 2 + angular.Z * 0.5f) * 10, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
             VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.Parameter.RightCanard.VertexPositions, 0);
-            device.SetVertexBuffer(this.Parameter.RightCanard.VertexNormals, 1);
-            device.SetVertexBuffer(this.Parameter.RightCanard.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.Parameter.RightCanard.VertexTangents, 3);
-            device.SetVertexBuffer(this.Parameter.RightCanard.VertexBinormals, 4);
-            device.SetIndexBuffer(this.Parameter.RightCanard.VertexIndices);
-            device.DrawIndexed(this.Parameter.RightCanard.VertexIndices.Count);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorR.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorR.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorR.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorR.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.SubWingElevatorR.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.SubWingElevatorR.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.SubWingElevatorR.Mesh.VertexIndices.Count);
         }
 
-        if (this.Parameter.LeftElevator != null)
+        // ---
+
+        if (this.ModelRef.SubWingAileronL != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(this.Parameter.ElevatorPos);
-            Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 + angular.Z * 0.5f) * 10, -0.3f, 0.3f));
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (this.ModelRef.SubWingAileronL.EdgePos1 + this.ModelRef.SubWingAileronL.EdgePos2);
+            Vector3 axis = Vector3.Normalize(this.ModelRef.SubWingAileronL.EdgePos2 - this.ModelRef.SubWingAileronL.EdgePos1);
+            float theta = -clamp((+angular.X * 2 + angular.Z * 0.5f) * 10, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
             VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexPositions, 0);
-            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexNormals, 1);
-            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexTangents, 3);
-            device.SetVertexBuffer(this.Parameter.LeftElevator.VertexBinormals, 4);
-            device.SetIndexBuffer(this.Parameter.LeftElevator.VertexIndices);
-            device.DrawIndexed(this.Parameter.LeftElevator.VertexIndices.Count);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronL.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronL.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronL.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronL.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronL.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.SubWingAileronL.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.SubWingAileronL.Mesh.VertexIndices.Count);
         }
 
-        if (this.Parameter.RightElevator != null)
+        if (this.ModelRef.SubWingAileronR != null)
         {
-            Matrix4x4 move = new Matrix4x4().Identity().Translate(flip(this.Parameter.ElevatorPos));
-            Matrix4x4 rot = new Matrix4x4().Identity().RotateX(clamp((-angular.X * 2 - angular.Z * 0.5f) * 10, -0.3f, 0.3f));
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (this.ModelRef.SubWingAileronR.EdgePos1 + this.ModelRef.SubWingAileronR.EdgePos2);
+            Vector3 axis = Vector3.Normalize(this.ModelRef.SubWingAileronR.EdgePos2 - this.ModelRef.SubWingAileronR.EdgePos1);
+            float theta = -clamp((-angular.X * 2 + angular.Z * 0.5f) * 10, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
             Matrix4x4 adjustment = move.Inverse * rot * move;
 
             VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
             PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
             PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
 
-            device.SetVertexBuffer(this.Parameter.RightElevator.VertexPositions, 0);
-            device.SetVertexBuffer(this.Parameter.RightElevator.VertexNormals, 1);
-            device.SetVertexBuffer(this.Parameter.RightElevator.VertexTextureCoords, 2);
-            device.SetVertexBuffer(this.Parameter.RightElevator.VertexTangents, 3);
-            device.SetVertexBuffer(this.Parameter.RightElevator.VertexBinormals, 4);
-            device.SetIndexBuffer(this.Parameter.RightElevator.VertexIndices);
-            device.DrawIndexed(this.Parameter.RightElevator.VertexIndices.Count);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronR.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronR.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronR.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronR.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.SubWingAileronR.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.SubWingAileronR.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.SubWingAileronR.Mesh.VertexIndices.Count);
+        }
+
+        // ---
+
+        if (this.ModelRef.SubWingCanardL != null)
+        {
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (this.ModelRef.SubWingCanardL.EdgePos1 + this.ModelRef.SubWingCanardL.EdgePos2);
+            Vector3 axis = Vector3.Normalize(this.ModelRef.SubWingCanardL.EdgePos2 - this.ModelRef.SubWingCanardL.EdgePos1);
+            float theta = -clamp(+angular.X * 20, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
+            Matrix4x4 adjustment = move.Inverse * rot * move;
+
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
+
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardL.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardL.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardL.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardL.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardL.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.SubWingCanardL.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.SubWingCanardL.Mesh.VertexIndices.Count);
+        }
+
+        if (this.ModelRef.SubWingCanardR != null)
+        {
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (this.ModelRef.SubWingCanardR.EdgePos1 + this.ModelRef.SubWingCanardR.EdgePos2);
+            Vector3 axis = Vector3.Normalize(this.ModelRef.SubWingCanardR.EdgePos2 - this.ModelRef.SubWingCanardR.EdgePos1);
+            float theta = -clamp(-angular.X * 20, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
+            Matrix4x4 adjustment = move.Inverse * rot * move;
+
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
+
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardR.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardR.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardR.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardR.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(this.ModelRef.SubWingCanardR.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(this.ModelRef.SubWingCanardR.Mesh.VertexIndices);
+            device.DrawIndexed(this.ModelRef.SubWingCanardR.Mesh.VertexIndices.Count);
+        }
+
+        // ---
+
+        foreach (var subWingRudder in new[] { this.ModelRef.SubWingRudderL, this.ModelRef.SubWingRudderR, this.ModelRef.SubWingRudderC })
+        {
+            if (subWingRudder == null)
+                continue;
+
+            Vector4 angular = new Vector4(this.Physics.AngularVelocity, 0) * this.Transform.Matrix.Inverse;
+
+            Vector3 pos = 0.5f * (subWingRudder.EdgePos1 + subWingRudder.EdgePos2);
+            Vector3 axis = Vector3.Normalize(subWingRudder.EdgePos2 - subWingRudder.EdgePos1);
+            float theta = clamp(-angular.Y * 40, -deg2rad(20), deg2rad(20));
+
+            Matrix4x4 move = new Matrix4x4().Identity().Translate(pos);
+            Matrix4x4 rot = new Matrix4x4().Identity().RotateAroundAxis(axis, theta);
+            Matrix4x4 adjustment = move.Inverse * rot * move;
+
+            VertexShader.SetConstantBuffer(adjustment * this.WVPMatrix, 0);
+            PixelShader.SetConstantBuffer(adjustment * this.WorldMatrix, 0);
+            PixelShader.SetConstantBuffer((adjustment * this.WorldMatrix).Inverse, 1);
+
+            device.SetVertexBuffer(subWingRudder.Mesh.VertexPositions, 0);
+            device.SetVertexBuffer(subWingRudder.Mesh.VertexNormals, 1);
+            device.SetVertexBuffer(subWingRudder.Mesh.VertexTextureCoords, 2);
+            device.SetVertexBuffer(subWingRudder.Mesh.VertexTangents, 3);
+            device.SetVertexBuffer(subWingRudder.Mesh.VertexBinormals, 4);
+            device.SetIndexBuffer(subWingRudder.Mesh.VertexIndices);
+            device.DrawIndexed(subWingRudder.Mesh.VertexIndices.Count);
         }
 
         #region ミサイル更新

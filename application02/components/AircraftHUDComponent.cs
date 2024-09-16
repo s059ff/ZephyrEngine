@@ -400,7 +400,7 @@ public class AircraftHUDComponent : CustomEntityComponent
                                 scale(0.75f);
                                 string text = string.Format(
                                         "{0}\n{1}",
-                                        e.Get<AircraftComponent>().Parameter.Name,
+                                        e.Get<AircraftComponent>().ModelRef.Name,
                                         e.Get<SquadronComponent>().SquadronName + " " + (e.Get<SquadronComponent>().UnitNumber + 1)
                                     );
                                 write(text, TextAlignment.Left, TextAlignment.Bottom);

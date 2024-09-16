@@ -148,7 +148,7 @@ public class JetComponent : CustomEntityComponent
         assert(this.Owner.Has<AircraftComponent>() || this.Owner.Has<MissileComponent>());
 
         if (this.Owner.Has<AircraftComponent>())
-            this.OffsetPosition = this.Owner.Get<AircraftComponent>().Parameter.EngineNozzlePos;
+            this.OffsetPosition = (Vector3)this.Owner.Get<AircraftComponent>().ModelRef.EngineNozzleL.Pos;
         if (this.Owner.Has<MissileComponent>())
             this.OffsetPosition = this.Owner.Get<MissileComponent>().EngineNozzlePos;
     }
