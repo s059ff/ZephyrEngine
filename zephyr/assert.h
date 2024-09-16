@@ -17,7 +17,10 @@ namespace zephyr
 
 #else
 
-inline void assert(bool) {}
-inline void assert(bool, const char*) {}
+namespace zephyr
+{
+    inline void assert(bool) {}
+    inline void assert(bool, const char*) {}
+}
 
 #endif
