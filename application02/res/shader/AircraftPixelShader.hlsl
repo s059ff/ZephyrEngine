@@ -66,6 +66,13 @@ float4 main(
     float3 N = normalize(2.0f * g_normalmap.Sample(g_sampler, texcoord).xyz - 1.0f);
     float3 V = normalize(mul(mul(g_camera_position, g_local).xyz - position, vertex)).xyz;
     float3 H = normalize(L + V);
+
+    // Coordinates in the original .obj format : rightward=+x, upward=+z, forward=+y (right-handed coordinates).
+    // Coordinates in our .cx format coordinates: rightward=+x, upward=+y, forward=+z (left-handed coordinates).
+    // To render using a original normal map texture, we need to swap the y and z values and convert it to left-handed coords.
+    float ny = N.y, nz = N.z;
+    N.y = -nz;
+    N.z = ny;
 #else
     float3 L = mul(-g_light_direction, g_local).xyz;
     float3 N = normal;
