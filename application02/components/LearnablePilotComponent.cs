@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -26,29 +25,6 @@ class LearnablePilotComponent : AbstractPilotComponent
         stream = client.GetStream();
     }
 
-    protected override void OnAttach()
-    {
-        base.OnAttach();
-
-        //var process = Process.GetCurrentProcess();
-        //var address = "127.0.0.1";
-        //var port = 12345 + process.Id;
-        //var host = IPAddress.Parse(address);
-
-        //this.listener = new TcpListener(host, port);
-        //this.listener.Start();
-        //this.client = listener.AcceptTcpClient();
-        //this.stream = client.GetStream();
-    }
-
-    protected override void OnDetach()
-    {
-        base.OnDetach();
-
-        //this.stream.Dispose();
-        //this.client.Dispose();
-        //this.listener.Stop();
-    }
     protected override void ReceiveMessage(object message, object argument)
     {
         base.ReceiveMessage(message, argument);
@@ -83,22 +59,15 @@ class LearnablePilotComponent : AbstractPilotComponent
         this.SendObservationData();
     }
 
-    private void SendObservationData()
+    private void SendMessage(object obj)
     {
-        var observer = this.Owner.Get<EnvironmentObservationComponent>();
-        var observation = observer.Observe();
-        string message = JObject.FromObject(observation).ToString(Formatting.None);
+        string message = JObject.FromObject(obj).ToString(Formatting.None);
         byte[] payload = Encoding.UTF8.GetBytes(message);
         stream.Write(payload, 0, payload.Length);
         stream.WriteByte(0);
-
-        if ((bool)observation["episode_done"])
-        {
-            Program.ResetSceneSignal = true;
-        }
     }
 
-    private void ReceiveActionData()
+    private JObject ReceiveMessage()
     {
         using (var buffer = new MemoryStream())
         {
@@ -117,19 +86,31 @@ class LearnablePilotComponent : AbstractPilotComponent
             assert(payload[payload.Length - 1] == 0);
 
             string message = Encoding.UTF8.GetString(payload, 0, payload.Length - 1);
-            JObject response = JObject.Parse(message);
-
-            var aircraft = this.Owner.Get<AircraftComponent>();
-            aircraft.RollInput = (float)response["roll_input"];
-            aircraft.PitchInput = (float)response["pitch_input"];
-            aircraft.YawInput = (float)response["yaw_input"];
-            aircraft.ThrottleInput = (float)response["throttle_input"];
-            aircraft.MissileLaunchInput = (uniform(0.0f, 1.0f) <= (float)response["missile_launch_input"]);
-            aircraft.GunFireInput = (uniform(0.0f, 1.0f) <= (float)response["gun_fire_input"]);
-
-            var display = Entity.Find("debugger").Get<DebugInformationDisplayComponent>();
-            display.DebugMessages["action"] = response.ToString(Formatting.Indented);
+            return JObject.Parse(message);
         }
+    }
+
+    private void SendObservationData()
+    {
+        var observer = this.Owner.Get<EnvironmentObserverComponent>();
+        var observation = observer.Observe();
+        this.SendMessage(observation);
+
+        Program.ResetSceneSignal = (bool)observation["episode_done"];
+    }
+
+    private void ReceiveActionData()
+    {
+        JObject response = this.ReceiveMessage();
+
+        var aircraft = this.Owner.Get<AircraftComponent>();
+        aircraft.RollInput = (float)response["roll_input"];
+        aircraft.PitchInput = (float)response["pitch_input"];
+        aircraft.YawInput = (float)response["yaw_input"];
+        aircraft.ThrottleInput = (float)response["throttle_input"];
+
+        var display = Entity.Find("debugger").Get<DebugInformationDisplayComponent>();
+        display.DebugMessages["action"] = response.ToString(Formatting.Indented);
     }
 
     private bool initialState = true;
