@@ -21,7 +21,6 @@ class PlayerPilotComponent : AbstractPilotComponent
 
     private void Update()
     {
-        var self = this.Owner;
         var aircraft = this.Owner.Get<AircraftComponent>();
         var avionics = this.Owner.Get<AircraftAvionicsComponent>();
 
