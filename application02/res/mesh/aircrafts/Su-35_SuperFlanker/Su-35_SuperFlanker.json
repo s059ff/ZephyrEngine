@@ -1,0 +1,221 @@
+{
+  "body": {
+    "mesh_path": "Su-35_SuperFlanker-Body.cx"
+  },
+  "cockpit": {
+    "pos": {
+      "x": 0,
+      "y": 1.538987,
+      "z": 7.613451
+    }
+  },
+  "engine_nozzle": {
+    "left": {
+      "pos": {
+        "x": -1.18262,
+        "y": -0.15003,
+        "z": -5.0797
+      }
+    },
+    "right": {
+      "pos": {
+        "x": 1.18262,
+        "y": -0.15003,
+        "z": -5.0797
+      }
+    }
+  },
+  "main_wing": {
+    "left": {
+      "edge_pos": {
+        "x": -7.046773,
+        "y": 0.370064,
+        "z": -3.691027
+      }
+    },
+    "right": {
+      "edge_pos": {
+        "x": 7.046773,
+        "y": 0.370064,
+        "z": -3.691027
+      }
+    }
+  },
+  "material": {
+    "main": {
+      "texture_path": "Su-35_SuperFlanker_P01.png"
+    },
+    "nmap": {
+      "texture_path": "Su-35_SuperFlanker_N.png"
+    }
+  },
+  "name": "Su-35_SuperFlanker",
+  "spec": {
+    "engine_thrust": 8.0,
+    "inertia_moment": 4.0,
+    "weight": 50.0
+  },
+  "sub_wing": {
+    "aileron": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": -2.10488,
+            "y": 0.34534,
+            "z": -1.17044
+          },
+          {
+            "x": -5.18914,
+            "y": 0.3696,
+            "z": -2.56051
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-AileronL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 2.10488,
+            "y": 0.34534,
+            "z": -1.17044
+          },
+          {
+            "x": 5.18914,
+            "y": 0.3696,
+            "z": -2.56051
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-AileronR.cx"
+      }
+    },
+    "canard": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": -1.77773,
+            "y": 0.37059,
+            "z": 3.41001
+          },
+          {
+            "x": -1.77773,
+            "y": 0.334,
+            "z": 4.90018
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-CanardL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 1.77773,
+            "y": 0.37059,
+            "z": 3.41001
+          },
+          {
+            "x": 1.77773,
+            "y": 0.334,
+            "z": 4.90018
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-CanardR.cx"
+      }
+    },
+    "elevator": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": -1.731125,
+            "y": -0.15175,
+            "z": -4.67178
+          },
+          {
+            "x": -3.160995,
+            "y": -0.15319,
+            "z": -4.67087
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-ElevatorL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 1.731125,
+            "y": -0.15175,
+            "z": -4.67178
+          },
+          {
+            "x": 3.160995,
+            "y": -0.15319,
+            "z": -4.67087
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-ElevatorR.cx"
+      }
+    },
+    "rudder": {
+      "left": {
+        "edge_pos": [
+          {
+            "x": -2.06522,
+            "y": 0.69448,
+            "z": -3.861922
+          },
+          {
+            "x": -2.065223,
+            "y": 2.6169,
+            "z": -4.301895
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-RudderL.cx"
+      },
+      "right": {
+        "edge_pos": [
+          {
+            "x": 2.06522,
+            "y": 0.69448,
+            "z": -3.861922
+          },
+          {
+            "x": 2.065223,
+            "y": 2.6169,
+            "z": -4.301895
+          }
+        ],
+        "mesh_path": "Su-35_SuperFlanker-RudderR.cx"
+      }
+    }
+  },
+  "weapon": {
+    "gun": {
+      "pos": {
+        "x": 0.81755,
+        "y": 0.764857,
+        "z": 5.394094
+      }
+    },
+    "missile": {
+      "pos": [
+        {
+          "x": -6.062167,
+          "y": 0.08501,
+          "z": -2.088631
+        },
+        {
+          "x": 6.062167,
+          "y": 0.08501,
+          "z": -2.088631
+        },
+        {
+          "x": -4.540156,
+          "y": -0.08825,
+          "z": -1.090204
+        },
+        {
+          "x": 4.540156,
+          "y": -0.08825,
+          "z": -1.090204
+        }
+      ]
+    }
+  }
+}
