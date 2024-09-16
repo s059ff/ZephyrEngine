@@ -84,7 +84,7 @@ class Scene
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
             entity.Attach(new SquadronComponent("Gargoyle"));
-            entity.Attach(new EnvironmentObservationComponent());
+            entity.Attach(new EnvironmentObserverComponent());
             entity.Attach(new AircraftHUDComponent());
             entity.Attach(new WindComponent());
             switch (args.ExecutionMode)
