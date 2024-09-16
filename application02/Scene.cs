@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -80,6 +80,8 @@ class Scene
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
             entity.Attach(new AircraftComponent("FA-22_Raptor"));
+            //entity.Attach(new AircraftComponent("F-15C_Eagle"));
+            //entity.Attach(new AircraftComponent("Su-35_SuperFlanker"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
@@ -116,7 +118,7 @@ class Scene
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
-            entity.Attach(new AircraftComponent("FA-22_Raptor"));
+            entity.Attach(new AircraftComponent("F-15C_Eagle"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(OrganizationFriend));
@@ -135,7 +137,7 @@ class Scene
             entity.Attach(new TransformComponent());
             entity.Attach(new PhysicsComponent());
             entity.Attach(new CollisionComponent());
-            entity.Attach(new AircraftComponent("Su-37_Terminator"));
+            entity.Attach(new AircraftComponent("Su-35_SuperFlanker"));
             entity.Attach(new JetComponent());
             entity.Attach(new SoundComponent(JetSound));
             entity.Attach(new AircraftAvionicsComponent(OrganizationEnemy));
