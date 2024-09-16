@@ -28,38 +28,74 @@ public class GamePad
 
     public int GetButtonState(LogicalButton button)
     {
-        switch (button)
+        if (this.joyStick.IsConnected())
         {
-            case LogicalButton.A:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button2) : this.keyboard.GetKeyState(Keyboard.KeyCode.V);
-            case LogicalButton.B:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button3) : this.keyboard.GetKeyState(Keyboard.KeyCode.C);
-            case LogicalButton.X:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button1) : this.keyboard.GetKeyState(Keyboard.KeyCode.A);
-            case LogicalButton.Y:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button4) : this.keyboard.GetKeyState(Keyboard.KeyCode.S);
-            case LogicalButton.LB:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button5) : this.keyboard.GetKeyState(Keyboard.KeyCode.Q);
-            case LogicalButton.RB:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button6) : this.keyboard.GetKeyState(Keyboard.KeyCode.E);
-            case LogicalButton.LT:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button7) : this.keyboard.GetKeyState(Keyboard.KeyCode.X);
-            case LogicalButton.RT:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button8) : this.keyboard.GetKeyState(Keyboard.KeyCode.Z);
-            case LogicalButton.LSB:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button11) : 0;
-            case LogicalButton.RSB:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button12) : this.keyboard.GetKeyState(Keyboard.KeyCode.D);
-            case LogicalButton.Back:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button9) : 0;
-            case LogicalButton.Start:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button10) : 0;
-            case LogicalButton.Guide:
-                return this.joyStick.IsConnected() ? this.joyStick.GetButtonState(JoyStick.ButtonCode.Button13) : 0;
-            default:
-                break;
+            switch (button)
+            {
+                case LogicalButton.A:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button2);
+                case LogicalButton.B:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button3);
+                case LogicalButton.X:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button1);
+                case LogicalButton.Y:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button4);
+                case LogicalButton.LB:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button5);
+                case LogicalButton.RB:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button6);
+                case LogicalButton.LT:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button7);
+                case LogicalButton.RT:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button8);
+                case LogicalButton.LSB:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button11);
+                case LogicalButton.RSB:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button12);
+                case LogicalButton.Back:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button9);
+                case LogicalButton.Start:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button10);
+                case LogicalButton.Guide:
+                    return this.joyStick.GetButtonState(JoyStick.ButtonCode.Button13);
+                default:
+                    throw new InvalidOperationException();
+            }
         }
-        throw new InvalidOperationException();
+        else
+        {
+            switch (button)
+            {
+                case LogicalButton.A:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.V);
+                case LogicalButton.B:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.C);
+                case LogicalButton.X:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.A);
+                case LogicalButton.Y:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.S);
+                case LogicalButton.LB:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.Q);
+                case LogicalButton.RB:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.E);
+                case LogicalButton.LT:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.X);
+                case LogicalButton.RT:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.Z);
+                case LogicalButton.LSB:
+                    return 0;
+                case LogicalButton.RSB:
+                    return this.keyboard.GetKeyState(Keyboard.KeyCode.D);
+                case LogicalButton.Back:
+                    return 0;
+                case LogicalButton.Start:
+                    return 0;
+                case LogicalButton.Guide:
+                    return 0;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
     }
 
     public int GetKeyState(Keyboard.KeyCode code)
