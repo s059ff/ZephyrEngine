@@ -108,11 +108,10 @@ public class AircraftHUDComponent : CustomEntityComponent
 
         {
             Color Red = new Color(0.8f, 0, 0, 0.8f);
+            Color Green = new Color(0, 0.8f, 0, 0.8f);
             Color Blue = new Color(0, 0.4f, 0.8f, 0.8f);
             Color Black = new Color(0, 0, 0, 0.8f);
             Color Yellow = new Color(0.6f, 0.6f, 0, 0.8f);
-            Color Green = new Color(0, 0.8f, 0, 0.8f);
-            Color DarkGray = new Color(0.1f, 0.1f, 0.1f, 0.8f);
 
             identity();
 
@@ -655,7 +654,18 @@ public class AircraftHUDComponent : CustomEntityComponent
                     {
                         if (!((target == e) && (frameCount % 60 < 30)))
                         {
-                            color((e.Get<AircraftAvionicsComponent>().Organization == OrganizationFriend) ? (e != this.Owner) ? Green : Blue : Red);
+                            if (e == this.Owner)
+                            {
+                                color(Green);
+                            }
+                            else if (e.Get<AircraftAvionicsComponent>().Organization == OrganizationFriend)
+                            {
+                                color(Blue);
+                            }
+                            else
+                            {
+                                color(Red);
+                            }
 
                             var transform2 = e.Get<TransformComponent>();
                             Matrix4x3 matrix = transform2.Matrix;
