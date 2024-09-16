@@ -4,7 +4,7 @@ using ZephyrSharp.Linalg;
 
 class FixedPointCameraComponent : AbstractCameraComponent
 {
-    protected override void Update()
+    protected override void PostUpdate()
     {
         var transform = Entity.Find("player")?.Get<TransformComponent>();
         if (transform != null)

@@ -9,8 +9,8 @@ abstract class AbstractCameraComponent : CustomEntityComponent
 
         switch (message as string)
         {
-            case UpdateMessage:
-                this.Update();
+            case PostUpdateMessage:
+                this.PostUpdate();
                 if (this.isActive)
                     this.ApplyCameraTransform();
                 break;
@@ -31,7 +31,7 @@ abstract class AbstractCameraComponent : CustomEntityComponent
 
     private bool isActive = false;
 
-    protected abstract void Update();
+    protected abstract void PostUpdate();
 
     protected abstract void ApplyCameraTransform();
 }

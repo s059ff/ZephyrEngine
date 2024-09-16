@@ -1,4 +1,3 @@
-﻿using System.Collections.Generic;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
 using ZephyrSharp.Linalg;
@@ -7,7 +6,7 @@ using static GameScript;
 
 class TrackingCameraComponent : AbstractCameraComponent
 {
-    protected override void Update()
+    protected override void PostUpdate()
     {
         var player = Entity.Find("player");
         var transform = player?.Get<TransformComponent>();
