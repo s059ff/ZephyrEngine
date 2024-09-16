@@ -5,9 +5,9 @@ using static GameScript;
 
 class CheatComponent : CustomEntityComponent
 {
-    public bool NoDamage = false;
+    public bool NoAttack = false;
 
-    public bool FixOtherAircrafts = false;
+    public bool FreezePosition = false;
 
     protected override void ReceiveMessage(object message, object argument)
     {
@@ -15,8 +15,8 @@ class CheatComponent : CustomEntityComponent
 
         switch (message as string)
         {
-            case UpdateMessage:
-                this.Update();
+            case PostUpdateMessage:
+                this.PostUpdate();
                 break;
 
             default:
@@ -24,19 +24,22 @@ class CheatComponent : CustomEntityComponent
         }
     }
 
-    private void Update()
+    private void PostUpdate()
     {
-        if (NoDamage)
+        if (NoAttack)
         {
-            Entity entity = Entity.Find("player");
-            AircraftComponent aircraft = entity?.Get<AircraftComponent>();
-            if (aircraft != null)
+            Entity.ForEach((e) =>
             {
-                aircraft.Armor = 1.0f;
-            }
+                if (e.Has<AircraftComponent>() && e.Name != "player")
+                {
+                    var aircraft = e.Get<AircraftComponent>();
+                    aircraft.GunFireInput = false;
+                    aircraft.MissileLaunchInput = false;
+                }
+            });
         }
 
-        if (FixOtherAircrafts)
+        if (FreezePosition)
         {
             Entity.ForEach((e) =>
             {

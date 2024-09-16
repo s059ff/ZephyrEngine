@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -40,6 +40,12 @@ class Program
 
         [Option("random_seed", Default = 12345UL)]
         public ulong RandomSeed { get; set; }
+
+        [Option("cheat_no_attack")]
+        public bool CheatNoAttack { get; set; }
+
+        [Option("cheat_freeze_position")]
+        public bool CheatFreezePosition { get; set; }
     }
 
     private static Arguments ParseArgs()

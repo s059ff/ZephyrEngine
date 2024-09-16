@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ZephyrSharp;
 using ZephyrSharp.GameSystem;
 using ZephyrSharp.GameSystem.Components;
@@ -17,7 +17,11 @@ class Scene
         Entity system = Entity.Instantiate();
         system.Name = "system";
         system.Attach(new SystemComponent());
-        system.Attach(new CheatComponent());
+        system.Attach(new CheatComponent()
+        {
+            NoAttack = args.CheatNoAttack,
+            FreezePosition = args.CheatFreezePosition
+        });
 
         Entity debugger = Entity.Instantiate();
         debugger.Name = "debugger";
