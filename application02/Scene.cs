@@ -87,7 +87,7 @@ class Scene
             entity.Attach(new EnvironmentObservationComponent());
             entity.Attach(new AircraftHUDComponent());
             entity.Attach(new WindComponent());
-            switch (args.Mode)
+            switch (args.ExecutionMode)
             {
                 case "play":
                     entity.Attach(new PlayerPilotComponent());
